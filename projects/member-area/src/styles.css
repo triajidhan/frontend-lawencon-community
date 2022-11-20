@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --main-color: #6148C6;
+    --body-color: #F3F0FF;
+    --main-font: Poppins,
+        Arial,
+        Helvetica,
+        sans-serif !important
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--main-font);
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.body-color {
+    background-color: var(--body-color);
+}
+
+.main-color {
+    background-color: var(--main-color) !important;
+}
+
+.main-text {
+    color: var(--main-color);
+}
+
+.main-font {
+    font-family: var(--main-font);
+}
+
+.icon-box {
+    width: 37px;
+    height: 37px;
+}
+
+.icon {
+    color: #fff;
+}
+
+/* ==================== LOGIN ==================== */
+.bg-login {
+    background-image: url(./assets/images/login-community.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 0.75rem 0 0 0.75rem;
+}
+
+.login-brand {
+    width: 150px;
+    height: 150px;
+}

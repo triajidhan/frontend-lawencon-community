@@ -1,0 +1,97 @@
+<div class="w-full min-h-screen body-color flex md:align-items-center justify-content-center">
+    <div class="grid bg-white border-round-xl lg:w-9 md:w-12 sm:w-10 w-12 container">
+        <div class="col-12 md:col-3 bg-login flex align-items-center justify-content-center min-h-30rem">
+            <div class="text-center text-white mb-3 md:mb-0">
+                <img src="../../../assets/logos/brand.png" class="login-brand mb-3 md:mt-0 mt-3"
+                    alt="lawencon international community">
+                <h2>LAWENCON</h2>
+                <h5>INTERNATIONAL</h5>
+                <H5>COMMUNITY</H5>
+            </div>
+        </div>
+        <div class="col-12 md:col-9 md:px-6 pl-4 pr-2 py-6">
+            <div class=" flex align-items-center mb-5">
+                <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-arrow-up-from-bracket icon"></i>
+                </div>
+                <h2 class=" ml-3">
+                    Sign Up
+                </h2>
+            </div>
+            <form class="card">
+                <div class="formgrid grid w-full">
+                    <div class="field col-12 md:col-6">
+                        <label for="fullName">Full Name <span class="text-red-500">*</span></label>
+                        <input pInputText id="fullName" name="fullName" type="text" class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="email">Email Address <span class="text-red-500">*</span></label>
+                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="pass">Password <span class="text-red-500">*</span></label>
+                        <input pInputText id="pass" name="pass" type="password" class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="industry">Industry <span class="text-red-500">*</span></label>
+                        <select id="industry" name="industry" pInputText class="w-full p-inputtext-sm"
+                            style="appearance: auto">
+                            <option>Arizona</option>
+                            <option>California</option>
+                            <option>Florida</option>
+                            <option>Ohio</option>
+                            <option>Washington</option>
+                        </select>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="position">Position <span class="text-red-500">*</span></label>
+                        <select id="position" name="position" pInputText class="w-full p-inputtext-sm"
+                            style="appearance: auto">
+                            <option>Arizona</option>
+                            <option>California</option>
+                            <option>Florida</option>
+                            <option>Ohio</option>
+                            <option>Washington</option>
+                        </select>
+                    </div>
+                    <div class="field col-12">
+                        <p class="text-center mt-4 mb-2">Have an Account? <b routerLink="/login/member"
+                                class=" cursor-pointer main-text sign-up-btn">Sign
+                                In</b></p>
+                        <button pButton (click)="showDialog()" type="button" class="main-color mt-3 w-full md:max-w-max"
+                            label="SIGN UP"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<p-dialog [(visible)]="display">
+    <div class="grid bg-white border-round-xl max-w-30rem mb-5">
+        <ng-template pTemplate="header">
+            <h3>Header Content</h3>
+        </ng-template>
+        <div class="col-12 md:px-6 px-3">
+            <div class=" flex align-items-center justify-content-center mb-5">
+                <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-code icon"></i>
+                </div>
+                <h2 class=" ml-3">
+                    Verification Code
+                </h2>
+            </div>
+            <form class="card">
+                <div class="field">
+                    <label for="code">Your Code</label>
+                    <input pInputText id="code" name="code" type="password" class="w-full">
+                </div>
+                <p>verification code has been sent to your email,
+                    please check your email</p>
+                <button pButton type="button" routerLink="/login/member" class="main-color w-full mt-3"
+                    label="SUBMIT"></button>
+            </form>
+        </div>
+    </div>
+</p-dialog>

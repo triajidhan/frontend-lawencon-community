@@ -3,5 +3,299 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "admin-area": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/admin-area",
+      "sourceRoot": "projects/admin-area/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/admin-area",
+            "index": "projects/admin-area/src/index.html",
+            "main": "projects/admin-area/src/main.ts",
+            "polyfills": "projects/admin-area/src/polyfills.ts",
+            "tsConfig": "projects/admin-area/tsconfig.app.json",
+            "assets": [
+              "projects/admin-area/src/favicon.ico",
+              "projects/admin-area/src/assets"
+            ],
+            "styles": [
+              "projects/admin-area/src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/admin-area/src/environments/environment.ts",
+                  "with": "projects/admin-area/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "admin-area:build:production"
+            },
+            "development": {
+              "browserTarget": "admin-area:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "admin-area:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/admin-area/src/test.ts",
+            "polyfills": "projects/admin-area/src/polyfills.ts",
+            "tsConfig": "projects/admin-area/tsconfig.spec.json",
+            "karmaConfig": "projects/admin-area/karma.conf.js",
+            "assets": [
+              "projects/admin-area/src/favicon.ico",
+              "projects/admin-area/src/assets"
+            ],
+            "styles": [
+              "projects/admin-area/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "member-area": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/member-area",
+      "sourceRoot": "projects/member-area/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/member-area",
+            "index": "projects/member-area/src/index.html",
+            "main": "projects/member-area/src/main.ts",
+            "polyfills": "projects/member-area/src/polyfills.ts",
+            "tsConfig": "projects/member-area/tsconfig.app.json",
+            "assets": [
+              "projects/member-area/src/favicon.ico",
+              "projects/member-area/src/assets"
+            ],
+            "styles": [
+              "projects/member-area/src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/member-area/src/environments/environment.ts",
+                  "with": "projects/member-area/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "member-area:build:production"
+            },
+            "development": {
+              "browserTarget": "member-area:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "member-area:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/member-area/src/test.ts",
+            "polyfills": "projects/member-area/src/polyfills.ts",
+            "tsConfig": "projects/member-area/tsconfig.spec.json",
+            "karmaConfig": "projects/member-area/karma.conf.js",
+            "assets": [
+              "projects/member-area/src/favicon.ico",
+              "projects/member-area/src/assets"
+            ],
+            "styles": [
+              "projects/member-area/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "main-area": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/main-area",
+      "sourceRoot": "projects/main-area/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/main-area",
+            "index": "projects/main-area/src/index.html",
+            "main": "projects/main-area/src/main.ts",
+            "polyfills": "projects/main-area/src/polyfills.ts",
+            "tsConfig": "projects/main-area/tsconfig.app.json",
+            "assets": [
+              "projects/main-area/src/favicon.ico",
+              "projects/main-area/src/assets"
+            ],
+            "styles": [
+              "projects/main-area/src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/main-area/src/environments/environment.ts",
+                  "with": "projects/main-area/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "main-area:build:production"
+            },
+            "development": {
+              "browserTarget": "main-area:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "main-area:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/main-area/src/test.ts",
+            "polyfills": "projects/main-area/src/polyfills.ts",
+            "tsConfig": "projects/main-area/tsconfig.spec.json",
+            "karmaConfig": "projects/main-area/karma.conf.js",
+            "assets": [
+              "projects/main-area/src/favicon.ico",
+              "projects/main-area/src/assets"
+            ],
+            "styles": [
+              "projects/main-area/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
   }
 }

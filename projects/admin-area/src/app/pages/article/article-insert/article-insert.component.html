@@ -1,0 +1,50 @@
+<div class="w-full body-color">
+    <div class=" flex justify-content-center flex-wrap">
+        <div class="grid w-full md:w-10 mt-1">
+            <p-breadcrumb [model]="items" class="w-full"></p-breadcrumb>
+        </div>
+        <div class="grid w-full md:w-10 ">
+            <h1 class="text-center w-full mt-5 mb-2">
+                <div class=" flex justify-content-center mb-5">
+                    <div
+                        class="border-circle main-color text-white flex align-items-center justify-content-center w-3rem h-3rem">
+                        <i class="fa-regular fa-file-lines text-xl"></i>
+                    </div>
+                    <h2 class=" ml-3">
+                        Articles Insert
+                    </h2>
+                </div>
+            </h1>
+        </div>
+        <div class="grid w-full md:w-10 mb-5 p-3 bg-white">
+            <form class="card w-full mx-3 border-0 md:px-4 my-3">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="title">Title <span class="text-red-500">*</span></label>
+                        <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="articleCode">Article Code <span class="text-red-500">*</span></label>
+                        <input pInputText id="articleCode" name="articleCode" type="text"
+                            class="w-full p-inputtext-sm color-body">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="contents">Contents <span class="text-red-500">*</span></label>
+                        <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" id="contents"
+                            name="contents" type="text" class="w-full"></textarea>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="file">Photo <span class="text-red-500">*</span></label>
+                        <p-fileUpload id="file" name="file" url="./upload.php" accept="image/*" [auto]="true">
+                        </p-fileUpload>
+                    </div>
+                    <div class="col-12 my-3">
+                        <button pButton routerLink="/articles" class="p-button-outlined mr-2" label="BACK"></button>
+                        <button pButton routerLink="/articles" type="submit" id="article-submit" label="SUBMIT"
+                            class="main-color"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

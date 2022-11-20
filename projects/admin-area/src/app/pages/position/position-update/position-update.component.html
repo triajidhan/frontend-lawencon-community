@@ -1,0 +1,40 @@
+<div class="w-full body-color">
+    <div class=" flex justify-content-center flex-wrap">
+        <div class="grid w-full md:w-10 mt-1">
+            <p-breadcrumb [model]="items" class="w-full"></p-breadcrumb>
+        </div>
+        <div class="grid w-full md:w-10 ">
+            <h1 class="text-center w-full mt-5 mb-2">
+                <div class=" flex justify-content-center mb-5">
+                    <div
+                        class="border-circle main-color text-white flex align-items-center justify-content-center w-3rem">
+                        <i class="fa-solid fa-briefcase text-xl"></i>
+                    </div>
+                    <h2 class=" ml-3">
+                        Positions Update
+                    </h2>
+                </div>
+            </h1>
+        </div>
+        <div class="grid w-full md:w-10 mb-5 p-3 bg-white">
+            <form class="card w-full mx-3 border-0 md:px-4 my-3">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="positionName">Position Name <span class="text-red-500">*</span></label>
+                        <input pInputText id="positionName" name="positionName" type="text"
+                            class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="positionCode">Position Code <span class="text-red-500">*</span></label>
+                        <input pInputText id="positionCode" name="positionCode" type="text"
+                            class="w-full p-inputtext-sm" disabled>
+                    </div>
+                    <div class="col-12 my-3">
+                        <button pButton routerLink="/positions" class="p-button-outlined mr-2" label="BACK"></button>
+                        <button pButton type="button" id="position-save" label="SAVE" class="main-color"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

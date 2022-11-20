@@ -1,0 +1,59 @@
+<div class="w-full body-color">
+    <div class=" flex justify-content-center flex-wrap">
+        <div class="grid w-full md:w-10 mt-1">
+            <p-breadcrumb [model]="items" class="w-full body-color"></p-breadcrumb>
+        </div>
+        <div class="grid w-full md:w-10 ">
+            <h1 class="text-center w-full mt-5 mb-2">
+                <div class=" flex justify-content-center mb-5">
+                    <div
+                        class="border-circle main-color text-white flex align-items-center justify-content-center w-3rem h-3rem">
+                        <i class="fa-solid fa-briefcase text-xl"></i>
+                    </div>
+                    <h2 class=" ml-3">
+                        Positions
+                    </h2>
+                </div>
+            </h1>
+        </div>
+        <div class="grid w-full md:w-10 ">
+            <button pButton routerLink="/positions/new" label="INSERT" class="mb-5 ml-2 main-color">
+                <i class="fa-solid fa-plus mr-2 text-sm"></i>
+            </button>
+        </div>
+        <div class="grid w-full md:w-10">
+            <div class="table w-full">
+                <p-table [value]="positions" [tableStyle]="{'min-width': '50rem'}" [rows]="5" class="w-full">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="no" class="text-center">No.</th>
+                            <th pSortableColumn="positionName">Position Name</th>
+                            <th pSortableColumn="positionCode">Position Code</th>
+                            <th pSortableColumn="isActive">Is Active</th>
+                            <th pSortableColumn="action" class="text-center">Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data let-i="rowIndex">
+                        <tr>
+                            <td class="text-center">{{i + 1}}</td>
+                            <td>{{data.positionName}}</td>
+                            <td>{{data.positionCode}}</td>
+                            <td>{{data.isActive}}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button pButton routerLink="/positions/edit/1" type="button" class="mr-1 main-color"
+                                        label="UPDATE">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                    <button pButton type="button" class="p-button-danger" label="DELETE">
+                                        <i class="fa-solid fa-trash-can text-sm mr-2"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
