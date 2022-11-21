@@ -18,24 +18,32 @@
                     Sign Up
                 </h2>
             </div>
-            <form class="card">
+            <form [formGroup]="registerForm" class="card">
                 <div class="formgrid grid w-full">
                     <div class="field col-12 md:col-6">
                         <label for="fullName">Full Name <span class="text-red-500">*</span></label>
-                        <input pInputText id="fullName" name="fullName" type="text" class="w-full p-inputtext-sm">
+                        <input pInputText id="fullName" formControlName="fullName" name="fullName" type="text"
+                            class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="email">Email Address <span class="text-red-500">*</span></label>
-                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm">
+                        <input pInputText id="email" formControlName="email" name="email" type="email"
+                            class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="pass">Password <span class="text-red-500">*</span></label>
-                        <input pInputText id="pass" name="pass" type="password" class="w-full p-inputtext-sm">
+                        <input pInputText id="pass" formControlName="pass" name="pass" type="password"
+                            class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="company">Company <span class="text-red-500">*</span></label>
+                        <input pInputText id="company" formControlName="company" name="company" type="text"
+                            class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="industry">Industry <span class="text-red-500">*</span></label>
-                        <select id="industry" name="industry" pInputText class="w-full p-inputtext-sm"
-                            style="appearance: auto">
+                        <select id="industry" formControlName="industry" name="industry" pInputText
+                            class="w-full p-inputtext-sm" style="appearance: auto">
                             <option>Arizona</option>
                             <option>California</option>
                             <option>Florida</option>
@@ -45,8 +53,8 @@
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="position">Position <span class="text-red-500">*</span></label>
-                        <select id="position" name="position" pInputText class="w-full p-inputtext-sm"
-                            style="appearance: auto">
+                        <select id="position" formControlName="position" name="position" pInputText
+                            class="w-full p-inputtext-sm" style="appearance: auto">
                             <option>Arizona</option>
                             <option>California</option>
                             <option>Florida</option>
