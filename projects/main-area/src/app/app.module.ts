@@ -26,12 +26,9 @@ import { RouterModule } from '@angular/router'
     CardModule,
     FormsModule,
     ReactiveFormsModule,
-<<<<<<< HEAD
-=======
     HttpClientModule
->>>>>>> 03edb81d63432027f26e6f5fd925b0cb5cbec60e
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: FilterTokenInterceptor, multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: FilterTokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
