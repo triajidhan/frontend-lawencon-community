@@ -1,9 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BASE_URL } from "projects/constant/base-url";
-import { Position } from "projects/interface/position";
-import { Observable } from "rxjs";
-
+import { HttpClient } from "@angular/common/http"
+import { Injectable } from "@angular/core"
+import { Observable } from "rxjs"
+import { Position } from "../../../../interface/position"
+import { BASE_URL } from "../../../../constant/base-url"
 @Injectable({
     providedIn: 'root'
 })

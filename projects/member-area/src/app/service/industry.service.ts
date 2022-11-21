@@ -1,13 +1,13 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { BASE_URL } from "projects/constant/base-url"
-import { Industry } from "projects/interface/industry"
 import { Observable } from "rxjs"
+import { Industry } from "../../../../interface/industry"
+import { BASE_URL } from "../../../../constant/base-url"
 
 @Injectable({
     providedIn: 'root'
 })
-export class PositionService {
+export class IndustryService {
 
     constructor(private http: HttpClient) { }
 
