@@ -24,7 +24,7 @@ import { RouterModule } from '@angular/router'
     InputTextModule,
     CardModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
