@@ -1,7 +1,7 @@
 export interface File {
 	id: string
 	version: number
-	file: string
+	files: string
 	ext: string
 }
 

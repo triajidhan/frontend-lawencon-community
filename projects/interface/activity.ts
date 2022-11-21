@@ -1,7 +1,7 @@
 import { ActivityType } from './activity-type'
 import { File } from './file'
 
-export interface Activity extends File {
+export interface Activity extends File, ActivityType {
 	id: string
 	version: number
 	activityCode: string
@@ -12,5 +12,6 @@ export interface Activity extends File {
 	finishSchedule: string
 	price: number
 	activityType: ActivityType
+	file: File
 }
 
