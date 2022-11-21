@@ -8,6 +8,7 @@ import { DropdownModule } from 'primeng/dropdown'
 import { RouterModule } from "@angular/router"
 import { DialogModule } from 'primeng/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
         CardModule,
         DropdownModule,
         DialogModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        ReactiveFormsModule
     ],
     providers: []
 })
