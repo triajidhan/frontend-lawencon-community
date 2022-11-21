@@ -1,0 +1,16 @@
+import { ActivityType } from './activity-type'
+import { File } from './file'
+
+export interface Activity extends File {
+	id: string
+	version: number
+	activityCode: string
+	title: string
+	provider: string
+	location: string
+	beginSchedule: string
+	finishSchedule: string
+	price: number
+	activityType: ActivityType
+}
+
