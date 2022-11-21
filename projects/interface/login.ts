@@ -3,7 +3,7 @@ import { Industry } from "./industry"
 import { Position } from "./position"
 import { Role } from "./role"
 
-export interface Login extends File {
+export interface Login extends File, Industry, Position, Balance, Role {
     id: string
     fullName: string
     email: string
@@ -13,4 +13,5 @@ export interface Login extends File {
     balance: Balance
     role: Role
     token: string
+    file: File
 }

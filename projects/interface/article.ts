@@ -6,5 +6,6 @@ export interface Article extends File {
 	articleCode: string
 	title: string
 	contents: string
+	file: File
 }
 

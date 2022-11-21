@@ -1,6 +1,6 @@
 import { Post } from './post'
 
-export interface Polling {
+export interface Polling extends Post {
 	id: string
 	version: number
 	pollContent: string

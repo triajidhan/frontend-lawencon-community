@@ -1,7 +1,7 @@
 import { User } from './user'
 import { Post } from './post'
 
-export interface Like {
+export interface Like extends User, Post {
 	id: string
 	version: number
 	user: User
