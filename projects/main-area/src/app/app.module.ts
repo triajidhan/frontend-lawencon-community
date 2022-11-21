@@ -1,7 +1,8 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FilterTokenInterceptor } from './filter/filter-token.interceptor';
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
 import { LoginComponent } from './pages/login/login.component';
@@ -24,9 +25,10 @@ import { RouterModule } from '@angular/router'
     InputTextModule,
     CardModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: FilterTokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
