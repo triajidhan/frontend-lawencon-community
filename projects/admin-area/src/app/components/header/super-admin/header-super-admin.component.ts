@@ -1,12 +1,10 @@
 import { Component, OnInit } from "@angular/core"
 import { MenuItem } from 'primeng/api'
 
-const BASE_URL: string = 'http://localhost:8080'
-
 @Component({
     selector: 'header-super-admin',
     templateUrl: './header-super-admin.component.html',
-    styleUrls: ['./header-super-admin.component.css']
+    styleUrls: ['../../../../styles.css']
 })
 export class HeaderSuperAdminComponent implements OnInit {
 
@@ -21,12 +19,12 @@ export class HeaderSuperAdminComponent implements OnInit {
                 items: [{
                     label: 'Profile',
                     icon: 'fa-solid fa-user',
-                    routerLink: './profiles/super-admin'
+                    routerLink: '/profiles/super-admin'
                 },
                 {
                     label: 'Log Out',
                     icon: 'fa-solid fa-power-off',
-                    routerLink: './login/admin'
+                    routerLink: '/login/admin'
                 }
                 ]
             }
@@ -36,39 +34,55 @@ export class HeaderSuperAdminComponent implements OnInit {
             {
                 label: 'Master Data',
                 items: [{
-                    label: 'Users',
+                    label: 'User',
                     icon: 'fa-solid fa-users',
-                    routerLink: './users'
+                    routerLink: '/users'
                 },
                 {
-                    label: 'Industries',
+                    label: 'Industry',
                     icon: 'fa-solid fa-industry',
-                    routerLink: './industries'
+                    routerLink: '/industries'
                 },
                 {
-                    label: 'Positions',
+                    label: 'Position',
                     icon: 'fa-solid fa-briefcase',
-                    routerLink: './positions'
+                    routerLink: '/positions'
                 }
                 ]
             },
             {
-                label: 'Information Reports',
-                title: 'start',
+                label: 'Information Report',
                 items: [
                     {
-                        label: 'Members',
+                        label: 'Member',
                         icon: 'fa-solid fa-users',
-                        routerLink: './member-information-reports/super-admin'
+                        routerLink: '/member-information-reports/super-admin'
                     },
                     {
-                        label: 'Incomes',
+                        label: 'Income',
                         icon: 'fa-solid fa-coins',
-                        routerLink: './income-information-reports/super-admin'
+                        routerLink: '/income-information-reports/super-admin'
+                    }
+                ]
+            },
+            {
+                label: 'Settings',
+                styleClass: 'settings',
+                items: [
+                    {
+                        label: 'Profile',
+                        icon: 'fa-solid fa-user',
+                        routerLink: '/profiles/super-admin'
+                    },
+                    {
+                        label: 'Log Out',
+                        icon: 'fa-solid fa-power-off',
+                        routerLink: '/login/admin'
                     }
                 ]
             }
         ]
+
     }
 
 }
