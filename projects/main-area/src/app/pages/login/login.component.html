@@ -18,16 +18,18 @@
                     Login Account
                 </h2>
             </div>
-            <form class="card">
+            <form class="card" [formGroup]="loginReq">
                 <div class="field">
                     <label for="email">Email Address</label>
-                    <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm">
+                    <input pInputText id="email" name="email" formControlName="email" type="email"
+                        class="w-full p-inputtext-sm">
                 </div>
                 <div class="field">
                     <label for="pass">Password</label>
-                    <input pInputText id="pass" name="pass" type="password" class="w-full p-inputtext-sm">
+                    <input pInputText id="pass" name="pass" formControlName="pass" type="password"
+                        class="w-full p-inputtext-sm">
                 </div>
-                <button pButton type="submit" routerLink="/dashboard/super-admin" class=" w-full mt-3"
+                <button [disabled]="loginReq.invalid" pButton type="submit" (click)="submit()" class=" w-full mt-3"
                     label="SIGN IN"></button>
             </form>
             <p class="text-center mt-5">No Account Yet? <b routerLink="/registrations"

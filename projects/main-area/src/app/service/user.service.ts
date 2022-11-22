@@ -12,7 +12,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     login(data: any): Observable<Login> {
-        return this.http.post<Login>(`${Object.values(BASE_URL)[0]}/login`, data)
+        return this.http.post<Login>(`${BASE_URL.LOCALHOST}/login`, data)
     }
 
 }
