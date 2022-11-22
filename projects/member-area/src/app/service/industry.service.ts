@@ -11,11 +11,11 @@ export class IndustryService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<Industry[]> {
-        return this.http.get<Industry[]>(`${BASE_URL.LOCALHOST}/industries`)
+    getAll(): Observable<any> {
+        return this.http.get<any>(`${BASE_URL.LOCALHOST}/industries?startPosition=0&limit=2`)
     }
 
-    getById(data: number): Observable<Industry> {
-        return this.http.get<Industry>(`${BASE_URL.LOCALHOST}/industries/${data}`);
+    getById(data: number): Observable<any> {
+        return this.http.get<any>(`${BASE_URL.LOCALHOST}/industries/${data}`);
     }
 }

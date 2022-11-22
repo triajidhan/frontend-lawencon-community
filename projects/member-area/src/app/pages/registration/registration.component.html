@@ -18,56 +18,49 @@
                     Sign Up
                 </h2>
             </div>
-            <form [formGroup]="registerForm" class="card">
+            <form [formGroup]="registerForm" class="card" (ngSubmit)="registerForm.valid && getVerivicationCode()">
                 <div class="formgrid grid w-full">
                     <div class="field col-12 md:col-6">
                         <label for="fullName">Full Name <span class="text-red-500">*</span></label>
                         <input pInputText id="fullName" formControlName="fullName" name="fullName" type="text"
-                            class="w-full p-inputtext-sm">
+                            class="w-full p-inputtext-sm" required>
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="email">Email Address <span class="text-red-500">*</span></label>
                         <input pInputText id="email" formControlName="email" name="email" type="email"
-                            class="w-full p-inputtext-sm">
+                            class="w-full p-inputtext-sm" required>
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="pass">Password <span class="text-red-500">*</span></label>
                         <input pInputText id="pass" formControlName="pass" name="pass" type="password"
-                            class="w-full p-inputtext-sm">
+                            class="w-full p-inputtext-sm" required>
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="company">Company <span class="text-red-500">*</span></label>
                         <input pInputText id="company" formControlName="company" name="company" type="text"
-                            class="w-full p-inputtext-sm">
+                            class="w-full p-inputtext-sm" required>
                     </div>
                     <div class="field col-12 md:col-6">
-                        <label for="industry">Industry <span class="text-red-500">*</span></label>
-                        <select id="industry" formControlName="industry" name="industry" pInputText
-                            class="w-full p-inputtext-sm" style="appearance: auto">
-                            <option>Arizona</option>
-                            <option>California</option>
-                            <option>Florida</option>
-                            <option>Ohio</option>
-                            <option>Washington</option>
-                        </select>
+                        <label for="industryName">Industry <span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="industries" styleClass="w-full" optionLabel="industryName"
+                            optionValue="id" name="industryName" id="industryName" formControlName="industry"
+                            placeholder="Select an Industry">
+                        </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6">
-                        <label for="position">Position <span class="text-red-500">*</span></label>
-                        <select id="position" formControlName="position" name="position" pInputText
-                            class="w-full p-inputtext-sm" style="appearance: auto">
-                            <option>Arizona</option>
-                            <option>California</option>
-                            <option>Florida</option>
-                            <option>Ohio</option>
-                            <option>Washington</option>
-                        </select>
+                        <label for="positionName">Position <span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="positions" styleClass="w-full" optionLabel="positionName"
+                            optionValue="id" name="positionName" id="positionName" formControlName="position"
+                            placeholder="Select an Position">
+                        </p-dropdown>
+
                     </div>
                     <div class="field col-12">
                         <p class="text-center mt-4 mb-2">Have an Account? <b routerLink="/login/member"
                                 class=" cursor-pointer main-text sign-up-btn">Sign
                                 In</b></p>
-                        <button pButton (click)="showDialog()" type="button" class="main-color mt-3 w-full md:max-w-max"
-                            label="SIGN UP"></button>
+                        <button pButton [disabled]="registerForm.invalid" (click)="getVerivicationCode()" type="submit"
+                            class="main-color mt-3 w-full md:max-w-max" label="SIGN UP"></button>
                     </div>
                 </div>
             </form>
@@ -93,7 +86,7 @@
             <form class="card">
                 <div class="field">
                     <label for="code">Your Code</label>
-                    <input pInputText id="code" name="code" type="password" class="w-full">
+                    <input pInputText id="code" name="code" type="password" class="w-full" required>
                 </div>
                 <p>verification code has been sent to your email,
                     please check your email</p>

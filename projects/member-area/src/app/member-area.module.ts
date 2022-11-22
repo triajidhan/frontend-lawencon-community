@@ -6,9 +6,10 @@ import { InputTextModule } from 'primeng/inputtext'
 import { CardModule } from 'primeng/card'
 import { DropdownModule } from 'primeng/dropdown'
 import { RouterModule } from "@angular/router"
+import { ToastrModule } from 'ngx-toastr'
 import { DialogModule } from 'primeng/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms"
 
 
 @NgModule({
@@ -24,9 +25,10 @@ import { ReactiveFormsModule } from "@angular/forms";
         DropdownModule,
         DialogModule,
         BrowserAnimationsModule,
-        ReactiveFormsModule
-    ],
-    providers: []
+        ReactiveFormsModule,
+        ToastrModule.forRoot()
+    ]
+
 })
 
 export class MemberAreaModule { }
