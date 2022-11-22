@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { CardModule } from 'primeng/card'
 import { RouterModule } from '@angular/router'
+import { Toast, ToastrModule } from 'ngx-toastr';
 
 
 
@@ -26,7 +27,8 @@ import { RouterModule } from '@angular/router'
     CardModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: FilterTokenInterceptor, multi: true }],
   bootstrap: [AppComponent]

@@ -1,11 +1,13 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { PrimeNGConfig } from 'primeng/api';
 import { Industry } from "projects/interface/industry";
 import { Position } from "projects/interface/position";
 import { Subscription } from "rxjs";
 import { IndustryService } from "../../service/industry.service";
 import { PositionService } from "../../service/position.service";
+import { UserService } from "../../service/user.service";
 import { VerificationCodeService } from "../../service/verivication-code.service";
 
 
@@ -21,6 +23,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private industriesSubscription?: Subscription
     private verificationCodeSubscription?: Subscription
     private validateSubscription?: Subscription
+    private insertMemberSubscription?: Subscription
 
     positionsRes!: Position[]
     industriesRes!: Industry[]
@@ -31,29 +34,34 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     display: boolean = false
 
     registerForm = this.fb.group({
-        fullName: ['', Validators.required, Validators.maxLength(30)],
-        email: ['', Validators.required, Validators.email, Validators.maxLength(50)],
+        fullName: ['', Validators.required],
+        email: ['', Validators.required],
         pass: ['', Validators.required],
-        company: ['', Validators.required, Validators.maxLength(100)],
-        industry: ['', Validators.required],
-        position: ['', Validators.required]
+        company: ['', Validators.required],
+
+        // industry: this.fb.group({
+        //     id: ['']
+        // }),
+        // position: this.fb.group({
+        //     id: ['']
+        // })
     })
 
-    verifCode: any = this.fb.group({
+    verifCodeForm: any = this.fb.group({
         code: ['', [Validators.required]],
     })
 
 
     constructor(private primengConfig: PrimeNGConfig, private fb: FormBuilder,
         private positionService: PositionService, private industryService: IndustryService,
-        private verificationCodeService: VerificationCodeService) { }
+        private verificationCodeService: VerificationCodeService, private router: Router,
+        private userService: UserService) { }
 
 
     ngOnInit() {
         this.primengConfig.ripple = true
 
         this.positionsSubscription = this.positionService.getAll().subscribe(result => {
-            console.log(result);
             this.positionsRes = result
             for (let i = 0; i < this.positionsRes.length; i++) {
                 this.positions.push({
@@ -72,25 +80,27 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                     id: this.industriesRes[i].id
                 })
             }
-            console.log(this.industries);
         })
     }
 
-    getVerivicationCode() {
-        this.display = true
-
+    getVerificationCode() {
+        this.verificationCodeSubscription = this.verificationCodeService.generateCode(this.registerForm.value).subscribe(() => {
+            this.display = true
+        })
     }
 
-    // clickVerify() {
-    //     this.verifCode.addControl('email', this.fb.control(this.registerForm.value.email, [Validators.required]))
-    //     this.verificationCodeSubscription = this.verificationCodeService.validate(this.verifCode.value).subscribe(u => {
-    //         if (u) {
-    //             this.registerSubscription = this.userService.register(this.registerForm.value).subscribe(() => { })
-    //             this.signUpView = false
-    //             this.verificationSuccess = true
-    //         }
-    //     })
-    // }
+    verifCode() {
+        this.verifCodeForm.addControl('email', this.fb.control(this.registerForm.get('email')?.value, [Validators.required]))
+        this.validateSubscription = this.verificationCodeService.validate(this.verifCodeForm.value).subscribe(result => {
+            if (result) {
+                this.validateSubscription = this.userService.registerUser(this.registerForm.value).subscribe(() => {
+                    this.display = false
+                    this.router.navigateByUrl('/login/member')
+                })
+            }
+            console.log(result)
+        })
+    }
 
     ngOnDestroy(): void {
         this.registerSubscription?.unsubscribe()
@@ -98,7 +108,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         this.industriesSubscription?.unsubscribe()
         this.verificationCodeSubscription?.unsubscribe()
         this.validateSubscription?.unsubscribe()
+        this.insertMemberSubscription?.unsubscribe()
     }
-
-
 }
