@@ -27,7 +27,8 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.css"
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -125,7 +126,8 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.css"
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -223,7 +225,8 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.css"
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },

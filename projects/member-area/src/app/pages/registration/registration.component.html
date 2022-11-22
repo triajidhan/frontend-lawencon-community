@@ -62,9 +62,7 @@
                         <button pButton [disabled]="registerForm.invalid" (click)="getVerificationCode()" type="submit"
                             class="main-color mt-3 w-full md:max-w-max" label="SIGN UP"></button>
                     </div>
-
                 </div>
-                <pre>{{registerForm.value| json }}</pre>
             </form>
         </div>
     </div>
@@ -94,7 +92,6 @@
                     please check your email</p>
                 <button pButton [disabled]="verifCodeForm.invalid" type="submit" (click)="verifCode()"
                     class="main-color w-full mt-3" label="SUBMIT"></button>
-                <pre>{{verifCodeForm.value| json }}</pre>
             </form>
         </div>
     </div>
