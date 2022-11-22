@@ -14,5 +14,4 @@ export class UserService {
     login(data: any): Observable<Login> {
         return this.http.post<Login>(`${BASE_URL.LOCALHOST}/login`, data)
     }
-
 }

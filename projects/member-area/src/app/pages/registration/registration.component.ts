@@ -38,13 +38,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         email: ['', Validators.required],
         pass: ['', Validators.required],
         company: ['', Validators.required],
-
-        // industry: this.fb.group({
-        //     id: ['']
-        // }),
-        // position: this.fb.group({
-        //     id: ['']
-        // })
+        industryId: [''],
+        positionId: ['']
     })
 
     verifCodeForm: any = this.fb.group({
