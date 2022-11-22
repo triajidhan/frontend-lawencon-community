@@ -41,32 +41,25 @@
                             class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
-                        <label for="industry">Industry <span class="text-red-500">*</span></label>
-                        <select id="industry" formControlName="industry" name="industry" pInputText
-                            class="w-full p-inputtext-sm" style="appearance: auto">
-                            <option>Arizona</option>
-                            <option>California</option>
-                            <option>Florida</option>
-                            <option>Ohio</option>
-                            <option>Washington</option>
-                        </select>
+                        <label for="industryName">Industry <span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="industries" styleClass="w-full" optionLabel="industryName"
+                            optionValue="id" name="industryName" id="industryName" formControlName="industry"
+                            placeholder="Select an Industry">
+                        </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6">
-                        <label for="position">Position <span class="text-red-500">*</span></label>
-                        <select id="position" formControlName="position" name="position" pInputText
-                            class="w-full p-inputtext-sm" style="appearance: auto">
-                            <option>Arizona</option>
-                            <option>California</option>
-                            <option>Florida</option>
-                            <option>Ohio</option>
-                            <option>Washington</option>
-                        </select>
+                        <label for="positionName">Position <span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="positions" styleClass="w-full" optionLabel="positionName"
+                            optionValue="id" name="positionName" id="positionName" formControlName="position"
+                            placeholder="Select an Position">
+                        </p-dropdown>
+
                     </div>
                     <div class="field col-12">
                         <p class="text-center mt-4 mb-2">Have an Account? <b routerLink="/login/member"
                                 class=" cursor-pointer main-text sign-up-btn">Sign
                                 In</b></p>
-                        <button pButton (click)="showDialog()" type="button" class="main-color mt-3 w-full md:max-w-max"
+                        <button pButton (click)="showDialog()" type="submit" class="main-color mt-3 w-full md:max-w-max"
                             label="SIGN UP"></button>
                     </div>
                 </div>

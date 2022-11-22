@@ -45,17 +45,19 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         this.primengConfig.ripple = true
 
         this.positionsSubscription = this.positionService.getAll().subscribe(result => {
+            console.log(result);
             this.positionsRes = result
             for (let i = 0; i < this.positionsRes.length; i++) {
                 this.positions.push({
-                    name: this.positionsRes[i].positionName,
-                    code: this.positionsRes[i].positionCode,
+                    positionName: this.positionsRes[i].positionName,
+                    positionCode: this.positionsRes[i].positionCode,
                     id: this.positionsRes[i].id
                 })
             }
         })
         this.industriesSubscription = this.industryService.getAll().subscribe(result => {
             this.industriesRes = result
+
             for (let i = 0; i < this.industriesRes.length; i++) {
                 this.industries.push({
                     name: this.industriesRes[i].industryName,
@@ -63,6 +65,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                     id: this.industriesRes[i].id
                 })
             }
+            console.log(this.industries);
         })
     }
 
