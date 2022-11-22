@@ -1,0 +1,36 @@
+/*====================== HEADER  ======================*/
+
+:host ::ng-deep .p-menubar {
+    background-color: #fff;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+
+.container-fluid {
+    border-bottom: 4px solid rgba(208, 207, 207, 0.5);
+}
+
+@media screen and (min-width: 575px) {
+    :host ::ng-deep .settings {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .profile {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    :host::ng-deep .p-menubar {
+        width: 1200px;
+    }
+
+    .container-fluid {
+        display: flex;
+        justify-content: center;
+    }
+}

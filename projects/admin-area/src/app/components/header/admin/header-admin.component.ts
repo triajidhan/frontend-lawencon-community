@@ -1,33 +1,71 @@
 import { Component } from "@angular/core"
-
-const BASE_URL: string = 'http://localhost:8080'
+import { MenuItem } from "primeng/api"
 
 @Component({
     selector: 'header-non-admin',
-    templateUrl: './header-admin.component.html'
+    templateUrl: './header-admin.component.html',
+    styleUrls: ['../../../../styles.css']
 })
 export class HeaderAdminComponent {
 
-    // name: string | null = ""
-    // photoId: number | null = 0
-    // fileDownload = `${BASE_URL}/files/download/`
+    navMenus!: MenuItem[]
 
-    // constructor(private apiService: ApiService, private router: Router) { }
+    profiles!: MenuItem[]
 
+    ngOnInit() {
+        this.profiles = [
+            {
+                items: [{
+                    label: 'Profile',
+                    icon: 'fa-solid fa-user',
+                    routerLink: '/profiles/super-admin'
+                },
+                {
+                    label: 'Log Out',
+                    icon: 'fa-solid fa-power-off',
+                    routerLink: '/login/admin'
+                }
+                ]
+            }
+        ]
 
-    // ngOnInit(): void {
-    //     if (this.apiService.getName()) {
-    //         this.name = this.apiService.getName()
-    //     }
-    //     if (this.apiService.getPhotoId()) {
-    //         this.photoId = this.apiService.getPhotoId()
-    //     }
-    // }
+        this.navMenus = [
+            {
+                label: 'Article',
+                routerLink: '/articles'
+            },
+            {
+                label: 'Approve Payment',
+                items: [
+                    {
+                        label: 'Subscribers',
+                        icon: 'fa-solid fa-users',
+                        routerLink: '/approve-subscriber-payment'
+                    },
+                    {
+                        label: 'Activities',
+                        icon: 'fa-solid fa-coins',
+                        routerLink: '/approve-activity-payment'
+                    }
+                ]
+            },
+            {
+                label: 'Settings',
+                styleClass: 'settings',
+                items: [
+                    {
+                        label: 'Profile',
+                        icon: 'fa-solid fa-user',
+                        routerLink: '/profiles/admin'
+                    },
+                    {
+                        label: 'Log Out',
+                        icon: 'fa-solid fa-power-off',
+                        routerLink: '/login/admin'
+                    }
+                ]
+            }
+        ]
 
-    // logOut() {
-    //     this.apiService.logOut()
-    //     this.router.navigateByUrl("/login")
-    // }
-
-    // ngOnDestroy(): void { }
+    }
 }

@@ -1,20 +1,19 @@
 import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
 import { RouterModule } from "@angular/router"
-import { HeaderAdminComponent } from "./admin/header-admin.component"
-import { HeaderSuperAdminComponent } from "./super-admin/header-super-admin.component"
 import { MenubarModule } from 'primeng/menubar'
 import { StyleClassModule } from 'primeng/styleclass'
+import { HeaderMemberComponent } from "./header-member.component"
 
 @NgModule({
     declarations: [
-        HeaderAdminComponent, HeaderSuperAdminComponent
+        HeaderMemberComponent
     ],
     imports: [
         RouterModule, CommonModule, MenubarModule, StyleClassModule
     ],
     exports: [
-        HeaderAdminComponent, HeaderSuperAdminComponent
+        HeaderMemberComponent
     ]
 })
-export class HeaderModule { }
+export class HeaderMemberModule { }
