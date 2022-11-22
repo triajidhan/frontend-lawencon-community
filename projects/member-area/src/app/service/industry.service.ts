@@ -12,7 +12,7 @@ export class IndustryService {
     constructor(private http: HttpClient) { }
 
     getAll(): Observable<any> {
-        return this.http.get<any>(`${BASE_URL.LOCALHOST}/industries?startPosition=0&limit=1`)
+        return this.http.get<any>(`${BASE_URL.LOCALHOST}/industries?startPosition=0&limit=2`)
     }
 
     getById(data: number): Observable<any> {
