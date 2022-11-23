@@ -32,12 +32,13 @@ export class PositionService {
 	getByIsActive(startPosition: number, limit: number): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/positions/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
+  
+   insert(data:any):Observable<Position>{
+       return this.httpClient.post<Position>(`${Object.values(BASE_URL)[0]}/positions`,data)
+   }
 
-	insert(position: Position): Observable<Position> {
-		return this.httpClient.post<Position>(`${Object.values(BASE_URL)[0]}/positions`, position)
-	}
+   update(data:any):Observable<Position>{
+       return this.httpClient.put<Position>(`${Object.values(BASE_URL)[0]}/positions`,data)
+   }
 
-	update(position: Position): Observable<Position> {
-		return this.httpClient.put<Position>(`${Object.values(BASE_URL)[0]}/positions`, position)
-	}
 }

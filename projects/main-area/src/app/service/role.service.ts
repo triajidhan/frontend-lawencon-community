@@ -15,7 +15,6 @@ export class Role{
         return this.httpClient.get<Role>(`${Object.values(BASE_URL)[0]}/roles/?startPosition=${startPosition}&limit=${limit}`) 
     }
 
-
     getByRoleCode(roleCode:string):Observable<Role>{
         return this.httpClient.get<Role>(`${Object.values(BASE_URL)[0]}/roles/${roleCode}/get`)
     }
