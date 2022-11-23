@@ -17,7 +17,7 @@ export class PostService{
     }
 
     getByUser(userId:string): Observable<Post>{
-        return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/?user/userId=${userId}`)
+        return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/user/?userId=${userId}`)
     }
 
     getByPost(postCode:string):Observable<Post>{
