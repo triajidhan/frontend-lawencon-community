@@ -20,4 +20,39 @@ export class UserService {
       return this.http.get<User>(`${BASE_URL.LOCALHOST}/users/total-user`)
     }
 
+    getAll(): Observable<any> {
+      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/`)
+    }
+  
+    getById(id: string): Observable<User> {
+      return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/id/${id}`)
+    }
+  
+    getByRoleCode(roleCode: string): Observable<User> {
+      return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/role/?roleCode=${roleCode}`)
+    }
+
+    getByEmail(email: string): Observable<User> {
+      return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/email/?email=${email}`)
+    }
+
+    getTotal(){
+      return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/total-user`)
+    }
+
+    getTotalByRole(roleCode: string){
+      return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/total-user/role-code/?roleCode=${roleCode}`)
+    }
+  
+    getByIsActive(startPosition: number, limit: number): Observable<any> {
+      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/is-active/?startPosition=${startPosition}&limit=${limit}`)
+    }
+    
+    insert(data:any):Observable<User>{
+        return this.http.post<User>(`${Object.values(BASE_URL)[0]}/users`,data)
+    }
+
+    update(data:any):Observable<User>{
+        return this.http.put<User>(`${Object.values(BASE_URL)[0]}/users`,data)
+    }
   }
