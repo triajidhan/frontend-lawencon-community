@@ -12,11 +12,11 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(startPosition: number, limit: number): Observable<Article> {
+  getAll(startPosition: number, limit: number): Observable<any> {
     return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/articles?startPosition=${startPosition}&limit=${limit}`)
   }
 
-  getById(id: number): Observable<Article> {
+  getById(id: string): Observable<Article> {
     return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/${id}/articles/get`)
   }
 
@@ -24,11 +24,11 @@ export class ArticleService {
     return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/articles/article-code/$articleCode=${articleCode}`)
   }
 
-  getTotal(): Observable<Article> {
+  getTotalArticles(): Observable<any> {
     return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/articles/total-article`)
   }
 
-  getByIsActive(startPosition: number, limit: number): Observable<Article> {
+  getByIsActive(startPosition: number, limit: number): Observable<any> {
     return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/articles/is-active/?startPosition=${startPosition}&limit=${limit}`)
   }
 

@@ -7,5 +7,7 @@ export interface Article extends File {
 	title: string
 	contents: string
 	file: File
+	isActive: boolean
+	countOfArticle:number
 }
 

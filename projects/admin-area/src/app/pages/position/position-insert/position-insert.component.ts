@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { Validators, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MenuItem } from "primeng/api"
-import { IndustryService } from "projects/main-area/src/app/service/industry.service";
+
 import { PositionService } from "projects/main-area/src/app/service/position.service";
 
 import { Subscription } from "rxjs";
@@ -32,8 +32,7 @@ export class PositionInsertComponent implements OnInit,OnDestroy {
 
     submitInsert(){
       this.insertSubscription = this.positionService.insert(this.insertPositionForm.value).subscribe(()=>{
-        console.log("tes")
-        //this.router.navigateByUrl(`/positions`)
+        this.router.navigateByUrl(`/positions`)
       })
     }
 

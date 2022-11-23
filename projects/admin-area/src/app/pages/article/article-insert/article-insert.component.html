@@ -17,30 +17,30 @@
             </h1>
         </div>
         <div class="grid w-full md:w-10 mb-5 p-3 bg-white">
-            <form class="card w-full mx-3 border-0 md:px-4 my-3">
+            <form [formGroup]="insertArticleForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6">
                         <label for="title">Title <span class="text-red-500">*</span></label>
-                        <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm">
+                        <input pInputText id="title" formControlName="title" name="title" type="text" class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="articleCode">Article Code <span class="text-red-500">*</span></label>
-                        <input pInputText id="articleCode" name="articleCode" type="text"
+                        <input pInputText id="articleCode" formControlName="articleCode" name="articleCode" type="text"
                             class="w-full p-inputtext-sm color-body">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="contents">Contents <span class="text-red-500">*</span></label>
                         <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" id="contents"
-                            name="contents" type="text" class="w-full"></textarea>
+                        formControlName="contents" name="contents" type="text" class="w-full"></textarea>
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="file">Photo <span class="text-red-500">*</span></label>
-                        <p-fileUpload id="file" name="file" url="./upload.php" accept="image/*" [auto]="true">
+                        <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true" (uploadHandler)="fileUpload($event)">
                         </p-fileUpload>
                     </div>
                     <div class="col-12 my-3">
                         <button pButton routerLink="/articles" class="p-button-outlined mr-2" label="BACK"></button>
-                        <button pButton routerLink="/articles" type="submit" id="article-submit" label="SUBMIT"
+                        <button pButton [disabled]="insertArticleForm.invalid" type="submit" id="article-submit" label="SUBMIT"
                             class="main-color"></button>
                     </div>
                 </div>
