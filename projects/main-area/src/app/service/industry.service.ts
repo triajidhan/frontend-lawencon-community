@@ -31,7 +31,7 @@ export class IndustryService{
 	}
 	
 	getByIsActive(startPosition:number,limit:number):Observable<Industry>{
-		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/is-active/?startIndustry=${startPosition}&limit=${limit}`)
+		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
     insert(data:any):Observable<Industry>{

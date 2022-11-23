@@ -17,10 +17,14 @@ export class PostService{
     }
 
     getByUser(userId:string): Observable<Post>{
-        return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/user/?userId=${userId}`)
+        return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/users/?userId=${userId}`)
     }
 
-    getByPost(postCode:string):Observable<Post>{
+    getByPostType(postTypeId:string):Observable<Post>{
+        return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/post-type/?postTypeId=${postTypeId}`)
+    }
+
+    getByPostCode(postCode:string):Observable<Post>{
         return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/post-code/?postCode=${postCode}`)
     }
 
@@ -40,12 +44,11 @@ export class PostService{
         return this.httpClient.get<Post>(`${Object.values(BASE_URL)[0]}/posts/total-post/`)
     }
 
-    insert(post:Post):Observable<Post>{
-        return this.httpClient.post<Post>(`${Object.values(BASE_URL)[0]}/posts/`,post)
+    insert(data:any):Observable<Post>{
+        return this.httpClient.post<Post>(`${Object.values(BASE_URL)[0]}/posts/`,data)
     }
 
-    update(post:Post):Observable<Post>{
-        return this.httpClient.put<Post>(`${Object.values(BASE_URL)[0]}/posts/`,post)
-    }
-    
+    update(data:any):Observable<Post>{
+        return this.httpClient.put<Post>(`${Object.values(BASE_URL)[0]}/posts/`,data)
+    }   
 }
