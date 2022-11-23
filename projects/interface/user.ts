@@ -17,5 +17,6 @@ export interface User extends File, Industry, Position, Balance, Role {
 	role: Role
 	statusSubscribe: boolean
 	file: File
+  countOfUser:number;
 }
 
