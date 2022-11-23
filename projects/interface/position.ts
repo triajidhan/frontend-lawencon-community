@@ -3,6 +3,7 @@ export interface Position {
 	version: number
 	positionCode: string
 	positionName: string
-  countOfPosition: number;
+	isActive: boolean
+	countOfPosition: number
 }
 
