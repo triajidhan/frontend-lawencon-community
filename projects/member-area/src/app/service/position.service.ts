@@ -15,7 +15,7 @@ export class PositionService {
         return this.http.get<any>(`${BASE_URL.LOCALHOST}/positions?startPosition=0&limit=2`)
     }
 
-    getById(data: number): Observable<any> {
+    getById(data: any): Observable<any> {
         return this.http.get<any>(`${BASE_URL.LOCALHOST}/positions/${data}`);
     }
 }

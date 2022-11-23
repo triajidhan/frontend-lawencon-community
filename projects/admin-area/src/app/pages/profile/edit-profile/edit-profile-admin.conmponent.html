@@ -6,16 +6,16 @@
                     <div class="field col-12 md:col-6">
                         <label for="fullName">Full Name <span class="text-red-500">*</span></label>
                         <input pInputText id="fullName" formControlName="fullName" name="fullName" type="text"
-                            class="w-full p-inputtext-sm" required>
+                            class="w-full p-inputtext-sm"  value="{{user.fullName}}">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="email">Email Address <span class="text-red-500">*</span></label>
-                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm" disabled>
+                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm" value="{{user.email}}" disabled>
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="company">Company <span class="text-red-500">*</span></label>
-                        <input pInputText id="company" formControlName="company" name="company" type="text"
-                            class="w-full p-inputtext-sm" required>
+                        <input pInputText id="company" formControlName="company" name="company" type="text" value="{{user.company}}"
+                            class="w-full p-inputtext-sm" >
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="industryName">Industry <span class="text-red-500">*</span></label>
@@ -41,6 +41,7 @@
                         </div>
                     </div>
                 </div>
+                {{editProfileForm.value|json}}
             </form>
         </div>
     </div>

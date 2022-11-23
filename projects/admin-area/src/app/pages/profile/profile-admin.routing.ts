@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router"
 import { ContentAdminComponent } from "../../components/content/admin/content-admin.component"
 import { ContentSuperAdminComponent } from "../../components/content/super-admin/content-super-admin.component"
 import { ChangePasswordAdminComponent } from "./change-password/change-password-admin.component"
-import { EditProfileAdminComponent } from "./edit-profile/edir-profile-admin.component"
+import { EditProfileAdminComponent } from "./edit-profile/edit-profile-admin.component"
 import { ProfileListAdminComponent } from "./profile-list/profile-list-admin.component"
 const routes: Routes = [
     {
