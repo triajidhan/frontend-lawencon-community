@@ -33,11 +33,11 @@ export class PositionService{
 		return this.httpClient.get<Position>(`${Object.values(BASE_URL)[0]}/positions/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
-    insert(position:Position):Observable<Position>{
-        return this.httpClient.post<Position>(`${Object.values(BASE_URL)[0]}/positions`,position)
+    insert(data:any):Observable<Position>{
+        return this.httpClient.post<Position>(`${Object.values(BASE_URL)[0]}/positions`,data)
     }
 
-    update(position:Position):Observable<Position>{
-        return this.httpClient.put<Position>(`${Object.values(BASE_URL)[0]}/positions`,position)
+    update(data:any):Observable<Position>{
+        return this.httpClient.put<Position>(`${Object.values(BASE_URL)[0]}/positions`,data)
     }
 }

@@ -51,8 +51,8 @@ export class ActivityService{
 		return this.httpClient.get<Activity>(`${Object.values(BASE_URL)[0]}/activities/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 	
-    insert(activity:Activity):Observable<Activity>{
-        return this.httpClient.post<Activity>(`${Object.values(BASE_URL)[0]}/activities`,activity)
+    insert(data:any):Observable<Activity>{
+        return this.httpClient.post<Activity>(`${Object.values(BASE_URL)[0]}/activities`,data)
     } 
 
 }
