@@ -13,6 +13,7 @@ import { IndustryInsertComponent } from "./industry-insert/industry-insert.compo
 import { IndustryUpdateComponent } from "./industry-update/industry-update.component"
 import { IndustryRouting } from "./industry.routing"
 import { ReactiveFormsModule } from "@angular/forms"
+import { ConfirmDialogModule } from "primeng/confirmdialog"
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { ReactiveFormsModule } from "@angular/forms"
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule, ReactiveFormsModule,
+        ConfirmDialogModule
     ],
     exports: [
         IndustryListComponent, IndustryInsertComponent, IndustryUpdateComponent

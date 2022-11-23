@@ -3,6 +3,7 @@ export interface Industry {
 	version: number
 	industryCode: string
 	industryName: string
-  countOfIndustry : number
+	isActive: boolean
+	countOfIndustry: number
 }
 

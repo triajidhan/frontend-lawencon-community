@@ -84,6 +84,4 @@ export class PositionListComponent implements OnInit, OnDestroy {
         this.deleteSubs?.unsubscribe()
         this.contDataSubs?.unsubscribe()
     }
-
-
 }
