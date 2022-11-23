@@ -12,7 +12,7 @@ import { MenuModule } from "primeng/menu"
 import { TableModule } from "primeng/table"
 import { TabMenuModule } from "primeng/tabmenu"
 import { ChangePasswordAdminComponent } from "./change-password/change-password-admin.component"
-import { EditProfileAdminComponent } from "./edit-profile/edir-profile-admin.component"
+import { EditProfileAdminComponent } from "./edit-profile/edit-profile-admin.component"
 import { ProfileAdminRouting } from "./profile-admin.routing"
 import { ProfileListAdminComponent } from "./profile-list/profile-list-admin.component"
 import { PanelMenuModule } from 'primeng/panelmenu'
