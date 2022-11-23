@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-12 my-3">
                         <button pButton routerLink="/industries" class="p-button-outlined mr-2" label="BACK"></button>
-                        <button [disabled]="insertIndustryForm.invalid" pButton routerLink="/industries" type="submit" id="industry-submit" label="SUBMIT"
+                        <button [disabled]="insertIndustryForm.invalid" pButton type="submit" id="industry-submit" label="SUBMIT"  (click)="submitInsert()"
                             class="main-color"></button>
                     </div>
                 </div>

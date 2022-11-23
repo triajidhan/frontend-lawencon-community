@@ -33,14 +33,14 @@ export class FilterTokenInterceptor implements HttpInterceptor {
                         }
                     }
                 },
-                // error: err => {
-                //     if (err instanceof HttpErrorResponse) {
-                //         this.toast.error(err.error.message, 'Information ')
-                //         if (err.error.message == 'Invalid Token') {
-                //             this.router.navigate(['/login/member'])
-                //         }
-                //     }
-                // }
+                error: err => {
+                    if (err instanceof HttpErrorResponse) {
+                        this.toast.error(err.error.message, 'Information ')
+                        if (err.error.message == 'Invalid Token') {
+                            this.router.navigate(['/login/member'])
+                        }
+                    }
+                }
             })
         )
     }

@@ -29,9 +29,13 @@ export class IndustryInsertComponent implements OnInit, OnDestroy{
             { label: 'Industry Insert' }
         ]
 
-        this.insertSubscription = this.industryService.insert(this.insertIndustryForm).subscribe(()=>{
-          this.router.navigateByUrl(`/industries`)
-        })
+
+    }
+
+    submitInsert(){
+      this.insertSubscription = this.industryService.insert(this.insertIndustryForm.value).subscribe(()=>{
+        this.router.navigateByUrl(`/industries`)
+      })
     }
 
     ngOnDestroy(): void {
