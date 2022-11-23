@@ -23,38 +23,6 @@
         </div>
         <div class="grid w-full md:w-10">
             <div class="table w-full">
-                <!-- <p-table [value]="positions" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '50rem'}"
-                    [rows]="5" class="w-full">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="no" class="text-center">No.</th>
-                            <th pSortableColumn="positionName">Position Name</th>
-                            <th pSortableColumn="positionCode">Position Code</th>
-                            <th pSortableColumn="isActive">Is Active</th>
-                            <th pSortableColumn="action" class="text-center">Action</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-data let-i="rowIndex">
-                        <tr>
-                            <td class="text-center">{{i + 1}}</td>
-                            <td>{{data.positionName}}</td>
-                            <td>{{data.positionCode}}</td>
-                            <td>{{data.isActive}}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button pButton routerLink="/positions/edit/1" type="button" class="mr-1 main-color"
-                                        label="UPDATE">
-                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                    </button>
-                                    <button pButton type="button" class="p-button-danger" label="DELETE">
-                                        <i class="fa-solid fa-trash-can text-sm mr-2"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table> -->
-
                 <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
                     [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
                     [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
@@ -83,7 +51,8 @@
                                         label="UPDATE">
                                         <i class="fa-solid fa-pen text-sm mr-2"></i>
                                     </button>
-                                    <button pButton type="button" class="p-button-danger" label="DELETE">
+                                    <button pButton (click)="getDeleteId(data.id)" type="button" class="p-button-danger"
+                                        label="DELETE">
                                         <i class="fa-solid fa-trash-can text-sm mr-2"></i>
                                     </button>
                                 </div>
@@ -97,3 +66,8 @@
         </div>
     </div>
 </div>
+
+
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+
+</p-confirmDialog>

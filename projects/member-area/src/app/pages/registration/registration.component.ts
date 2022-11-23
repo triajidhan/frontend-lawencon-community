@@ -93,7 +93,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                     this.router.navigateByUrl('/login/member')
                 })
             }
-            console.log(result)
         })
     }
 
