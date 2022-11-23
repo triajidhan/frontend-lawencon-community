@@ -11,6 +11,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea'
 import { TableModule } from 'primeng/table'
 import { PositionListComponent } from "./position-list/position-list.component"
 import { PositionInsertComponent } from "./position-insert/position-insert.component"
+import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { PositionUpdateComponent } from "./position-update/position-update.component"
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PositionUpdateComponent } from "./position-update/position-update.compo
         PositionRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
-        FileUploadModule, HttpClientModule
+        FileUploadModule, HttpClientModule,
+        ConfirmDialogModule
     ],
     exports: [
         PositionListComponent, PositionInsertComponent, PositionUpdateComponent
