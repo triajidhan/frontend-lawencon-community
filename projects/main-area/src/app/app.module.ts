@@ -13,7 +13,6 @@ import { RouterModule } from '@angular/router'
 import { Toast, ToastrModule } from 'ngx-toastr';
 
 
-
 @NgModule({
   declarations: [
     AppComponent, LoginComponent
