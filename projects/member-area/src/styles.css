@@ -34,3 +34,17 @@
         justify-content: center;
     }
 }
+
+/*====================== THREAD  ======================*/
+
+:host ::ng-deep .p-tabmenuitem {
+    width: 33.33%;
+}
+
+:host ::ng-deep .content-box.p-card {
+    background-color: #F4F4F4;
+}
+
+:host ::ng-deep .pooling-content.p-card {
+    margin-top: 1.5rem;
+}

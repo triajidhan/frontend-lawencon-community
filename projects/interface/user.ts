@@ -7,7 +7,7 @@ import { File } from './file'
 export interface User extends File, Industry, Position, Balance, Role {
 	id: string
 	version: number
-	fullname: string
+	fullName: string
 	email: string
 	pass: string
 	company: string

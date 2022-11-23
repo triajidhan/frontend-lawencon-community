@@ -8,6 +8,10 @@ export const adminAreaRoutes: Routes = [
         loadChildren: () => import('./pages/dashboard/dashboard.module').then(u => u.DashboardModule)
     },
     {
+        path: 'profiles',
+        loadChildren: () => import('./pages/profile/profile-admin.module').then(u => u.ProfileAdminModule)
+    },
+    {
         path: 'users',
         component: ContentSuperAdminComponent,
         loadChildren: () => import('./pages/user/user.module').then(u => u.UserModule)

@@ -1,0 +1,47 @@
+<div class="w-full body-color">
+    <div class=" flex justify-content-center flex-wrap">
+        <div class="grid w-full md:w-10 my-5 p-3 bg-white">
+            <form [formGroup]="editProfileForm" class="card w-full mx-3 border-0 md:px-4 my-3">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="fullName">Full Name <span class="text-red-500">*</span></label>
+                        <input pInputText id="fullName" formControlName="fullName" name="fullName" type="text"
+                            class="w-full p-inputtext-sm" required>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="email">Email Address <span class="text-red-500">*</span></label>
+                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm" disabled>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="company">Company <span class="text-red-500">*</span></label>
+                        <input pInputText id="company" formControlName="company" name="company" type="text"
+                            class="w-full p-inputtext-sm" required>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="industryName">Industry <span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="industries" styleClass="w-full" optionLabel="industryName"
+                            optionValue="id" name="industry" id="industryName" formControlName="industryId"
+                            placeholder="Select an Industry">
+                        </p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="positionName">Position <span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="positions" styleClass="w-full" optionLabel="positionName"
+                            optionValue="id" name="position" id="positionName" formControlName="positionId"
+                            placeholder="Select an Position">
+                        </p-dropdown>
+
+                    </div>
+                    <div class="field col-12">
+                        <div class="col-12 my-3">
+                            <button pButton (click)="back()" type="submit" class="p-button-outlined mr-2"
+                                label="BACK"></button>
+                            <button pButton [disabled]="editProfileForm.invalid" (click)="updateUser()" type="submit"
+                                id="position-save" label="SAVE" class="main-color"></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

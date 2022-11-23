@@ -4,7 +4,7 @@ import { MenuItem } from "primeng/api"
 @Component({
     selector: 'thread',
     templateUrl: './thread.component.html',
-    styleUrls: ['./thread.component.css']
+    styleUrls: ['../../../styles.css']
 })
 export class ThreadComponent implements OnInit {
 

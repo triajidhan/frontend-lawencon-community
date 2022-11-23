@@ -1,0 +1,51 @@
+<div class="w-full body-color">
+    <div class=" flex justify-content-center flex-wrap">
+        <div class="grid w-full md:w-10 container">
+
+            <div class="col">
+                <div class=" flex align-items-center mb-4 mt-5">
+                    <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-user icon text-xl"></i>
+                    </div>
+                    <h2 class=" ml-3">
+                        Your Profile
+                    </h2>
+                </div>
+                <p-card>
+                    <div class="flex mx-5">
+                        <div class="max-w-max mr-7">
+                            <img src="../../../assets/images/article.png" alt="" class="w-10rem h-10rem border-circle">
+                        </div>
+                        <div class="flex align-items-center flex-wrap">
+                            <div>
+                                <h1>{{name}}</h1>
+                                <p class="text-black-alpha-60">{{roleName}}</p>
+                                <p class="text-black-alpha-60">{{email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex mx-5 justify-content-end">
+                        <div class=" flex align-items-center mt-5 mr-5 cursor-pointer" (click)="changePass()">
+                            <div
+                                class="border-circle bg-black-alpha-40 icon-box flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-code icon text-xl"></i>
+                            </div>
+                            <h3 class=" ml-3">
+                                Change Password
+                            </h3>
+                        </div>
+                        <div class=" flex align-items-center mt-5 cursor-pointer" (click)="editProfile()">
+                            <div
+                                class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-pen icon text-xl"></i>
+                            </div>
+                            <h3 class=" ml-3">
+                                Edit Profile
+                            </h3>
+                        </div>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+    </div>
+</div>
