@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BASE_URL } from "projects/constant/base-url";
-import { Position } from "projects/interface/position";
+import { BASE_URL } from "../../../../../projects/constant/base-url";
+import { Position } from "../../../../../projects/interface/position";
 import { Observable } from "rxjs";
 
 
@@ -10,7 +10,6 @@ import { Observable } from "rxjs";
 })
 
 export class PositionService{
-
 
     constructor(private httpClient:HttpClient){}
 
