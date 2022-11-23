@@ -10,6 +10,15 @@ export class ApiService {
         localStorage.setItem('data', JSON.stringify(data))
     }
 
+    getId(): string | null {
+        const data = localStorage.getItem('data')
+        let result: null | string = ''
+        if (data) {
+            result = JSON.parse(data).id
+        }
+        return result
+    }
+
     getToken(): string | null {
         const data = localStorage.getItem('data')
         let result: null | string = ''
@@ -23,7 +32,7 @@ export class ApiService {
         const data = localStorage.getItem('data')
         let result: null | string = ''
         if (data) {
-            result = JSON.parse(data).roleCode
+            result = JSON.parse(data).role.roleCode
         }
         return result
     }
@@ -32,7 +41,7 @@ export class ApiService {
         const data = localStorage.getItem('data')
         let result: null | string = ''
         if (data) {
-            result = JSON.parse(data).roleName
+            result = JSON.parse(data).role.roleName
         }
         return result
     }
@@ -50,7 +59,7 @@ export class ApiService {
         const data = localStorage.getItem('data')
         let result: null | string = ''
         if (data) {
-            result = JSON.parse(data).userEmail
+            result = JSON.parse(data).email
         }
         return result
     }
