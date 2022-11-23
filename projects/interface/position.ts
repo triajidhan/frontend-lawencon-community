@@ -3,5 +3,6 @@ export interface Position {
 	version: number
 	positionCode: string
 	positionName: string
+  countOfPosition: number;
 }
 
