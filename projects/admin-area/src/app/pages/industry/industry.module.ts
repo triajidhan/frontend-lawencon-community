@@ -12,6 +12,7 @@ import { IndustryListComponent } from "./industry-list/industry-list.component"
 import { IndustryInsertComponent } from "./industry-insert/industry-insert.component"
 import { IndustryUpdateComponent } from "./industry-update/industry-update.component"
 import { IndustryRouting } from "./industry.routing"
+import { ReactiveFormsModule } from "@angular/forms"
 
 @NgModule({
     declarations: [
@@ -21,7 +22,7 @@ import { IndustryRouting } from "./industry.routing"
         IndustryRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
-        FileUploadModule, HttpClientModule
+        FileUploadModule, HttpClientModule, ReactiveFormsModule,
     ],
     exports: [
         IndustryListComponent, IndustryInsertComponent, IndustryUpdateComponent
