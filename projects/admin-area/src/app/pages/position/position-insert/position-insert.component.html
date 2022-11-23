@@ -17,24 +17,25 @@
             </h1>
         </div>
         <div class="grid w-full md:w-10 mb-5 p-3 bg-white">
-            <form class="card w-full mx-3 border-0 md:px-4 my-3">
+            <form  [formGroup]="insertPositionForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6">
                         <label for="positionName">Position Name <span class="text-red-500">*</span></label>
-                        <input pInputText id="positionName" name="positionName" type="text"
-                            class="w-full p-inputtext-sm">
+                        <input pInputText id="positionName" formControlName="positionName" name="positionName" type="text"
+                            class="w-full p-inputtext-sm" required>
                     </div>
-                    <div class="field col-12 md:col-6">
+                    <!-- <div class="field col-12 md:col-6">
                         <label for="positionCode">Position Code <span class="text-red-500">*</span></label>
                         <input pInputText id="positionCode" name="positionCode" type="text"
                             class="w-full p-inputtext-sm">
-                    </div>
+                    </div> -->
                     <div class="col-12 my-3">
                         <button pButton routerLink="/positions" class="p-button-outlined mr-2" label="BACK"></button>
-                        <button pButton routerLink="/positions" type="button" id="position-submit" label="SUBMIT"
+                        <button [disabled]="insertPositionForm.invalid" pButton routerLink="/positions" type="submit" id="position-submit" label="SUBMIT" (click)="submitInsert()"
                             class="main-color"></button>
                     </div>
                 </div>
+                {{ insertPositionForm.value | json}}
             </form>
         </div>
     </div>

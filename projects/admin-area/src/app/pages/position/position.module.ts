@@ -13,6 +13,7 @@ import { PositionListComponent } from "./position-list/position-list.component"
 import { PositionInsertComponent } from "./position-insert/position-insert.component"
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { PositionUpdateComponent } from "./position-update/position-update.component"
+import { ReactiveFormsModule } from "@angular/forms"
 
 @NgModule({
     declarations: [
@@ -22,8 +23,9 @@ import { PositionUpdateComponent } from "./position-update/position-update.compo
         PositionRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
+
         FileUploadModule, HttpClientModule,
-        ConfirmDialogModule
+        ConfirmDialogModule, ReactiveFormsModule
     ],
     exports: [
         PositionListComponent, PositionInsertComponent, PositionUpdateComponent
