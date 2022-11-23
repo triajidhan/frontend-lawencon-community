@@ -1,35 +1,44 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { LazyLoadEvent, MenuItem } from "primeng/api"
+import { ActivatedRoute } from "@angular/router"
+import { ConfirmationService, LazyLoadEvent, MenuItem, PrimeNGConfig } from "primeng/api"
 import { Position } from "projects/interface/position"
 import { PositionService } from "projects/main-area/src/app/service/position.service"
 import { Subscription } from "rxjs"
 
 @Component({
     selector: 'position-list',
-    templateUrl: './position-list.component.html'
+    templateUrl: './position-list.component.html',
+    providers: [ConfirmationService]
 })
 export class PositionListComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
     data: any[] = []
 
+    id!: number
+    position!: Position
     startPage: number = 0
     maxPage: number = 5
     totalData: number = 0
-    query?: string
     loading: boolean = true
+    display: boolean = false
 
     getAllSubs?: Subscription
+    getByIdSubs?: Subscription
     deleteSubs?: Subscription
     contDataSubs?: Subscription
 
-    constructor(private positionService: PositionService) { }
+    constructor(private positionService: PositionService, private confirmationService: ConfirmationService,
+        private primengConfig: PrimeNGConfig) { }
 
     ngOnInit(): void {
+        this.primengConfig.ripple = true
+
         this.items = [
             { label: 'Home', routerLink: "/dashboard/super-admin" },
             { label: 'Position' }
         ]
     }
+
 
     loadData(event: LazyLoadEvent) {
         console.log(event)
@@ -49,13 +58,29 @@ export class PositionListComponent implements OnInit, OnDestroy {
                     this.totalData = result.countOfPosition
                 })
                 console.log(this.data)
-            },
+            }
         )
     }
 
+    getDeleteId(id: string) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this position?',
+            accept: () => {
+                this.getByIdSubs = this.positionService.getById(id).subscribe(result => {
+                    this.position = result
+                    this.position.isActive = false
+
+                    this.deleteSubs = this.positionService.update(this.position).subscribe(() => {
+                        this.getData()
+                    })
+                })
+            }
+        })
+    }
 
     ngOnDestroy(): void {
         this.getAllSubs?.unsubscribe()
+        this.getByIdSubs?.unsubscribe()
         this.deleteSubs?.unsubscribe()
         this.contDataSubs?.unsubscribe()
     }

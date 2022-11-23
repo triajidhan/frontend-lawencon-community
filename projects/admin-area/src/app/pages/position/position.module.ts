@@ -11,6 +11,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea'
 import { TableModule } from 'primeng/table'
 import { PositionListComponent } from "./position-list/position-list.component"
 import { PositionInsertComponent } from "./position-insert/position-insert.component"
+import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { PositionUpdateComponent } from "./position-update/position-update.component"
 import { ReactiveFormsModule } from "@angular/forms"
 
@@ -22,7 +23,9 @@ import { ReactiveFormsModule } from "@angular/forms"
         PositionRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
-        FileUploadModule, HttpClientModule,ReactiveFormsModule,
+
+        FileUploadModule, HttpClientModule,
+        ConfirmDialogModule, ReactiveFormsModule
     ],
     exports: [
         PositionListComponent, PositionInsertComponent, PositionUpdateComponent
