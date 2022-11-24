@@ -12,6 +12,8 @@ import { MenuModule } from 'primeng/menu'
 import { TabMenuModule } from 'primeng/tabmenu'
 import { HomeComponent } from "./home.component"
 import { HomeRouting } from "./home.routing"
+import { DialogModule } from "primeng/dialog"
+import { ReactiveFormsModule } from "@angular/forms"
 
 @NgModule({
     declarations: [
@@ -22,7 +24,8 @@ import { HomeRouting } from "./home.routing"
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule, TabMenuModule
+        MenuModule, TabMenuModule, DialogModule,
+        ReactiveFormsModule
     ],
     exports: [
         HomeComponent
