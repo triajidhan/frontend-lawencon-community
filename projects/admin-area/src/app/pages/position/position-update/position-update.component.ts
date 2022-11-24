@@ -19,7 +19,7 @@ export class PositionUpdateComponent implements OnInit,OnDestroy {
     updatePositionForm = this.fb.group({
         positionName:['',Validators.required],
         id:[''],
-        versions:['']
+
     })
 
     constructor(private fb:FormBuilder,
@@ -34,21 +34,21 @@ export class PositionUpdateComponent implements OnInit,OnDestroy {
         ]
 
         this.activatedRoute.params.subscribe(result => {
-            this.updateSubscription = this.positionService.getById(result['id']).subscribe(result => {
-                this.position = result
+            this.updateSubscription = this.positionService.getById(result['id']).subscribe(position => {
+              this.position = position;
+              this.updatePositionForm.controls['positionName'].setValue(position.positionName)
+              this.updatePositionForm.controls['id'].setValue(position.id)
             })
         })
     }
 
     submitUpdate(){
-        this.updatePositionForm.value.id = this.position.id
-        this.updatePositionForm.value.versions = this.position.versions
         this.updateSubscription = this.positionService.update(this.updatePositionForm.value).subscribe(()=>{
             this.router.navigateByUrl(`/positions`)
         })
     }
 
     ngOnDestroy(): void {
-        
+
     }
 }

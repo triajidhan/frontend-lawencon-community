@@ -19,7 +19,6 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
   updateIndustryForm = this.fb.group({
     industryName: ['', Validators.required],
     id : [''],
-    versions : ['']
   })
 
   constructor(private fb: FormBuilder,
@@ -34,15 +33,15 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
       { label: 'Industry Update' }
     ]
     this.activatedRoute.params.subscribe(result => {
-      this.updateSubscription = this.industryService.getById(result['id']).subscribe(result => {
-        this.industry = result
+      this.updateSubscription = this.industryService.getById(result['id']).subscribe(industry => {
+        this.industry = industry
+        this.updateIndustryForm.controls['industryName'].setValue(industry.industryName)
+        this.updateIndustryForm.controls['id'].setValue(industry.id)
       })
     })
   }
 
   submitUpdate(){
-    this.updateIndustryForm.value.id = this.industry.id
-    this.updateIndustryForm.value.versions = this.industry.versions
     this.updateSubscription = this.industryService.update(this.updateIndustryForm.value).subscribe(()=>{
       this.router.navigateByUrl(`/industries`)
     })
