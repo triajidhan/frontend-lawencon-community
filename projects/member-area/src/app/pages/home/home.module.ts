@@ -14,6 +14,7 @@ import { HomeComponent } from "./home.component"
 import { HomeRouting } from "./home.routing"
 import { DialogModule } from "primeng/dialog"
 import { ReactiveFormsModule } from "@angular/forms"
+import { DropdownModule } from "primeng/dropdown"
 
 @NgModule({
     declarations: [
@@ -25,7 +26,7 @@ import { ReactiveFormsModule } from "@angular/forms"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, DialogModule,
-        ReactiveFormsModule
+        ReactiveFormsModule, DropdownModule
     ],
     exports: [
         HomeComponent

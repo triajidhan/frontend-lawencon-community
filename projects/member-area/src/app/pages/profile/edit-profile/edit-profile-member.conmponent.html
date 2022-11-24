@@ -6,16 +6,17 @@
                     <div class="field col-12 md:col-6">
                         <label for="fullName">Full Name <span class="text-red-500">*</span></label>
                         <input pInputText id="fullName" formControlName="fullName" name="fullName" type="text"
-                            class="w-full p-inputtext-sm"  value="{{user.fullName}}">
+                            class="w-full p-inputtext-sm" value="{{user.fullName}}">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="email">Email Address <span class="text-red-500">*</span></label>
-                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm" value="{{user.email}}" disabled>
+                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm"
+                            value="{{user.email}}" disabled>
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="company">Company <span class="text-red-500">*</span></label>
-                        <input pInputText id="company" formControlName="company" name="company" type="text" value="{{user.company}}"
-                            class="w-full p-inputtext-sm" >
+                        <input pInputText id="company" formControlName="company" name="company" type="text"
+                            value="{{user.company}}" class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="industryName">Industry <span class="text-red-500">*</span></label>
@@ -27,7 +28,7 @@
                     <div class="field col-12 md:col-6">
                         <label for="positionName">Position <span class="text-red-500">*</span></label>
                         <p-dropdown [options]="positions" styleClass="w-full" optionLabel="positionName"
-                            optionValue="id" name="position" id="positionName" formControlName="positionId"
+                            optionValue="postTypeCode" name="position" id="positionName" formControlName="postTypeCode"
                             placeholder="Select an Position">
                         </p-dropdown>
 
