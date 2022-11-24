@@ -9,23 +9,27 @@ import { HttpClientModule } from '@angular/common/http'
 import { InputTextareaModule } from 'primeng/inputtextarea'
 import { TableModule } from 'primeng/table'
 import { MenuModule } from 'primeng/menu'
-import { ActivityComponent } from "./activity.component"
 import { ActivityRouting } from "./activity.routing"
 import { TabMenuModule } from 'primeng/tabmenu'
+import { ActivityListComponent } from "./activity-list/activity-list.component"
+import { ActivityInsertComponent } from "./activity-insert/activity-insert.component"
+import { ReactiveFormsModule } from "@angular/forms"
+import { CalendarModule } from "primeng/calendar"
 
 @NgModule({
     declarations: [
-        ActivityComponent
+        ActivityListComponent, ActivityInsertComponent
     ],
     imports: [
         ActivityRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule, TabMenuModule
+        MenuModule, TabMenuModule, ReactiveFormsModule,
+        CalendarModule
     ],
     exports: [
-        ActivityComponent
+        ActivityListComponent, ActivityInsertComponent
     ]
 })
 export class ActivityModule { }

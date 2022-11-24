@@ -34,11 +34,10 @@ export class HeaderMemberComponent implements OnInit {
             {
                 label: 'Home',
                 routerLink: '/homes/threads'
-
             },
             {
                 label: 'Activity',
-                routerLink: '/activities/all'
+                routerLink: '/activities/type/all'
             },
             {
                 label: 'Settings',
