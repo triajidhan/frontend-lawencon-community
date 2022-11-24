@@ -13,6 +13,7 @@ import { MenuModule } from 'primeng/menu'
 import { ArticleUpdateComponent } from "./article-update/article-update.component"
 import { ArticleInsertComponent } from "./article-insert/article-insert.component"
 import { ArticleListComponent } from "./article-list/article-list.component"
+import { ReactiveFormsModule } from "@angular/forms"
 
 @NgModule({
     declarations: [
@@ -23,7 +24,7 @@ import { ArticleListComponent } from "./article-list/article-list.component"
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule
+        MenuModule, ReactiveFormsModule
     ],
     exports: [
         ArticleListComponent, ArticleInsertComponent, ArticleUpdateComponent
