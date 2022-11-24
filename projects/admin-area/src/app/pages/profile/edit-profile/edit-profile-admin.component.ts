@@ -16,10 +16,10 @@ import { Subscription } from "rxjs"
 })
 export class EditProfileAdminComponent implements OnInit, OnDestroy {
 
-  private positionsSubscription?: Subscription
-  private industriesSubscription?: Subscription
-  private getByIdUserSubscription?: Subscription
-  private editUserSubscription?: Subscription
+  private positionsSubscription!: Subscription
+  private industriesSubscription!: Subscription
+  private getByIdUserSubscription!: Subscription
+  private editUserSubscription!: Subscription
   private positionGetByIdSubscription!: Subscription
   private industriesGetByIdSubscription!: Subscription
 
@@ -29,23 +29,19 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
   roleCode: string | null = ""
   fullName: string = ''
   email: string = ''
-  company: string = ''
-  industryId: string = ''
-  positionId: string = ''
-  id: string = ''
   positions: any[] = []
   industries: any[] = []
 
   editProfileForm = this.fb.group({
-    id: [this.id],
-    fullName: [this.fullName],
-    email: [this.email],
-    company: [this.company],
+    id: [''],
+    fullName: [''],
+    email: [''],
+    company: [''],
     industry: this.fb.group({
-      id: [this.industryId]
+      id: ['']
     }),
     position: this.fb.group({
-      id: [this.positionId]
+      id: ['']
     }),
     version: [''],
     industryId: [''],
@@ -63,13 +59,15 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
     this.positions = [];
     this.industries = [];
     this.activatedRoute.params.subscribe(result => {
-      this.getByIdUserSubscription = this.userService.getById(result[`id`]).subscribe(result => {
-        this.user = result
-        this.id = result.id
-        this.fullName = result.fullName
-        this.company = result.company
-        // this.positionId = result.position.id
-        this.industryId = result.industry.id
+      this.getByIdUserSubscription = this.userService.getById(result['id']).subscribe(user => {
+        this.user = user
+        this.editProfileForm.controls['id'].setValue(result[`id`])
+        this.editProfileForm.controls['fullName'].setValue(user[`fullName`])
+        this.editProfileForm.controls['company'].setValue(user[`company`])
+        this.email = user.email
+        this.editProfileForm.controls['industryId'].setValue(user[`industry`].id)
+        this.editProfileForm.controls['positionId'].setValue(user[`position`].id)
+        this.editProfileForm.value.email = user.email
       })
     })
 
@@ -113,8 +111,8 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
 
   updateUser() {
     this.editProfileForm.patchValue({
-      industry: {
-        id: this.editProfileForm.value.industryId
+      position: {
+        id: this.editProfileForm.value.positionId
       }
     })
 
@@ -123,7 +121,7 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
         id: this.editProfileForm.value.industryId
       }
     })
-    this.editProfileForm.value.id = this.user.id
+
     this.editUserSubscription = this.userService.update(this.editProfileForm.value).subscribe(() => {
       this.init()
     })
