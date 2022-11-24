@@ -44,9 +44,9 @@
                             <td class="text-center">{{i + 1}}</td>
                             <td>{{data.title}}</td>
                             <td>{{data.articleCode}}</td>
-                            <td>{{data.contents}}--{{data.file.files}}</td>
+                            <td>{{data.contents}}</td>
                             <td>
-                                <img src="../../../../assets/logos/brand.png" class="img-fluid images table-img"
+                                <img src="{{ data.file.files }}" class="img-fluid images table-img"
                                     alt="article admin image">
                             </td>
                             <td>{{data.isActive}}</td>
