@@ -47,8 +47,14 @@
                             <td class="text-center">{{i + 1}}</td>
                             <td>{{data.fullName}}</td>
                             <td>{{data.email}}</td>
-                            <td>{{data.position}}</td>
-                            <td>{{data.company}}</td>
+                            <td>
+                                <div *ngIf="data.position != null; else elseBlock">{{data.position}}</div>
+                                <ng-template #elseBlock>-</ng-template>
+                            </td>
+                            <td>
+                                <div *ngIf="data.company != null; else elseBlock">{{data.company}}</div>
+                                <ng-template #elseBlock>-</ng-template>
+                            </td>
                             <td>
                                 <img src="../../../../assets/logos/brand.png" class="img-fluid images table-img"
                                     alt="user admin image">
