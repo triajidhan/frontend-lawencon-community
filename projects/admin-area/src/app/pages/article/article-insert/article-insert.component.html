@@ -41,7 +41,7 @@
                     <div class="col-12 my-3">
                         <button pButton routerLink="/articles" class="p-button-outlined mr-2" label="BACK"></button>
                         <button pButton [disabled]="insertArticleForm.invalid" type="submit" id="article-submit" label="SUBMIT"
-                            class="main-color"></button>
+                            (click)="submitInsert()" class="main-color"></button>
                     </div>
                 </div>
             </form>

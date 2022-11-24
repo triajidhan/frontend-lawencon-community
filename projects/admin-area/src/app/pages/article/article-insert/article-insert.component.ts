@@ -12,7 +12,8 @@ import { Subscription } from "rxjs"
 export class ArticleInsertComponent implements OnInit,OnDestroy {
     items!: MenuItem[]
     insertSubscription!: Subscription
-
+    resultExtension!: string
+    resultFile !: string
     insertArticleForm = this.formBuilder.group({
         title: ['', Validators.required],
         articleCode: ['', Validators.required],
@@ -36,31 +37,30 @@ export class ArticleInsertComponent implements OnInit,OnDestroy {
     }
 
     fileUpload(event : any) : void {
-        console.log(event.files[0])
-
         const toBase64 = (file : File) => new Promise<string>((resolve, reject) => {
         const reader = new FileReader()
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(event.files[0])
         reader.onload = () => {
           if(typeof reader.result === "string") resolve(reader.result)
-         
         }
         reader.onerror = error => reject(error)
     })
   
-      toBase64(event.files[0]).then(result =>{
-          const resulltStr = result.substring(result.indexOf(",")+1,result.length)
-          const resultExtension = result.split(";")[0].split('/')[1]
-            this.insertArticleForm.patchValue({
-              file: {
-                files: resulltStr,
-                ext : resultExtension
-              }
-            });
+      toBase64(event.files[0].name).then(result =>{
+          this.resultFile = result.substring(result.indexOf(",")+1,result.length)
+          this.resultExtension = result.split(";")[0].split('/')[1]
+          
+         
           })
       }
 
     submitInsert(){
+      this.insertArticleForm.patchValue({
+        file: {
+          files: this.resultFile,
+          ext : this.resultExtension
+        }
+      });
         this.insertSubscription = this.articleService.insert(this.insertArticleForm.value).subscribe(()=>{
             console.log("save")
           this.router.navigateByUrl(`/articles`)
