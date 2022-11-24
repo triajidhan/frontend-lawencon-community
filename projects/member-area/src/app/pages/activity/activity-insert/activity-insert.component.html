@@ -113,56 +113,55 @@
                 </p-card>
             </div>
             <div class="col-8">
-                <div class="flex justify-content-end">
-                    <div class=" flex align-items-center mb-4 mt-5 cursor-pointer">
-                        <h2 class=" mr-3">
-                            Create Activity
-                        </h2>
-                        <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-plus icon text-xl"></i>
-                        </div>
-                    </div>
+                <div class="flex justify-content-end my-4">
+                    <button pButton type="button" class="p-button-outlined" label="Back"
+                        routerLink="/activities/type/all">
+                    </button>
                 </div>
                 <div>
                     <p-card>
-                        <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
-
-                        <div class="grid mt-3">
-                            <div class="col-12 lg:col-4 md:col-6 mt-2">
-                                <p-card styleClass="activity-card">
-                                    <ng-template pTemplate="header">
-                                        <img src="../../../assets/images/article.png" alt="activity img" class="h-8rem">
-                                    </ng-template>
-                                    <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                        <p>CODE</p>
-                                        <p>COURSE</p>
+                        <div class="grid w-full bg-white">
+                            <form [formGroup]="activityForm" class="card w-full mx-3 border-0 md:px-4 my-3">
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6">
+                                        <label for="title">Title<span class="text-red-500">*</span></label>
+                                        <input pInputText id="title" formControlName="title" name="title" type="text"
+                                            class="w-full p-inputtext-sm" required>
                                     </div>
-                                    <h3>Event Name</h3>
-                                    <div class="text-xs text-black-alpha-60 mt-3">
-                                        <div class="flex mt-2">
-                                            <i class="fa-regular fa-calendar-days mr-2"></i>
-                                            <p>Wednesday, Nov 16, 2022 until Friday, Nov, 18 2022</p>
-                                        </div>
-                                        <div class="flex mt-2">
-                                            <i class="fa-regular fa-clock mr-2"></i>
-                                            <p>08.00 -09.40</p>
-                                        </div>
-                                        <div class="flex mt-2">
-                                            <i class="fa-solid fa-location-dot mr-2"></i>
-                                            <p>Bootcamp Room</p>
-                                        </div>
-                                        <div class="flex mt-2">
-                                            <i class="fa-solid fa-coins mr-2"></i>
-                                            <p>Rp. 40.000,-</p>
-                                        </div>
-                                        <div class="text-right mt-3">
-                                            <a routerLink="" class=" main-text">Join Event</a>
-                                        </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label for="provider">Provider<span class="text-red-500">*</span></label>
+                                        <input pInputText id="provider" formControlName="provider" name="provider"
+                                            type="text" class="w-full p-inputtext-sm" required>
                                     </div>
-
-                                </p-card>
-                            </div>
-
+                                    <div class="field col-12 md:col-6">
+                                        <label for="locations">Locations<span class="text-red-500">*</span></label>
+                                        <input pInputText id="locations" formControlName="locations" name="locations"
+                                            type="text" class="w-full p-inputtext-sm" required>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label for="price">Price<span class="text-red-500">*</span></label>
+                                        <input pInputText id="price" formControlName="price" name="price" type="number"
+                                            class="w-full p-inputtext-sm" required>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label for="beginSchedule" class="w-full">Begin Schedule<span
+                                                class="text-red-500">*</span></label>
+                                        <p-calendar [showTime]="true" class="w-full" inputId="beginSchedule" clas
+                                            styleClass="calendar"></p-calendar>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label for="finishSchedule" class="w-full">Finish Schedule<span
+                                                class="text-red-500">*</span></label>
+                                        <p-calendar [showTime]="true" class="w-full" inputId="finishSchedule" clas
+                                            styleClass="calendar"></p-calendar>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <button [disabled]="activityForm.invalid" pButton type="submit"
+                                            id="activity-submit" label="SUBMIT" (click)="submitInsert()"
+                                            class="main-color"></button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </p-card>
                 </div>

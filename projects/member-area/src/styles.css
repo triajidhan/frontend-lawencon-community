@@ -54,3 +54,9 @@
 :host ::ng-deep .activity-card .p-card-content {
     padding: 0px;
 }
+
+:host ::ng-deep .calendar .p-inputtext {
+    font-size: 0.875rem;
+    padding: 0.875rem;
+    width: 350px;
+}
