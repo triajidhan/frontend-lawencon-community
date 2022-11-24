@@ -1,99 +1,86 @@
-import { Component, OnInit } from "@angular/core"
-import { MenuItem } from "primeng/api"
+import { Component, OnDestroy, OnInit } from "@angular/core"
+import { ConfirmationService, LazyLoadEvent, MenuItem, PrimeNGConfig } from "primeng/api"
+import { User } from "projects/interface/user"
+import { UserService } from "projects/main-area/src/app/service/user.service"
+import { Subscription } from "rxjs"
 
 @Component({
     selector: 'user-list',
-    templateUrl: './user-list.component.html'
+    templateUrl: './user-list.component.html',
+    providers: [ConfirmationService]
 })
-export class UserListComponent implements OnInit {
-    users!: any
-    cols: any[] = []
+export class UserListComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
-    sideBars!: MenuItem[]
+    data: any[] = []
+
+    id!: number
+    user!: User
+    startPage: number = 0
+    maxPage: number = 5
+    totalData: number = 0
+    loading: boolean = true
+    display: boolean = false
+
+    getAllSubs?: Subscription
+    getByIdSubs?: Subscription
+    deleteSubs?: Subscription
+    contDataSubs?: Subscription
+
+    constructor(private userService: UserService, private confirmationService: ConfirmationService,
+        private primengConfig: PrimeNGConfig) { }
 
     ngOnInit(): void {
-        this.cols = [
-            { field: "no", header: "No." },
-            { field: "fullname", header: "Full Name" },
-            { field: "email", header: "Email" },
-            { field: "imgSrc", header: "Photo" },
-            { field: "isActive", header: "Is Active" },
-            { field: "action", header: "Action" }
-        ]
-        this.users =
-            [
-                {
-                    fullName: "Vincensius",
-                    email: "vincensius@email.com",
-                    imgSrc: "../../../../assets/images/img (1).jpg",
-                    isActive: "true",
-                },
-                {
-                    fullName: "Gunawan",
-                    email: "gunawan@email.com",
-                    imgSrc: "../../../../assets/images/img (2).jpg",
-                    isActive: "true",
-                },
-                {
-                    fullName: "Agus",
-                    email: "agus@email.com",
-                    imgSrc: "../../../../assets/images/img (3).jpg",
-                    isActive: "true",
-                },
-                {
-                    fullName: "Priyono",
-                    email: "priyono@email.com",
-                    imgSrc: "../../../../assets/images/img (4).jpg",
-                    isActive: "true",
-                },
-                {
-                    fullName: "Marlita",
-                    email: "marlita@email.com",
-                    imgSrc: "../../../../assets/images/img (5).jpg",
-                    isActive: "true",
-                },
-            ]
+        this.primengConfig.ripple = true
+
         this.items = [
             { label: 'Home', routerLink: "/dashboard/super-admin" },
-            { label: 'Admin User' }
+            { label: 'User' }
         ]
+    }
 
-        this.sideBars = [
-            {
-                label: 'Master Data',
-                items: [{
-                    label: 'Users',
-                    icon: 'fa-solid fa-users',
-                    routerLink: './users'
-                },
-                {
-                    label: 'Industries',
-                    icon: 'fa-solid fa-industry',
-                    routerLink: './industries'
-                },
-                {
-                    label: 'Positions',
-                    icon: 'fa-solid fa-briefcase',
-                    routerLink: './positions'
-                }
-                ]
-            },
-            {
-                label: 'Information Reports',
-                title: 'start',
-                items: [
-                    {
-                        label: 'Members',
-                        icon: 'fa-solid fa-users',
-                        routerLink: './member-information-reports/super-admin'
-                    },
-                    {
-                        label: 'Incomes',
-                        icon: 'fa-solid fa-coins',
-                        routerLink: './income-information-reports/super-admin'
-                    }
-                ]
+    loadData(event: LazyLoadEvent) {
+        console.log(event)
+        this.getData(event.first, event.rows)
+    }
+
+    getData(startPage: number = this.startPage, maxPage: number = this.maxPage): void {
+        this.loading = true;
+        this.startPage = startPage
+        this.maxPage = maxPage
+
+        this.getAllSubs = this.userService.getByRoleCode('A', startPage, maxPage).subscribe(
+            result => {
+                this.data = result
+                console.log(this.data)
+                this.loading = false
+                this.contDataSubs = this.userService.getTotalByRole('A').subscribe(result => {
+                    this.totalData = result.countOfUser
+                })
+                console.log(this.data)
             }
-        ]
+        )
+    }
+
+    getDeleteId(id: string) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this user?',
+            accept: () => {
+                this.getByIdSubs = this.userService.getById(id).subscribe(result => {
+                    this.user = result
+                    this.user.isActive = false
+
+                    this.deleteSubs = this.userService.update(this.user).subscribe(() => {
+                        this.getData()
+                    })
+                })
+            }
+        })
+    }
+
+    ngOnDestroy(): void {
+        this.getAllSubs?.unsubscribe()
+        this.getByIdSubs?.unsubscribe()
+        this.deleteSubs?.unsubscribe()
+        this.contDataSubs?.unsubscribe()
     }
 }

@@ -35,7 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.apiService.saveData(result)
             console.log(result)
             if (result.role.roleCode == 'M') {
-                this.router.navigateByUrl("/threads")
+                this.router.navigateByUrl("/homes/threads")
+            } else if (result.role.roleCode == 'A') {
+                this.router.navigateByUrl("/dashboard/admin")
+            } else if (result.role.roleCode == 'SA') {
+                this.router.navigateByUrl("/dashboard/super-admin")
             }
         })
     }

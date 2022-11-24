@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
-import { ThreadComponent } from "./thread.component"
+import { ActivityComponent } from "./activity.component"
 
 const routes: Routes = [
     {
-        path: '',
-        component: ThreadComponent
+        path: ':type',
+        component: ActivityComponent
     }
 ]
 
@@ -17,4 +17,4 @@ const routes: Routes = [
         RouterModule
     ]
 })
-export class ThreadRouting { }
+export class ActivityRouting { }

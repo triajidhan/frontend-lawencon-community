@@ -23,7 +23,6 @@ import { ReactiveFormsModule } from "@angular/forms"
         PositionRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
-
         FileUploadModule, HttpClientModule,
         ConfirmDialogModule, ReactiveFormsModule
     ],

@@ -9,23 +9,23 @@ import { HttpClientModule } from '@angular/common/http'
 import { InputTextareaModule } from 'primeng/inputtextarea'
 import { TableModule } from 'primeng/table'
 import { MenuModule } from 'primeng/menu'
-import { ThreadComponent } from "./thread.component"
-import { ThreadRouting } from "./thread.routing"
 import { TabMenuModule } from 'primeng/tabmenu'
+import { HomeComponent } from "./home.component"
+import { HomeRouting } from "./home.routing"
 
 @NgModule({
     declarations: [
-        ThreadComponent
+        HomeComponent
     ],
     imports: [
-        ThreadRouting, ButtonModule, InputTextModule,
+        HomeRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule
     ],
     exports: [
-        ThreadComponent
+        HomeComponent
     ]
 })
-export class ThreadModule { }
+export class HomeModule { }
