@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core"
+import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
-import { MenuItem } from "primeng/api"
-import { InitEditableRow } from "primeng/table"
+import { MenuItem, PrimeNGConfig } from "primeng/api"
 
 @Component({
     selector: 'home',
@@ -12,10 +12,22 @@ export class HomeComponent implements OnInit {
 
     items!: MenuItem[]
     type!: string
+    display: boolean = false
 
-    constructor(private activatedRoute: ActivatedRoute) { }
+    postForm = this.fb.group({
+        fullName: ['', Validators.required],
+        email: ['', Validators.required],
+        pass: ['', Validators.required],
+        company: ['', Validators.required],
+        industryId: [''],
+        positionId: ['']
+    })
+
+    constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
+        private fb: FormBuilder) { }
 
     ngOnInit(): void {
+        this.primengConfig.ripple = true
 
         this.items = [
             { label: 'Thread', routerLink: '/homes/threads' },
@@ -30,4 +42,8 @@ export class HomeComponent implements OnInit {
     }
 
     init() { }
+
+    postDialog() {
+        this.display = true
+    }
 }

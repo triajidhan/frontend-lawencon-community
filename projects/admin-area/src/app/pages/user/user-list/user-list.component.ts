@@ -68,7 +68,6 @@ export class UserListComponent implements OnInit, OnDestroy {
                 this.getByIdSubs = this.userService.getById(id).subscribe(result => {
                     this.user = result
                     this.user.isActive = false
-
                     this.deleteSubs = this.userService.update(this.user).subscribe(() => {
                         this.getData()
                     })

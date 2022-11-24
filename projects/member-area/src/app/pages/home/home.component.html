@@ -421,3 +421,32 @@
         </div>
     </div>
 </div>
+
+<p-dialog [(visible)]="display">
+    <div class="grid bg-white border-round-xl max-w-30rem mb-5">
+        <ng-template pTemplate="header">
+            <h3>Header Content</h3>
+        </ng-template>
+        <div class="col-12 md:px-6 px-3">
+            <div class=" flex align-items-center justify-content-center mb-5">
+                <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-code icon"></i>
+                </div>
+                <h2 class=" ml-3">
+                    Verification Code
+                </h2>
+            </div>
+            <form class="card" [formGroup]="postForm">
+                <div class="field">
+                    <label for="code">Your Code</label>
+                    <input pInputText id="code" name="code" type="password" class="w-full" formControlName="code"
+                        required>
+                </div>
+                <p>verification code has been sent to your email,
+                    please check your email</p>
+                <!-- <button pButton [disabled]="verifCodeForm.invalid" type="submit" (click)="verifCode()"
+                    class="main-color w-full mt-3" label="SUBMIT"></button> -->
+            </form>
+        </div>
+    </div>
+</p-dialog>
