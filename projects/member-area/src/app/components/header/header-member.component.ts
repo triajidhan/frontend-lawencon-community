@@ -33,12 +33,12 @@ export class HeaderMemberComponent implements OnInit {
         this.navMenus = [
             {
                 label: 'Home',
-                routerLink: '/threads'
+                routerLink: '/homes/threads'
 
             },
             {
                 label: 'Activity',
-                routerLink: '/activities'
+                routerLink: '/activities/all'
             },
             {
                 label: 'Settings',

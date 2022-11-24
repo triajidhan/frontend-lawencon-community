@@ -12,6 +12,11 @@ export const mainRoutes: Routes = [
     ...adminAreaRoutes,
     ...memberAreaRoutes,
     {
+        path: '',
+        redirectTo: '/login/member',
+        pathMatch: 'full'
+    },
+    {
         path: "login/member",
         component: LoginComponent
     },

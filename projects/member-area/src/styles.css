@@ -48,3 +48,9 @@
 :host ::ng-deep .pooling-content.p-card {
     margin-top: 1.5rem;
 }
+
+/*====================== ACTIVITY  ======================*/
+
+:host ::ng-deep .activity-card .p-card-content {
+    padding: 0px;
+}

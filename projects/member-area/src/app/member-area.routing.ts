@@ -8,8 +8,18 @@ export const memberAreaRoutes: Routes = [
         component: RegistrationComponent
     },
     {
-        path: 'threads',
+        path: 'homes',
         component: ContentMemberComponent,
-        loadChildren: () => import('./pages/thread/thread.module').then(u => u.ThreadModule)
+        loadChildren: () => import('./pages/home/home.module').then(u => u.HomeModule)
     },
+    {
+        path: 'activities',
+        component: ContentMemberComponent,
+        loadChildren: () => import('./pages/activity/activity.module').then(u => u.ActivityModule)
+    },
+    {
+        path: 'profiles',
+        component: ContentMemberComponent,
+        loadChildren: () => import('./pages/profile/profile-member.module').then(u => u.ProfileMemberModule)
+    }
 ]

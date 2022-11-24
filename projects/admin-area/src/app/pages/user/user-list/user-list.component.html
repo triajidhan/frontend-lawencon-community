@@ -23,23 +23,32 @@
         </div>
         <div class="grid w-full md:w-10">
             <div class="table w-full">
-                <p-table [value]="users" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '50rem'}" [rows]="5"
-                    class="w-full">
+                <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
+                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
+                    [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
+                    [globalFilterFields]="['id', 'title']">
+
+
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="no" class="text-center">No.</th>
                             <th pSortableColumn="fullName">Full Name</th>
                             <th pSortableColumn="email">Email</th>
+                            <th pSortableColumn="company">Company</th>
+                            <th pSortableColumn="position">Position</th>
                             <th pSortableColumn="photo">Photo</th>
                             <th pSortableColumn="isActive">Is Active</th>
                             <th pSortableColumn="action" class="text-center">Action</th>
                         </tr>
                     </ng-template>
+
                     <ng-template pTemplate="body" let-data let-i="rowIndex">
                         <tr>
                             <td class="text-center">{{i + 1}}</td>
                             <td>{{data.fullName}}</td>
                             <td>{{data.email}}</td>
+                            <td>{{data.position}}</td>
+                            <td>{{data.company}}</td>
                             <td>
                                 <img src="../../../../assets/logos/brand.png" class="img-fluid images table-img"
                                     alt="user admin image">
@@ -47,11 +56,12 @@
                             <td>{{data.isActive}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button pButton routerLink="/users/edit/1" type="button" class="mr-1 main-color"
-                                        label="UPDATE">
+                                    <button pButton routerLink="/users/edit/{{data.id}}" type="button"
+                                        class="mr-1 main-color" label="UPDATE">
                                         <i class="fa-solid fa-pen text-sm mr-2"></i>
                                     </button>
-                                    <button pButton type="button" class="p-button-danger" label="DELETE">
+                                    <button pButton (click)="getDeleteId(data.id)" type="button" class="p-button-danger"
+                                        label="DELETE">
                                         <i class="fa-solid fa-trash-can text-sm mr-2"></i>
                                     </button>
                                 </div>
@@ -63,3 +73,6 @@
         </div>
     </div>
 </div>
+
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+</p-confirmDialog>
