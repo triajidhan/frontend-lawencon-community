@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormArray, FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
+import { InitEditableRow } from "primeng/table"
+import { Post } from "projects/interface/post"
 import { PostType } from "projects/interface/post-type"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
@@ -14,19 +16,31 @@ import { Subscription } from "rxjs"
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+
+    startPosition = 0
+    limit = 2
+
     items!: MenuItem[]
     type!: string
     postType!: string
     display: boolean = false
     // resultExtension!: string
     // resultFile !: string
+
     fileArray: any[] = [];
     postTypesRes!: PostType[]
     postTypes: any[] = []
 
+    postRes!: []
+    post: any[] = []
+
     private postInsertSubs?: Subscription
     private postAttachInsertSubs?: Subscription
     private getAllPostTypeSubs?: Subscription
+
+
+    private getPostDataSubs?: Subscription
+
 
     postForm = this.fb.group({
         title: ['', Validators.required],
@@ -58,6 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.getAllPostTypeSubs = this.postTypeService.getAll().subscribe(result => {
             this.postTypesRes = result
+
             for (let i = 0; i < this.postTypesRes.length; i++) {
                 this.postTypes.push({
                     postTypeName: this.postTypesRes[i].postTypeName,
@@ -66,6 +81,27 @@ export class HomeComponent implements OnInit, OnDestroy {
                 })
             }
         })
+
+        this.init();
+
+
+    }
+
+    onScroll() {
+        this.startPosition += this.limit
+        this.init()
+    }
+
+    init() {
+        this.getPostDataSubs = this.postService.getAll(this.startPosition, this.limit).subscribe(result => {
+            this.postRes = result
+            this.addData()
+            console.log(this.postRes)
+        })
+    }
+
+    addData() {
+            this.post.push(this.postRes)
     }
 
     fileUpload(event: any): void {
@@ -120,6 +156,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.postInsertSubs?.unsubscribe()
         this.postAttachInsertSubs?.unsubscribe()
         this.getAllPostTypeSubs?.unsubscribe()
+        this.getPostDataSubs?.unsubscribe()
     }
 
 }

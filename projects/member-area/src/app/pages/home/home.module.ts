@@ -15,6 +15,7 @@ import { HomeRouting } from "./home.routing"
 import { DialogModule } from "primeng/dialog"
 import { ReactiveFormsModule } from "@angular/forms"
 import { DropdownModule } from "primeng/dropdown"
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 @NgModule({
     declarations: [
@@ -26,7 +27,7 @@ import { DropdownModule } from "primeng/dropdown"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, DialogModule,
-        ReactiveFormsModule, DropdownModule
+        ReactiveFormsModule, DropdownModule,InfiniteScrollModule
     ],
     exports: [
         HomeComponent
