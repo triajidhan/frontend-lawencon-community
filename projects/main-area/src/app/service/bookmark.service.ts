@@ -14,36 +14,36 @@ import { Bookmark } from "projects/interface/bookmark";
 export class BookmarkService{
     constructor(private http: HttpClient) { }
 
-    getAll(startPosition: number, limit: number): Observable<Bookmark> {
-      return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks?startPosition=${startPosition}&limit=${limit}`)
+    getAll(startPosition: number, limit: number): Observable<any> {
+      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks?startPosition=${startPosition}&limit=${limit}`)
     }
   
-    getById(id: string): Observable<Bookmark> {
-      return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/${id}/bookmarks/get`)
+    getById(id: string): Observable<any> {
+      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/id/${id}`)
     }
 
-    getByUser(userId: string): Observable<Bookmark> {
+    getByUser(userId: string): Observable<any> {
         return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}`)
     }
 
-    getByPost(postId: string): Observable<Bookmark> {
-        return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?postId=${postId}`)
+    getByPost(postId: string): Observable<any> {
+        return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?postId=${postId}`)
     }
   
-    getTotalByUser(userId: string): Observable<Bookmark> {
+    getTotalByUser(userId: string): Observable<any> {
       return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/total-users/?userId=${userId}`)
     }
 
-    getTotalByPost(postId: string): Observable<Bookmark> {
+    getTotalByPost(postId: string): Observable<any> {
         return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/total-posts/?postId=${postId}`)
     }
 
-    getUserBookmarkPost(postId: string,userId:string): Observable<Bookmark> {
-        return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/user-bookmark/?postId=${postId}&userId=${userId}`)
+    getUserBookmarkPost(postId: string,userId:string): Observable<any> {
+        return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/user-bookmark/?postId=${postId}&userId=${userId}`)
     }
   
-    getByIsActive(startPosition: number, limit: number): Observable<Bookmark> {
-      return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/is-active/?startPosition=${startPosition}&limit=${limit}`)
+    getByIsActive(startPosition: number, limit: number): Observable<any> {
+      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/is-active/?startPosition=${startPosition}&limit=${limit}`)
     }
   
     insert(data: any): Observable<ResponseMessage> {

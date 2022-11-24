@@ -29,7 +29,7 @@ export class PostService{
     }
 
     getById(id:string):Observable<any>{
-        return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/${id}/get`)
+        return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/id/${id}`)
     }
 
     getTotalByUser(userId:string):Observable<any>{

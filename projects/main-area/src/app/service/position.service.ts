@@ -22,7 +22,7 @@ export class PositionService {
 	}
 
 	getById(id: string): Observable<Position> {
-		return this.httpClient.get<Position>(`${Object.values(BASE_URL)[0]}/positions/${id}/get`)
+		return this.httpClient.get<Position>(`${Object.values(BASE_URL)[0]}/positions/id/${id}`)
 	}
 
 	getByIsActiveAll(): Observable<Position> {

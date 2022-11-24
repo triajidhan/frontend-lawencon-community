@@ -19,7 +19,7 @@ export class PaymentActivityDetailService{
 	}
 
 	getById(id:string):Observable<PaymentActivityDetail>{
-		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/${id}/get`)
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/id/${id}`)
 	}
 
     getByActivity(activityId:string):Observable<PaymentActivityDetail>{

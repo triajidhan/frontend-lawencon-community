@@ -19,7 +19,7 @@ export class LikeService{
     }
   
     getById(id: string): Observable<Like> {
-      return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/${id}/likes/get`)
+      return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/id/${id}`)
     }
 
     getByUser(userId: string): Observable<Like> {

@@ -19,7 +19,7 @@ export class IndustryService {
 	}
 
 	getById(id: string): Observable<Industry> {
-		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/${id}/get`)
+		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/id/${id}`)
 	}
 
 	getTotalIndustry(): Observable<Industry> {

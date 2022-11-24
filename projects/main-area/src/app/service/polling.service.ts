@@ -18,7 +18,15 @@ export class PollingService{
 	}
 
 	getById(id:string):Observable<Polling>{
-		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/${id}/get`)
+		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/id/${id}`)
+	}
+
+    getByPost(postId:string):Observable<Polling>{
+		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/post/postId=${postId}`)
+	}
+
+    getByUser(userId:string):Observable<Polling>{
+		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/user/userId=${userId}`)
 	}
 
 	getByIsActive(startPosition:number,limit:number):Observable<Polling>{
