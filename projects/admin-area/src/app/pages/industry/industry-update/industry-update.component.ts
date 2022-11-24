@@ -38,8 +38,6 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
         this.industry = result
       })
     })
-
-
   }
 
   submitUpdate(){
