@@ -17,25 +17,34 @@
             </h1>
         </div>
         <div class="grid w-full md:w-10 mb-5 p-3 bg-white">
-            <form class="card w-full mx-3 border-0 md:px-4 my-3">
+            <form [formGroup]="insertUserForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6">
                         <label for="fullName">Full Name <span class="text-red-500">*</span></label>
-                        <input pInputText id="fullName" name="fullName" type="text" class="w-full p-inputtext-sm">
+                        <input pInputText id="fullName" formControlName="fullName" name="fullName" type="text"
+                            class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
                         <label for="email">Email Address <span class="text-red-500">*</span></label>
-                        <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm">
+                        <input pInputText id="email" formControlName="email" name="email" type="email"
+                            class="w-full p-inputtext-sm">
                     </div>
                     <div class="field col-12 md:col-6">
-                        <label for="photoId">Photo <span class="text-red-500">*</span></label>
-                        <p-fileUpload id="photoId" name="photoId" url="./upload.php" accept="image/*" [auto]="true">
+                        <label for="pass">Password <span class="text-red-500">*</span></label>
+                        <input pInputText id="pass" formControlName="pass" name="pass" type="password"
+                            class="w-full p-inputtext-sm">
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="file">Photo <span class="text-red-500">*</span></label>
+                        <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
+                            (uploadHandler)="fileUpload($event)">
                         </p-fileUpload>
                     </div>
+
                     <div class="col-12 my-3">
                         <button pButton routerLink="/users" class="p-button-outlined mr-2" label="BACK"></button>
-                        <button pButton routerLink="/users" type="button" id="user-submit" label="SUBMIT"
-                            class="main-color"></button>
+                        <button pButton [disabled]="insertUserForm.invalid" (click)="submitInsert()" type="button"
+                            id="user-submit" label="SUBMIT" class="main-color"></button>
                     </div>
                 </div>
             </form>

@@ -6,68 +6,66 @@ import { ArticleService } from "projects/main-area/src/app/service/article.servi
 import { Subscription } from "rxjs"
 
 @Component({
-    selector: 'article-insert',
-    templateUrl: './article-insert.component.html'
+  selector: 'article-insert',
+  templateUrl: './article-insert.component.html'
 })
-export class ArticleInsertComponent implements OnInit,OnDestroy {
-    items!: MenuItem[]
-    insertSubscription!: Subscription
-    resultExtension!: string
-    resultFile !: string
-    insertArticleForm = this.formBuilder.group({
-        title: ['', Validators.required],
-        articleCode: ['', Validators.required],
-        contents: ['', Validators.required],
-        file: this.formBuilder.group({
-            files: [''],
-            ext : ['']
-        })
+export class ArticleInsertComponent implements OnInit, OnDestroy {
+  items!: MenuItem[]
+  insertSubscription!: Subscription
+  resultExtension!: string
+  resultFile !: string
+  insertArticleForm = this.formBuilder.group({
+    title: ['', Validators.required],
+    articleCode: ['', Validators.required],
+    contents: ['', Validators.required],
+    file: this.formBuilder.group({
+      files: [''],
+      ext: ['']
+    })
+  })
+
+  constructor(private formBuilder: FormBuilder,
+    private articleService: ArticleService,
+    private router: Router) { }
+
+  ngOnInit(): void {
+    this.items = [
+      { label: 'Home', routerLink: '/dashboard/admin' },
+      { label: 'Article', routerLink: '/articles' },
+      { label: 'Article Insert' }
+    ]
+  }
+
+  fileUpload(event: any): void {
+    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(event.files[0])
+      reader.onload = () => {
+        if (typeof reader.result === "string") resolve(reader.result)
+      }
+      reader.onerror = error => reject(error)
     })
 
-    constructor(private formBuilder: FormBuilder,
-        private articleService: ArticleService,
-        private router: Router) {}
-
-    ngOnInit(): void {
-        this.items = [
-            { label: 'Home', routerLink: '/dashboard/admin' },
-            { label: 'Article', routerLink: '/articles' },
-            { label: 'Article Insert' }
-        ]
-    }
-
-    fileUpload(event : any) : void {
-        const toBase64 = (file : File) => new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(event.files[0])
-        reader.onload = () => {
-          if(typeof reader.result === "string") resolve(reader.result)
-        }
-        reader.onerror = error => reject(error)
+    toBase64(event.files[0].name).then(result => {
+      this.resultFile = result.substring(result.indexOf(",") + 1, result.length)
+      this.resultExtension = result.split(";")[0].split('/')[1]
     })
-  
-      toBase64(event.files[0].name).then(result =>{
-          this.resultFile = result.substring(result.indexOf(",")+1,result.length)
-          this.resultExtension = result.split(";")[0].split('/')[1]
-          
-         
-          })
-      }
+  }
 
-    submitInsert(){
-      this.insertArticleForm.patchValue({
-        file: {
-          files: this.resultFile,
-          ext : this.resultExtension
-        }
-      });
-        this.insertSubscription = this.articleService.insert(this.insertArticleForm.value).subscribe(()=>{
-            console.log("save")
-          this.router.navigateByUrl(`/articles`)
-        })
-    }
-
-    ngOnDestroy(): void {
-        this.insertSubscription.unsubscribe();
+  submitInsert() {
+    this.insertArticleForm.patchValue({
+      file: {
+        files: this.resultFile,
+        ext: this.resultExtension
       }
+    });
+    this.insertSubscription = this.articleService.insert(this.insertArticleForm.value).subscribe(() => {
+      console.log("save")
+      this.router.navigateByUrl(`/articles`)
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.insertSubscription.unsubscribe();
+  }
 }
