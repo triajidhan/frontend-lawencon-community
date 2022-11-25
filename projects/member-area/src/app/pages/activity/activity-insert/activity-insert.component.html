@@ -166,7 +166,8 @@
                                         <p-dropdown [options]="activityTypes" styleClass="w-full"
                                             optionLabel="activityTypeName" optionValue="id" name="activityType"
                                             id="activityTypeName" formControlName="activityTypeId"
-                                            placeholder="Select an Activity Type" [required]="true">
+                                            placeholder="Select an Activity Type" class="w-full p-inputtext-sm"
+                                            [required]="true">
                                         </p-dropdown>
                                     </div>
                                     <div class="field col-12">
@@ -181,7 +182,6 @@
                                             class="main-color"></button>
                                     </div>
                                 </div>
-                                <pre> {{activityForm.value | json}}</pre>
                             </form>
                         </div>
                     </p-card>

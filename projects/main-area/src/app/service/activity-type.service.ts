@@ -8,7 +8,6 @@ import { Observable } from "rxjs";
 	providedIn: "root"
 })
 
-
 export class ActivityTypeService {
 
 	constructor(private httpClient: HttpClient) { }
