@@ -47,6 +47,6 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
     })
   }
   ngOnDestroy(): void {
-
+    this.updateSubscription.unsubscribe()
   }
 }

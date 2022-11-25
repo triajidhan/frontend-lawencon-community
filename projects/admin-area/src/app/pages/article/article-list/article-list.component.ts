@@ -7,9 +7,9 @@ import { Subscription } from "rxjs"
 @Component({
     selector: 'article-list',
     templateUrl: './article-list.component.html',
-    providers:[ConfirmationService]
+    providers: [ConfirmationService]
 })
-export class ArticleListComponent implements OnInit,OnDestroy {
+export class ArticleListComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
     data: any[] = []
 
@@ -26,8 +26,8 @@ export class ArticleListComponent implements OnInit,OnDestroy {
     deleteSubs?: Subscription
     contDataSubs?: Subscription
 
-    constructor(private articleService:ArticleService,private confirmationService:ConfirmationService,
-        private primengConfig: PrimeNGConfig){}
+    constructor(private articleService: ArticleService, private confirmationService: ConfirmationService,
+        private primengConfig: PrimeNGConfig) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
@@ -35,7 +35,7 @@ export class ArticleListComponent implements OnInit,OnDestroy {
         this.items = [
             { label: 'Home', routerLink: "/dashboard/admin" },
             { label: 'Article' }
-        ]       
+        ]
     }
 
     loadData(event: LazyLoadEvent) {
@@ -43,17 +43,18 @@ export class ArticleListComponent implements OnInit,OnDestroy {
         this.getData(event.first, event.rows)
     }
 
-    getData(startPage:number = this.startPage,maxPage:number = this.maxPage):void{
+    getData(startPage: number = this.startPage, maxPage: number = this.maxPage): void {
         this.loading = true
         this.startPage = startPage
         this.maxPage = maxPage
 
 
-        this.getAllSubs = this.articleService.getByIsActive(startPage,maxPage).subscribe(
-            result =>{
+        this.getAllSubs = this.articleService.getByIsActive(startPage, maxPage).subscribe(
+            result => {
                 this.data = result
                 this.loading = false
-                this.contDataSubs = this.articleService.getTotalArticle().subscribe(result =>{
+
+                this.contDataSubs = this.articleService.getTotalArticle().subscribe(result => {
                     this.totalData = result.countOfArticle
                 })
 
