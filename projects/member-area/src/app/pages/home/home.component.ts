@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     startPosition = 0
     limit = 2
+    maxLimit = this.startPosition + this.limit
 
     items!: MenuItem[]
     type!: string
@@ -31,13 +32,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     postTypesRes!: PostType[]
     postTypes: any[] = []
 
-    postRes!: []
     post: any[] = []
 
     private postInsertSubs?: Subscription
     private postAttachInsertSubs?: Subscription
     private getAllPostTypeSubs?: Subscription
-
 
     private getPostDataSubs?: Subscription
 
@@ -84,7 +83,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.init();
 
-
     }
 
     onScroll() {
@@ -94,14 +92,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     init() {
         this.getPostDataSubs = this.postService.getAll(this.startPosition, this.limit).subscribe(result => {
-            this.postRes = result
-            this.addData()
-            console.log(this.postRes)
+
+            for(let i = 0; i<result.length; i++){
+                this.addData(result[i])
+            }
         })
     }
 
-    addData() {
-            this.post.push(this.postRes)
+    addData(post:any) {
+            this.post.push(post)
+            console.log(this.post)
     }
 
     fileUpload(event: any): void {
@@ -149,7 +149,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
             this.display = false
         })
-
     }
 
     ngOnDestroy(): void {
