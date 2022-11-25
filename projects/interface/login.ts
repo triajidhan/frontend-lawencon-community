@@ -8,6 +8,7 @@ export interface Login extends File, Industry, Position, Balance, Role {
     fullName: string
     email: string
     company: string
+    statusSubscribe: boolean
     industry: Industry
     position: Position
     balance: Balance
