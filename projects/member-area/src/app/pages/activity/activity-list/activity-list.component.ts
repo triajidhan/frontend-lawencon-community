@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { MenuItem } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
+import { ActivityService } from "projects/main-area/src/app/service/activity.service"
+import { FileService } from "projects/main-area/src/app/service/file.service"
+import { Subscription } from "rxjs"
 
 @Component({
     selector: 'activity-list',
@@ -9,10 +13,18 @@ import { MenuItem } from "primeng/api"
 })
 export class ActivityListComponent implements OnInit {
 
+    startPosition = 0
+    limit = 3
     items!: MenuItem[]
     type!: string
+    activities: any[] = []
 
-    constructor(private activatedRoute: ActivatedRoute) { }
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
+
+    private getAllActivitySubs?: Subscription
+
+    constructor(private activatedRoute: ActivatedRoute, private fileService: FileService,
+        private activityService: ActivityService) { }
 
     ngOnInit(): void {
 
@@ -27,9 +39,32 @@ export class ActivityListComponent implements OnInit {
 
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
-            this.init()
+        })
+
+        this.init()
+    }
+
+    init() {
+        this.getAllActivitySubs = this.activityService.getByIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
+            for (let i = 0; i < result.length; i++) {
+                this.addData(result[i])
+            }
         })
     }
 
-    init() { }
+
+    onScroll() {
+        this.startPosition += this.limit
+        this.init()
+    }
+
+    addData(activity: any) {
+        this.activities.push(activity)
+        console.log(this.activities)
+    }
+
+
+    ngOnDestroy(): void {
+        this.getAllActivitySubs?.unsubscribe()
+    }
 }

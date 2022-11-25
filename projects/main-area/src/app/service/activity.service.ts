@@ -5,57 +5,57 @@ import { Activity } from "../../../../../projects/interface/activity"
 import { Observable } from "rxjs";
 
 
-Injectable({
-    providedIn:"root"
+@Injectable({
+	providedIn: "root"
 })
 
 
-export class ActivityService{
+export class ActivityService {
 
-    constructor(private httpClient:HttpClient){}
+	constructor(private httpClient: HttpClient) { }
 
 
-	getAll(startPosition:number,limit:number):Observable<any>{
+	getAll(startPosition: number, limit: number): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
-	getById(activityId:string):Observable<any>{
+	getById(activityId: string): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/id/${activityId}`)
 	}
 
-	getByActivityCode(activityCode:string):Observable<any>{
+	getByActivityCode(activityCode: string): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-code/?activityCode=${activityCode}`)
 	}
 
-	getTotalActivity():Observable<any>{
+	getTotalActivity(): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity/`)
 	}
 
-	getByActivityType(activityTypeId:string,startPosition:number,limit:number):Observable<any>{
+	getByActivityType(activityTypeId: string, startPosition: number, limit: number): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-type/?activityTypeId=${activityTypeId}&startPosition=${startPosition}&limit=${limit}`)
 	}
 
-	getTotalByActivityType(activityTypeId:string):Observable<any>{
+	getTotalByActivityType(activityTypeId: string): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity-type/?${activityTypeId}`)
 	}
-	
-	getByActivityTypeCode(activityTypeCode:string,startPosition:number,limit:number):Observable<any>{
-	return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-type-code/?activityTypeCode=${activityTypeCode}&startPosition=${startPosition}&limit=${limit}`)
+
+	getByActivityTypeCode(activityTypeCode: string, startPosition: number, limit: number): Observable<any> {
+		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-type-code/?activityTypeCode=${activityTypeCode}&startPosition=${startPosition}&limit=${limit}`)
 	}
 
-    getTotalByActivityCode(activityTypeCode:string):Observable<any> {
+	getTotalByActivityCode(activityTypeCode: string): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity-type-code/?activityTypeCode=${activityTypeCode}`)
 	}
-	
-	getByIsActive(startPosition:number,limit:number):Observable<any>{
+
+	getByIsActive(startPosition: number, limit: number): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
-	getByIsActiveAndOrder(startPosition:number,limit:number,ascending:boolean):Observable<any>{
+	getByIsActiveAndOrder(startPosition: number, limit: number, ascending: boolean): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/is-active-order/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
-	
-    insert(data:any):Observable<any>{
-        return this.httpClient.post<any>(`${Object.values(BASE_URL)[0]}/activities`,data)
-    } 
+
+	insert(data: any): Observable<any> {
+		return this.httpClient.post<any>(`${Object.values(BASE_URL)[0]}/activities`, data)
+	}
 }

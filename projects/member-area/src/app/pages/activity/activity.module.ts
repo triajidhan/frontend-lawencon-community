@@ -16,6 +16,7 @@ import { ActivityInsertComponent } from "./activity-insert/activity-insert.compo
 import { ReactiveFormsModule } from "@angular/forms"
 import { CalendarModule } from "primeng/calendar"
 import { DropdownModule } from "primeng/dropdown"
+import { InfiniteScrollModule } from "ngx-infinite-scroll"
 
 @NgModule({
     declarations: [
@@ -27,7 +28,7 @@ import { DropdownModule } from "primeng/dropdown"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
-        CalendarModule, DropdownModule
+        CalendarModule, DropdownModule, InfiniteScrollModule
     ],
     exports: [
         ActivityListComponent, ActivityInsertComponent
