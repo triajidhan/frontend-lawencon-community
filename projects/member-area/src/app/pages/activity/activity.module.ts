@@ -15,6 +15,7 @@ import { ActivityListComponent } from "./activity-list/activity-list.component"
 import { ActivityInsertComponent } from "./activity-insert/activity-insert.component"
 import { ReactiveFormsModule } from "@angular/forms"
 import { CalendarModule } from "primeng/calendar"
+import { DropdownModule } from "primeng/dropdown"
 
 @NgModule({
     declarations: [
@@ -26,7 +27,7 @@ import { CalendarModule } from "primeng/calendar"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
-        CalendarModule
+        CalendarModule, DropdownModule
     ],
     exports: [
         ActivityListComponent, ActivityInsertComponent
