@@ -15,4 +15,5 @@ export interface Post extends File, PostType {
 	userPhotoId: string
 	userCompany:string
 	userPosition:string
+	postAttachment:any[]
 }

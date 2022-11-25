@@ -7,6 +7,7 @@ import { BASE_URL } from "projects/constant/base-url"
 import { Post } from "projects/interface/post"
 import { PostType } from "projects/interface/post-type"
 import { FileService } from "projects/main-area/src/app/service/file.service"
+import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
 import { Subscription } from "rxjs"
@@ -37,7 +38,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     post: any[] = []
     user:any[] = []
+    postAttachment:any[] = []
+
     userObj:Object = new Object()
+    postAttachmentObj:Object = new Object()
 
 
     private postInsertSubs?: Subscription
@@ -45,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private getAllPostTypeSubs?: Subscription
 
     private getPostDataSubs?: Subscription
+    private getPostAttachmentDataSubs?: Subscription
 
     private getUserDataSubs?:Subscription
 
@@ -62,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
         private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
-        private userService:UserService,private fileService:FileService) { }
+        private userService:UserService,private fileService:FileService,private postAttachmentService:PostAttachmentService) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
@@ -90,7 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
 
         this.init();
-
     }
 
     onScroll() {
@@ -107,7 +111,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     addData(post:any) {
+        
         this.getUserDataSubs = this.userService.getById(post.createdBy).subscribe(resultUser =>{
+            
             this.userObj = resultUser;
             post.userName = resultUser.fullName
             post.userId = resultUser.id
@@ -116,8 +122,13 @@ export class HomeComponent implements OnInit, OnDestroy {
             post.userPosition = resultUser.position.positionName
             this.user.push(this.userObj)
         })
-        
+
+        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result =>{
+            post.postAttachment = result
+        })
         this.post.push(post)
+
+        console.log(post)
     }
 
     fileUpload(event: any): void {
@@ -174,6 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getPostDataSubs?.unsubscribe()
 
         this.getUserDataSubs?.unsubscribe()
+        this.getPostAttachmentDataSubs?.unsubscribe()
     }
 
 }
