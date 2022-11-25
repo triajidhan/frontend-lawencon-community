@@ -9,5 +9,7 @@ export interface PaymentActivityDetail extends File, Activity {
 	approve: boolean
 	activity: Activity
 	file: File
+	userName: string
+	createdBy: string;
 }
 
