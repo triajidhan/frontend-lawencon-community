@@ -181,12 +181,14 @@
                                             {{post[i].contents }}
                                         </p>
                                         <div>
-                                            <img src="../../../assets/images/article.png" alt="pos image"
+                                            <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
+                                                <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}" alt="pos image"
+                                                    class="w-4 pr-3 mt-3">
+                                            </ng-container>
+                                            <!-- <img src="../../../assets/images/article.png" alt="pos image"
                                                 class="w-4 pr-3 mt-3">
                                             <img src="../../../assets/images/article.png" alt="pos image"
-                                                class="w-4 pr-3 mt-3">
-                                            <img src="../../../assets/images/article.png" alt="pos image"
-                                                class="w-4 pr-3 mt-3">
+                                                class="w-4 pr-3 mt-3"> -->
                                         </div>
                                     </p-card>
 
