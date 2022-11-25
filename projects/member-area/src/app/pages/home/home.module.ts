@@ -27,7 +27,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, DialogModule,
-        ReactiveFormsModule, DropdownModule,InfiniteScrollModule
+        ReactiveFormsModule, DropdownModule,
+        InfiniteScrollModule
     ],
     exports: [
         HomeComponent
