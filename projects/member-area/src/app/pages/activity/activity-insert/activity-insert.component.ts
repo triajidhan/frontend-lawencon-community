@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
+import { ActivityType } from "projects/interface/activity-type"
+import { ActivityTypeService } from "projects/main-area/src/app/service/activity-type.service"
 import { Subscription } from "rxjs"
 import { ActivityService } from "../../../service/activity.service"
 
@@ -16,8 +18,8 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     type!: string
     date?: Date
 
-    // activityTypesRes!: ActivityType[]
-    // activityTypes: any[] = []
+    activityTypesRes!: ActivityType[]
+    activityTypes: any[] = []
 
     resultExtension!: string
     resultFile !: string
@@ -28,7 +30,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     activityForm = this.fb.group({
         title: ['', Validators.required],
         provider: ['', Validators.required],
-        locations: ['', Validators.required],
+        location: ['', Validators.required],
         beginSchedule: ['', Validators.required],
         finishSchedule: ['', Validators.required],
         price: ['', Validators.required],
@@ -38,11 +40,13 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
         file: this.fb.group({
             files: [''],
             ext: ['']
-        })
+        }),
+        activityTypeId: ['']
     })
 
     constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder,
-        private router: Router, private activityService: ActivityService) { }
+        private router: Router, private activityService: ActivityService,
+        private activityTypeService: ActivityTypeService) { }
 
     ngOnInit(): void {
         this.items = [
@@ -58,16 +62,16 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
             this.type = result['type']
         })
 
-        // this.getAllActivityTypeSubscription = this.activityTypeService.getAll().subscribe(result => {
-        //     this.activityTypesRes = result
-        //     for (let i = 0; i < this.activityTypesRes.length; i++) {
-        //         this.activityTypes.push({
-        //             activityTypeName: this.activityTypesRes[i].activityTypeName,
-        //             activityTypeCode: this.activityTypesRes[i].activityTypeCode,
-        //             id: this.activityTypesRes[i].id
-        //         })
-        //     }
-        // })
+        this.getAllActivityTypeSubscription = this.activityTypeService.getAll().subscribe(result => {
+            this.activityTypesRes = result
+            for (let i = 0; i < this.activityTypesRes.length; i++) {
+                this.activityTypes.push({
+                    activityTypeName: this.activityTypesRes[i].activityTypeName,
+                    activityTypeCode: this.activityTypesRes[i].activityTypeCode,
+                    id: this.activityTypesRes[i].id
+                })
+            }
+        })
     }
 
     fileUpload(event: any): void {
@@ -93,7 +97,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
                 ext: this.resultExtension
             },
             activityType: {
-                id: 'bakso goreng'
+                id: this.activityForm.value.activityTypeId
             }
         })
         this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).subscribe(() => {

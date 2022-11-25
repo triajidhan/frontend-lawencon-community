@@ -121,6 +121,7 @@
                 <div>
                     <p-card>
                         <div class="grid w-full bg-white">
+                            <h3 class="mx-3 border-0 md:px-4">Create your own activity :</h3>
                             <form [formGroup]="activityForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                                 <div class="formgrid grid">
                                     <div class="field col-12 md:col-6">
@@ -134,8 +135,8 @@
                                             type="text" class="w-full p-inputtext-sm" required>
                                     </div>
                                     <div class="field col-12 md:col-6">
-                                        <label for="locations">Locations<span class="text-red-500">*</span></label>
-                                        <input pInputText id="locations" formControlName="locations" name="locations"
+                                        <label for="location">Location<span class="text-red-500">*</span></label>
+                                        <input pInputText id="location" formControlName="location" name="location"
                                             type="text" class="w-full p-inputtext-sm" required>
                                     </div>
                                     <div class="field col-12 md:col-6">
@@ -147,13 +148,32 @@
                                         <label for="beginSchedule" class="w-full">Begin Schedule<span
                                                 class="text-red-500">*</span></label>
                                         <p-calendar [showTime]="true" class="w-full" inputId="beginSchedule" clas
-                                            styleClass="calendar"></p-calendar>
+                                            styleClass="calendar" id="beginSchedule" formControlName="beginSchedule"
+                                            [required]="true">
+                                        </p-calendar>
                                     </div>
                                     <div class="field col-12 md:col-6">
                                         <label for="finishSchedule" class="w-full">Finish Schedule<span
                                                 class="text-red-500">*</span></label>
                                         <p-calendar [showTime]="true" class="w-full" inputId="finishSchedule" clas
-                                            styleClass="calendar"></p-calendar>
+                                            styleClass="calendar" id="finishSchedule" formControlName="finishSchedule"
+                                            [required]="true">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label for="activityTypeName">Activity Type <span
+                                                class="text-red-500">*</span></label>
+                                        <p-dropdown [options]="activityTypes" styleClass="w-full"
+                                            optionLabel="activityTypeName" optionValue="id" name="activityType"
+                                            id="activityTypeName" formControlName="activityTypeId"
+                                            placeholder="Select an Activity Type" [required]="true">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="field col-12">
+                                        <label for="file">Photo <span class="text-red-500">*</span></label>
+                                        <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
+                                            (uploadHandler)="fileUpload($event)">
+                                        </p-fileUpload>
                                     </div>
                                     <div class="col-12 my-3">
                                         <button [disabled]="activityForm.invalid" pButton type="submit"
@@ -161,6 +181,7 @@
                                             class="main-color"></button>
                                     </div>
                                 </div>
+                                <pre> {{activityForm.value | json}}</pre>
                             </form>
                         </div>
                     </p-card>
