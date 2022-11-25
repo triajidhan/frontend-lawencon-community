@@ -155,38 +155,30 @@
                             <ng-container *ngFor="let p of post; index as i">
 
                                 <div class="md:mx-5">
-                                    {{post[i].id}}
                                     <div class="flex  align-items-center mb-3 mt-7">
                                         <div class="max-w-max mr-3">
-                                            <img src="../../../assets/images/article.png" alt=""
+                                            <img src="{{urlFile}}{{ post[i].userPhotoId }}" alt=""
                                                 class="w-3rem h-3rem border-circle">
                                         </div>
                                         <div class="w-full">
-                                            <h3>Rifki Dzaky</h3>
-                                            <p class="text-black-alpha-60">Upload 1 hour ago</p>
+                                            <h3>{{ post[i].userName }}</h3>
+                                            <p class="text-black-alpha-60">{{ post[i].createdAt }}</p>
                                         </div>
                                         <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
-                                            <h4 class="mx-3 my-1 text-purple-500">Lawencon</h4>
+                                            <h4 class="mx-3 my-1 text-purple-500">{{ post[i].userCompany }}</h4>
                                         </div>
                                         <div class="min-w-max mr-3 bg-green-100 border-round-xl">
-                                            <h4 class="mx-3 my-1 text-green-500">Java Developer</h4>
+                                            <h4 class="mx-3 my-1 text-green-500">{{ post[i].userPosition }}</h4>
                                         </div>
                                         <div class=" cursor-pointer">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </div>
                                     </div>
                                     <p-card styleClass="content-box">
-                                        <h3 class="text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing
-                                            elit
+                                        <h3 class="text-justify">{{post[i].title}}
                                         </h3>
                                         <p class="text-black-alpha-60 mt-3 text-justify">
-                                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                                            elit.
-                                            Tempore eos eius voluptates,
-                                            exercitationem assumenda optio ut molestias necessitatibus ipsam ducimus
-                                            delectus
-                                            aut
-                                            omnis dolore dicta! Neque libero eligendi reiciendis qui.
+                                            {{post[i].contents }}
                                         </p>
                                         <div>
                                             <img src="../../../assets/images/article.png" alt="pos image"

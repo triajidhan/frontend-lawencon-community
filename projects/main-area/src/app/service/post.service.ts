@@ -44,6 +44,10 @@ export class PostService{
         return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/total-post/`)
     }
 
+    getIsActiveAndOrder(startPosition:number,limit:number,asc:boolean): Observable<any>{
+        return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/is-active-order/?startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
+    }
+
     insert(data:any):Observable<any>{
         return this.httpClient.post<Post>(`${Object.values(BASE_URL)[0]}/posts/`,data)
     }

@@ -3,11 +3,14 @@ import { FormArray, FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
 import { InitEditableRow } from "primeng/table"
+import { BASE_URL } from "projects/constant/base-url"
 import { Post } from "projects/interface/post"
 import { PostType } from "projects/interface/post-type"
+import { FileService } from "projects/main-area/src/app/service/file.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
 import { Subscription } from "rxjs"
+import { UserService } from "../../service/user.service"
 
 @Component({
     selector: 'home',
@@ -16,10 +19,8 @@ import { Subscription } from "rxjs"
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-
     startPosition = 0
     limit = 2
-    maxLimit = this.startPosition + this.limit
 
     items!: MenuItem[]
     type!: string
@@ -27,12 +28,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     display: boolean = false
     // resultExtension!: string
     // resultFile !: string
+    
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
     fileArray: any[] = [];
     postTypesRes!: PostType[]
     postTypes: any[] = []
 
     post: any[] = []
+    user:any[] = []
+    userObj:Object = new Object()
+
 
     private postInsertSubs?: Subscription
     private postAttachInsertSubs?: Subscription
@@ -40,6 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private getPostDataSubs?: Subscription
 
+    private getUserDataSubs?:Subscription
 
     postForm = this.fb.group({
         title: ['', Validators.required],
@@ -54,7 +61,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
-        private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService) { }
+        private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
+        private userService:UserService,private fileService:FileService) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
@@ -91,17 +99,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     init() {
-        this.getPostDataSubs = this.postService.getAll(this.startPosition, this.limit).subscribe(result => {
-
-            for(let i = 0; i<result.length; i++){
+        this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPosition, this.limit,true).subscribe(result => {
+            for(let i = 0; i< result.length; i++){       
                 this.addData(result[i])
             }
         })
     }
 
     addData(post:any) {
-            this.post.push(post)
-            console.log(this.post)
+        this.getUserDataSubs = this.userService.getById(post.createdBy).subscribe(resultUser =>{
+            this.userObj = resultUser;
+            post.userName = resultUser.fullName
+            post.userId = resultUser.id
+            post.userPhotoId = resultUser.file.id
+            post.userCompany = resultUser.company
+            post.userPosition = resultUser.position.positionName
+            this.user.push(this.userObj)
+        })
+        
+        this.post.push(post)
     }
 
     fileUpload(event: any): void {
@@ -156,6 +172,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.postAttachInsertSubs?.unsubscribe()
         this.getAllPostTypeSubs?.unsubscribe()
         this.getPostDataSubs?.unsubscribe()
+
+        this.getUserDataSubs?.unsubscribe()
     }
 
 }

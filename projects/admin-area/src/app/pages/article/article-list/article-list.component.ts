@@ -53,7 +53,7 @@ export class ArticleListComponent implements OnInit,OnDestroy {
             result =>{
                 this.data = result
                 this.loading = false
-                this.contDataSubs = this.articleService.getTotalArticles().subscribe(result =>{
+                this.contDataSubs = this.articleService.getTotalArticle().subscribe(result =>{
                     this.totalData = result.countOfArticle
                 })
 
