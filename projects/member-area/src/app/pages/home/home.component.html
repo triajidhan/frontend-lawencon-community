@@ -194,8 +194,8 @@
 
 
                                     <div class="flex mt-5 align-items-center text-black-alpha-60">
-                                        <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer"></i>
-                                        <p class="min-w-max">15 likes</p>
+                                        <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer" (click)="actLike(post[i].id,post[i].likeId)"></i>
+                                        <p class="min-w-max">{{ post[i].countOfLike }} likes</p>
 
                                         <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
                                         <p class="w-full">15 comments</p>
@@ -293,10 +293,6 @@
                                 </div>
                             </p-card> -->
                     </ng-container>
-
-                    
-
-
 
                     <ng-container *ngIf="type == 'likes'">
                         <p-card>
