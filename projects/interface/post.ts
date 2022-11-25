@@ -10,4 +10,9 @@ export interface Post extends File, PostType {
 	titlePoll: string
 	postType: PostType
 	file: File
+	userId: string
+	userName : string
+	userPhotoId: string
+	userCompany:string
+	userPosition:string
 }
