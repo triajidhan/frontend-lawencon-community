@@ -14,20 +14,28 @@ import { Like } from "projects/interface/like";
 export class LikeService{
     constructor(private http: HttpClient) { }
 
-    getAll(startPosition: number, limit: number): Observable<Like> {
-      return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes?startPosition=${startPosition}&limit=${limit}`)
+    getAll(startPosition: number, limit: number): Observable<Like[]> {
+      return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes?startPosition=${startPosition}&limit=${limit}`)
     }
   
     getById(id: string): Observable<Like> {
       return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/id/${id}`)
     }
 
-    getByUser(userId: string): Observable<Like> {
-        return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}`)
+    getByUser(userId: string,startPosition: number, limit: number): Observable<Like[]> {
+      return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}`)
     }
 
-    getByPost(postId: string): Observable<Like> {
-        return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/users/?postId=${postId}`)
+    getByUserOrder(userId: string,startPosition: number, limit: number,ascending:boolean): Observable<Like[]> {
+      return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
+
+    getByUserAll(userId: string): Observable<Like[]> {
+        return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}`)
+    }
+
+    getByPost(postId: string): Observable<Like[]> {
+        return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?postId=${postId}`)
     }
   
     getTotalByUser(userId: string): Observable<Like> {
