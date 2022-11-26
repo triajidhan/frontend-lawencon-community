@@ -1,20 +1,21 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { LazyLoadEvent, MenuItem } from "primeng/api"
-import { PaymentSubscribe } from "projects/interface/payment-subscribe"
-import { PaymentSubscribeService } from "projects/main-area/src/app/service/payment-subscribe.service"
+import { Activity } from "projects/interface/activity"
+import { ActivityService } from "projects/main-area/src/app/service/activity.service"
+import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
 
 @Component({
-    selector: 'subscriber-payment',
-    templateUrl: './subscriber-payment.component.html'
+    selector: 'information-report-income-admin',
+    templateUrl: './information-report-income-admin.component.html'
 })
-export class SubscriberPaymentComponent implements OnInit, OnDestroy {
+export class InformationReportIncomeAdminComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
     data: any[] = []
 
     id!: number
-    paymentSubscribe!: PaymentSubscribe
+    activity!: Activity
     startPage: number = 0
     maxPage: number = 5
     totalData: number = 0
@@ -22,16 +23,16 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
 
     getAllSubs?: Subscription
     getByIdUserSubs?: Subscription
-    getByIdPaymentSubscribe?: Subscription
-    approvePaymentSubs?: Subscription
+    getTotalActivitySubs?: Subscription
 
-    constructor(private paymentSubscribeService: PaymentSubscribeService,
-        private userService: UserService) { }
+    constructor(private activityService: ActivityService, private userService: UserService,
+        private paymentActivityDetailService: PaymentActivityDetailService) { }
 
     ngOnInit(): void {
         this.items = [
-            { label: 'Home', routerLink: "/dashboard/admin" },
-            { label: 'Member Subscriber Payment' }
+            { label: 'Home', routerLink: "/dashboard/super-admin" },
+            { label: 'Income Information Report' }
+
         ]
     }
 
@@ -45,39 +46,31 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllSubs = this.paymentSubscribeService.getAll(startPage, maxPage).subscribe(
+        this.getAllSubs = this.activityService.getAll(startPage, maxPage).subscribe(
             result => {
-                console.log(result)
                 for (let i = 0; result.length; i++) {
                     this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
                         result[i].userName = resultUser.fullName
+                        // this.getTotalActivitySubs = this.paymentActivityDetailService.getTotalByActivity(result[i].id).subscribe(resultDetail => {
+                        //     result[i].totalParticipant = resultDetail.totalParticipant
                         this.data = result
                         this.loading = false
                         this.totalData = result.length
+                        // })
                     })
-
                 }
+                console.log(result)
             }
         )
     }
 
-    approvePayment(paymentSubsId: string) {
-        this.getByIdPaymentSubscribe = this.paymentSubscribeService.getById(paymentSubsId).subscribe(result => {
-            this.paymentSubscribe = result
-            this.paymentSubscribe.approve = true
+    exportData() {
 
-            console.log(this.paymentSubscribe);
-
-            this.approvePaymentSubs = this.paymentSubscribeService.update(this.paymentSubscribe).subscribe(() => {
-                this.getData()
-            })
-        })
     }
 
     ngOnDestroy(): void {
         this.getAllSubs?.unsubscribe()
         this.getByIdUserSubs?.unsubscribe()
-        this.getByIdPaymentSubscribe?.unsubscribe()
-        this.approvePaymentSubs?.unsubscribe()
+        this.getTotalActivitySubs?.unsubscribe()
     }
 }

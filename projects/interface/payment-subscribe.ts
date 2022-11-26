@@ -9,7 +9,7 @@ export interface PaymentSubscribe extends File, User {
 	approve: boolean
 	user: User
 	file: File
-	createdBy: string;
+	createdBy: string
 	userName: string
 }
 

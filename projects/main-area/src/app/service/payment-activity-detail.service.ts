@@ -14,8 +14,8 @@ export class PaymentActivityDetailService {
 
 	constructor(private httpClient: HttpClient) { }
 
-	getAll(): Observable<PaymentActivityDetail> {
-		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/`)
+	getAll(startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
 	getById(id: string): Observable<PaymentActivityDetail> {
@@ -30,8 +30,8 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-activity/?activityId=${activityId}`)
 	}
 
-	getByIsActive(startPosition: number, limit: number): Observable<PaymentActivityDetail> {
-		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active/?startPosition=${startPosition}&limit=${limit}`)
+	getByIsActive(startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
 	insert(data: any): Observable<any> {

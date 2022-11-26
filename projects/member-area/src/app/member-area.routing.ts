@@ -21,5 +21,15 @@ export const memberAreaRoutes: Routes = [
         path: 'profiles',
         component: ContentMemberComponent,
         loadChildren: () => import('./pages/profile/profile-member.module').then(u => u.ProfileMemberModule)
+    },
+    {
+        path: 'member-information-reports/members',
+        component: ContentMemberComponent,
+        loadChildren: () => import('./pages/information-report-member/information-report-member.module').then(u => u.InformationReportMemberModule)
+    },
+    {
+        path: 'income-information-reports/members',
+        component: ContentMemberComponent,
+        loadChildren: () => import('./pages/information-report-income/information-report-income.module').then(u => u.InformationReportIncomeModule)
     }
 ]

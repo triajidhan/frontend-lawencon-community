@@ -45,5 +45,15 @@ export const adminAreaRoutes: Routes = [
         path: 'approve-subscriber-payments',
         component: ContentAdminComponent,
         loadChildren: () => import('./pages/aprrove-subscriber-payment/subscriber-payment.module').then(u => u.SubscriberPaymentModule)
+    },
+    {
+        path: 'member-information-reports/super-admin',
+        component: ContentSuperAdminComponent,
+        loadChildren: () => import('./pages/information-report-member/information-report-member-admin.module').then(u => u.InformationReportMemberAdminModule)
+    },
+    {
+        path: 'income-information-reports/super-admin',
+        component: ContentSuperAdminComponent,
+        loadChildren: () => import('./pages/information-report-income/information-report-income-admin.module').then(u => u.InformationReportIncomeAdminModule)
     }
 ]
