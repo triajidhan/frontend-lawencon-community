@@ -4,7 +4,17 @@ import { Post } from './post'
 export interface Bookmark extends User, Post {
 	id: string
 	version: number
-	userId: User
-	postId: Post
+	user: User
+	post: Post
+
+	countOfBookmark: number
+	userBookmarkPost: number
+
+	likeId: string
+	countOfLike: number
+
+	isActive: boolean
+
+	postAttachment:any[]
 }
 

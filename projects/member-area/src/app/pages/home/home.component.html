@@ -185,10 +185,6 @@
                                                 <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}" alt="pos image"
                                                     class="w-4 pr-3 mt-3">
                                             </ng-container>
-                                            <!-- <img src="../../../assets/images/article.png" alt="pos image"
-                                                class="w-4 pr-3 mt-3">
-                                            <img src="../../../assets/images/article.png" alt="pos image"
-                                                class="w-4 pr-3 mt-3"> -->
                                         </div>
                                     </p-card>
 
@@ -200,7 +196,8 @@
                                         <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
                                         <p class="w-full">15 comments</p>
 
-                                        <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer"></i>
+                                        <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer" (click)="actBookmark(post[i].id,post[i].bookmarkId)"></i>
+                                        <p class="min-w-max">{{ post[i].countOfBookmark }}</p>
                                     </div>
                                 </div>
                             </ng-container>
@@ -297,90 +294,84 @@
                     <ng-container *ngIf="type == 'likes'">
                         <p-card>
                             <p-tabMenu [model]="items" [activeItem]="items[1]"></p-tabMenu>
-
-                            <div class="md:mx-5">
-                                <div class="flex  align-items-center mb-3 mt-7">
-                                    <div class="max-w-max mr-3">
-                                        <img src="../../../assets/images/article.png" alt=""
-                                            class="w-3rem h-3rem border-circle">
-                                    </div>
-                                    <div class="w-full">
-                                        <h3>Rifki Dzaky</h3>
-                                        <p class="text-black-alpha-60">Upload 1 hour ago</p>
-                                    </div>
-                                    <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
-                                        <h4 class="mx-3 my-1 text-purple-500">Lawencon</h4>
-                                    </div>
-                                    <div class="min-w-max mr-3 bg-green-100 border-round-xl">
-                                        <h4 class="mx-3 my-1 text-green-500">Java Developer</h4>
-                                    </div>
-                                    <div class=" cursor-pointer">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </div>
-                                </div>
-                                <p-card styleClass="content-box">
-                                    <h3 class="text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit
-                                    </h3>
-                                    <p class="text-black-alpha-60 mt-3 text-justify">
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                                        elit.
-                                        Tempore eos eius voluptates,
-                                        exercitationem assumenda optio ut molestias necessitatibus ipsam ducimus
-                                        delectus
-                                        aut
-                                        omnis dolore dicta! Neque libero eligendi reiciendis qui.
-                                    </p>
-                                    <div>
-                                        <img src="../../../assets/images/article.png" alt="pos image"
-                                            class="w-4 pr-3 mt-3">
-                                        <img src="../../../assets/images/article.png" alt="pos image"
-                                            class="w-4 pr-3 mt-3">
-                                        <img src="../../../assets/images/article.png" alt="pos image"
-                                            class="w-4 pr-3 mt-3">
-                                    </div>
-                                </p-card>
-
-                                <p-card styleClass="pooling-content">
-                                    <h3 class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing
-                                        elit</h3>
-                                    <div class="mt-3 py-3 body-color">
-                                        <div class="flex align-items-center">
-                                            <p class="text-center text-lg main-text w-full">Option 1</p>
-                                            <p class="min-w-max mr-3">5 votes</p>
+                            <ng-container *ngFor="let l of like;index as i">
+                                <div class="md:mx-5">
+                                    <div class="flex  align-items-center mb-3 mt-7">
+                                        <div class="max-w-max mr-3">
+                                            <img src="{{urlFile}}{{ like[i].user.file.id }}" alt=""
+                                                class="w-3rem h-3rem border-circle">
+                                        </div>
+                                        <div class="w-full">
+                                            <h3>{{ like[i].user.fullName }}</h3>
+                                            <p class="text-black-alpha-60">{{ like[i].post.createdAt }}</p>
+                                        </div>
+                                        <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
+                                            <h4 class="mx-3 my-1 text-purple-500">{{ like[i].user.company }}</h4>
+                                        </div>
+                                        <div class="min-w-max mr-3 bg-green-100 border-round-xl">
+                                            <h4 class="mx-3 my-1 text-green-500">{{ like[i].user.position.positionName }}</h4>
+                                        </div>
+                                        <div class=" cursor-pointer">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </div>
                                     </div>
-                                    <div class="mt-3 py-3 body-color">
-                                        <div class="flex align-items-center">
-                                            <p class="text-center text-lg main-text w-full">Option 2</p>
-                                            <p class="min-w-max mr-3">5 votes</p>
+                                    <p-card styleClass="content-box">
+                                        <h3 class="text-justify">{{ like[i].post.title }}
+                                        </h3>
+                                        <p class="text-black-alpha-60 mt-3 text-justify">
+                                            {{ like[i].post.contents }}
+                                        </p>
+                                        <div>
+                                            <ng-container *ngFor="let pa of like[i].postAttachment;index as j">
+                                                <img src="{{urlFile}}{{ like[i].postAttachment[j].file.id }}" alt="pos image"
+                                                    class="w-4 pr-3 mt-3">
+                                            </ng-container>
                                         </div>
-                                    </div>
-                                    <div class="mt-3 py-3 body-color">
-                                        <div class="flex align-items-center">
-                                            <p class="text-center text-lg main-text w-full">Option 3</p>
-                                            <p class="min-w-max mr-3">5 votes</p>
-                                        </div>
-                                    </div>
-
+                                    </p-card>
+    
                                     <div class="flex mt-5 align-items-center text-black-alpha-60">
-                                        <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
-                                        <p class="w-full">15 votes</p>
-
-                                        <p class="min-w-max">Until 2 day</p>
-
+                                        <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer" (click)="actLike(like[i].post.id,like[i].id)"></i>
+                                        <p class="min-w-max">{{ like[i].countOfLike }} likes</p>
+    
+                                        <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
+                                        <p class="w-full">15 comments</p>
+    
+                                        <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer" (click)="actBookmark(like[i].post.id,like[i].bookmarkId)"></i>
+                                        <p class="min-w-max">{{ post[i].countOfBookmark }}</p>
                                     </div>
-                                </p-card>
-
-                                <div class="flex mt-5 align-items-center text-black-alpha-60">
-                                    <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer"></i>
-                                    <p class="min-w-max">15 likes</p>
-
-                                    <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
-                                    <p class="w-full">15 comments</p>
-
-                                    <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer"></i>
                                 </div>
-                            </div>
+                            </ng-container>
+                            <!-- <p-card styleClass="pooling-content">
+                                        <h3 class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                            elit</h3>
+                                        <div class="mt-3 py-3 body-color">
+                                            <div class="flex align-items-center">
+                                                <p class="text-center text-lg main-text w-full">Option 1</p>
+                                                <p class="min-w-max mr-3">5 votes</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 py-3 body-color">
+                                            <div class="flex align-items-center">
+                                                <p class="text-center text-lg main-text w-full">Option 2</p>
+                                                <p class="min-w-max mr-3">5 votes</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 py-3 body-color">
+                                            <div class="flex align-items-center">
+                                                <p class="text-center text-lg main-text w-full">Option 3</p>
+                                                <p class="min-w-max mr-3">5 votes</p>
+                                            </div>
+                                        </div>
+    
+                                        <div class="flex mt-5 align-items-center text-black-alpha-60">
+                                            <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
+                                            <p class="w-full">15 votes</p>
+    
+                                            <p class="min-w-max">Until 2 day</p>
+    
+                                        </div>
+                                    </p-card> -->
+    
                         </p-card>
                     </ng-container>
 
@@ -388,89 +379,84 @@
                         <p-card>
                             <p-tabMenu [model]="items" [activeItem]="items[2]"></p-tabMenu>
 
-                            <div class="md:mx-5">
-                                <div class="flex  align-items-center mb-3 mt-7">
-                                    <div class="max-w-max mr-3">
-                                        <img src="../../../assets/images/article.png" alt=""
-                                            class="w-3rem h-3rem border-circle">
-                                    </div>
-                                    <div class="w-full">
-                                        <h3>Rifki Dzaky</h3>
-                                        <p class="text-black-alpha-60">Upload 1 hour ago</p>
-                                    </div>
-                                    <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
-                                        <h4 class="mx-3 my-1 text-purple-500">Lawencon</h4>
-                                    </div>
-                                    <div class="min-w-max mr-3 bg-green-100 border-round-xl">
-                                        <h4 class="mx-3 my-1 text-green-500">Java Developer</h4>
-                                    </div>
-                                    <div class=" cursor-pointer">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </div>
-                                </div>
-                                <p-card styleClass="content-box">
-                                    <h3 class="text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit
-                                    </h3>
-                                    <p class="text-black-alpha-60 mt-3 text-justify">
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                                        elit.
-                                        Tempore eos eius voluptates,
-                                        exercitationem assumenda optio ut molestias necessitatibus ipsam ducimus
-                                        delectus
-                                        aut
-                                        omnis dolore dicta! Neque libero eligendi reiciendis qui.
-                                    </p>
-                                    <div>
-                                        <img src="../../../assets/images/article.png" alt="pos image"
-                                            class="w-4 pr-3 mt-3">
-                                        <img src="../../../assets/images/article.png" alt="pos image"
-                                            class="w-4 pr-3 mt-3">
-                                        <img src="../../../assets/images/article.png" alt="pos image"
-                                            class="w-4 pr-3 mt-3">
-                                    </div>
-                                </p-card>
-
-                                <p-card styleClass="pooling-content">
-                                    <h3 class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing
-                                        elit</h3>
-                                    <div class="mt-3 py-3 body-color">
-                                        <div class="flex align-items-center">
-                                            <p class="text-center text-lg main-text w-full">Option 1</p>
-                                            <p class="min-w-max mr-3">5 votes</p>
+                            <ng-container *ngFor="let b of bookmark;index as i">
+                                <div class="md:mx-5">
+                                    <div class="flex  align-items-center mb-3 mt-7">
+                                        <div class="max-w-max mr-3">
+                                            <img src="{{urlFile}}{{ bookmark[i].user.file.id }}" alt=""
+                                                class="w-3rem h-3rem border-circle">
+                                        </div>
+                                        <div class="w-full">
+                                            <h3>{{ bookmark[i].user.fullName }}</h3>
+                                            <p class="text-black-alpha-60">{{ bookmark[i].post.createdAt }}</p>
+                                        </div>
+                                        <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
+                                            <h4 class="mx-3 my-1 text-purple-500">{{ bookmark[i].user.company }}</h4>
+                                        </div>
+                                        <div class="min-w-max mr-3 bg-green-100 border-round-xl">
+                                            <h4 class="mx-3 my-1 text-green-500">{{ bookmark[i].user.position.positionName }}</h4>
+                                        </div>
+                                        <div class=" cursor-pointer">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </div>
                                     </div>
-                                    <div class="mt-3 py-3 body-color">
-                                        <div class="flex align-items-center">
-                                            <p class="text-center text-lg main-text w-full">Option 2</p>
-                                            <p class="min-w-max mr-3">5 votes</p>
+                                    <p-card styleClass="content-box">
+                                        <h3 class="text-justify">{{ bookmark[i].post.title }}
+                                        </h3>
+                                        <p class="text-black-alpha-60 mt-3 text-justify">
+                                            {{ bookmark[i].post.contents }}
+                                        </p>
+                                        <div>
+                                            <ng-container *ngFor="let pa of bookmark[i].postAttachment;index as j">
+                                                <img src="{{urlFile}}{{ bookmark[i].postAttachment[j].file.id }}" alt="pos image"
+                                                    class="w-4 pr-3 mt-3">
+                                            </ng-container>
                                         </div>
-                                    </div>
-                                    <div class="mt-3 py-3 body-color">
-                                        <div class="flex align-items-center">
-                                            <p class="text-center text-lg main-text w-full">Option 3</p>
-                                            <p class="min-w-max mr-3">5 votes</p>
+                                    </p-card>
+    
+                                    <!-- <p-card styleClass="pooling-content">
+                                        <h3 class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing
+                                            elit</h3>
+                                        <div class="mt-3 py-3 body-color">
+                                            <div class="flex align-items-center">
+                                                <p class="text-center text-lg main-text w-full">Option 1</p>
+                                                <p class="min-w-max mr-3">5 votes</p>
+                                            </div>
                                         </div>
-                                    </div>
-
+                                        <div class="mt-3 py-3 body-color">
+                                            <div class="flex align-items-center">
+                                                <p class="text-center text-lg main-text w-full">Option 2</p>
+                                                <p class="min-w-max mr-3">5 votes</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 py-3 body-color">
+                                            <div class="flex align-items-center">
+                                                <p class="text-center text-lg main-text w-full">Option 3</p>
+                                                <p class="min-w-max mr-3">5 votes</p>
+                                            </div>
+                                        </div>
+    
+                                        <div class="flex mt-5 align-items-center text-black-alpha-60">
+                                            <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
+                                            <p class="w-full">15 votes</p>
+    
+                                            <p class="min-w-max">Until 2 day</p>
+    
+                                        </div>
+                                    </p-card> -->
+    
                                     <div class="flex mt-5 align-items-center text-black-alpha-60">
-                                        <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
-                                        <p class="w-full">15 votes</p>
-
-                                        <p class="min-w-max">Until 2 day</p>
-
+                                        <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer"></i>
+                                        <p class="min-w-max">{{ bookmark[i].countOfLike }} likes</p>
+    
+                                        <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
+                                        <p class="w-full">15 comments</p>
+    
+                                        <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer" (click)="actBookmark(bookmark[i].post.id,bookmark[i].id)"></i>
+                                        <p class="min-w-max">{{ post[i].countOfBookmark }}</p>
                                     </div>
-                                </p-card>
-
-                                <div class="flex mt-5 align-items-center text-black-alpha-60">
-                                    <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer"></i>
-                                    <p class="min-w-max">15 likes</p>
-
-                                    <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
-                                    <p class="w-full">15 comments</p>
-
-                                    <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer"></i>
                                 </div>
-                            </div>
+                            </ng-container>
                         </p-card>
                     </ng-container>
                 </div>

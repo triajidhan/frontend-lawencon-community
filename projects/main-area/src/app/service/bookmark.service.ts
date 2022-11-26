@@ -22,8 +22,16 @@ export class BookmarkService{
       return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/id/${id}`)
     }
 
-    getByUser(userId: string): Observable<any> {
-        return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}`)
+    getByUser(userId: string): Observable<Bookmark[]> {
+        return this.http.get<Bookmark[]>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}`)
+    }
+
+    getByUserOrder(userId: string,startPosition: number, limit: number,ascending:boolean): Observable<Bookmark[]> {
+      return this.http.get<Bookmark[]>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
+
+    getByUserAll(userId: string): Observable<Bookmark[]> {
+        return this.http.get<Bookmark[]>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}`)
     }
 
     getByPost(postId: string): Observable<any> {

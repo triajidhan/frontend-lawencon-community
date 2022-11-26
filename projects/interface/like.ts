@@ -6,9 +6,13 @@ export interface Like extends User, Post {
 	version: number
 	user: User
 	post: Post
+	
 	countOfLike: number
 	userLikePost: number
+
 	isActive: boolean
 	likeId: string
+
+	postAttachment:any[]
 }
 
