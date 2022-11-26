@@ -10,6 +10,6 @@ export interface PaymentActivityDetail extends File, Activity {
 	activity: Activity
 	file: File
 	userName: string
-	createdBy: string;
+	createdBy: string
 }
 

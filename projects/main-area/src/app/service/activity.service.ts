@@ -15,8 +15,8 @@ export class ActivityService {
 	constructor(private httpClient: HttpClient) { }
 
 
-	getAll(startPosition: number, limit: number): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/?startPosition=${startPosition}&limit=${limit}`)
+	getAll(startPosition: number, limit: number): Observable<Activity[]> {
+		return this.httpClient.get<Activity[]>(`${Object.values(BASE_URL)[0]}/activities/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
 	getById(activityId: string): Observable<any> {
@@ -31,8 +31,8 @@ export class ActivityService {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity/`)
 	}
 
-	getByActivityType(activityTypeId: string, startPosition: number, limit: number): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-type/?activityTypeId=${activityTypeId}&startPosition=${startPosition}&limit=${limit}`)
+	getByActivityType(activityTypeId: string, startPosition: number, limit: number): Observable<Activity[]> {
+		return this.httpClient.get<Activity[]>(`${Object.values(BASE_URL)[0]}/activities/activity-type/?activityTypeId=${activityTypeId}&startPosition=${startPosition}&limit=${limit}`)
 	}
 
 	getTotalByActivityType(activityTypeId: string): Observable<any> {

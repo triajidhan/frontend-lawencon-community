@@ -56,6 +56,21 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
                 routerLink: '/activities/type/all'
             },
             {
+                label: 'Information Report',
+                items: [
+                    {
+                        label: 'Member',
+                        icon: 'fa-solid fa-users',
+                        routerLink: '/member-information-reports/members'
+                    },
+                    {
+                        label: 'Income',
+                        icon: 'fa-solid fa-coins',
+                        routerLink: '/income-information-reports/members'
+                    }
+                ]
+            },
+            {
                 label: 'Settings',
                 styleClass: 'settings',
                 items: [

@@ -13,5 +13,8 @@ export interface Activity extends File, ActivityType {
 	price: number
 	activityType: ActivityType
 	file: File
+	createdBy: string
+	userName: string
+	totalParticipant: number
 }
 
