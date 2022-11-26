@@ -9,29 +9,30 @@ import { HttpClientModule } from '@angular/common/http'
 import { InputTextareaModule } from 'primeng/inputtextarea'
 import { TableModule } from 'primeng/table'
 import { MenuModule } from 'primeng/menu'
+import { ArticleRouting } from "./article.routing"
 import { TabMenuModule } from 'primeng/tabmenu'
-import { HomeRouting } from "./home.routing"
-import { DialogModule } from "primeng/dialog"
 import { ReactiveFormsModule } from "@angular/forms"
+import { CalendarModule } from "primeng/calendar"
 import { DropdownModule } from "primeng/dropdown"
-import { InfiniteScrollModule } from 'ngx-infinite-scroll'
-import { HomeComponent } from "./home-list/home.component"
+import { InfiniteScrollModule } from "ngx-infinite-scroll"
+import { DialogModule } from "primeng/dialog"
+import { ArticleListComponent } from "./article-list/article-list.component"
 
 @NgModule({
     declarations: [
-        HomeComponent
+        ArticleListComponent
     ],
     imports: [
-        HomeRouting, ButtonModule, InputTextModule,
+        ArticleRouting, ButtonModule, InputTextModule,
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule, TabMenuModule, DialogModule,
-        ReactiveFormsModule, DropdownModule,
-        InfiniteScrollModule
+        MenuModule, TabMenuModule, ReactiveFormsModule,
+        CalendarModule, DropdownModule, InfiniteScrollModule,
+        DialogModule
     ],
     exports: [
-        HomeComponent
+        ArticleListComponent
     ]
 })
-export class HomeModule { }
+export class ArticleModule { }

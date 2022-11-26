@@ -15,12 +15,12 @@ import { PostAttachmentService } from "projects/main-area/src/app/service/post-a
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
 import { Subscription } from "rxjs"
-import { UserService } from "../../service/user.service"
+import { UserService } from "../../../service/user.service"
 
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
-    styleUrls: ['../../../styles.css']
+    styleUrls: ['../../../../styles.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             id: ['']
         })
     })
-    
+
     updateLike = this.fb.group({
         id: [''],
         isActive: [false]
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             id: ['']
         })
     })
-    
+
     updateBookmark = this.fb.group({
         id: [''],
         isActive: [false]
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private insertLikeDataSubs?: Subscription
     private updateLikeDataSubs?: Subscription
     private getIdLikeDataSubs?: Subscription
-    private getPostDataByIdSubs?:Subscription
+    private getPostDataByIdSubs?: Subscription
     private getLikeDataSubs?: Subscription
 
 
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
         private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
         private userService: UserService, private fileService: FileService, private postAttachmentService: PostAttachmentService,
-        private apiService: ApiService, private likeService: LikeService,private bookmarkService: BookmarkService) { }
+        private apiService: ApiService, private likeService: LikeService, private bookmarkService: BookmarkService) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
@@ -166,12 +166,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.initBookmark()
     }
 
-    initPost(){
-        this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {            
+    initPost() {
+        this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
-                
+
                 this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
-                    
+
                     result[i].likeId = userLike.likeId
                     result[i].countOfLike = userLike.countOfLike
                 })
@@ -181,37 +181,37 @@ export class HomeComponent implements OnInit, OnDestroy {
                     result[i].bookmarkId = userBookmark.id
                     result[i].countOfBookmark = userBookmark.countOfBookmark
                 })
-                
+
                 this.addData(result[i])
             }
         })
     }
 
     initLike() {
-        this.getLikeDataSubs = this.likeService.getByUserOrder(this.myId,this.startPosition,this.limit,true).subscribe(result=>{
-            this.likeRes = result 
+        this.getLikeDataSubs = this.likeService.getByUserOrder(this.myId, this.startPosition, this.limit, true).subscribe(result => {
+            this.likeRes = result
             for (let i = 0; i < this.likeRes.length; i++) {
-                           
+
                 this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.likeRes[i].post.id, this.myId).subscribe(userLike => {
-                    
+
                     this.likeRes[i].likeId = userLike.likeId
                     this.likeRes[i].countOfLike = userLike.countOfLike
                 })
-                
+
                 this.addLikeData(this.likeRes[i])
             }
         })
     }
 
     initBookmark() {
-        this.getBookmarkDataSubs = this.bookmarkService.getByUserOrder(this.myId,this.startPosition,this.limit,true).subscribe(result=>{
-            this.bookmarkRes = result 
+        this.getBookmarkDataSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPosition, this.limit, true).subscribe(result => {
+            this.bookmarkRes = result
             for (let i = 0; i < this.bookmarkRes.length; i++) {
-                           
+
                 this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.bookmarkRes[i].post.id, this.myId).subscribe(bookmarkLike => {
                     this.bookmarkRes[i].countOfBookmark = bookmarkLike.countOfBookmark
                 })
-                
+
                 this.addBookmarkData(this.bookmarkRes[i])
             }
         })
@@ -233,26 +233,26 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
 
         console.log(post)
-        
+
         this.post.push(post)
     }
 
-    addLikeData(like:any){
+    addLikeData(like: any) {
         this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(like.post.id, this.myId).subscribe(userBookmark => {
 
             like.bookmarkId = userBookmark.id
             like.countOfBookmark = userBookmark.countOfBookmark
         })
-        
+
         this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(like.post.id).subscribe(result => {
             like.postAttachment = result
         })
-        
+
         this.like.push(like)
     }
 
 
-    addBookmarkData(bookmark:any){
+    addBookmarkData(bookmark: any) {
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(bookmark.post.id, this.myId).subscribe(userLike => {
             bookmark.likeId = userLike.likeId
             bookmark.countOfLike = userLike.countOfLike
@@ -261,7 +261,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(bookmark.post.id).subscribe(result => {
             bookmark.postAttachment = result
         })
-        
+
         this.bookmark.push(bookmark)
     }
 
@@ -314,10 +314,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     actBookmark(postId: string, bookmarkId: string) {
-        
-        if (bookmarkId) {            
+
+        if (bookmarkId) {
             this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
-                
+
                 if (result.isActive) {
                     this.updateBookmark.controls.isActive.setValue(false)
                 } else {
@@ -326,7 +326,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
                 this.updateBookmark.controls['id'].setValue(result.id)
 
-                this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {        
+                this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {
                     for (let i = 0; i < this.post.length; i++) {
                         this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
                             this.post[i].bookmarkId = userBookmark.id
@@ -368,11 +368,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     actLike(postId: string, likeId: string) {
-        
+
         if (likeId) {
-            
+
             this.getIdLikeDataSubs = this.likeService.getById(likeId).subscribe(result => {
-                
+
                 if (result.isActive) {
                     this.updateLike.controls.isActive.setValue(false)
                 } else {
@@ -381,7 +381,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
                 this.updateLike.controls['id'].setValue(result.id)
 
-                this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {        
+                this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
                     for (let i = 0; i < this.post.length; i++) {
                         this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.post[i].id, this.myId).subscribe(userLike => {
                             this.post[i].likeId = userLike.likeId
@@ -428,7 +428,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.insertLikeDataSubs?.unsubscribe()
         this.updateLikeDataSubs?.unsubscribe()
         this.getIdLikeDataSubs?.unsubscribe()
-        
+
 
         this.getLikeDataSubs?.unsubscribe()
         this.getPostDataByIdSubs?.unsubscribe()

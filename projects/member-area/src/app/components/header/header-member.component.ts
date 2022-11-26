@@ -56,6 +56,10 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
                 routerLink: '/activities/type/all'
             },
             {
+                label: 'Article',
+                routerLink: '/articles/members'
+            },
+            {
                 label: 'Information Report',
                 items: [
                     {
