@@ -31,5 +31,10 @@ export const memberAreaRoutes: Routes = [
         path: 'income-information-reports/members',
         component: ContentMemberComponent,
         loadChildren: () => import('./pages/information-report-income/information-report-income.module').then(u => u.InformationReportIncomeModule)
+    },
+    {
+        path: 'articles/members',
+        component: ContentMemberComponent,
+        loadChildren: () => import('./pages/article/article.module').then(u => u.ArticleModule)
     }
 ]
