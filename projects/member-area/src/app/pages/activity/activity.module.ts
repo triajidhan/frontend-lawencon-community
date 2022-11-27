@@ -18,6 +18,7 @@ import { CalendarModule } from "primeng/calendar"
 import { DropdownModule } from "primeng/dropdown"
 import { InfiniteScrollModule } from "ngx-infinite-scroll"
 import { DialogModule } from "primeng/dialog"
+import { PanelMenuModule } from 'primeng/panelmenu'
 
 @NgModule({
     declarations: [
@@ -30,7 +31,7 @@ import { DialogModule } from "primeng/dialog"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
         CalendarModule, DropdownModule, InfiniteScrollModule,
-        DialogModule
+        DialogModule, PanelMenuModule
     ],
     exports: [
         ActivityListComponent, ActivityInsertComponent

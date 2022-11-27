@@ -237,7 +237,8 @@
                                     </div>
 
                                     <div pStyleClass="@next" enterClass="hidden" leaveToClass="hidden"
-                                        [hideOnOutsideClick]="true" enterActiveClass="fadein"
+                                        [hideOnOutsideClick]="true" enterActiveClass="scalein"
+                                        leaveActiveClass="fadeout"
                                         class="w-full text-right main-text cursor-pointer mt-2 underline hover:text-purple-500">
                                         <div (click)="btnToggleComment()">
                                             <ng-container *ngIf="isShowComment">

@@ -16,7 +16,7 @@ import { Subscription } from "rxjs"
 export class ActivityListComponent implements OnInit {
 
     startPosition = 0
-    limit = 3
+    limit = 6
     items!: MenuItem[]
     type!: string
     activities: any[] = []
@@ -53,12 +53,22 @@ export class ActivityListComponent implements OnInit {
         this.primengConfig.ripple = true
 
         this.items = [
-            { label: 'All', routerLink: '/activities/type/all' },
-            { label: 'Event', routerLink: '/activities/type/events' },
-            { label: 'Course', routerLink: '/activities/type/courses' },
-            { label: 'My Activity', routerLink: '/activities/type/my-activities' },
-            { label: 'My Event', routerLink: '/activities/type/my-events' },
-            { label: 'My Course', routerLink: '/activities/type/my-courses' }
+            {
+                label: 'Activity',
+                items: [
+                    { label: 'All', routerLink: '/activities/type/all' },
+                    { label: 'Event', routerLink: '/activities/type/events' },
+                    { label: 'Course', routerLink: '/activities/type/courses' }
+                ]
+            },
+            {
+                label: 'My Activity',
+                items: [
+                    { label: 'All', routerLink: '/activities/type/my-activities' },
+                    { label: 'My Event', routerLink: '/activities/type/my-events' },
+                    { label: 'My Course', routerLink: '/activities/type/my-courses' }
+                ]
+            }
         ]
 
         this.activatedRoute.params.subscribe(result => {

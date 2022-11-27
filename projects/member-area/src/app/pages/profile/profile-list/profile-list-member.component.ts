@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { Router } from "@angular/router"
+import { MenuItem } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 
-const BASE_URL: string = 'http://localhost:8080'
 
 @Component({
     selector: 'profile-list-member',
@@ -15,12 +16,20 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     roleCode?: string | null
     email?: string | null
     photoId?: number | null
-    fileDownload = `${BASE_URL}/files/download/`
+    items!: MenuItem[]
+    fileDownload = `${BASE_URL.LOCALHOST}/files/download/`
 
     constructor(private apiService: ApiService, private router: Router) { }
 
 
     ngOnInit(): void {
+        this.items = [
+            { label: 'Edit Profile', routerLink: '/activities/type/all' },
+            { label: 'Change Password', routerLink: '/activities/type/events' },
+            { label: 'Log Out', routerLink: '/activities/type/courses' }
+        ]
+
+
         if (this.apiService.getId()) {
             this.id = this.apiService.getId()
         }
