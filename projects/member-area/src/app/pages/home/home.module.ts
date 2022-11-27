@@ -16,10 +16,11 @@ import { ReactiveFormsModule } from "@angular/forms"
 import { DropdownModule } from "primeng/dropdown"
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { HomeComponent } from "./home-list/home.component"
+import { HomeInsertComponent } from "./home-insert/home-insert.component"
 
 @NgModule({
     declarations: [
-        HomeComponent
+        HomeComponent, HomeInsertComponent
     ],
     imports: [
         HomeRouting, ButtonModule, InputTextModule,
@@ -31,7 +32,7 @@ import { HomeComponent } from "./home-list/home.component"
         InfiniteScrollModule
     ],
     exports: [
-        HomeComponent
+        HomeComponent, HomeInsertComponent
     ]
 })
 export class HomeModule { }

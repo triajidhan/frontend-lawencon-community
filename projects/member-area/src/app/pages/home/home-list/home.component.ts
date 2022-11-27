@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
 import { InitEditableRow } from "primeng/table"
 import { BASE_URL } from "projects/constant/base-url"
+import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { Bookmark } from "projects/interface/bookmark"
 import { Like } from "projects/interface/like"
 import { PostType } from "projects/interface/post-type"
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private postInsertSubs?: Subscription
     private postAttachInsertSubs?: Subscription
-    private getAllPostTypeSubs?: Subscription
+    private getByCodePostTypeSubsc?: Subscription
 
     private getPostDataSubs?: Subscription
     private getPostAttachmentDataSubs?: Subscription
@@ -125,9 +126,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.myId = String(this.apiService.getId())
 
         this.items = [
-            { label: 'Thread', routerLink: '/homes/threads' },
-            { label: 'Likes', routerLink: '/homes/likes' },
-            { label: 'Bookmark', routerLink: '/homes/bookmarks' }
+            { label: 'Thread', routerLink: '/homes/type/threads' },
+            { label: 'Likes', routerLink: '/homes/type/likes' },
+            { label: 'Bookmark', routerLink: '/homes/type/bookmarks' }
         ]
 
         this.init()
@@ -147,18 +148,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     init() {
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
-        })
-
-        this.getAllPostTypeSubs = this.postTypeService.getAll().subscribe(result => {
-            this.postTypesRes = result
-
-            for (let i = 0; i < this.postTypesRes.length; i++) {
-                this.postTypes.push({
-                    postTypeName: this.postTypesRes[i].postTypeName,
-                    postTypeCode: this.postTypesRes[i].postTypeCode,
-                    id: this.postTypesRes[i].id
-                })
-            }
         })
 
         this.initPost()
@@ -300,17 +289,35 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     postInsert() {
-        this.postForm.patchValue({
-            postType: {
-                id: this.postForm.value.postTypeId
-            },
-        })
-        this.postForm.value.file = this.fileArray;
+        if (this.postType == 'regular') {
+            this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).subscribe(result => {
+                this.postForm.patchValue({
+                    postType: {
+                        id: result.id
+                    }
+                })
+                this.postForm.value.postTypeId = result.id
+                this.postForm.value.file = this.fileArray
 
-        //console.log(this.postForm.value)
-        this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
-            this.display = false
-        })
+                this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
+                    this.display = false
+                })
+            })
+        } else if (this.postType == 'premium') {
+            this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).subscribe(result => {
+                this.postForm.patchValue({
+                    postType: {
+                        id: result.id
+                    }
+                })
+                this.postForm.value.postTypeId = result.id
+                this.postForm.value.file = this.fileArray
+
+                this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
+                    this.display = false
+                })
+            })
+        }
     }
 
     actBookmark(postId: string, bookmarkId: string) {
@@ -418,8 +425,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.postInsertSubs?.unsubscribe()
         this.postAttachInsertSubs?.unsubscribe()
-        this.getAllPostTypeSubs?.unsubscribe()
         this.getPostDataSubs?.unsubscribe()
+        this.getByCodePostTypeSubsc?.unsubscribe()
 
         this.getUserDataSubs?.unsubscribe()
         this.getPostAttachmentDataSubs?.unsubscribe()
@@ -434,7 +441,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getPostDataByIdSubs?.unsubscribe()
 
         this.getBookmarkDataSubs?.unsubscribe()
-
         this.getCountBookmarkDataSubs?.unsubscribe()
 
         this.insertBookmarkDataSubs?.unsubscribe()

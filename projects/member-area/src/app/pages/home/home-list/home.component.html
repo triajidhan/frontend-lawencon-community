@@ -58,7 +58,7 @@
             </div>
             <div class="col-8 mt-3">
                 <p-card>
-                    <div class="flex mx-5" (click)="postDialog('reguler')">
+                    <div class="flex mx-5" (click)="postDialog('regular')">
                         <div class="max-w-max">
                             <img src="../../../assets/images/article.png" alt="" class="w-3rem h-3rem border-circle">
                         </div>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="flex mx-5">
-                        <div class=" flex align-items-center mt-5 mr-5 cursor-pointer" (click)="postDialog('poll')">
+                        <div class=" flex align-items-center mt-5 mr-5 cursor-pointer" routerLink="/homes/new">
                             <div
                                 class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
                                 <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
@@ -417,6 +417,16 @@
 
 <p-dialog [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
     <ng-template pTemplate="header">
+        <ng-container *ngIf="postType == 'premium'">
+            <div class="border-circle bg-orange-300 icon-box flex align-items-center justify-content-center">
+                <i class="fa-regular fa-gem icon text-xl"></i>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="postType == 'regular'">
+            <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                <i class="fa-regular fa-note-sticky icon text-xl"></i>
+            </div>
+        </ng-container>
         <h3 class="capitalize">{{postType}} Post</h3>
     </ng-template>
     <div class="grid bg-white border-round-xl w-30rem">
@@ -436,21 +446,11 @@
                         formControlName="title" placeholder="title" required>
                 </div>
                 <div class="field">
-                    <input pInputText id="titlePoll" name="titlePoll" type="text" class="w-full p-inputtext-sm"
-                        formControlName="titlePoll" placeholder="poll title" required>
-                </div>
-                <div class="field">
-                    <p-dropdown [options]="postTypes" styleClass="w-full p-inputtext-sm" optionLabel="postTypeName"
-                        optionValue="id" name="postType" id="postTypeName" formControlName="postTypeId"
-                        placeholder="Select an Post Type">
-                    </p-dropdown>
-                </div>
-                <div class="field">
                     <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
-                        formControlName="contents" class="w-full" placeholder="contents"></textarea>
+                        formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
                 </div>
                 <div class="field">
-                    <label for="file">Photo <span class="text-red-500">*</span></label>
+                    <label for="file">Photo</label>
                     <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
                         (uploadHandler)="fileUpload($event)" [multiple]="true">
                     </p-fileUpload>
