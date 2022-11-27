@@ -49,7 +49,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
         this.navMenus = [
             {
                 label: 'Home',
-                routerLink: '/homes/threads'
+                routerLink: '/homes/type/threads'
             },
             {
                 label: 'Activity',
