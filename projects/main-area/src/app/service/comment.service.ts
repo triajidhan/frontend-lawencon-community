@@ -10,35 +10,43 @@ import { Observable } from "rxjs";
 })
 
 
-export class Comment{
+export class CommentService{
     constructor(private http: HttpClient) { }
 
-    getAll(startPosition: number, limit: number): Observable<any> {
-      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments?startPosition=${startPosition}&limit=${limit}`)
+    getAll(startPosition: number, limit: number): Observable<Comment[]> {
+      return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments?startPosition=${startPosition}&limit=${limit}`)
     }
   
-    getById(id: string): Observable<any> {
-      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments/id/${id}`)
+    getById(id: string): Observable<Comment> {
+      return this.http.get<Comment>(`${Object.values(BASE_URL)[0]}/comments/id/${id}`)
     }
 
-    getByUser(userId: string): Observable<any> {
-        return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments/users/?userId=${userId}`)
+    getByUser(userId: string): Observable<Comment[]> {
+        return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users/?userId=${userId}`)
     }
 
-    getByPost(postId: string): Observable<any> {
-        return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments/users/?postId=${postId}`)
+    getByUserAndOrder(userId: string, asc:boolean): Observable<Comment[]> {
+      return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users-order/?userId=${userId}&asc=${asc}`)
+    }
+
+    getByPost(postId: string): Observable<Comment[]> {
+        return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users/?postId=${postId}`)
+    }
+
+    getByPostAndOrder(postId: string,asc:boolean): Observable<Comment[]> {
+      return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users-order/?postId=${postId}&asc=${asc}`)
     }
   
-    getTotalByUser(userId: string): Observable<any> {
-      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments/total-user/?userId=${userId}`)
+    getTotalByUser(userId: string): Observable<Comment> {
+      return this.http.get<Comment>(`${Object.values(BASE_URL)[0]}/comments/total-user/?userId=${userId}`)
     }
 
-    getTotalByPost(postId: string): Observable<any> {
-        return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments/total-post/?postId=${postId}`)
+    getTotalByPost(postId: string): Observable<Comment> {
+        return this.http.get<Comment>(`${Object.values(BASE_URL)[0]}/comments/total-post/?postId=${postId}`)
     }
   
-    getByIsActive(startPosition: number, limit: number): Observable<any> {
-      return this.http.get<any>(`${Object.values(BASE_URL)[0]}/comments/is-active/?startPosition=${startPosition}&limit=${limit}`)
+    getByIsActive(startPosition: number, limit: number): Observable<Comment[]> {
+      return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/is-active/?startPosition=${startPosition}&limit=${limit}`)
     }
   
     insert(data: any): Observable<ResponseMessage> {

@@ -34,6 +34,28 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
+	getTotalPaymentActivity(): Observable<PaymentActivityDetail> {
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total/`)
+	}
+
+
+	getReportPartisipation(beginDate:string,finishDate:string,startPosition: number, limit: number):Observable<PaymentActivityDetail[]>{
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}`)
+	}
+
+	getReportPartisipationAll(beginDate:string,finishDate:string):Observable<PaymentActivityDetail[]>{
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
+	}
+
+	getReportIncome(beginDate:string,finishDate:string,startPosition: number, limit: number):Observable<PaymentActivityDetail[]>{
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}`)
+	}
+
+	getReportIncomeAll(beginDate:string,finishDate:string):Observable<PaymentActivityDetail[]>{
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
+	}
+
+
 	insert(data: any): Observable<any> {
 		return this.httpClient.post<any>(`${Object.values(BASE_URL)[0]}/payment-activity-details`, data)
 	}
