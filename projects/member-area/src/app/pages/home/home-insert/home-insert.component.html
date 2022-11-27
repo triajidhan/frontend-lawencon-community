@@ -78,8 +78,8 @@
                                     <div class="field col-12">
                                         <label for="contents">Contents <span class="text-red-500">*</span></label>
                                         <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true"
-                                            name="contents" type="text" formControlName="contents" class="w-full"
-                                            placeholder="contents"></textarea>
+                                            name="contents" type="text" formControlName="contents"
+                                            class="w-full text-sm" placeholder="contents"></textarea>
                                     </div>
                                     <div class="field col-12">
                                         <label for="file">Photo</label>
@@ -98,7 +98,7 @@
                                     </div>
 
                                     <div class="col-12 flex justify-content-between align-items-center w-full">
-                                        <label for="pollContent" class="form-label">Poll Content <span
+                                        <label for="pollContent" class="form-label">Poll Contents <span
                                                 class="text-red-500">*</span></label>
                                         <button pButton type="button" class="mb-3" (click)="addInsert()"
                                             id="add-poll-content" label="ADD">
