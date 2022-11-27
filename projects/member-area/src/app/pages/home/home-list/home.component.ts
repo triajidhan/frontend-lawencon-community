@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common"
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormArray, FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     type!: string
     postType!: string
     display: boolean = false
+    isShowComment: boolean = true
     // resultExtension!: string
     // resultFile !: string
 
@@ -301,6 +303,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
                 this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
                     this.display = false
+                    this.init()
                 })
             })
         } else if (this.postType == 'premium') {
@@ -315,6 +318,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
                 this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
                     this.display = false
+                    this.init()
                 })
             })
         }
@@ -420,6 +424,11 @@ export class HomeComponent implements OnInit, OnDestroy {
             })
         }
 
+    }
+
+    btnToggleComment() {
+        this.isShowComment = !this.isShowComment
+        console.log(this.isShowComment)
     }
 
     ngOnDestroy(): void {

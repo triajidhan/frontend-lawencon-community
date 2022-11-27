@@ -17,6 +17,7 @@ import { DropdownModule } from "primeng/dropdown"
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { HomeComponent } from "./home-list/home.component"
 import { HomeInsertComponent } from "./home-insert/home-insert.component"
+import { StyleClassModule } from "primeng/styleclass"
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import { HomeInsertComponent } from "./home-insert/home-insert.component"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, DialogModule,
         ReactiveFormsModule, DropdownModule,
-        InfiniteScrollModule
+        InfiniteScrollModule, StyleClassModule
     ],
     exports: [
         HomeComponent, HomeInsertComponent

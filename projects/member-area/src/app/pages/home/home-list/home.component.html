@@ -63,12 +63,13 @@
                             <img src="../../../assets/images/article.png" alt="" class="w-3rem h-3rem border-circle">
                         </div>
                         <div
-                            class="w-full bg-black-alpha-10 ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer">
+                            class="w-full bg-black-alpha-10 ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
                             <p class="text-black-alpha-50">What do you think?</p>
                         </div>
                     </div>
-                    <div class="flex mx-5">
-                        <div class=" flex align-items-center mt-5 mr-5 cursor-pointer" routerLink="/homes/new">
+                    <div class="flex mx-3">
+                        <div class=" flex align-items-center mt-3 mr-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                            routerLink="/homes/new">
                             <div
                                 class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
                                 <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
@@ -77,7 +78,8 @@
                                 Poll Post
                             </h3>
                         </div>
-                        <div class=" flex align-items-center mt-5 cursor-pointer" (click)="postDialog('premium')">
+                        <div class=" flex align-items-center mt-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                            (click)="postDialog('premium')">
                             <div
                                 class="border-circle bg-orange-400 icon-box flex align-items-center justify-content-center">
                                 <i class="fa-regular fa-gem icon text-2xl"></i>
@@ -96,16 +98,17 @@
                             <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
 
                             <ng-container *ngFor="let p of post; index as i">
-
                                 <div class="md:mx-5">
                                     <div class="flex  align-items-center mb-3 mt-7">
                                         <div class="max-w-max mr-3">
-                                            <img src="{{urlFile}}{{ post[i].userPhotoId }}" alt=""
+                                            <img src="{{urlFile}}{{ post[i].userPhotoId }}" alt="profile image"
                                                 class="w-3rem h-3rem border-circle">
                                         </div>
                                         <div class="w-full">
                                             <h3>{{ post[i].userName }}</h3>
-                                            <p class="text-black-alpha-60">{{ post[i].createdAt }}</p>
+                                            <p class="text-black-alpha-60 text-xs mt-1">{{ post[i].createdAt |
+                                                date:"shortTime" }} |
+                                                {{ post[i].createdAt | date:"fullDate" }} </p>
                                         </div>
                                         <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
                                             <h4 class="mx-3 my-1 text-purple-500">{{ post[i].userCompany }}</h4>
@@ -113,9 +116,27 @@
                                         <div class="min-w-max mr-3 bg-green-100 border-round-xl">
                                             <h4 class="mx-3 my-1 text-green-500">{{ post[i].userPosition }}</h4>
                                         </div>
-                                        <div class=" cursor-pointer">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+
+                                        <div class="relative">
+                                            <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100"
+                                                pStyleClass="@next" enterClass="hidden" leaveToClass="hidden"
+                                                [hideOnOutsideClick]="true">
+                                                <div
+                                                    class=" cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
+                                                    <i class="fa-solid fa-ellipsis text-xl"></i>
+                                                </div>
+                                            </div>
+                                            <div class="absolute right-0 py-1 shadow-2 w-12rem bg-white hidden">
+                                                <ul class="list-none p-0 m-0">
+                                                    <li><a class="block px-3 pt-2 pb-3 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
+                                                            routerLink="/posts/details/{{post[i].id}}">
+                                                            show detail
+                                                        </a></li>
+                                                </ul>
+                                            </div>
                                         </div>
+
+
                                     </div>
                                     <p-card styleClass="content-box">
                                         <h3 class="text-justify">{{post[i].title}}
@@ -123,26 +144,161 @@
                                         <p class="text-black-alpha-60 mt-3 text-justify">
                                             {{post[i].contents }}
                                         </p>
-                                        <div>
-                                            <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
-                                                <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
-                                                    alt="pos image" class="w-4 pr-3 mt-3">
-                                            </ng-container>
-                                        </div>
                                     </p-card>
 
+                                    <div class="flex w-full column-gap-1 cursor-pointer">
+                                        <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
+                                            <ng-container *ngIf="post[i].postAttachment.length == 1">
+                                                <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                                    alt="post image">
+                                            </ng-container>
+                                            <ng-container *ngIf="post[i].postAttachment.length == 2">
+                                                <div
+                                                    class="w-6 flex justify-content-center align-content-center h-30rem bg-black-alpha-30 overflow-hidden">
+                                                    <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                                        alt="post image" class="w-auto">
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="post[i].postAttachment.length > 2">
+                                                <ng-container *ngIf="j == 0">
+                                                    <div
+                                                        class="w-6 flex justify-content-center align-content-center h-30rem  overflow-hidden pb-1">
+                                                        <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                                            alt="post image" class="w-auto">
+                                                    </div>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
 
-                                    <div class="flex mt-5 align-items-center text-black-alpha-60">
-                                        <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer"
-                                            (click)="actLike(post[i].id,post[i].likeId)"></i>
-                                        <p class="min-w-max">{{ post[i].countOfLike }} likes</p>
+                                        <ng-container *ngIf="post[i].postAttachment.length > 2">
+                                            <div class="flex w-6 flex-wrap">
+                                                <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
+                                                    <ng-container *ngIf="j == 1">
+                                                        <div
+                                                            class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1">
+                                                            <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                                                alt="post image" class="h-auto">
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="post[i].postAttachment.length == 3">
+                                                        <ng-container *ngIf="j == 2">
+                                                            <div
+                                                                class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1">
+                                                                <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                                                    alt="post image" class="h-auto">
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="post[i].postAttachment.length > 3">
+                                                        <ng-container *ngIf="j == 2">
+                                                            <div
+                                                                class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1 relative">
+                                                                <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                                                    alt="post image" class="h-auto">
+                                                                <div
+                                                                    class="absolute w-full h-full bg-black-alpha-90 opacity-70 flex justify-content-center align-items-center">
+                                                                    <h1 class="text-white">
+                                                                        {{post[i].postAttachment.length -3}} +</h1>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                    </div>
 
-                                        <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
-                                        <p class="w-full">15 comments</p>
+                                    <div
+                                        class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
+                                        <div class="flex align-items-center">
+                                            <div class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                                                (click)="actLike(post[i].id,post[i].likeId)">
 
-                                        <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer"
-                                            (click)="actBookmark(post[i].id,post[i].bookmarkId)"></i>
-                                        <p class="min-w-max">{{ post[i].countOfBookmark }}</p>
+                                                <i class="fa-regular fa-heart text-2xl mr-2"></i>
+                                                <i class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
+
+                                                <p class="min-w-max">{{ post[i].countOfLike }} likes</p>
+                                            </div>
+
+                                            <div class="ml-1 flex align-items-center px-3 py-2">
+                                                <i class="fa-regular fa-message text-2xl mr-2"></i>
+                                                <p class="">15 comments</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                                            (click)="actBookmark(post[i].id,post[i].bookmarkId)">
+
+                                            <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
+                                            <i class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
+
+                                            <p class="min-w-max">{{ post[i].countOfBookmark }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div pStyleClass="@next" enterClass="hidden" leaveToClass="hidden"
+                                        [hideOnOutsideClick]="true" enterActiveClass="fadein"
+                                        class="w-full text-right main-text cursor-pointer mt-2 underline hover:text-purple-500">
+                                        <div (click)="btnToggleComment()">
+                                            <ng-container *ngIf="isShowComment">
+                                                <p>show comment</p>
+                                            </ng-container>
+                                            <ng-container *ngIf="!isShowComment">
+                                                <p>hide comment</p>
+                                            </ng-container>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 hidden">
+                                        <div class="flex mt-3">
+                                            <div class="max-w-max mr-3">
+                                                <img src="../../../assets/images/article.png" alt=""
+                                                    class="w-2rem h-2rem border-circle">
+                                            </div>
+                                            <div class="w-max">
+                                                <div class="bg-gray-100 px-3 py-2 border-round-xl">
+                                                    <p class="font-medium">Alexa Victoria</p>
+                                                    <p class=" text-black-alpha-60">Lorem ipsum dolor sit, amet
+                                                        consectetur adipisicing elit. Quis id optio iste officiis
+                                                        eveniet ducimus rerum saepe quod reprehenderit voluptas!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex mt-3">
+                                            <div class="max-w-max mr-3">
+                                                <img src="../../../assets/images/article.png" alt=""
+                                                    class="w-2rem h-2rem border-circle">
+                                            </div>
+                                            <div class="w-max">
+                                                <div class="bg-gray-100 px-3 py-2 border-round-xl">
+                                                    <p class="font-medium">Alexa Victoria</p>
+                                                    <p class=" text-black-alpha-60">Lorem ipsum dolor sit amet.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex mt-3">
+                                            <div class="max-w-max mr-3">
+                                                <img src="../../../assets/images/article.png" alt=""
+                                                    class="w-2rem h-2rem border-circle">
+                                            </div>
+                                            <div class="w-full">
+                                                <form class="card w-full">
+                                                    <div class="field">
+                                                        <input pInputText
+                                                            class="text-lg w-full h-2rem border-round-2xl bg-gray-100"
+                                                            type="text" placeholder="write comment...">
+                                                        <p class="text-xs text-black-alpha-60">Press Enter to Send.
+                                                        </p>
+                                                    </div>
+                                                    <div class="hidden">
+                                                        <button type="submit"></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </ng-container>
