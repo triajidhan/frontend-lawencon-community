@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { FormBuilder, Validators } from "@angular/forms"
+import { FormArray, FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { ActivityType } from "projects/interface/activity-type"
 import { Polling } from "projects/interface/polling"
+import { PollingService } from "projects/main-area/src/app/service/polling.service"
 import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
@@ -29,7 +30,6 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
     fileArray: any[] = []
 
     insertPostSubscription?: Subscription
-    getPostAttachmentDataSubscription?: Subscription
     getByCodePostTypeSubscription?: Subscription
 
     postForm = this.fb.group({
@@ -38,19 +38,21 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
         postType: this.fb.group({
             id: ['']
         }),
-        titlePoll: [''],
+        titlePoll: ['', Validators.required],
         postTypeId: [''],
-        file: this.fb.array([])
+        pollContents: this.fb.array([])
     })
 
-    pollingForm = this.fb.group({
-        pollContent: ['', Validators.required],
-        post: ['']
+    pollingArr = this.fb.group({
+        details: this.fb.array([
+            this.fb.group({ pollContent: ['', Validators.required] }),
+            this.fb.group({ pollContent: ['', Validators.required] })
+        ])
     })
+
 
     constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder,
-        private router: Router, private postAttachmentService: PostAttachmentService,
-        private postService: PostService, private postTypeService: PostTypeService) { }
+        private router: Router, private postService: PostService, private postTypeService: PostTypeService) { }
 
     ngOnInit(): void {
         this.items = [
@@ -67,42 +69,6 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
         })
     }
 
-    addData(post: any) {
-        this.getPostAttachmentDataSubscription = this.postAttachmentService.getByPost(post.id).subscribe(result => {
-            post.postAttachment = result
-        })
-
-        this.post.push(post)
-    }
-
-    fileUpload(event: any): void {
-
-        for (let i = 0; i < event.files.length; i++) {
-            this.fileUploadMultiple(event, i).then(result => {
-                this.fileArray.push({ ext: result[0], files: result[1] })
-            })
-        }
-    }
-
-    async fileUploadMultiple(event: any, index: number) {
-        const file: [string, string] = ['', '']
-        const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onload = () => {
-                if (typeof reader.result === "string") resolve(reader.result)
-            }
-            reader.onerror = error => reject(error)
-        })
-        const result = await toBase64(event.files[index])
-        const resultStr = result.substring(result.indexOf(",") + 1, result.length)
-        const resultExt = result.substring(result.indexOf("/") + 1, result.indexOf(";"))
-        file[0] = resultExt
-        file[1] = resultStr
-        return file
-    }
-
-
     postInsert() {
         this.getByCodePostTypeSubscription = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.POLL).subscribe(result => {
             this.postForm.patchValue({
@@ -111,25 +77,28 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
                 }
             })
             this.postForm.value.postTypeId = result.id
-            this.postForm.value.file = this.fileArray
-
+            for (let i = 0; i < this.details.value.length; i++) {
+                this.postForm.value.pollContents?.push(this.details.value[i].pollContent)
+            }
             this.insertPostSubscription = this.postService.insert(this.postForm.value).subscribe(() => {
                 this.router.navigateByUrl("/homes/type/threads")
             })
         })
-
-    }
-
-    onChange(event: any) {
-        this.optionValue = event.target.value
     }
 
     addInsert() {
-        // this.pollings.push(pollingForm)
+        const newUserReq = this.fb.group({
+            pollContent: ['', Validators.required]
+        })
+        this.details.push(newUserReq)
+    }
+
+    get details(): FormArray {
+        return this.pollingArr.get('details') as FormArray
     }
 
     remove(i: number) {
-        this.pollings.splice(i, 1);
+        this.details.removeAt(i)
     }
 
     changePollings(i: number, event: any) {
@@ -138,7 +107,6 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.insertPostSubscription?.unsubscribe()
-        this.getPostAttachmentDataSubscription?.unsubscribe()
         this.getByCodePostTypeSubscription?.unsubscribe()
     }
 }

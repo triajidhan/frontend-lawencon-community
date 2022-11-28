@@ -29,7 +29,7 @@ img {
 }
 
 .body-color {
-    background-color: var(--body-color);
+    background-color: var(--body-color) !important;
 }
 
 .main-color {
