@@ -70,12 +70,12 @@
                                 <p-tableCheckbox [value]="data"></p-tableCheckbox>
                             </td>
                             <td>{{i + 1}}</td>
-                            <td>{{data.userName}}</td>
-                            <td>{{data.provider}}</td>
-                            <td>{{data.activityType.activityTypeName}}</td>
-                            <td>{{data.title}}</td>
-                            <td>{{data.beginSchedule | date:'dd/MM/yyyy'}}</td>
-                            <td>Total Participant</td>
+                            <td>{{data.memberCreate}}</td>
+                            <td>belum ada</td>
+                            <td>belum ada</td>
+                            <td>{{data.activity.title}}</td>
+                            <td>{{data.activity.beginSchedule | date:'dd/MM/yyyy'}}</td>
+                            <td>{{data.countOfPaymentActivity}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
