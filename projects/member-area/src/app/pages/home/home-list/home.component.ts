@@ -20,438 +20,366 @@ import { Subscription } from "rxjs"
 import { UserService } from "../../../service/user.service"
 
 @Component({
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['../../../../styles.css']
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrls: ['../../../../styles.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-    myId: string = ""
-    myFullName:string = ""
-    myProfile:string = ""
+  myId: string = ""
+  myFullName: string = ""
+  myProfile: string = ""
 
-    startPosition = 0
-    limit = 5
+  startPositionPost = 0
+  limitPost = 5
 
-    items!: MenuItem[]
-    type!: string
-    postType!: string
-    display: boolean = false
-    isShowComment: boolean = true
-    // resultExtension!: string
-    // resultFile !: string
+  startPositionPostLike = 0
+  limitPostLike = 5
 
-    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
+  startPositionPostBookmark = 0
+  limitPostBookmark = 5
 
-    fileArray: any[] = [];
-    postTypesRes!: PostType[]
-    postTypes: any[] = []
+  items!: MenuItem[]
+  type!: string
+  postType!: string
+  display: boolean = false
+  isShowComment: boolean = true
 
-    post: any[] = []
-    user: any[] = []
-    postAttachment: any[] = []
+  urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
-    likeRes!: Like[]
-    like: any[] = []
+  fileArray: any[] = [];
+  postTypesRes!: PostType[]
+  postTypes: any[] = []
 
-    addLike = this.fb.group({
-        post: this.fb.group({
-            id: ['']
-        })
+  post: any[] = []
+  postAttachment: any[] = []
+
+  postLike: any[] = []
+  postAttachmentLike: any[] = []
+
+  getByPostIdForLike: any = new Object();
+  addLike = this.fb.group({
+    post: this.fb.group({
+      id: ['']
     })
+  })
 
-    updateLike = this.fb.group({
-        id: [''],
-        isActive: [false]
+  updateLike = this.fb.group({
+    id: [''],
+    isActive: [false]
+  })
+
+  bookmarkRes!: Bookmark[]
+  bookmark: any[] = []
+
+  addBookmark = this.fb.group({
+    post: this.fb.group({
+      id: ['']
     })
+  })
 
-    bookmarkRes!: Bookmark[]
-    bookmark: any[] = []
+  updateBookmark = this.fb.group({
+    id: [''],
+    isActive: [false]
+  })
 
-    addBookmark = this.fb.group({
-        post: this.fb.group({
-            id: ['']
-        })
+  userObj: Object = new Object()
+  postAttachmentObj: Object = new Object()
+
+  private postInsertSubs?: Subscription
+  private postAttachInsertSubs?: Subscription
+  private getByCodePostTypeSubsc?: Subscription
+
+  private getPostDataSubs?: Subscription
+  private getPostAttachmentDataSubs?: Subscription
+
+  private getPostLikeDataSubs?: Subscription
+  private getPostLikeAttachmentDataSubs?: Subscription
+
+  private getPostBookmarkDataSubs?: Subscription
+  private getPostBookmarkAttachmentDataSubs?: Subscription
+
+  private getCountLikeDataSubs?: Subscription
+  private insertLikeDataSubs?: Subscription
+  private updateLikeDataSubs?: Subscription
+  private getIdLikeDataSubs?: Subscription
+
+  private getCountBookmarkDataSubs?: Subscription
+  private insertBookmarkDataSubs?: Subscription
+  private updateBookmarkDataSubs?: Subscription
+  private getIdBookmarkDataSubs?: Subscription
+
+  private getDataLikeSubs?: Subscription
+
+  postForm = this.fb.group({
+    title: ['', Validators.required],
+    contents: ['', Validators.required],
+    postType: this.fb.group({
+      id: ['']
+    }),
+    titlePoll: [''],
+    postTypeId: [''],
+    file: this.fb.array([])
+  })
+
+
+  constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
+    private userService: UserService, private fileService: FileService, private postAttachmentService: PostAttachmentService,
+    private apiService: ApiService, private likeService: LikeService, private bookmarkService: BookmarkService) { }
+
+  ngOnInit(): void {
+    this.primengConfig.ripple = true
+
+    this.myId = String(this.apiService.getId())
+    this.myFullName = String(this.apiService.getName())
+    this.myProfile = String(this.apiService.getPhotoId())
+
+    this.items = [
+      { label: 'Thread', routerLink: '/homes/type/threads', command: () => this.init()},
+      { label: 'Likes', routerLink: '/homes/type/likes', command: () => this.init()},
+      { label: 'Bookmark', routerLink: '/homes/type/bookmarks', command: () => this.init()}
+    ]
+
+    this.init()
+  }
+
+  onScroll() {
+    this.startPositionPost += this.limitPost
+    this.initPost()
+  }
+
+
+  onScrollLike() {
+    this.startPositionPostLike += this.limitPostLike
+    this.initLike()
+  }
+
+  onScrollBookmark() {
+
+  }
+
+  init() {
+    this.startPositionPost = 0
+    this.limitPost = 5
+    this.post = [];
+    this.startPositionPostLike = 0
+    this.limitPostLike = 5
+    this.postLike = [];
+    this.activatedRoute.params.subscribe(result => {
+      this.type = result['type']
     })
+    this.initPost()
+    this.initLike()
+  }
 
-    updateBookmark = this.fb.group({
-        id: [''],
-        isActive: [false]
+  initPost() {
+    this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, true).subscribe(result => {
+      for (let i = 0; i < result.length; i++) {
+        this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
+          result[i].likeId = userLike.likeId
+          result[i].countOfLike = userLike.countOfLike
+        })
+
+        this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, this.myId).subscribe(userBookmark => {
+          result[i].bookmarkId = userBookmark.id
+        })
+        this.addDataPost(result[i])
+      }
     })
+  }
 
-
-    userObj: Object = new Object()
-    postAttachmentObj: Object = new Object()
-
-    private postInsertSubs?: Subscription
-    private postAttachInsertSubs?: Subscription
-    private getByCodePostTypeSubsc?: Subscription
-
-    private getPostDataSubs?: Subscription
-    private getPostAttachmentDataSubs?: Subscription
-    private getCountLikeDataSubs?: Subscription
-    private getUserDataSubs?: Subscription
-
-    private insertLikeDataSubs?: Subscription
-    private updateLikeDataSubs?: Subscription
-    private getIdLikeDataSubs?: Subscription
-    private getPostDataByIdSubs?: Subscription
-    private getLikeDataSubs?: Subscription
-
-
-    private getBookmarkDataSubs?: Subscription
-    private getCountBookmarkDataSubs?: Subscription
-
-    private insertBookmarkDataSubs?: Subscription
-    private updateBookmarkDataSubs?: Subscription
-    private getIdBookmarkDataSubs?: Subscription
-
-
-    postForm = this.fb.group({
-        title: ['', Validators.required],
-        contents: ['', Validators.required],
-        postType: this.fb.group({
-            id: ['']
-        }),
-        titlePoll: [''],
-        postTypeId: [''],
-        file: this.fb.array([])
+  initLike() {
+    this.getDataLikeSubs = this.likeService.getByUserOrder(this.myId, this.startPositionPostLike, this.limitPostLike, false).subscribe(result => {
+      for (let i = 0; i < result.length; i++) {
+        this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].post.id, this.myId).subscribe(userLike => {
+          result[i].likeId = userLike.likeId
+          result[i].countOfLike = userLike.countOfLike
+        })
+        this.addDataLike(result[i])
+      }
     })
+  }
 
+  addDataPost(post: any) {
+    this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
+      post.postAttachment = result
+    })
+    this.post.push(post)
+  }
 
-    constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
-        private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
-        private userService: UserService, private fileService: FileService, private postAttachmentService: PostAttachmentService,
-        private apiService: ApiService, private likeService: LikeService, private bookmarkService: BookmarkService) { }
+  addDataLike(post: any) {
+    this.getPostLikeAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
+      post.post.postAttachment = result
+    })
+    this.postLike.push(post)
+  }
 
-    ngOnInit(): void {
-        this.primengConfig.ripple = true
-
-        this.myId = String(this.apiService.getId())
-        this.myFullName = String(this.apiService.getName())
-        this.myProfile = String(this.apiService.getPhotoId)
-
-        this.items = [
-            { label: 'Thread', routerLink: '/homes/type/threads' },
-            { label: 'Likes', routerLink: '/homes/type/likes' },
-            { label: 'Bookmark', routerLink: '/homes/type/bookmarks' }
-        ]
-
-        this.init()
+  fileUpload(event: any): void {
+    for (let i = 0; i < event.files.length; i++) {
+      this.fileUploadMultiple(event, i).then(result => {
+        this.fileArray.push({ ext: result[0], files: result[1] })
+      })
     }
+  }
 
-    onScroll() {
-        this.startPosition += this.limit
-        this.initPost()
-    }
+  async fileUploadMultiple(event: any, index: number) {
+    const file: [string, string] = ['', '']
+    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        if (typeof reader.result === "string") resolve(reader.result)
+      }
+      reader.onerror = error => reject(error)
+    })
+    const result = await toBase64(event.files[index])
+    const resultStr = result.substring(result.indexOf(",") + 1, result.length)
+    const resultExt = result.substring(result.indexOf("/") + 1, result.indexOf(";"))
+    file[0] = resultExt
+    file[1] = resultStr
+    return file
+  }
 
+  postDialog(type: string) {
+    this.postType = type
+    this.display = true
+  }
 
-    onScrollLike() {
-        this.startPosition += this.limit
-        this.initPost()
-    }
-
-    onScrollBookmark() {
-        this.startPosition += this.limit
-        this.initPost()
-    }
-
-    init() {
-        this.activatedRoute.params.subscribe(result => {
-            this.type = result['type']
+  postInsert() {
+    if (this.postType == 'regular') {
+      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).subscribe(result => {
+        this.postForm.patchValue({
+          postType: {
+            id: result.id
+          }
         })
+        this.postForm.value.postTypeId = result.id
+        this.postForm.value.file = this.fileArray
 
-        this.initPost()
-        this.initLike()
-        this.initBookmark()
-    }
-
-    initPost() {
-        this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
-            for (let i = 0; i < result.length; i++) {
-
-                this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
-
-                    result[i].likeId = userLike.likeId
-                    result[i].countOfLike = userLike.countOfLike
-                })
-
-                this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, this.myId).subscribe(userBookmark => {
-
-                    result[i].bookmarkId = userBookmark.id
-                    result[i].countOfBookmark = userBookmark.countOfBookmark
-                })
-
-                this.addData(result[i])
-            }
+        this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
+          this.display = false
+          this.postForm.controls.title.setValue("")
+          this.postForm.controls.contents.setValue("")
+          this.postForm.controls.titlePoll.setValue("")
+          this.init()
         })
-    }
-
-    initLike() {
-        this.getLikeDataSubs = this.likeService.getByUserOrder(this.myId, this.startPosition, this.limit, true).subscribe(result => {
-            this.likeRes = result
-            for (let i = 0; i < this.likeRes.length; i++) {
-
-                this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.likeRes[i].post.id, this.myId).subscribe(userLike => {
-
-                    this.likeRes[i].likeId = userLike.likeId
-                    this.likeRes[i].countOfLike = userLike.countOfLike
-                })
-
-                this.addLikeData(this.likeRes[i])
-            }
+      })
+    } else if (this.postType == 'premium') {
+      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).subscribe(result => {
+        this.postForm.patchValue({
+          postType: {
+            id: result.id
+          }
         })
-    }
+        this.postForm.value.postTypeId = result.id
+        this.postForm.value.file = this.fileArray
 
-    initBookmark() {
-        this.getBookmarkDataSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPosition, this.limit, true).subscribe(result => {
-            this.bookmarkRes = result
-            for (let i = 0; i < this.bookmarkRes.length; i++) {
-                this.addBookmarkData(this.bookmarkRes[i])
-            }
+        this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
+          this.display = false
+          this.init()
         })
+      })
     }
+  }
 
-    addData(post: any) {
-        this.getUserDataSubs = this.userService.getById(post.createdBy).subscribe(resultUser => {
-            this.userObj = resultUser;
-            post.userName = resultUser.fullName
-            post.userId = resultUser.id
-            post.userPhotoId = resultUser.file.id
-            post.userCompany = resultUser.company
-            post.userPosition = resultUser.position.positionName
-            this.user.push(this.userObj)
-        })
-
-        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
-            post.postAttachment = result
-        })
-
-        console.log(post)
-
-        this.post.push(post)
-    }
-
-    addLikeData(like: any) {
-        this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(like.post.id, this.myId).subscribe(userBookmark => {
-
-            like.bookmarkId = userBookmark.id
-            like.countOfBookmark = userBookmark.countOfBookmark
-        })
-
-        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(like.post.id).subscribe(result => {
-            like.postAttachment = result
-        })
-
-        this.like.push(like)
-    }
-
-
-    addBookmarkData(bookmark: any) {
-        this.getCountLikeDataSubs = this.likeService.getUserLikePost(bookmark.post.id, this.myId).subscribe(userLike => {
-            bookmark.likeId = userLike.likeId
-            bookmark.countOfLike = userLike.countOfLike
-        })
-
-        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(bookmark.post.id).subscribe(result => {
-            bookmark.postAttachment = result
-        })
-
-        this.bookmark.push(bookmark)
-    }
-
-
-    fileUpload(event: any): void {
-
-        for (let i = 0; i < event.files.length; i++) {
-            this.fileUploadMultiple(event, i).then(result => {
-                this.fileArray.push({ ext: result[0], files: result[1] })
-            })
-        }
-        //console.log(this.fileArray);
-    }
-
-    async fileUploadMultiple(event: any, index: number) {
-        const file: [string, string] = ['', '']
-        const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onload = () => {
-                if (typeof reader.result === "string") resolve(reader.result)
-            }
-            reader.onerror = error => reject(error)
-        })
-        const result = await toBase64(event.files[index])
-        const resultStr = result.substring(result.indexOf(",") + 1, result.length)
-        const resultExt = result.substring(result.indexOf("/") + 1, result.indexOf(";"))
-        file[0] = resultExt
-        file[1] = resultStr
-        return file
-    }
-
-    postDialog(type: string) {
-        this.postType = type
-        this.display = true
-    }
-
-    postInsert() {
-        if (this.postType == 'regular') {
-            this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).subscribe(result => {
-                this.postForm.patchValue({
-                    postType: {
-                        id: result.id
-                    }
-                })
-                this.postForm.value.postTypeId = result.id
-                this.postForm.value.file = this.fileArray
-
-                this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
-                    this.display = false
-                    this.init()
-
-                    this.postForm.controls.title.setValue("")
-                    this.postForm.controls.contents.setValue("")
-                    this.postForm.controls.titlePoll.setValue("")
-                    // this.postForm.controls.file.reset()
-                })
-            })
-        } else if (this.postType == 'premium') {
-            this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).subscribe(result => {
-                this.postForm.patchValue({
-                    postType: {
-                        id: result.id
-                    }
-                })
-                this.postForm.value.postTypeId = result.id
-                this.postForm.value.file = this.fileArray
-
-                this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
-                    this.display = false
-                    this.init()
-                })
-            })
-        }
-    }
-
-    actBookmark(postId: string, bookmarkId: string) {
-
-        if (bookmarkId) {
-            this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
-
-                if (result.isActive) {
-                    this.updateBookmark.controls.isActive.setValue(false)
-                } else {
-                    this.updateBookmark.controls.isActive.setValue(true)
-                }
-
-                this.updateBookmark.controls['id'].setValue(result.id)
-
-                this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {
-                    for (let i = 0; i < this.post.length; i++) {
-                        this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
-                            this.post[i].bookmarkId = userBookmark.id
-                            this.post[i].countOfBookmark = userBookmark.countOfBookmark
-                        })
-                    }
-                })
-            })
+  actBookmark(postId: string, bookmarkId: string) {
+    if (bookmarkId) {
+      this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
+        if (result.isActive) {
+          this.updateBookmark.controls.isActive.setValue(false)
         } else {
-
-            this.addBookmark.patchValue({
-                post: {
-                    id: postId
-                }
-            })
-
-            this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe(() => {
-
-                for (let i = 0; i < this.post.length; i++) {
-                    this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
-                        this.post[i].bookmarkId = userBookmark.id
-                        this.post[i].countOfBookmark = userBookmark.countOfBookmark
-                    })
-                }
-
-                // belum buat insert otomatis
-            })
+          this.updateBookmark.controls.isActive.setValue(true)
         }
-    }
 
-    actLike(postId: string, likeId: string) {
+        this.updateBookmark.controls['id'].setValue(result.id)
 
-        if (likeId) {
-
-            this.getIdLikeDataSubs = this.likeService.getById(likeId).subscribe(result => {
-
-                if (result.isActive) {
-                    this.updateLike.controls.isActive.setValue(false)
-                } else {
-                    this.updateLike.controls.isActive.setValue(true)
-                }
-
-                this.updateLike.controls['id'].setValue(result.id)
-
-                this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
-                    for (let i = 0; i < this.post.length; i++) {
-                        this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.post[i].id, this.myId).subscribe(userLike => {
-                            this.post[i].likeId = userLike.likeId
-                            this.post[i].countOfLike = userLike.countOfLike
-                        })
-                    }
-                })
+        this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {
+          for (let i = 0; i < this.post.length; i++) {
+            this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
+              this.post[i].bookmarkId = userBookmark.id
             })
+          }
+        })
+      })
+    } else {
+      this.addBookmark.patchValue({
+        post: {
+          id: postId
+        }
+      })
+      this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe(() => {
+        for (let i = 0; i < this.post.length; i++) {
+          this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
+            this.post[i].bookmarkId = userBookmark.id
+          })
+        }
+      })
+    }
+  }
+
+  actLikePost(postId: string, likeId: string, i: any) {
+    if (likeId) {
+      this.getIdLikeDataSubs = this.likeService.getById(likeId).subscribe(result => {
+        if (result.isActive) {
+          this.updateLike.controls.isActive.setValue(false)
+          this.post[i].countOfLike = this.post[i].countOfLike - 1;
         } else {
-
-            this.addLike.patchValue({
-                post: {
-                    id: postId
-                }
-            })
-
-            this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(() => {
-
-                for (let i = 0; i < this.post.length; i++) {
-                    this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.post[i].id, this.myId).subscribe(userLike => {
-                        this.post[i].likeId = userLike.likeId
-                        this.post[i].countOfLike = userLike.countOfLike
-                    })
-                }
-
-                // belum buat insert otomatis
-            })
+          this.updateLike.controls.isActive.setValue(true)
+          this.post[i].countOfLike = this.post[i].countOfLike + 1;
         }
+        this.updateLike.controls['id'].setValue(result.id)
 
+        this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
+        })
+      })
+    } else {
+      this.addLike.patchValue({
+        post: {
+          id: postId
+        }
+      })
+      this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(() => {
+        this.post[i].countOfLike = this.post[i].countOfLike + 1;
+      })
     }
 
-    btnToggleComment() {
-        this.isShowComment = !this.isShowComment
-        console.log(this.isShowComment)
+  }
+
+  actLikePostLike(postId: string, likeId: string, i: any) {
+    if (likeId) {
+      this.getIdLikeDataSubs = this.likeService.getById(likeId).subscribe(result => {
+        this.updateLike.controls.isActive.setValue(false)
+        this.updateLike.controls['id'].setValue(result.id)
+        this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
+          this.postLike.splice(i, 1);
+        })
+      })
     }
+  }
 
-    ngOnDestroy(): void {
-        this.postInsertSubs?.unsubscribe()
-        this.postAttachInsertSubs?.unsubscribe()
-        this.getPostDataSubs?.unsubscribe()
-        this.getByCodePostTypeSubsc?.unsubscribe()
+  btnToggleComment() {
+    this.isShowComment = !this.isShowComment
+  }
 
-        this.getUserDataSubs?.unsubscribe()
-        this.getPostAttachmentDataSubs?.unsubscribe()
-        this.getCountLikeDataSubs?.unsubscribe()
+  ngOnDestroy(): void {
+    this.postInsertSubs?.unsubscribe()
+    this.postAttachInsertSubs?.unsubscribe()
+    this.getPostDataSubs?.unsubscribe()
+    this.getByCodePostTypeSubsc?.unsubscribe()
 
-        this.insertLikeDataSubs?.unsubscribe()
-        this.updateLikeDataSubs?.unsubscribe()
-        this.getIdLikeDataSubs?.unsubscribe()
+    this.getPostAttachmentDataSubs?.unsubscribe()
+    this.getCountLikeDataSubs?.unsubscribe()
 
+    this.insertLikeDataSubs?.unsubscribe()
+    this.updateLikeDataSubs?.unsubscribe()
+    this.getIdLikeDataSubs?.unsubscribe()
 
-        this.getLikeDataSubs?.unsubscribe()
-        this.getPostDataByIdSubs?.unsubscribe()
+    this.getCountBookmarkDataSubs?.unsubscribe()
 
-        this.getBookmarkDataSubs?.unsubscribe()
-        this.getCountBookmarkDataSubs?.unsubscribe()
-
-        this.insertBookmarkDataSubs?.unsubscribe()
-        this.updateBookmarkDataSubs?.unsubscribe()
-        this.getIdBookmarkDataSubs?.unsubscribe()
-    }
+    this.insertBookmarkDataSubs?.unsubscribe()
+    this.updateBookmarkDataSubs?.unsubscribe()
+    this.getIdBookmarkDataSubs?.unsubscribe()
+  }
 
 }
