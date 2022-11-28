@@ -334,7 +334,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     actBookmark(postId: string, bookmarkId: string) {
-
         if (bookmarkId) {
             this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
 
@@ -372,7 +371,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                     })
                 }
 
-                // belum buat insert otomatis
+                
             })
         }
     }
@@ -453,5 +452,4 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.updateBookmarkDataSubs?.unsubscribe()
         this.getIdBookmarkDataSubs?.unsubscribe()
     }
-
 }
