@@ -60,7 +60,7 @@
                 <p-card>
                     <div class="flex mx-5" (click)="postDialog('regular')">
                         <div class="max-w-max">
-                            <img src="../../../assets/images/article.png" alt="" class="w-3rem h-3rem border-circle">
+                            <img src="{{ urlFile }}{{ myProfile }}" alt="" class="w-3rem h-3rem border-circle">
                         </div>
                         <div
                             class="w-full bg-black-alpha-10 ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
@@ -590,10 +590,10 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <img src="../../../assets/images/article.png" alt="" class="w-3rem h-3rem border-circle">
+                    <img src="{{ urlFile }}{{ myProfile }}" alt="" class="w-3rem h-3rem border-circle">
                 </div>
                 <div class="w-full">
-                    <h3>Rifki Dzaky</h3>
+                    <h3>{{ myFullName }}</h3>
                     <p class="text-black-alpha-60">Java Developer</p>
                 </div>
             </div>

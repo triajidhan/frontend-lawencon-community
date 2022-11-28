@@ -27,6 +27,8 @@ import { UserService } from "../../../service/user.service"
 export class HomeComponent implements OnInit, OnDestroy {
 
     myId: string = ""
+    myFullName:string = ""
+    myProfile:string = ""
 
     startPosition = 0
     limit = 5
@@ -126,6 +128,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.primengConfig.ripple = true
 
         this.myId = String(this.apiService.getId())
+        this.myFullName = String(this.apiService.getName())
+        this.myProfile = String(this.apiService.getPhotoId)
 
         this.items = [
             { label: 'Thread', routerLink: '/homes/type/threads' },
@@ -143,6 +147,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     onScrollLike() {
+        this.startPosition += this.limit
+        this.initPost()
+    }
+
+    onScrollBookmark() {
         this.startPosition += this.limit
         this.initPost()
     }
@@ -198,11 +207,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getBookmarkDataSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPosition, this.limit, true).subscribe(result => {
             this.bookmarkRes = result
             for (let i = 0; i < this.bookmarkRes.length; i++) {
-
-                this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.bookmarkRes[i].post.id, this.myId).subscribe(bookmarkLike => {
-                    this.bookmarkRes[i].countOfBookmark = bookmarkLike.countOfBookmark
-                })
-
                 this.addBookmarkData(this.bookmarkRes[i])
             }
         })
@@ -304,6 +308,11 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
                     this.display = false
                     this.init()
+
+                    this.postForm.controls.title.setValue("")
+                    this.postForm.controls.contents.setValue("")
+                    this.postForm.controls.titlePoll.setValue("")
+                    // this.postForm.controls.file.reset()
                 })
             })
         } else if (this.postType == 'premium') {
@@ -343,11 +352,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                             this.post[i].bookmarkId = userBookmark.id
                             this.post[i].countOfBookmark = userBookmark.countOfBookmark
                         })
-
-                        this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.post[i].id, this.myId).subscribe(userLike => {
-                            this.post[i].likeId = userLike.likeId
-                            this.post[i].countOfLike = userLike.countOfLike
-                        })
                     }
                 })
             })
@@ -365,11 +369,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                     this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
                         this.post[i].bookmarkId = userBookmark.id
                         this.post[i].countOfBookmark = userBookmark.countOfBookmark
-                    })
-
-                    this.getCountLikeDataSubs = this.likeService.getUserLikePost(this.post[i].id, this.myId).subscribe(userLike => {
-                        this.post[i].likeId = userLike.likeId
-                        this.post[i].countOfLike = userLike.countOfLike
                     })
                 }
 
@@ -398,8 +397,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                             this.post[i].likeId = userLike.likeId
                             this.post[i].countOfLike = userLike.countOfLike
                         })
-
-
                     }
                 })
             })

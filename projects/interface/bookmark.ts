@@ -6,13 +6,6 @@ export interface Bookmark extends User, Post {
 	version: number
 	user: User
 	post: Post
-
-	countOfBookmark: number
-	userBookmarkPost: number
-
-	likeId: string
-	countOfLike: number
-
 	isActive: boolean
 
 	postAttachment:any[]
