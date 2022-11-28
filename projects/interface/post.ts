@@ -11,9 +11,10 @@ export interface Post extends File, PostType {
 	postType: PostType
 	file: File
 	userId: string
-	userName : string
+	userName: string
 	userPhotoId: string
-	userCompany:string
-	userPosition:string
-	postAttachment:any[]
+	userCompany: string
+	userPosition: string
+	postAttachment: any[]
+	pollContents: any[]
 }
