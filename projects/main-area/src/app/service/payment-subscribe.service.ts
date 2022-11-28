@@ -22,12 +22,12 @@ export class PaymentSubscribeService {
         return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/id/${id}`)
     }
 
-    getByActivity(activityId: string): Observable<PaymentSubscribe> {
-        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/activity/?activityId=${activityId}`)
-    }
-
     getByIsActive(startPosition: number, limit: number): Observable<PaymentSubscribe[]> {
         return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active/?startPosition=${startPosition}&limit=${limit}`)
+    }
+
+    getTotalPaymentSubscribe(): Observable<PaymentSubscribe> {
+        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total/`)
     }
 
     insert(data: any): Observable<any> {
