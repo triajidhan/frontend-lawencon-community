@@ -19,22 +19,22 @@ export class ActivityListComponent implements OnInit {
     myId = ""
 
     startPosition = 0
-    limit = 5
+    limit = 6
 
     startPositionCourse = 0
-    limitCourse = 5
+    limitCourse = 6
 
     startPositionEvent = 0
-    limitEvent = 5
+    limitEvent = 6
 
     startPositionMyActivity = 0
-    limitMyActivity = 5
+    limitMyActivity = 6
 
     startPositionMyCourse = 0
-    limitMyCourse = 5
+    limitMyCourse = 6
 
     startPositionMyEvent = 0
-    limitMyEvent = 5
+    limitMyEvent = 6
 
     items!: MenuItem[]
     type!: string
@@ -43,9 +43,9 @@ export class ActivityListComponent implements OnInit {
     activitiesCourse: any[] = []
     activitiesEvent: any[] = []
 
-    myActivities: any[] =  []
-    myActivitiesByEvent: any[] =  []
-    myActivitiesByCourse: any[] =  []
+    myActivities: any[] = []
+    myActivitiesByEvent: any[] = []
+    myActivitiesByCourse: any[] = []
 
     activityId?: string
     activityTitle?: string
@@ -69,19 +69,19 @@ export class ActivityListComponent implements OnInit {
     })
 
     private getAllActivitySubs?: Subscription
-    private getAllActivityByEvent?:Subscription
-    private getAllActivityByCourse?:Subscription
+    private getAllActivityByEvent?: Subscription
+    private getAllActivityByCourse?: Subscription
 
-    private getAllMyActivitiesSubs?:Subscription
-    private getAllMyActivityEventSubs?:Subscription
-    private getAllMyActivityCourseSubs?:Subscription
+    private getAllMyActivitiesSubs?: Subscription
+    private getAllMyActivityEventSubs?: Subscription
+    private getAllMyActivityCourseSubs?: Subscription
 
     private paymentActivityDetailSubs?: Subscription
 
     constructor(private primengConfig: PrimeNGConfig, private fb: FormBuilder,
         private activatedRoute: ActivatedRoute, private fileService: FileService,
         private activityService: ActivityService, private paymentActivityDetailService: PaymentActivityDetailService,
-        private apiService:ApiService) { }
+        private apiService: ApiService) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
@@ -124,7 +124,7 @@ export class ActivityListComponent implements OnInit {
         this.initMyActivityEvent()
     }
 
-    initAllActivity(){
+    initAllActivity() {
         this.getAllActivitySubs = this.activityService.getByIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addData(result[i])
@@ -132,40 +132,40 @@ export class ActivityListComponent implements OnInit {
         })
     }
 
-    initAllActivityCourse(){
-        this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C',this.startPositionCourse,this.limitCourse,true).subscribe(result =>{
+    initAllActivityCourse() {
+        this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByCourse(result[i])
             }
         })
     }
 
-    initAllActivityEvent(){
-        this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E',this.startPositionEvent,this.limitEvent,true).subscribe(result =>{
+    initAllActivityEvent() {
+        this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E', this.startPositionEvent, this.limitEvent, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByEvent(result[i])
             }
         })
     }
 
-    initMyActivity(){
-        this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId,this.startPosition, this.limit,false).subscribe(result => {
+    initMyActivity() {
+        this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId, this.startPosition, this.limit, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivities(result[i])
             }
         })
     }
 
-    initMyActivityCourse(){
-        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId,'C',this.startPositionCourse,this.limitCourse,true).subscribe(result =>{
+    initMyActivityCourse() {
+        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'C', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesCourse(result[i])
             }
         })
     }
 
-    initMyActivityEvent(){
-        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId,'E',this.startPositionCourse,this.limitCourse,true).subscribe(result =>{
+    initMyActivityEvent() {
+        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesEvent(result[i])
             }
@@ -208,24 +208,24 @@ export class ActivityListComponent implements OnInit {
         this.activities.push(activity)
     }
 
-    addDataActivityByCourse(activity: any){
+    addDataActivityByCourse(activity: any) {
         this.activitiesCourse.push(activity)
     }
 
-    addDataActivityByEvent(activity: any){
+    addDataActivityByEvent(activity: any) {
         this.activitiesEvent.push(activity)
     }
 
 
-    addDataMyActivities(activity: any){
+    addDataMyActivities(activity: any) {
         this.myActivities.push(activity)
     }
 
-    addDataMyActivitiesCourse(activity: any){
+    addDataMyActivitiesCourse(activity: any) {
         this.myActivitiesByCourse.push(activity)
     }
 
-    addDataMyActivitiesEvent(activity: any){
+    addDataMyActivitiesEvent(activity: any) {
         this.myActivitiesByEvent.push(activity)
     }
 

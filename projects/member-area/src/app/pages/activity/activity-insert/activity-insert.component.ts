@@ -1,3 +1,4 @@
+import { formatDate } from "@angular/common"
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
@@ -101,6 +102,14 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     }
 
     submitInsert() {
+        function getTimeZone() {
+            var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+            return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
+        }
+
+        this.activityForm.controls.beginSchedule.setValue(formatDate(this.activityForm.value.beginSchedule ?? '', `yyyy-MM-dd'T'HH:mm:ss.SSS${getTimeZone()}`, 'en'))
+        this.activityForm.controls.finishSchedule.setValue(formatDate(this.activityForm.value.finishSchedule ?? '', `yyyy-MM-dd'T'HH:mm:ss.SSS${getTimeZone()}`, 'en'))
+
         this.activityForm.patchValue({
             file: {
                 files: this.resultFile,
@@ -110,6 +119,8 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
                 id: this.activityForm.value.activityTypeId
             }
         })
+
+
         this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).subscribe(() => {
             this.router.navigateByUrl(`/activities/type/all`)
         })
