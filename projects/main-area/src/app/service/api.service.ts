@@ -68,7 +68,7 @@ export class ApiService {
         const data = localStorage.getItem('data')
         let result: null | number = 0
         if (data) {
-            result = JSON.parse(data).file
+            result = JSON.parse(data).file.id
         }
         return result
     }

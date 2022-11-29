@@ -17,7 +17,7 @@ export class LikeService{
     getAll(startPosition: number, limit: number): Observable<Like[]> {
       return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes?startPosition=${startPosition}&limit=${limit}`)
     }
-  
+
     getById(id: string): Observable<Like> {
       return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/id/${id}`)
     }
@@ -31,13 +31,13 @@ export class LikeService{
     }
 
     getByUserAll(userId: string): Observable<Like[]> {
-        return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}`)
+        return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users-all/?userId=${userId}`)
     }
 
     getByPost(postId: string): Observable<Like[]> {
         return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?postId=${postId}`)
     }
-  
+
     getTotalByUser(userId: string): Observable<Like> {
       return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/total-users/?userId=${userId}`)
     }
@@ -49,15 +49,15 @@ export class LikeService{
     getUserLikePost(postId: string,userId:string): Observable<Like> {
         return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/user-like/?postId=${postId}&userId=${userId}`)
     }
-  
+
     getByIsActive(startPosition: number, limit: number): Observable<Like> {
       return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/is-active/?startPosition=${startPosition}&limit=${limit}`)
     }
-  
+
     insert(data: any): Observable<ResponseMessage> {
       return this.http.post<ResponseMessage>(`${Object.values(BASE_URL)[0]}/likes`, data)
     }
-  
+
     update(data: any): Observable<ResponseMessage> {
       return this.http.put<ResponseMessage>(`${Object.values(BASE_URL)[0]}/likes`, data)
     }

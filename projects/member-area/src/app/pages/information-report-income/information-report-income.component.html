@@ -55,8 +55,8 @@
                                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                             </th>
                             <th>No.</th>
-                            <th>Member Name</th>
                             <th>Type</th>
+                            <th>Title</th>
                             <th>Total Income</th>
                         </tr>
                     </ng-template>
@@ -67,9 +67,9 @@
                                 <p-tableCheckbox [value]="data"></p-tableCheckbox>
                             </td>
                             <td>{{i + 1}}</td>
-                            <td>{{data.userName}}</td>
-                            <td>{{data.activityType.activityTypeName}}</td>
-                            <td>Total Income</td>
+                            <td>belum ada</td>
+                            <td>{{data.activity.title}}</td>
+                            <td>{{data.net | currency:"IDR ":"symbol"}}</td>
                         </tr>
                     </ng-template>
                 </p-table>

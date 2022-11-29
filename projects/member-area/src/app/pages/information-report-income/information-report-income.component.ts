@@ -21,12 +21,12 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
     totalData: number = 0
     loading: boolean = true
 
-    getAllSubs?: Subscription
-    getByIdUserSubs?: Subscription
-    getTotalActivitySubs?: Subscription
+    beginSchedule = new Date("2020-01-01").toISOString()
+    finishSchedule = new Date("2025-01-01").toISOString()
 
-    constructor(private activityService: ActivityService, private userService: UserService,
-        private paymentActivityDetailService: PaymentActivityDetailService) { }
+    getAllPaymentSubs?: Subscription
+
+    constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
 
     ngOnInit(): void {
         this.items = [
@@ -46,20 +46,11 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllSubs = this.activityService.getAll(startPage, maxPage).subscribe(
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncome(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
             result => {
-                for (let i = 0; result.length; i++) {
-                    this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
-                        result[i].userName = resultUser.fullName
-                        // this.getTotalActivitySubs = this.paymentActivityDetailService.getTotalByActivity(result[i].id).subscribe(resultDetail => {
-                        //     result[i].totalParticipant = resultDetail.totalParticipant
-                        this.data = result
-                        this.loading = false
-                        this.totalData = result.length
-                        // })
-                    })
-                }
-                console.log(result)
+                this.data = result
+                this.loading = false
+                this.totalData = result.length
             }
         )
     }
@@ -69,8 +60,6 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.getAllSubs?.unsubscribe()
-        this.getByIdUserSubs?.unsubscribe()
-        this.getTotalActivitySubs?.unsubscribe()
+        this.getAllPaymentSubs?.unsubscribe()
     }
 }

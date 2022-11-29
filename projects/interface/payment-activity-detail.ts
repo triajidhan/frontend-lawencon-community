@@ -1,4 +1,5 @@
 import { Activity } from './activity'
+import { ActivityType } from './activity-type'
 import { File } from './file'
 
 export interface PaymentActivityDetail extends File, Activity {
