@@ -376,7 +376,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getIdLikeDataSubs?.unsubscribe()
 
     this.getCountBookmarkDataSubs?.unsubscribe()
-
     this.insertBookmarkDataSubs?.unsubscribe()
     this.updateBookmarkDataSubs?.unsubscribe()
     this.getIdBookmarkDataSubs?.unsubscribe()

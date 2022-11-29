@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
 import { ActivityService } from "projects/main-area/src/app/service/activity.service"
+import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { FileService } from "projects/main-area/src/app/service/file.service"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
 import { Subscription } from "rxjs"
@@ -15,11 +16,37 @@ import { Subscription } from "rxjs"
 })
 export class ActivityListComponent implements OnInit {
 
+    myId = ""
+
     startPosition = 0
-    limit = 6
+    limit = 5
+
+    startPositionCourse = 0
+    limitCourse = 5
+
+    startPositionEvent = 0
+    limitEvent = 5
+
+    startPositionMyActivity = 0
+    limitMyActivity = 5
+
+    startPositionMyCourse = 0
+    limitMyCourse = 5
+
+    startPositionMyEvent = 0
+    limitMyEvent = 5
+
     items!: MenuItem[]
     type!: string
+
     activities: any[] = []
+    activitiesCourse: any[] = []
+    activitiesEvent: any[] = []
+
+    myActivities: any[] =  []
+    myActivitiesByEvent: any[] =  []
+    myActivitiesByCourse: any[] =  []
+
     activityId?: string
     activityTitle?: string
     activityPrice?: string
@@ -29,7 +56,6 @@ export class ActivityListComponent implements OnInit {
     display: boolean = false
 
     urlFile = `${BASE_URL.LOCALHOST}/files/download/`
-
     paymentActivityForm = this.fb.group({
         net: [''],
         approve: [false],
@@ -43,14 +69,24 @@ export class ActivityListComponent implements OnInit {
     })
 
     private getAllActivitySubs?: Subscription
+    private getAllActivityByEvent?:Subscription
+    private getAllActivityByCourse?:Subscription
+
+    private getAllMyActivitiesSubs?:Subscription
+    private getAllMyActivityEventSubs?:Subscription
+    private getAllMyActivityCourseSubs?:Subscription
+
     private paymentActivityDetailSubs?: Subscription
 
     constructor(private primengConfig: PrimeNGConfig, private fb: FormBuilder,
         private activatedRoute: ActivatedRoute, private fileService: FileService,
-        private activityService: ActivityService, private paymentActivityDetailService: PaymentActivityDetailService) { }
+        private activityService: ActivityService, private paymentActivityDetailService: PaymentActivityDetailService,
+        private apiService:ApiService) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
+
+        this.myId = String(this.apiService.getId())
 
         this.items = [
             {
@@ -79,6 +115,16 @@ export class ActivityListComponent implements OnInit {
     }
 
     init() {
+
+        this.initAllActivity()
+        this.initAllActivityCourse()
+        this.initAllActivityEvent()
+        this.initMyActivity()
+        this.initMyActivityCourse()
+        this.initMyActivityEvent()
+    }
+
+    initAllActivity(){
         this.getAllActivitySubs = this.activityService.getByIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addData(result[i])
@@ -86,15 +132,101 @@ export class ActivityListComponent implements OnInit {
         })
     }
 
+    initAllActivityCourse(){
+        this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C',this.startPositionCourse,this.limitCourse,true).subscribe(result =>{
+            for (let i = 0; i < result.length; i++) {
+                this.addDataActivityByCourse(result[i])
+            }
+        })
+    }
+
+    initAllActivityEvent(){
+        this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E',this.startPositionEvent,this.limitEvent,true).subscribe(result =>{
+            for (let i = 0; i < result.length; i++) {
+                this.addDataActivityByEvent(result[i])
+            }
+        })
+    }
+
+    initMyActivity(){
+        this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId,this.startPosition, this.limit,false).subscribe(result => {
+            for (let i = 0; i < result.length; i++) {
+                this.addDataMyActivities(result[i])
+            }
+        })
+    }
+
+    initMyActivityCourse(){
+        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId,'C',this.startPositionCourse,this.limitCourse,true).subscribe(result =>{
+            for (let i = 0; i < result.length; i++) {
+                this.addDataMyActivitiesCourse(result[i])
+            }
+        })
+    }
+
+    initMyActivityEvent(){
+        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId,'E',this.startPositionCourse,this.limitCourse,true).subscribe(result =>{
+            for (let i = 0; i < result.length; i++) {
+                this.addDataMyActivitiesEvent(result[i])
+            }
+        })
+    }
+
 
     onScroll() {
         this.startPosition += this.limit
-        this.init()
+        this.initAllActivity()
     }
+
+    onScrollActivityByCourse() {
+        this.startPositionCourse += this.limitCourse
+        this.initAllActivityCourse()
+    }
+
+    onScrollActivityByEvent() {
+        this.startPositionEvent += this.limitEvent
+        this.initAllActivityEvent()
+    }
+
+    onScrollMyActivity() {
+        this.startPositionMyActivity += this.limitMyActivity
+        this.initMyActivity()
+    }
+
+    onScrollMyActivityCourse() {
+        this.startPositionMyCourse += this.limitMyCourse
+        this.initMyActivityCourse()
+    }
+
+    onScrollMyActivityEvent() {
+        this.startPositionMyEvent += this.limitMyEvent
+        this.initMyActivityEvent()
+    }
+
 
     addData(activity: any) {
         this.activities.push(activity)
-        console.log(this.activities)
+    }
+
+    addDataActivityByCourse(activity: any){
+        this.activitiesCourse.push(activity)
+    }
+
+    addDataActivityByEvent(activity: any){
+        this.activitiesEvent.push(activity)
+    }
+
+
+    addDataMyActivities(activity: any){
+        this.myActivities.push(activity)
+    }
+
+    addDataMyActivitiesCourse(activity: any){
+        this.myActivitiesByCourse.push(activity)
+    }
+
+    addDataMyActivitiesEvent(activity: any){
+        this.myActivitiesByEvent.push(activity)
     }
 
     fileUpload(event: any): void {
@@ -141,6 +273,13 @@ export class ActivityListComponent implements OnInit {
 
     ngOnDestroy(): void {
         this.getAllActivitySubs?.unsubscribe()
+        this.getAllActivityByEvent?.unsubscribe()
+        this.getAllActivityByCourse?.unsubscribe()
+
+        this.getAllMyActivitiesSubs?.unsubscribe()
+        this.getAllMyActivityCourseSubs?.unsubscribe()
+        this.getAllMyActivityEventSubs?.unsubscribe()
+
         this.paymentActivityDetailSubs?.unsubscribe()
     }
 }
