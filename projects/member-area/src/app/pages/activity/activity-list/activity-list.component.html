@@ -33,14 +33,21 @@
                                 <div *ngFor="let p of activities; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <img src="{{urlFile}}{{ activities[i].file.id}}" alt="activity img"
+                                            <img *ngIf="activities[i].file.files && activities[i].file.files != ''"
+                                                src="{{urlFile}}{{ activities[i].file.id}}" class="h-8rem">
+                                            <img *ngIf="(!activities[i].file.files && activities[i].activityType.activityTypeName == 'Course') || (activities[i].file.files =='' && activities[i].activityType.activityTypeName == 'Course') "
+                                                src="../../../../assets/images/course.jpg" alt="activity image"
+                                                class="h-8rem">
+                                            <img *ngIf="(!activities[i].file.files && activities[i].activityType.activityTypeName == 'Event') || (activities[i].file.files =='' && activities[i].activityType.activityTypeName == 'Event') "
+                                                src="../../../../assets/images/event.jpg" alt="activity image"
                                                 class="h-8rem">
                                         </ng-template>
+
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ activities[i].activityCode }}</p>
                                             <p class="uppercase">{{ activities[i].activityType.activityTypeName }}</p>
                                         </div>
-                                        <h3>{{ activities[i].title }}</h3>
+                                        <h3 class="capitalize">{{ activities[i].title }}</h3>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -62,7 +69,7 @@
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ activities[i].price }},-</p>
+                                                <p>{{ activities[i].price | currency:"IDR ":"symbol"}}</p>
                                             </div>
                                             <div class="text-right mt-3">
                                                 <p (click)="showPopUpDialog(activities[i].id, activities[i].price, activities[i].title)"
@@ -79,17 +86,25 @@
                     <ng-container *ngIf="type == 'courses'">
                         <p-card infinite-scroll (scrolled)="onScrollActivityByCourse()">
                             <div class="grid">
-                                <div *ngFor="let ac of activitiesCourse; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
+                                <div *ngFor="let ac of activitiesCourse; index as i"
+                                    class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <img src="{{urlFile}}{{ activitiesCourse[i].file.id}}" alt="activity img"
+                                            <img *ngIf="activitiesCourse[i].file.files && activitiesCourse[i].file.files != ''"
+                                                src="{{urlFile}}{{ activitiesCourse[i].file.id}}" class="h-8rem">
+                                            <img *ngIf="(!activitiesCourse[i].file.files && activitiesCourse[i].activityType.activityTypeName == 'Course') || (activitiesCourse[i].file.files =='' && activitiesCourse[i].activityType.activityTypeName == 'Course') "
+                                                src="../../../../assets/images/course.jpg" alt="activity image"
+                                                class="h-8rem">
+                                            <img *ngIf="(!activitiesCourse[i].file.files && activitiesCourse[i].activityType.activityTypeName == 'Event') || (activitiesCourse[i].file.files =='' && activitiesCourse[i].activityType.activityTypeName == 'Event') "
+                                                src="../../../../assets/images/event.jpg" alt="activity image"
                                                 class="h-8rem">
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ activitiesCourse[i].activityCode }}</p>
-                                            <p class="uppercase">{{ activitiesCourse[i].activityType.activityTypeName }}</p>
+                                            <p class="uppercase">{{ activitiesCourse[i].activityType.activityTypeName }}
+                                            </p>
                                         </div>
-                                        <h3>{{ activitiesCourse[i].title }}</h3>
+                                        <h3 class="capitalize">{{ activitiesCourse[i].title }}</h3>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -111,7 +126,7 @@
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ activitiesCourse[i].price }},-</p>
+                                                <p>Rp. {{ activitiesCourse[i].price | currency:"IDR ":"symbol" }},-</p>
                                             </div>
                                             <div class="text-right mt-3">
                                                 <p (click)="showPopUpDialog(activitiesCourse[i].id, activitiesCourse[i].price, activitiesCourse[i].title)"
@@ -125,21 +140,29 @@
                             </div>
                         </p-card>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="type == 'events'">
                         <p-card infinite-scroll (scrolled)="onScrollActivityByEvent()">
                             <div class="grid">
-                                <div *ngFor="let ac of activitiesEvent; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
+                                <div *ngFor="let ac of activitiesEvent; index as i"
+                                    class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <img src="{{urlFile}}{{ activitiesEvent[i].file.id}}" alt="activity img"
+                                            <img *ngIf="activitiesEvent[i].file.files && activitiesEvent[i].file.files != ''"
+                                                src="{{urlFile}}{{ activitiesEvent[i].file.id}}" class="h-8rem">
+                                            <img *ngIf="(!activitiesEvent[i].file.files && activitiesEvent[i].activityType.activityTypeName == 'Course') || (activitiesEvent[i].file.files =='' && activitiesEvent[i].activityType.activityTypeName == 'Course') "
+                                                src="../../../../assets/images/course.jpg" alt="activity image"
+                                                class="h-8rem">
+                                            <img *ngIf="(!activitiesEvent[i].file.files && activitiesEvent[i].activityType.activityTypeName == 'Event') || (activitiesEvent[i].file.files =='' && activitiesEvent[i].activityType.activityTypeName == 'Event') "
+                                                src="../../../../assets/images/event.jpg" alt="activity image"
                                                 class="h-8rem">
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ activitiesEvent[i].activityCode }}</p>
-                                            <p class="uppercase">{{ activitiesEvent[i].activityType.activityTypeName }}</p>
+                                            <p class="uppercase">{{ activitiesEvent[i].activityType.activityTypeName }}
+                                            </p>
                                         </div>
-                                        <h3>{{ activitiesEvent[i].title }}</h3>
+                                        <h3 class="capitalize">{{ activitiesEvent[i].title }}</h3>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -161,7 +184,7 @@
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ activitiesEvent[i].price }},-</p>
+                                                <p>Rp. {{ activitiesEvent[i].price | currency:"IDR ":"symbol" }},-</p>
                                             </div>
                                             <div class="text-right mt-3">
                                                 <p (click)="showPopUpDialog(activitiesEvent[i].id, activitiesEvent[i].price, activitiesEvent[i].title)"
@@ -182,14 +205,20 @@
                                 <div *ngFor="let ma of myActivities; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <img src="{{urlFile}}{{ myActivities[i].file.id}}" alt="activity img"
+                                            <img *ngIf="myActivities[i].file.files && myActivities[i].file.files != ''"
+                                                src="{{urlFile}}{{ myActivities[i].file.id}}" class="h-8rem">
+                                            <img *ngIf="(!myActivities[i].file.files && myActivities[i].activityType.activityTypeName == 'Course') || (myActivities[i].file.files =='' && myActivities[i].activityType.activityTypeName == 'Course') "
+                                                src="../../../../assets/images/course.jpg" alt="activity image"
+                                                class="h-8rem">
+                                            <img *ngIf="(!myActivities[i].file.files && myActivities[i].activityType.activityTypeName == 'Event') || (myActivities[i].file.files =='' && myActivities[i].activityType.activityTypeName == 'Event') "
+                                                src="../../../../assets/images/event.jpg" alt="activity image"
                                                 class="h-8rem">
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivities[i].activityCode }}</p>
                                             <p class="uppercase">{{ myActivities[i].activityType.activityTypeName }}</p>
                                         </div>
-                                        <h3>{{ myActivities[i].title }}</h3>
+                                        <h3 class="capitalize">{{ myActivities[i].title }}</h3>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -211,7 +240,7 @@
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivities[i].price }},-</p>
+                                                <p>Rp. {{ myActivities[i].price | currency:"IDR ":"symbol" }},-</p>
                                             </div>
                                             <div class="text-right mt-3">
                                                 <p (click)="showPopUpDialog(myActivities[i].id, myActivities[i].price, myActivities[i].title)"
@@ -228,17 +257,25 @@
                     <ng-container *ngIf="type == 'my-courses'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityCourse()">
                             <div class="grid">
-                                <div *ngFor="let mabc of myActivitiesByCourse; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
+                                <div *ngFor="let mabc of myActivitiesByCourse; index as i"
+                                    class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <img src="{{urlFile}}{{ myActivitiesByCourse[i].file.id}}" alt="activity img"
+                                            <img *ngIf="myActivitiesByCourse[i].file.files && myActivitiesByCourse[i].file.files != ''"
+                                                src="{{urlFile}}{{ myActivitiesByCourse[i].file.id}}" class="h-8rem">
+                                            <img *ngIf="(!myActivitiesByCourse[i].file.files && myActivitiesByCourse[i].activityType.activityTypeName == 'Course') || (myActivitiesByCourse[i].file.files =='' && myActivitiesByCourse[i].activityType.activityTypeName == 'Course') "
+                                                src="../../../../assets/images/course.jpg" alt="activity image"
+                                                class="h-8rem">
+                                            <img *ngIf="(!myActivitiesByCourse[i].file.files && myActivitiesByCourse[i].activityType.activityTypeName == 'Event') || (myActivitiesByCourse[i].file.files =='' && myActivitiesByCourse[i].activityType.activityTypeName == 'Event') "
+                                                src="../../../../assets/images/event.jpg" alt="activity image"
                                                 class="h-8rem">
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivitiesByCourse[i].activityCode }}</p>
-                                            <p class="uppercase">{{ myActivitiesByCourse[i].activityType.activityTypeName }}</p>
+                                            <p class="uppercase">{{
+                                                myActivitiesByCourse[i].activityType.activityTypeName }}</p>
                                         </div>
-                                        <h3>{{ myActivitiesByCourse[i].title }}</h3>
+                                        <h3 class="capitalize">{{ myActivitiesByCourse[i].title }}</h3>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -260,7 +297,8 @@
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesByCourse[i].price }},-</p>
+                                                <p>Rp. {{ myActivitiesByCourse[i].price | currency:"IDR ":"symbol" }},-
+                                                </p>
                                             </div>
                                             <div class="text-right mt-3">
                                                 <p (click)="showPopUpDialog(myActivitiesByCourse[i].id, myActivitiesByCourse[i].price, myActivitiesByCourse[i].title)"
@@ -274,21 +312,29 @@
                             </div>
                         </p-card>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="type == 'my-events'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityEvent()">
                             <div class="grid">
-                                <div *ngFor="let mave of myActivitiesByEvent; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
+                                <div *ngFor="let mave of myActivitiesByEvent; index as i"
+                                    class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <img src="{{urlFile}}{{ myActivitiesByEvent[i].file.id}}" alt="activity img"
+                                            <img *ngIf="myActivitiesByEvent[i].file.files && myActivitiesByEvent[i].file.files != ''"
+                                                src="{{urlFile}}{{ myActivitiesByEvent[i].file.id}}" class="h-8rem">
+                                            <img *ngIf="(!myActivitiesByEvent[i].file.files && myActivitiesByEvent[i].activityType.activityTypeName == 'Course') || (myActivitiesByEvent[i].file.files =='' && myActivitiesByEvent[i].activityType.activityTypeName == 'Course') "
+                                                src="../../../../assets/images/course.jpg" alt="activity image"
+                                                class="h-8rem">
+                                            <img *ngIf="(!myActivitiesByEvent[i].file.files && myActivitiesByEvent[i].activityType.activityTypeName == 'Event') || (myActivitiesByEvent[i].file.files =='' && myActivitiesByEvent[i].activityType.activityTypeName == 'Event') "
+                                                src="../../../../assets/images/event.jpg" alt="activity image"
                                                 class="h-8rem">
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivitiesByEvent[i].activityCode }}</p>
-                                            <p class="uppercase">{{ myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                            <p class="uppercase">{{ myActivitiesByEvent[i].activityType.activityTypeName
+                                                }}</p>
                                         </div>
-                                        <h3>{{ myActivitiesByEvent[i].title }}</h3>
+                                        <h3 class="capitalize">{{ myActivitiesByEvent[i].title }}</h3>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -310,7 +356,8 @@
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesByEvent[i].price }},-</p>
+                                                <p>Rp. {{ myActivitiesByEvent[i].price | currency:"IDR ":"symbol" }},-
+                                                </p>
                                             </div>
                                             <div class="text-right mt-3">
                                                 <p (click)="showPopUpDialog(myActivitiesByEvent[i].id, myActivitiesByEvent[i].price, myActivitiesByEvent[i].title)"
@@ -333,9 +380,6 @@
 
 <p-dialog [(visible)]="display">
     <div class="grid bg-white border-round-xl max-w-27rem mb-5">
-        <ng-template pTemplate="header">
-            <h3>Header Content</h3>
-        </ng-template>
         <div class="col-12 md:px-3 px-1">
             <div class=" flex align-items-center justify-content-center mb-5">
                 <div class="border-circle bg-blue-300 icon-box flex align-items-center justify-content-center">
@@ -348,8 +392,8 @@
             <form class="card" [formGroup]="paymentActivityForm">
                 <p class="text-justify mb-2">Please make a payment to account number <b class="main-text">1234567890</b>
                     in
-                    the amount of <b class="main-text">IDR
-                        {{activityPrice}},-</b> . And send proof of payment here</p>
+                    the amount of <b class="main-text">
+                        {{activityPrice | currency:"IDR ":"symbol"}}</b>. And send proof of payment here</p>
                 <div class="field col-12">
                     <p-fileUpload id="file" name="file" [customUpload]="true" (uploadHandler)="fileUpload($event)">
                     </p-fileUpload>
