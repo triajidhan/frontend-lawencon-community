@@ -511,81 +511,6 @@
 
                         <p class="min-w-max">{{ p.countOfLike }} likes</p>
                       </div>
-
-                      <div class="ml-1 flex align-items-center px-3 py-2">
-                        <i class="fa-regular fa-message text-2xl mr-2"></i>
-                        <p class="">15 comments</p>
-                      </div>
-                    </div>
-
-                    <div
-                      class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
-                      (click)="actBookmark(post[i].id,post[i].bookmarkId,i)">
-
-                      <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
-                      <i class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
-
-                    </div>
-                  </div>
-
-                  <div pStyleClass="@next" enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true"
-                    enterActiveClass="scalein" leaveActiveClass="fadeout"
-                    class="w-full text-right main-text cursor-pointer mt-2 underline hover:text-purple-500">
-                    <div (click)="btnToggleComment()">
-                      <ng-container *ngIf="isShowComment">
-                        <p>show comment</p>
-                      </ng-container>
-                      <ng-container *ngIf="!isShowComment">
-                        <p>hide comment</p>
-                      </ng-container>
-
-                    </div>
-                  </div>
-
-                  <div class="mt-4 hidden">
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-max">
-                        <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                          <p class="font-medium">Alexa Victoria</p>
-                          <p class=" text-black-alpha-60">Lorem ipsum dolor sit, amet
-                            consectetur adipisicing elit. Quis id optio iste officiis
-                            eveniet ducimus rerum saepe quod reprehenderit voluptas!</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-max">
-                        <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                          <p class="font-medium">Alexa Victoria</p>
-                          <p class=" text-black-alpha-60">Lorem ipsum dolor sit amet.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-full">
-                        <form class="card w-full">
-                          <div class="field">
-                            <input pInputText class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text"
-                              placeholder="write comment...">
-                            <p class="text-xs text-black-alpha-60">Press Enter to Send.
-                            </p>
-                          </div>
-                          <div class="hidden">
-                            <button type="submit"></button>
-                          </div>
-                        </form>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -706,91 +631,12 @@
                   </div>
 
                   <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
-                    <div class="flex align-items-center">
-                      <div
-                        class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
-                        (click)="actLikePost(p.id,p.likeId,i)">
-
-                        <i class="fa-regular fa-heart text-2xl mr-2"></i>
-                        <i class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
-
-                        <p class="min-w-max">{{ p.countOfLike }} likes</p>
-                      </div>
-
-                      <div class="ml-1 flex align-items-center px-3 py-2">
-                        <i class="fa-regular fa-message text-2xl mr-2"></i>
-                        <p class="">15 comments</p>
-                      </div>
-                    </div>
-
                     <div
                       class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
                       (click)="actBookmarkPostBookmark(p.id,p.bookmarkId,i)">
 
                       <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
                       <i class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
-
-                    </div>
-                  </div>
-
-                  <div pStyleClass="@next" enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true"
-                    enterActiveClass="scalein" leaveActiveClass="fadeout"
-                    class="w-full text-right main-text cursor-pointer mt-2 underline hover:text-purple-500">
-                    <div (click)="btnToggleComment()">
-                      <ng-container *ngIf="isShowComment">
-                        <p>show comment</p>
-                      </ng-container>
-                      <ng-container *ngIf="!isShowComment">
-                        <p>hide comment</p>
-                      </ng-container>
-
-                    </div>
-                  </div>
-
-                  <div class="mt-4 hidden">
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-max">
-                        <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                          <p class="font-medium">Alexa Victoria</p>
-                          <p class=" text-black-alpha-60">Lorem ipsum dolor sit, amet
-                            consectetur adipisicing elit. Quis id optio iste officiis
-                            eveniet ducimus rerum saepe quod reprehenderit voluptas!</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-max">
-                        <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                          <p class="font-medium">Alexa Victoria</p>
-                          <p class=" text-black-alpha-60">Lorem ipsum dolor sit amet.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-full">
-                        <form class="card w-full">
-                          <div class="field">
-                            <input pInputText class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text"
-                              placeholder="write comment...">
-                            <p class="text-xs text-black-alpha-60">Press Enter to Send.
-                            </p>
-                          </div>
-                          <div class="hidden">
-                            <button type="submit"></button>
-                          </div>
-                        </form>
-                      </div>
                     </div>
                   </div>
                 </div>
