@@ -46,7 +46,7 @@ export class InformationReportMemberComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipation(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationMember(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
             result => {
                 this.data = result
                 this.loading = false
