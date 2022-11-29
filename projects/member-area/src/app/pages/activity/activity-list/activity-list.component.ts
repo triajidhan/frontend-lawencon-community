@@ -120,6 +120,24 @@ export class ActivityListComponent implements OnInit {
         this.myActivitiesByEvent = []
         this.myActivitiesByCourse =  []
 
+        this.startPosition = 0
+        this.limit = 6
+
+        this.startPositionCourse = 0
+        this.limitCourse = 6
+
+        this.startPositionEvent = 0
+        this.limitEvent = 6
+
+        this.startPositionMyActivity = 0
+        this.limitMyActivity = 6
+
+        this.startPositionMyCourse = 0
+        this.limitMyCourse = 6
+
+        this.startPositionMyEvent = 0
+        this.limitMyEvent = 6
+
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
         })
