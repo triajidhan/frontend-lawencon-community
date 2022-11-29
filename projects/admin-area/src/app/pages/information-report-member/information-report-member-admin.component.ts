@@ -46,7 +46,7 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipation(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
             result => {
                 console.log(result)
                 this.data = result

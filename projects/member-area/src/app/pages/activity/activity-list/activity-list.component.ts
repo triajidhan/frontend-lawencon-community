@@ -92,29 +92,37 @@ export class ActivityListComponent implements OnInit {
             {
                 label: 'Activity',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/all' },
-                    { label: 'Event', routerLink: '/activities/type/events' },
+                    { label: 'All', routerLink: '/activities/type/all'},
+                    { label: 'Event', routerLink: '/activities/type/events'},
                     { label: 'Course', routerLink: '/activities/type/courses' }
                 ]
             },
             {
                 label: 'My Activity',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/my-activities' },
+                    { label: 'All', routerLink: '/activities/type/my-activities'},
                     { label: 'My Event', routerLink: '/activities/type/my-events' },
                     { label: 'My Course', routerLink: '/activities/type/my-courses' }
                 ]
             }
         ]
 
-        this.activatedRoute.params.subscribe(result => {
-            this.type = result['type']
-        })
-
         this.init()
     }
 
     init() {
+
+        this.activities =  []
+        this.activitiesCourse =  []
+        this.activitiesEvent = []
+
+        this.myActivities =  []
+        this.myActivitiesByEvent = []
+        this.myActivitiesByCourse =  []
+
+        this.activatedRoute.params.subscribe(result => {
+            this.type = result['type']
+        })
 
         this.initAllActivity()
         this.initAllActivityCourse()
@@ -122,6 +130,7 @@ export class ActivityListComponent implements OnInit {
         this.initMyActivity()
         this.initMyActivityCourse()
         this.initMyActivityEvent()
+
     }
 
     initAllActivity() {
@@ -150,6 +159,7 @@ export class ActivityListComponent implements OnInit {
 
     initMyActivity() {
         this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId, this.startPosition, this.limit, false).subscribe(result => {
+            
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivities(result[i])
             }
@@ -165,7 +175,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityEvent() {
-        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
+        this.getAllMyActivityEventSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesEvent(result[i])
             }

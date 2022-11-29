@@ -2,7 +2,12 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
+import { PostAttachment } from "projects/interface/post-attachment"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
+import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
+import { PostService } from "projects/main-area/src/app/service/post.service"
+import { Subscription } from "rxjs"
+
 
 
 @Component({
@@ -19,7 +24,18 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
     fileDownload = `${BASE_URL.LOCALHOST}/files/download/`
 
-    constructor(private apiService: ApiService, private router: Router) { }
+
+    startPosition = 0
+    limit = 5
+
+
+    getDataMyPostSubs?:Subscription
+    getPostAttachmentDataSubs?:Subscription
+
+    postData: any[] = []
+
+    constructor(private apiService: ApiService, private router: Router,
+        private postService:PostService, private postAttachmentService:PostAttachmentService) { }
 
 
     ngOnInit(): void {
@@ -48,7 +64,31 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         if (this.apiService.getPhotoId()) {
             this.photoId = this.apiService.getPhotoId()
         }
+
+        this.init()
+        
     }
+
+    init(){
+        this.getDataMyPostSubs = this.postService.getByUserAndOrder(String(this.id),this.startPosition,this.limit,false).subscribe(result=>{
+            
+            for(let i=0;i < result.length;i++){
+                this.addPost(result[i])
+            }
+        })
+    }
+
+    addPost(post:any){
+        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
+            post.postAttachment = result
+          })
+          this.postData.push(post)
+    }
+
+    onScroll() {
+        this.startPosition += this.limit
+        this.init()
+      }
 
     changePass() {
         if (this.roleCode == "SA") {

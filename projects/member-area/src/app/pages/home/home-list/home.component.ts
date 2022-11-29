@@ -211,7 +211,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   initBookmark() {
     this.getDataBookmarkSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPositionPostBookmark, this.limitPostBookmark, false).subscribe(result => {
-      console.log(result)
       for (let i = 0; i < result.length; i++) {
         this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].post.id, this.myId).subscribe(userBookmark => {
           result[i].bookmarkId = userBookmark.bookmarkId
