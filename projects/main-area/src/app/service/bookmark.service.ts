@@ -17,7 +17,7 @@ export class BookmarkService{
     getAll(startPosition: number, limit: number): Observable<any> {
       return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks?startPosition=${startPosition}&limit=${limit}`)
     }
-  
+
     getById(id: string): Observable<any> {
       return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/id/${id}`)
     }
@@ -37,7 +37,7 @@ export class BookmarkService{
     getByPost(postId: string): Observable<any> {
         return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?postId=${postId}`)
     }
-  
+
     getTotalByUser(userId: string): Observable<any> {
       return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/total-users/?userId=${userId}`)
     }
@@ -46,18 +46,18 @@ export class BookmarkService{
         return this.http.get<Bookmark>(`${Object.values(BASE_URL)[0]}/bookmarks/total-posts/?postId=${postId}`)
     }
 
-    getUserBookmarkPost(postId: string,userId:string): Observable<any> {
+    getUserBookmarkPost(postId: string,userId:string): Observable<Bookmark> {
         return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/user-bookmark/?postId=${postId}&userId=${userId}`)
     }
-  
+
     getByIsActive(startPosition: number, limit: number): Observable<any> {
       return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/is-active/?startPosition=${startPosition}&limit=${limit}`)
     }
-  
+
     insert(data: any): Observable<ResponseMessage> {
       return this.http.post<ResponseMessage>(`${Object.values(BASE_URL)[0]}/bookmarks`, data)
     }
-  
+
     update(data: any): Observable<ResponseMessage> {
       return this.http.put<ResponseMessage>(`${Object.values(BASE_URL)[0]}/bookmarks`, data)
     }

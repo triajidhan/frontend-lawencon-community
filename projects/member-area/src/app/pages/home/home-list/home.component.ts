@@ -57,6 +57,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   postLike: any[] = []
   postAttachmentLike: any[] = []
 
+  postBookmark: any[] = []
+  postAttachmentBookmark: any[] = []
+
   getByPostIdForLike: any = new Object();
   addLike = this.fb.group({
     post: this.fb.group({
@@ -110,6 +113,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getIdBookmarkDataSubs?: Subscription
 
   private getDataLikeSubs?: Subscription
+  private getDataBookmarkSubs?: Subscription
 
   postForm = this.fb.group({
     title: ['', Validators.required],
@@ -149,14 +153,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initPost()
   }
 
-
   onScrollLike() {
     this.startPositionPostLike += this.limitPostLike
     this.initLike()
   }
 
   onScrollBookmark() {
-
+    this.startPositionPostBookmark += this.limitPostBookmark
+    this.initLike()
   }
 
   init() {
@@ -165,12 +169,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.post = [];
     this.startPositionPostLike = 0
     this.limitPostLike = 5
+    this.startPositionPostBookmark = 0
+    this.limitPostBookmark = 5
     this.postLike = [];
+    this.postBookmark = [];
     this.activatedRoute.params.subscribe(result => {
       this.type = result['type']
     })
     this.initPost()
     this.initLike()
+    this.initBookmark()
   }
 
   initPost() {
@@ -201,6 +209,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   }
 
+  initBookmark() {
+    this.getDataBookmarkSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPositionPostBookmark, this.limitPostBookmark, false).subscribe(result => {
+      console.log(result)
+      for (let i = 0; i < result.length; i++) {
+        this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].post.id, this.myId).subscribe(userBookmark => {
+          result[i].bookmarkId = userBookmark.bookmarkId
+        })
+        this.addDataBookmark(result[i])
+      }
+    })
+  }
+
   addDataPost(post: any) {
     this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
       post.postAttachment = result
@@ -213,6 +233,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       post.post.postAttachment = result
     })
     this.postLike.push(post)
+  }
+
+  addDataBookmark(post: any) {
+    this.getPostBookmarkAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
+      post.post.postAttachment = result
+    })
+    this.postBookmark.push(post)
   }
 
   fileUpload(event: any): void {
@@ -283,7 +310,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  actBookmark(postId: string, bookmarkId: string) {
+  actBookmark(postId: string, bookmarkId: string, i :any) {
     if (bookmarkId) {
       this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
         if (result.isActive) {
@@ -291,15 +318,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         } else {
           this.updateBookmark.controls.isActive.setValue(true)
         }
-
         this.updateBookmark.controls['id'].setValue(result.id)
 
         this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {
-          for (let i = 0; i < this.post.length; i++) {
-            this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
-              this.post[i].bookmarkId = userBookmark.id
-            })
-          }
         })
       })
     } else {
@@ -308,13 +329,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           id: postId
         }
       })
-      this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe(() => {
-        for (let i = 0; i < this.post.length; i++) {
-          this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(this.post[i].id, this.myId).subscribe(userBookmark => {
-            this.post[i].bookmarkId = userBookmark.id
-          })
-        }
-      })
+      this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe()
     }
   }
 
@@ -353,6 +368,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.updateLike.controls['id'].setValue(result.id)
         this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
           this.postLike.splice(i, 1);
+        })
+      })
+    }
+  }
+
+  actBookmarkPostBookmark(postId: string, bookmarkId: string, i: any) {
+    if (bookmarkId) {
+      this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
+        this.updateBookmark.controls.isActive.setValue(false)
+        this.updateBookmark.controls['id'].setValue(result.id)
+        this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {
+          this.postBookmark.splice(i, 1);
         })
       })
     }
