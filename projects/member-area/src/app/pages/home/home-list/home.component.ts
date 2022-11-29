@@ -140,9 +140,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.myProfile = String(this.apiService.getPhotoId())
 
     this.items = [
-      { label: 'Thread', routerLink: '/homes/type/threads', command: () => this.init()},
-      { label: 'Likes', routerLink: '/homes/type/likes', command: () => this.init()},
-      { label: 'Bookmark', routerLink: '/homes/type/bookmarks', command: () => this.init()}
+      { label: 'Thread', routerLink: '/homes/type/threads', command: () => this.init() },
+      { label: 'Likes', routerLink: '/homes/type/likes', command: () => this.init() },
+      { label: 'Bookmark', routerLink: '/homes/type/bookmarks', command: () => this.init() }
     ]
 
     this.init()
@@ -310,7 +310,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  actBookmark(postId: string, bookmarkId: string, i :any) {
+  actBookmark(postId: string, bookmarkId: string, i: any) {
     if (bookmarkId) {
       this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
         if (result.isActive) {

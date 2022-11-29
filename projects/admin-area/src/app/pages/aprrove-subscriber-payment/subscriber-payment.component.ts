@@ -49,7 +49,7 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
             result => {
                 console.log(result)
                 for (let i = 0; result.length; i++) {
-                    this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
+                    this.getByIdUserSubs = this.userService.getById(result[i].createdBy ?? '').subscribe(resultUser => {
                         result[i].userName = resultUser.fullName
                         this.data = result
                         this.loading = false
