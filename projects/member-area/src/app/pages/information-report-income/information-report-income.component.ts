@@ -46,7 +46,7 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncome(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncomeSuper(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
             result => {
                 this.data = result
                 this.loading = false
