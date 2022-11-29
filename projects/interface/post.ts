@@ -18,4 +18,5 @@ export interface Post extends File, PostType, User {
 	userPosition: string
 	postAttachment: any[]
 	pollContents: any[]
+	totalPoll: any
 }

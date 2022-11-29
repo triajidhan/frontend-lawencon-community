@@ -1,9 +1,7 @@
-import { DatePipe } from "@angular/common"
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { FormArray, FormBuilder, Validators } from "@angular/forms"
+import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
-import { InitEditableRow } from "primeng/table"
 import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { Bookmark } from "projects/interface/bookmark"
@@ -11,13 +9,12 @@ import { Like } from "projects/interface/like"
 import { PostType } from "projects/interface/post-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { BookmarkService } from "projects/main-area/src/app/service/bookmark.service"
-import { FileService } from "projects/main-area/src/app/service/file.service"
 import { LikeService } from "projects/main-area/src/app/service/like.service"
+import { PollingService } from "projects/main-area/src/app/service/polling.service"
 import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
 import { Subscription } from "rxjs"
-import { UserService } from "../../../service/user.service"
 
 @Component({
   selector: 'home',
@@ -39,6 +36,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   startPositionPostBookmark = 0
   limitPostBookmark = 5
 
+  startPositionPollOption = 0
+  limitPollOption = 5
+
   items!: MenuItem[]
   type!: string
   postType!: string
@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   postTypes: any[] = []
 
   post: any[] = []
+  pollOption: any[] = []
   postAttachment: any[] = []
 
   postLike: any[] = []
@@ -91,15 +92,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private postInsertSubs?: Subscription
   private postAttachInsertSubs?: Subscription
+  private getDataPollContentSubs?: Subscription
   private getByCodePostTypeSubsc?: Subscription
 
   private getPostDataSubs?: Subscription
   private getPostAttachmentDataSubs?: Subscription
 
-  private getPostLikeDataSubs?: Subscription
   private getPostLikeAttachmentDataSubs?: Subscription
-
-  private getPostBookmarkDataSubs?: Subscription
   private getPostBookmarkAttachmentDataSubs?: Subscription
 
   private getCountLikeDataSubs?: Subscription
@@ -129,8 +128,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
     private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
-    private userService: UserService, private fileService: FileService, private postAttachmentService: PostAttachmentService,
-    private apiService: ApiService, private likeService: LikeService, private bookmarkService: BookmarkService) { }
+    private postAttachmentService: PostAttachmentService, private apiService: ApiService,
+    private likeService: LikeService, private bookmarkService: BookmarkService,
+    private pollingService: PollingService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true
@@ -166,13 +166,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   init() {
     this.startPositionPost = 0
     this.limitPost = 5
-    this.post = [];
     this.startPositionPostLike = 0
     this.limitPostLike = 5
     this.startPositionPostBookmark = 0
     this.limitPostBookmark = 5
-    this.postLike = [];
-    this.postBookmark = [];
+
+    this.post = []
+    this.postLike = []
+    this.postBookmark = []
+    this.pollOption = []
     this.activatedRoute.params.subscribe(result => {
       this.type = result['type']
     })
@@ -224,7 +226,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
       post.postAttachment = result
     })
-    this.post.push(post)
+    this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
+      this.pollOption.push(result)
+
+      let totalTemp = 0
+      for (let j = 0; j < result.length; j++) {
+        totalTemp += result[j].totalPoll
+        post.totalPoll = totalTemp
+      }
+      this.post.push(post)
+    })
   }
 
   addDataLike(post: any) {
@@ -345,6 +356,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.updateLike.controls['id'].setValue(result.id)
 
         this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
+
         })
       })
     } else {
@@ -353,8 +365,10 @@ export class HomeComponent implements OnInit, OnDestroy {
           id: postId
         }
       })
-      this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(() => {
+      this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(response => {
         this.post[i].countOfLike = this.post[i].countOfLike + 1;
+        this.post[i].likeId = response.id
+        console.log(this.post[i])
       })
     }
 
@@ -396,15 +410,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.getPostAttachmentDataSubs?.unsubscribe()
     this.getCountLikeDataSubs?.unsubscribe()
+    this.getDataPollContentSubs?.unsubscribe()
 
     this.insertLikeDataSubs?.unsubscribe()
     this.updateLikeDataSubs?.unsubscribe()
     this.getIdLikeDataSubs?.unsubscribe()
 
+    this.getPostLikeAttachmentDataSubs?.unsubscribe()
+    this.getPostBookmarkAttachmentDataSubs?.unsubscribe()
+
     this.getCountBookmarkDataSubs?.unsubscribe()
     this.insertBookmarkDataSubs?.unsubscribe()
     this.updateBookmarkDataSubs?.unsubscribe()
     this.getIdBookmarkDataSubs?.unsubscribe()
+
+    this.getDataLikeSubs?.unsubscribe()
+    this.getDataBookmarkSubs?.unsubscribe()
   }
 
 }

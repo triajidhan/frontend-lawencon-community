@@ -21,8 +21,8 @@ export class PollingService {
 		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/id/${id}`)
 	}
 
-	getByPost(postId: string): Observable<Polling> {
-		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/posts/postId=${postId}`)
+	getByPost(postId: string): Observable<Polling[]> {
+		return this.httpClient.get<Polling[]>(`${Object.values(BASE_URL)[0]}/pollings/posts/?postId=${postId}`)
 	}
 
 	getByUser(userId: string): Observable<Polling> {
