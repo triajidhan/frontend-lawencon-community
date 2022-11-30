@@ -3,7 +3,7 @@ import { FormBuilder } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
-import { ActivityService } from "projects/main-area/src/app/service/activity.service"
+import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { FileService } from "projects/main-area/src/app/service/file.service"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
 import { Subscription } from "rxjs"
@@ -19,10 +19,11 @@ export class ArticleListComponent implements OnInit {
     limit = 6
     items!: MenuItem[]
     type!: string
-    activities: any[] = []
-    activityId?: string
-    activityTitle?: string
-    activityPrice?: string
+    article: any[] = []
+
+    articleId?: string
+    articleTitle?: string
+    articleContents?: string
 
     resultExtension!: string
     resultFile !: string
@@ -47,7 +48,7 @@ export class ArticleListComponent implements OnInit {
 
     constructor(private primengConfig: PrimeNGConfig, private fb: FormBuilder,
         private activatedRoute: ActivatedRoute, private fileService: FileService,
-        private activityService: ActivityService, private paymentActivityDetailService: PaymentActivityDetailService) { }
+        private articleService:ArticleService) { }
 
     ngOnInit(): void {
         this.primengConfig.ripple = true
@@ -69,22 +70,21 @@ export class ArticleListComponent implements OnInit {
     }
 
     init() {
-        this.getAllActivitySubs = this.activityService.getByIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
+        this.getAllActivitySubs = this.articleService.getByIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addData(result[i])
             }
         })
     }
 
-
     onScroll() {
         this.startPosition += this.limit
         this.init()
     }
 
-    addData(activity: any) {
-        this.activities.push(activity)
-        console.log(this.activities)
+    addData(article: any) {
+        this.article.push(article)
+        console.log(article)
     }
 
     fileUpload(event: any): void {
@@ -102,32 +102,6 @@ export class ArticleListComponent implements OnInit {
             this.resultExtension = result.split(";")[0].split('/')[1]
         })
     }
-
-    showPopUpDialog(activityId: string, price: string, title: string) {
-        this.display = true
-        this.activityId = activityId
-        this.activityPrice = price
-        this.activityTitle = title
-    }
-
-    submitInsert() {
-        this.paymentActivityForm.patchValue({
-            file: {
-                files: this.resultFile,
-                ext: this.resultExtension
-            },
-            activity: {
-                id: this.activityId
-            }
-        })
-
-        this.paymentActivityForm.value.net = this.activityPrice
-
-        this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).subscribe(() => {
-            this.display = false
-        })
-    }
-
 
     ngOnDestroy(): void {
         this.getAllActivitySubs?.unsubscribe()

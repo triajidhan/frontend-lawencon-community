@@ -32,12 +32,12 @@ export class ArticleService {
     return this.http.get<Article[]>(`${Object.values(BASE_URL)[0]}/articles/is-active/?startPosition=${startPosition}&limit=${limit}`)
   }
 
-  getByIsActiveAll(): Observable<Article> {
-    return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/articles/is-active/`)
+  getByIsActiveAll(): Observable<Article[]> {
+    return this.http.get<Article[]>(`${Object.values(BASE_URL)[0]}/articles/is-active/`)
   }
 
-  getByIsActiveAndOrder(startPosition: number, limit: number, asc: boolean): Observable<Article> {
-    return this.http.get<Article>(`${Object.values(BASE_URL)[0]}/articles/is-active-order/?startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
+  getByIsActiveAndOrder(startPosition: number, limit: number, asc: boolean): Observable<Article[]> {
+    return this.http.get<Article[]>(`${Object.values(BASE_URL)[0]}/articles/is-active-order/?startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
   }
 
   insert(data: any): Observable<ResponseMessage> {
