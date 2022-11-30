@@ -33,4 +33,8 @@ export class PollingStatusService {
 		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
+  getByUserPosting(userId: string, postingId:string): Observable<PollingStatus>{
+		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/user-posting?userId=${userId}&pollingId=${postingId}`)
+  }
+
 }
