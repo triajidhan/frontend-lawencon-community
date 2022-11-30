@@ -32,7 +32,6 @@ export class InformationReportMemberComponent implements OnInit, OnDestroy {
         this.items = [
             { label: 'Home', routerLink: "/dashboard/super-admin" },
             { label: 'Member Information Report' }
-
         ]
     }
 
@@ -46,8 +45,10 @@ export class InformationReportMemberComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationMember(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(
-            result => {
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationMember(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(result => {
+
+                console.log(result)
+
                 this.data = result
                 this.loading = false
                 this.totalData = result.length

@@ -68,7 +68,7 @@
                                 <p-tableCheckbox [value]="data"></p-tableCheckbox>
                             </td>
                             <td>{{i + 1}}</td>
-                            <td>belum ada</td>
+                            <td>{{data.activity.activityType.activityTypeName}}</td>
                             <td>{{data.activity.title}}</td>
                             <td>{{data.activity.beginSchedule | date:'dd/MM/yyyy'}}</td>
                             <td>{{data.countOfPaymentActivity}}</td>
