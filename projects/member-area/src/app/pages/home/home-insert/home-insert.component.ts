@@ -18,7 +18,6 @@ import { Subscription } from "rxjs"
 })
 export class HomeInsertComponent implements OnInit, OnDestroy {
 
-    items!: MenuItem[]
     type!: string
     date?: Date
 
@@ -55,14 +54,6 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
         private router: Router, private postService: PostService, private postTypeService: PostTypeService) { }
 
     ngOnInit(): void {
-        this.items = [
-            { label: 'All', routerLink: '/activities/type/all' },
-            { label: 'Event', routerLink: '/activities/type/events' },
-            { label: 'Course', routerLink: '/activities/type/courses' },
-            { label: 'My Activity', routerLink: '/activities/type/my-activities' },
-            { label: 'My Event', routerLink: '/activities/type/my-events' },
-            { label: 'My Course', routerLink: '/activities/type/my-courses' }
-        ]
 
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']

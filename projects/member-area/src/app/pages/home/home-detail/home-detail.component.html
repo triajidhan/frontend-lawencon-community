@@ -1,0 +1,145 @@
+<div class="w-full body-color">
+    <div class=" flex justify-content-center flex-wrap">
+        <div class="col-12 md:col-8 md:px-3 px-1 py-3">
+            <div class="w-full bg-black-alpha-20 pt-5">
+                <p-carousel [value]="carousel">
+                    <ng-template let-item pTemplate="item">
+                        <!-- <div class="w-full max-h-max flex justify-content-center align-items-center"> -->
+                        <p-image [src]="item.image" alt="Image">
+                        </p-image>
+                        <!-- </div> -->
+                    </ng-template>
+                </p-carousel>
+            </div>
+            <p-card>
+                <div class="md:mx-5">
+                    <div class="flex  align-items-center mb-3 mt-3">
+                        <div class="max-w-max mr-3">
+                            <img src="../../../../assets/logos/user.jpg" class="w-3rem h-3rem border-circle"
+                                alt="profile image">
+                        </div>
+                        <div class="w-full">
+                            <h3>Tri Aji Ramadhan</h3>
+                            <p class="text-black-alpha-60 text-xs mt-1">one minutes ago </p>
+                        </div>
+                        <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
+                            <h4 class="mx-3 my-1 text-purple-500">Lawencon</h4>
+                        </div>
+                        <div class="min-w-max mr-3 bg-green-100 border-round-xl">
+                            <h4 class="mx-3 my-1 text-green-500">Programmer</h4>
+                        </div>
+                    </div>
+                    <p-card styleClass="content-box">
+                        <h3 class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam, aut!
+                        </h3>
+                        <p class="text-black-alpha-60 mt-3 text-justify">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem illo obcaecati in
+                            similique
+                            vel earum modi eius temporibus aliquam officia.
+                        </p>
+                    </p-card>
+
+                    <p-card styleClass="pooling-content">
+                        <h3 class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
+                            exercitationem.</h3>
+
+                        <div class="mt-3 body-color hover:bg-gray-100">
+                            <div class="flex align-items-center cursor-pointer py-3">
+                                <p class="text-center text-lg main-text w-full">Lorem ipsum dolor sit amet.</p>
+                                <p class="min-w-max mr-3 text-black-alpha-60">1 votes</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 body-color hover:bg-gray-100">
+                            <div class="flex align-items-center cursor-pointer py-3">
+                                <p class="text-center text-lg main-text w-full">Lorem ipsum dolor sit amet.</p>
+                                <p class="min-w-max mr-3 text-black-alpha-60">1 votes</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 body-color hover:bg-gray-100">
+                            <div class="flex align-items-center cursor-pointer py-3">
+                                <p class="text-center text-lg main-text w-full">Lorem ipsum dolor sit amet.</p>
+                                <p class="min-w-max mr-3 text-black-alpha-60">1 votes</p>
+                            </div>
+                        </div>
+
+                        <div class="flex mt-5 align-items-center text-black-alpha-60">
+                            <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
+                            <p class="w-full">3 votes</p>
+                        </div>
+                    </p-card>
+                    <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
+                        <div class="flex align-items-center">
+                            <div
+                                class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
+
+                                <i class="fa-regular fa-heart text-2xl mr-2"></i>
+                                <i class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
+
+
+                                <p class="min-w-max">1 likes</p>
+                            </div>
+
+                            <div class="ml-1 flex align-items-center px-3 py-2">
+                                <i class="fa-regular fa-message text-2xl mr-2"></i>
+                                <p class="">15 comments</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
+
+                            <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
+                            <i class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
+
+                        </div>
+                    </div>
+
+
+                    <div class="mt-4">
+                        <ng-container>
+                            <div class="flex mt-3">
+                                <div class="max-w-max mr-3">
+                                    <img src="../../../assets/images/article.png" alt=""
+                                        class="w-2rem h-2rem border-circle">
+                                </div>
+                                <div class="w-max">
+                                    <div class="bg-gray-100 px-3 py-2 border-round-xl">
+                                        <p class="font-medium">Tri Aji Ramadhan</p>
+                                        <p class=" text-black-alpha-60">Lorem ipsum, dolor sit amet consectetur
+                                            adipisicing
+                                            elit. Commodi, libero! </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </ng-container>
+
+
+                        <div class="flex mt-3">
+                            <div class="max-w-max mr-3">
+                                <img src="../../../assets/images/article.png" alt=""
+                                    class="w-2rem h-2rem border-circle">
+                            </div>
+                            <div class="w-full">
+                                <form class="card w-full">
+                                    <div class="field">
+                                        <input formControlName="commentBody" pInputText
+                                            class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text"
+                                            placeholder="write comment...">
+                                        <p class="text-xs text-black-alpha-60">Press Enter to Send.
+                                        </p>
+                                    </div>
+                                    <div class="hidden">
+                                        <button type="submit"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+    </div>
+</div>

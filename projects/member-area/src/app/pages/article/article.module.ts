@@ -17,10 +17,11 @@ import { DropdownModule } from "primeng/dropdown"
 import { InfiniteScrollModule } from "ngx-infinite-scroll"
 import { DialogModule } from "primeng/dialog"
 import { ArticleListComponent } from "./article-list/article-list.component"
+import { ArticleDetailComponent } from "./article-detail/article-detail.component"
 
 @NgModule({
     declarations: [
-        ArticleListComponent
+        ArticleListComponent, ArticleDetailComponent
     ],
     imports: [
         ArticleRouting, ButtonModule, InputTextModule,
@@ -32,7 +33,7 @@ import { ArticleListComponent } from "./article-list/article-list.component"
         DialogModule
     ],
     exports: [
-        ArticleListComponent
+        ArticleListComponent, ArticleDetailComponent
     ]
 })
 export class ArticleModule { }

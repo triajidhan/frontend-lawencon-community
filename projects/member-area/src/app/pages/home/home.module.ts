@@ -18,10 +18,13 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { HomeComponent } from "./home-list/home.component"
 import { HomeInsertComponent } from "./home-insert/home-insert.component"
 import { StyleClassModule } from "primeng/styleclass"
+import { HomeDetailComponent } from "./home-detail/home-detail.component"
+import { CarouselModule } from 'primeng/carousel'
+import { ImageModule } from 'primeng/image'
 
 @NgModule({
     declarations: [
-        HomeComponent, HomeInsertComponent
+        HomeComponent, HomeInsertComponent, HomeDetailComponent
     ],
     imports: [
         HomeRouting, ButtonModule, InputTextModule,
@@ -30,10 +33,11 @@ import { StyleClassModule } from "primeng/styleclass"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, DialogModule,
         ReactiveFormsModule, DropdownModule,
-        InfiniteScrollModule, StyleClassModule
+        InfiniteScrollModule, StyleClassModule,
+        CarouselModule, ImageModule
     ],
     exports: [
-        HomeComponent, HomeInsertComponent
+        HomeComponent, HomeInsertComponent, HomeDetailComponent
     ]
 })
 export class HomeModule { }
