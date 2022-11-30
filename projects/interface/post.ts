@@ -19,4 +19,6 @@ export interface Post extends File, PostType, User {
 	postAttachment: any[]
 	pollContents: any[]
 	totalPoll: any
+	isActiveLike: any
+	isActiveBookmark: any
 }

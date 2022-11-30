@@ -8,7 +8,7 @@ export interface Bookmark extends User, Post {
 	post: Post
 	isActive: boolean
 
-  bookmarkId: string
-	postAttachment:any[]
+	bookmarkId: string
+	postAttachment: any[]
 }
 

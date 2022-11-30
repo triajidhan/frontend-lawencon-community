@@ -5,7 +5,7 @@ import { MenuItem, PrimeNGConfig } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { Bookmark } from "projects/interface/bookmark"
-import { Like } from "projects/interface/like"
+import { Polling } from "projects/interface/polling"
 import { PostType } from "projects/interface/post-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { BookmarkService } from "projects/main-area/src/app/service/bookmark.service"
@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   post: any[] = []
   pollOption: any[] = []
+  polling!: Polling
   postAttachment: any[] = []
 
   postLike: any[] = []
@@ -93,6 +94,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private postInsertSubs?: Subscription
   private postAttachInsertSubs?: Subscription
   private getDataPollContentSubs?: Subscription
+  private choosePollOptionSubs?: Subscription
+  private getByIdPollOptionSubs?: Subscription
   private getByCodePostTypeSubsc?: Subscription
 
   private getPostDataSubs?: Subscription
@@ -189,10 +192,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
           result[i].likeId = userLike.likeId
           result[i].countOfLike = userLike.countOfLike
+          result[i].isActiveLike = userLike.isActive
         })
 
         this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, this.myId).subscribe(userBookmark => {
           result[i].bookmarkId = userBookmark.id
+          result[i].isActiveBookmark = userBookmark.isActive
         })
         this.addDataPost(result[i])
       }
@@ -216,6 +221,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       for (let i = 0; i < result.length; i++) {
         this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].post.id, this.myId).subscribe(userBookmark => {
           result[i].bookmarkId = userBookmark.bookmarkId
+
         })
         this.addDataBookmark(result[i])
       }
@@ -320,13 +326,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  choosePollOption(pollId: string) {
+    this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
+      this.polling = result
+      this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(() => {
+
+      })
+    })
+  }
+
   actBookmark(postId: string, bookmarkId: string, i: any) {
     if (bookmarkId) {
       this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
         if (result.isActive) {
           this.updateBookmark.controls.isActive.setValue(false)
+          this.post[i].isActiveBookmark = false
         } else {
           this.updateBookmark.controls.isActive.setValue(true)
+          this.post[i].isActiveBookmark = true
         }
         this.updateBookmark.controls['id'].setValue(result.id)
 
@@ -339,7 +356,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           id: postId
         }
       })
-      this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe()
+      this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe(response => {
+        this.post[i].isActiveBookmark = true
+        this.post[i].bookmarkId = response.id
+      }
+
+      )
     }
   }
 
@@ -349,14 +371,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (result.isActive) {
           this.updateLike.controls.isActive.setValue(false)
           this.post[i].countOfLike = this.post[i].countOfLike - 1;
+          this.post[i].isActiveLike = false
         } else {
           this.updateLike.controls.isActive.setValue(true)
           this.post[i].countOfLike = this.post[i].countOfLike + 1;
+          this.post[i].isActiveLike = true
         }
         this.updateLike.controls['id'].setValue(result.id)
 
         this.updateLikeDataSubs = this.likeService.update(this.updateLike.value).subscribe(() => {
-
         })
       })
     } else {
@@ -368,7 +391,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(response => {
         this.post[i].countOfLike = this.post[i].countOfLike + 1;
         this.post[i].likeId = response.id
-        console.log(this.post[i])
+        this.post[i].isActiveLike = true
+
       })
     }
 
