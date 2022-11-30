@@ -23,12 +23,16 @@ import { UserService } from "../../../service/user.service"
     templateUrl: './profile-list-member.component.html'
 })
 export class ProfileListMemberComponent implements OnInit, OnDestroy {
-    id?: string | null
-    name?: string | null
+    myId: string = ""
+    myFullName: string = ""
+    myProfile: string = ""
+    
     roleName?: string | null
     roleCode?: string | null
     email?: string | null
     photoId?: number | null
+
+    
     items!: MenuItem[]
     fileDownload = `${BASE_URL.LOCALHOST}/files/download/`
 
@@ -132,12 +136,11 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             { label: 'Log Out', routerLink: '/activities/type/courses' }
         ]
 
-        if (this.apiService.getId()) {
-            this.id = this.apiService.getId()
-        }
-        if (this.apiService.getName()) {
-            this.name = this.apiService.getName()
-        }
+        this.myId = String(this.apiService.getId())
+        this.myFullName = String(this.apiService.getName())
+        this.myProfile = String(this.apiService.getPhotoId())
+
+        
         if (this.apiService.getEmail()) {
             this.email = this.apiService.getEmail()
         }
@@ -170,36 +173,35 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     }
     
     initPost() {
-        this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, false).subscribe(result => {
+        this.getPostDataSubs = this.postService.getByUserAndOrder(this.myId,this.startPositionPost, this.limitPost, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
-            this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, String(this.id)).subscribe(userLike => {
+            this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
                 result[i].likeId = userLike.likeId
                 result[i].countOfLike = userLike.countOfLike
             })
 
-            this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, String(this.id)).subscribe(userBookmark => {
+            this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, this.myId).subscribe(userBookmark => {
                 result[i].bookmarkId = userBookmark.id
             })
+
             this.addDataPost(result[i])
+
+            console.log(result[i])
             }
         })
     }
     
-  
-    
     addDataPost(post: any) {
+
         this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
             post.postAttachment = result
         })
-        this.post.push(post)
-    }
+        
+        this.userService.getById(post.createdBy).subscribe(result=>{
+            post.user = result
+        })
 
-    addPost(post:any){
-        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
-            post.postAttachment = result
-          })
-          
-          this.post.push(post)
+        this.post.push(post)
     }
 
     fileUpload(event: any): void {
@@ -290,7 +292,10 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 id: postId
             }
             })
-            this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe()
+
+            this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe(response=>{
+                this.bookmark[i].bookmarkId = response.id
+            })
         }
     }
     
@@ -349,21 +354,21 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
     changePass() {
         if (this.roleCode == "SA") {
-            this.router.navigateByUrl("/profiles/super-admin/change-password/" + this.id)
+            this.router.navigateByUrl("/profiles/super-admin/change-password/" + this.myId)
         } else if (this.roleCode == "A") {
-            this.router.navigateByUrl("/profiles/admin/change-password/" + this.id)
+            this.router.navigateByUrl("/profiles/admin/change-password/" + this.myId)
         } else {
-            this.router.navigateByUrl("/profiles/admin/change-password/" + this.id)
+            this.router.navigateByUrl("/profiles/admin/change-password/" + this.myId)
         }
     }
 
     editProfile() {
         if (this.roleCode == "SA") {
-            this.router.navigateByUrl("/profiles/super-admin/edit/" + this.id)
+            this.router.navigateByUrl("/profiles/super-admin/edit/" + this.myId)
         } else if (this.roleCode == "A") {
-            this.router.navigateByUrl("/profiles/admin/edit/" + this.id)
+            this.router.navigateByUrl("/profiles/admin/edit/" + this.myId)
         } else {
-            this.router.navigateByUrl("/profiles/admin/edit/" + this.id)
+            this.router.navigateByUrl("/profiles/admin/edit/" + this.myId)
         }
     }
 

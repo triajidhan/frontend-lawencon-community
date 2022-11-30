@@ -5,11 +5,14 @@
                 <p-card>
                     <div class="flex mx-5 mt-5">
                         <div class="max-w-max mr-7"> 
-                            <img src="{{ fileDownload }}{{ photoId }}" alt="" class="w-10rem h-10rem border-circle">
+                            <img *ngIf="!myProfile" src="{{fileDownload}}{{myProfile}}" alt="" class="w-3rem h-3rem border-circle">
+                            <img *ngIf="myProfile" src="../../../../assets/logos/user.jpg" alt="" class="w-3rem h-3rem border-circle">
+                            
+                            <!-- <img src="{{ fileDownload }}{{ photoId }}" alt="" class="w-10rem h-10rem border-circle"> -->
                         </div>
                         <div class="flex align-items-center flex-wrap">
                             <div>
-                                <h1 class="mb-3">{{name}}</h1>
+                                <h1 class="mb-3">{{myFullName}}</h1>
                                 <p class="text-black-alpha-60">{{email}}</p>
                                 <p class="text-black-alpha-60">{{roleName}}</p>
                             </div>
@@ -64,7 +67,12 @@
                 <p-card>
                     <div class="flex mx-5" (click)="postDialog('regular')">
                         <div class="max-w-max">
-                            <img src="{{ fileDownload }}{{ photoId }}" alt="" class="w-3rem h-3rem border-circle">
+                            
+                            <img *ngIf="!myProfile" src="{{fileDownload}}{{myProfile}}" alt="" class="w-3rem h-3rem border-circle">
+                            <img *ngIf="myProfile" src="../../../../assets/logos/user.jpg" alt="" class="w-3rem h-3rem border-circle">
+
+
+                            <!-- <img src="{{ fileDownload }}{{ photoId }}" alt="" class="w-3rem h-3rem border-circle"> -->
                         </div>
                         <div
                             class="w-full bg-black-alpha-10 ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer">
@@ -72,10 +80,10 @@
                         </div>
                     </div>
                     <div class="flex mx-5">
-                        <div class=" flex align-items-center mt-5 mr-5 cursor-pointer">
+                        <div routerLink="/homes/new" class=" flex align-items-center mt-5 mr-5 cursor-pointer">
                             <div
                                 class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center" 
-                                routerLink="/homes/new">
+                                >
                                 <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
                             </div>
                             <h3 class=" ml-3">
@@ -104,16 +112,17 @@
                                             class="w-3rem h-3rem border-circle">
                                     </div>
                                     <div class="w-full">
-                                        <h3>{{ name }}</h3>
+                                        <h3>{{ myFullName }}</h3>
                                         <p class="text-black-alpha-60">{{ post[i].createdAt | date:"shortTime" }} {{ post[i].createdAt | date:"fullDate" }}</p>
                                     </div>
-                                    <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
+                                    <div *ngIf="post[i].user.company != null" class="min-w-max mr-3 bg-purple-100 border-round-xl">
                                         <h4 class="mx-3 my-1 text-purple-500">{{ post[i].user.company }}</h4>
                                     </div>
                                     <div class="min-w-max mr-3 bg-green-100 border-round-xl">
-                                    <h4 class="mx-3 my-1 text-green-500">{{ post[i].user.position.positionName }}</h4>
+                                    <!-- <h4 class="mx-3 my-1 text-green-500">{{ post[i].user.position.positionName }}</h4> -->
                                     </div>
                                     
+
                                     <div class="relative">
                                         <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100" pStyleClass="@next"
                                           enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
@@ -145,6 +154,7 @@
                                         </ng-container>
                                     </div>
                                 </p-card>
+
 <!--     
                                 <p-card styleClass="pooling-content">
                                     <h3 class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing
@@ -218,7 +228,7 @@
             <!-- <img src="{{urlFile}}{{myProfile}}" alt="" class="w-3rem h-3rem border-circle"> -->
           </div>
           <div class="w-full">
-            <h3>{{ name }}</h3>
+            <h3>{{ myFullName }}</h3>
             <p class="text-black-alpha-60">Java Developer</p>
           </div>
         </div>
