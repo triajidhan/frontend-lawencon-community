@@ -468,7 +468,7 @@
                                         <ng-template pTemplate="header">
                                             <img *ngIf="myActivitiesByCourseOnGoing[i].file.files && myActivitiesByCourseOnGoing[i].file.files != ''"
                                                 src="{{urlFile}}{{ myActivitiesByCourseOnGoing[i].file.id}}" class="h-8rem">
-                                            <img *ngIf="(!myActivitiesByCourse[i].file.files && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course') || (myActivitiesByCourseOnGoing[i].file.files =='' && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course') "
+                                            <img *ngIf="(!myActivitiesByCourseOnGoing[i].file.files && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course') || (myActivitiesByCourseOnGoing[i].file.files =='' && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course') "
                                                 src="../../../../assets/images/course.jpg" alt="activity image"
                                                 class="h-8rem">
                                             <img *ngIf="(!myActivitiesByCourseOnGoing[i].file.files && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Event') || (myActivitiesByCourseOnGoing[i].file.files =='' && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Event') "
@@ -541,10 +541,10 @@
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivitiesByEventOnGoing[i].activityCode }}</p>
                                             <div *ngIf="myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                              <p class="uppercase ">{{ myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                              <p class="uppercase ">{{ myActivitiesByEventOnGoing[i].activityType.activityTypeName }}</p>
                                             </div>
                                             <div *ngIf="myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
-                                              <p class="uppercase">{{ myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                              <p class="uppercase">{{ myActivitiesByEventOnGoing[i].activityType.activityTypeName }}</p>
                                             </div>
                                         </div>
                                         <h4 class="flex align-items-center h-2rem">{{ myActivitiesByEventOnGoing[i].title }}</h4>
