@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
+import { MenuItem } from "primeng/api"
 import { Industry } from "projects/interface/industry"
 import { Position } from "projects/interface/position"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
@@ -22,6 +23,9 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
   private positionGetByIdSubscription!: Subscription
   private industriesGetByIdSubscription!: Subscription
 
+  items!: MenuItem[]
+  resultExtension!: string
+  resultFile !: string
   positionsRes!: Position[]
   industriesRes!: Industry[]
   user: any = new Object();
@@ -55,6 +59,12 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
     private router: Router, private userService: UserService, private apiService: ApiService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.items = [
+      { label: 'Edit Profile', routerLink: '/profiles/member/edit/1' },
+      { label: 'Change Password', routerLink: '/profiles/member/change-password/1' },
+      { label: 'Log Out', routerLink: '/' }
+    ]
+
     this.init()
   }
 
@@ -97,18 +107,9 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
 
   logOut() {
     this.apiService.logOut()
-    this.router.navigateByUrl("/login/member")
+    this.router.navigateByUrl("/")
   }
 
-  back() {
-    if (this.roleCode == "SA") {
-      this.router.navigateByUrl("/profiles/super-admin")
-    } else if (this.roleCode == "A") {
-      this.router.navigateByUrl("/profiles/admin")
-    } else {
-      this.router.navigateByUrl("/profiles/member")
-    }
-  }
 
   updateUser() {
     this.editProfileForm.patchValue({
@@ -127,6 +128,22 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
       this.init()
     })
 
+  }
+
+  fileUpload(event: any): void {
+    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(event.files[0])
+      reader.onload = () => {
+        if (typeof reader.result === "string") resolve(reader.result)
+      }
+      reader.onerror = error => reject(error)
+    })
+
+    toBase64(event.files[0].name).then(result => {
+      this.resultFile = result.substring(result.indexOf(",") + 1, result.length)
+      this.resultExtension = result.split(";")[0].split('/')[1]
+    })
   }
 
 
