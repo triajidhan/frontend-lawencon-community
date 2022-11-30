@@ -67,7 +67,7 @@
                                 <p-tableCheckbox [value]="data"></p-tableCheckbox>
                             </td>
                             <td>{{i + 1}}</td>
-                            <td>belum ada</td>
+                            <td>{{data.activity.activityType.activityTypeName}}</td>
                             <td>{{data.activity.title}}</td>
                             <td>{{data.net | currency:"IDR ":"symbol"}}</td>
                         </tr>

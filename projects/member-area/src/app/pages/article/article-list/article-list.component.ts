@@ -84,7 +84,6 @@ export class ArticleListComponent implements OnInit {
 
     addData(article: any) {
         this.article.push(article)
-        console.log(article)
     }
 
     fileUpload(event: any): void {
