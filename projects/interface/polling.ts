@@ -1,3 +1,4 @@
+import { PollingStatus } from './polling-status'
 import { Post } from './post'
 
 export interface Polling extends Post {
@@ -6,5 +7,6 @@ export interface Polling extends Post {
 	pollContent: string
 	totalPoll: number
 	post: Post
+  pollingStatus:PollingStatus
 }
 

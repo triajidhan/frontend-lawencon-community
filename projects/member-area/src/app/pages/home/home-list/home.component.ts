@@ -234,13 +234,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
     this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
       this.pollOption.push(result)
-
+      console.log(result)
       let totalTemp = 0
       for (let j = 0; j < result.length; j++) {
         totalTemp += result[j].totalPoll
         post.totalPoll = totalTemp
       }
       this.post.push(post)
+      // console.log(this.pollOption)
     })
   }
 
@@ -326,11 +327,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  choosePollOption(pollId: string) {
+  choosePollOption(pollId: string, i :any, j : any) {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
       this.polling = result
-      this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(() => {
-
+      this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
+        this.pollOption[i][j].totalPoll = this.pollOption[i][j].totalPoll+1
+        this.pollOption[i][j].pollingStatusId = polling.id;
       })
     })
   }
