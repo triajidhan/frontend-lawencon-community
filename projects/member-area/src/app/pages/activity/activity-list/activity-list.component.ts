@@ -92,22 +92,52 @@ export class ActivityListComponent implements OnInit {
             {
                 label: 'Activity',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/all'},
-                    { label: 'Event', routerLink: '/activities/type/events'},
-                    { label: 'Course', routerLink: '/activities/type/courses' }
+                    { label: 'All', routerLink: '/activities/type/all',command:()=>this.init()},
+                    { label: 'Event', routerLink: '/activities/type/events',command:()=>this.init()},
+                    { label: 'Course', routerLink: '/activities/type/courses',command:()=>this.init()}
                 ]
             },
             {
                 label: 'My Activity',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/my-activities'},
-                    { label: 'My Event', routerLink: '/activities/type/my-events' },
-                    { label: 'My Course', routerLink: '/activities/type/my-courses' }
+                    { label: 'All', routerLink: '/activities/type/my-activities',command:()=>this.init()},
+                    { label: 'My Event', routerLink: '/activities/type/my-events' ,command:()=>this.init()},
+                    { label: 'My Course', routerLink: '/activities/type/my-courses' ,command:()=>this.init()}
                 ]
             }
         ]
 
         this.init()
+    }
+
+    onScroll() {
+        this.startPosition += this.limit
+        this.initAllActivity()
+    }
+
+    onScrollActivityByCourse() {
+        this.startPositionCourse += this.limitCourse
+        this.initAllActivityCourse()
+    }
+
+    onScrollActivityByEvent() {
+        this.startPositionEvent += this.limitEvent
+        this.initAllActivityEvent()
+    }
+
+    onScrollMyActivity() {
+        this.startPositionMyActivity += this.limitMyActivity
+        this.initMyActivity()
+    }
+
+    onScrollMyActivityCourse() {
+        this.startPositionMyCourse += this.limitMyCourse
+        this.initMyActivityCourse()
+    }
+
+    onScrollMyActivityEvent() {
+        this.startPositionMyEvent += this.limitMyEvent
+        this.initMyActivityEvent()
     }
 
     init() {
@@ -176,7 +206,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivity() {
-        this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId, this.startPosition, this.limit, false).subscribe(result => {
+        this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId, this.startPositionMyActivity, this.limitMyActivity, false).subscribe(result => {
             
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivities(result[i])
@@ -185,7 +215,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityCourse() {
-        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'C', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
+        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'C', this.startPositionMyCourse, this.limitMyCourse, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesCourse(result[i])
             }
@@ -193,42 +223,11 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityEvent() {
-        this.getAllMyActivityEventSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
+        this.getAllMyActivityEventSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionMyEvent, this.limitMyCourse, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesEvent(result[i])
             }
         })
-    }
-
-
-    onScroll() {
-        this.startPosition += this.limit
-        this.initAllActivity()
-    }
-
-    onScrollActivityByCourse() {
-        this.startPositionCourse += this.limitCourse
-        this.initAllActivityCourse()
-    }
-
-    onScrollActivityByEvent() {
-        this.startPositionEvent += this.limitEvent
-        this.initAllActivityEvent()
-    }
-
-    onScrollMyActivity() {
-        this.startPositionMyActivity += this.limitMyActivity
-        this.initMyActivity()
-    }
-
-    onScrollMyActivityCourse() {
-        this.startPositionMyCourse += this.limitMyCourse
-        this.initMyActivityCourse()
-    }
-
-    onScrollMyActivityEvent() {
-        this.startPositionMyEvent += this.limitMyEvent
-        this.initMyActivityEvent()
     }
 
 
