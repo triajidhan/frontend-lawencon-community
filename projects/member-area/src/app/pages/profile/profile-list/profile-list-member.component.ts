@@ -130,16 +130,16 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-        this.items = [
-            { label: 'Edit Profile', routerLink: '/profiles/member/edit/1' },
-            { label: 'Change Password', routerLink: '/profiles/member/change-password/1' },
-            { label: 'Log Out', routerLink: '/' }
-        ]
 
         this.myId = String(this.apiService.getId())
         this.myFullName = String(this.apiService.getName())
         this.myProfile = String(this.apiService.getPhotoId())
 
+        this.items = [
+            { label: 'Edit Profile', routerLink: '/profiles/member/edit/' + this.myId },
+            { label: 'Change Password', routerLink: '/profiles/member/change-password/' + this.myId },
+            { label: 'Log Out', routerLink: '/' }
+        ]
 
         if (this.apiService.getEmail()) {
             this.email = this.apiService.getEmail()
