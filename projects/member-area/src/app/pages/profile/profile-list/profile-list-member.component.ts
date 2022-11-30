@@ -315,8 +315,9 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             id: postId
         }
         })
-        this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(() => {
-        this.post[i].countOfLike = this.post[i].countOfLike + 1;
+        this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(response => {
+            this.post[i].countOfLike = this.post[i].countOfLike + 1;
+            this.post[i].likeId = response.id
         })
     }
 
