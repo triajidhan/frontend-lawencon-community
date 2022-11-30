@@ -23,6 +23,7 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
   private positionGetByIdSubscription!: Subscription
   private industriesGetByIdSubscription!: Subscription
 
+  myId: string = ""
   items!: MenuItem[]
   resultExtension!: string
   resultFile !: string
@@ -59,9 +60,11 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
     private router: Router, private userService: UserService, private apiService: ApiService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.myId = String(this.apiService.getId())
+
     this.items = [
-      { label: 'Edit Profile', routerLink: '/profiles/member/edit/1' },
-      { label: 'Change Password', routerLink: '/profiles/member/change-password/1' },
+      { label: 'Edit Profile', routerLink: '/profiles/member/edit/' + this.myId },
+      { label: 'Change Password', routerLink: '/profiles/member/change-password/' + this.myId },
       { label: 'Log Out', routerLink: '/' }
     ]
 
@@ -145,6 +148,7 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
       this.resultExtension = result.split(";")[0].split('/')[1]
     })
   }
+
 
 
   ngOnDestroy(): void {

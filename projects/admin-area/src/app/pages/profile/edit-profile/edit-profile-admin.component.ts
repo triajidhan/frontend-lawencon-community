@@ -23,6 +23,8 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
   private positionGetByIdSubscription!: Subscription
   private industriesGetByIdSubscription!: Subscription
 
+  resultExtension!: string
+  resultFile !: string
   positionsRes!: Position[]
   industriesRes!: Industry[]
   user: any = new Object();
@@ -42,6 +44,10 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
     }),
     position: this.fb.group({
       id: ['']
+    }),
+    file: this.fb.group({
+      files: [''],
+      ext: ['']
     }),
     version: [''],
     industryId: [''],
@@ -94,6 +100,22 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
     })
   }
 
+  fileUpload(event: any): void {
+    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(event.files[0])
+      reader.onload = () => {
+        if (typeof reader.result === "string") resolve(reader.result)
+      }
+      reader.onerror = error => reject(error)
+    })
+
+    toBase64(event.files[0].name).then(result => {
+      this.resultFile = result.substring(result.indexOf(",") + 1, result.length)
+      this.resultExtension = result.split(";")[0].split('/')[1]
+    })
+  }
+
   logOut() {
     this.apiService.logOut()
     this.router.navigateByUrl("/login/member")
@@ -110,6 +132,12 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
   }
 
   updateUser() {
+    this.editProfileForm.patchValue({
+      file: {
+        files: this.resultFile,
+        ext: this.resultExtension
+      }
+    })
     this.editProfileForm.patchValue({
       position: {
         id: this.editProfileForm.value.positionId
