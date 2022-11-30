@@ -36,6 +36,16 @@ export class ActivityListComponent implements OnInit {
     startPositionMyEvent = 0
     limitMyEvent = 6
 
+
+    startPositionMyActivityOnGoing = 0
+    limitMyActivityOnGoing = 6
+
+    startPositionMyCourseOnGoing = 0
+    limitMyCourseOnGoing = 6
+
+    startPositionMyEventOnGoing = 0
+    limitMyEventOnGoing = 6
+
     items!: MenuItem[]
     type!: string
 
@@ -46,6 +56,10 @@ export class ActivityListComponent implements OnInit {
     myActivities: any[] = []
     myActivitiesByEvent: any[] = []
     myActivitiesByCourse: any[] = []
+
+    myActivitiesOnGoing: any[] = []
+    myActivitiesByEventOnGoing: any[] = []
+    myActivitiesByCourseOnGoing: any[] = []
 
     activityId?: string
     activityTitle?: string
@@ -76,6 +90,10 @@ export class ActivityListComponent implements OnInit {
     private getAllMyActivityEventSubs?: Subscription
     private getAllMyActivityCourseSubs?: Subscription
 
+    private getAllMyActivitiesOnGoingSubs?: Subscription
+    private getAllMyActivityOnGoingEventSubs?: Subscription
+    private getAllMyActivityOnGoingCourseSubs?: Subscription
+
     private paymentActivityDetailSubs?: Subscription
 
     constructor(private primengConfig: PrimeNGConfig, private fb: FormBuilder,
@@ -103,6 +121,14 @@ export class ActivityListComponent implements OnInit {
                     { label: 'All', routerLink: '/activities/type/my-activities',command:()=>this.init()},
                     { label: 'My Event', routerLink: '/activities/type/my-events' ,command:()=>this.init()},
                     { label: 'My Course', routerLink: '/activities/type/my-courses' ,command:()=>this.init()}
+                ]
+            },
+            {
+                label: 'On Going',
+                items: [
+                    { label: 'All', routerLink: '/activities/type/my-activities-on-going',command:()=>this.init()},
+                    { label: 'My Event', routerLink: '/activities/type/my-events-on-going' ,command:()=>this.init()},
+                    { label: 'My Course', routerLink: '/activities/type/my-courses-on-going' ,command:()=>this.init()}
                 ]
             }
         ]
@@ -140,6 +166,22 @@ export class ActivityListComponent implements OnInit {
         this.initMyActivityEvent()
     }
 
+
+    onScrollMyActivityOnGoing() {
+        this.startPositionMyActivityOnGoing += this.limitMyActivityOnGoing
+        this.initMyActivityOnGoing()
+    }
+
+    onScrollMyActivityCourseOnGoing() {
+        this.startPositionMyCourseOnGoing += this.limitMyCourseOnGoing
+        this.initMyActivityCourseOnGoing()
+    }
+
+    onScrollMyActivityEventOnGoing() {
+        this.startPositionMyEventOnGoing += this.limitMyEventOnGoing
+        this.initMyActivityEventOnGoing()
+    }
+
     init() {
 
         this.activities =  []
@@ -150,6 +192,10 @@ export class ActivityListComponent implements OnInit {
         this.myActivitiesByEvent = []
         this.myActivitiesByCourse =  []
 
+        this.myActivitiesOnGoing =  []
+        this.myActivitiesByEventOnGoing = []
+        this.myActivitiesByCourseOnGoing =  []
+
         this.startPosition = 0
         this.limit = 6
 
@@ -158,6 +204,7 @@ export class ActivityListComponent implements OnInit {
 
         this.startPositionEvent = 0
         this.limitEvent = 6
+
 
         this.startPositionMyActivity = 0
         this.limitMyActivity = 6
@@ -168,6 +215,16 @@ export class ActivityListComponent implements OnInit {
         this.startPositionMyEvent = 0
         this.limitMyEvent = 6
 
+        
+        this.startPositionMyActivityOnGoing = 0
+        this.limitMyActivityOnGoing = 6
+
+        this.startPositionMyCourseOnGoing = 0
+        this.limitMyCourseOnGoing = 6
+
+        this.startPositionMyEventOnGoing = 0
+        this.limitMyEventOnGoing = 6
+
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
         })
@@ -175,9 +232,14 @@ export class ActivityListComponent implements OnInit {
         this.initAllActivity()
         this.initAllActivityCourse()
         this.initAllActivityEvent()
+        
         this.initMyActivity()
         this.initMyActivityCourse()
         this.initMyActivityEvent()
+
+        this.initMyActivityOnGoing()
+        this.initMyActivityCourseOnGoing()
+        this.initMyActivityEventOnGoing()
 
     }
 
@@ -231,6 +293,36 @@ export class ActivityListComponent implements OnInit {
     }
 
 
+
+    initMyActivityOnGoing() {
+        this.getAllMyActivitiesOnGoingSubs = this.paymentActivityDetailService.getByUser(this.myId, this.startPositionMyActivityOnGoing, this.limitMyActivityOnGoing, false).subscribe(result => {
+            
+            for (let i = 0; i < result.length; i++) {
+                this.addDataMyActivitiesOnGoing(result[i].activity)
+            }
+        })
+    }
+
+    initMyActivityCourseOnGoing() {
+        this.getAllMyActivityOnGoingCourseSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('course',this.myId, this.startPositionMyCourseOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
+            console.log(result)
+
+            for (let i = 0; i < result.length; i++) {
+                
+                this.addDataMyActivitiesOnGoingCourse(result[i].activity)
+            }
+        })
+    }
+
+    initMyActivityEventOnGoing() {
+        this.getAllMyActivityOnGoingEventSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('event',this.myId, this.startPositionMyEventOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
+            for (let i = 0; i < result.length; i++) {
+                this.addDataMyActivitiesOnGoingEvent(result[i].activity)
+            }
+        })
+    }
+
+
     addData(activity: any) {
         this.activities.push(activity)
     }
@@ -254,6 +346,20 @@ export class ActivityListComponent implements OnInit {
 
     addDataMyActivitiesEvent(activity: any) {
         this.myActivitiesByEvent.push(activity)
+    }
+
+
+
+    addDataMyActivitiesOnGoing(activity: any) {
+        this.myActivitiesOnGoing.push(activity)
+    }
+
+    addDataMyActivitiesOnGoingCourse(activity: any) {
+        this.myActivitiesByCourseOnGoing.push(activity)
+    }
+
+    addDataMyActivitiesOnGoingEvent(activity: any) {
+        this.myActivitiesByEventOnGoing.push(activity)
     }
 
     fileUpload(event: any): void {

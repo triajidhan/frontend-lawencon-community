@@ -38,6 +38,10 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/activity-type-user/?activityTypeId=${activityTypeId}&userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
+	getByActivityTypeCodeAndUser(activityTypeCode: string,userId:string,startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/activity-type-code-user/?activityTypeCode=${activityTypeCode}&userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+	}
+
 	getTotalByActivity(activityId: string): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-activity/?activityId=${activityId}`)
 	}
