@@ -43,11 +43,16 @@
                                                 class="h-8rem">
                                         </ng-template>
 
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
+                                        <div class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ activities[i].activityCode }}</p>
-                                            <p class="uppercase">{{ activities[i].activityType.activityTypeName }}</p>
+                                            <div *ngIf="activities[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase ">{{ activities[i].activityType.activityTypeName }}</p>
+                                            </div>
+                                            <div *ngIf="activities[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase">{{ activities[i].activityType.activityTypeName }}</p>
+                                            </div>
                                         </div>
-                                        <h3 class="capitalize">{{ activities[i].title }}</h3>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ activities[i].title }}</h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -101,10 +106,14 @@
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ activitiesCourse[i].activityCode }}</p>
-                                            <p class="uppercase">{{ activitiesCourse[i].activityType.activityTypeName }}
-                                            </p>
+                                            <div *ngIf="activitiesCourse[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase ">{{ activitiesCourse[i].activityType.activityTypeName }}</p>
+                                            </div>
+                                            <div *ngIf="activitiesCourse[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase">{{ activitiesCourse[i].activityType.activityTypeName }}</p>
+                                            </div>
                                         </div>
-                                        <h3 class="capitalize">{{ activitiesCourse[i].title }}</h3>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ activitiesCourse[i].title }}</h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -159,10 +168,14 @@
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ activitiesEvent[i].activityCode }}</p>
-                                            <p class="uppercase">{{ activitiesEvent[i].activityType.activityTypeName }}
-                                            </p>
+                                            <div *ngIf="activitiesEvent[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase ">{{ activitiesEvent[i].activityType.activityTypeName }}</p>
+                                            </div>
+                                            <div *ngIf="activitiesEvent[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase">{{ activitiesEvent[i].activityType.activityTypeName }}</p>
+                                            </div>
                                         </div>
-                                        <h3 class="capitalize">{{ activitiesEvent[i].title }}</h3>
+                                        <h4 class="flex align-items-center h-2rem">{{ activitiesEvent[i].title }}</h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -216,9 +229,14 @@
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivities[i].activityCode }}</p>
-                                            <p class="uppercase">{{ myActivities[i].activityType.activityTypeName }}</p>
+                                            <div *ngIf="myActivities[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase ">{{ myActivities[i].activityType.activityTypeName }}</p>
+                                            </div>
+                                            <div *ngIf="myActivities[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase">{{ myActivities[i].activityType.activityTypeName }}</p>
+                                            </div>
                                         </div>
-                                        <h3 class="capitalize">{{ myActivities[i].title }}</h3>
+                                        <h4 class="flex align-items-center h-2rem">{{ myActivities[i].title }}</h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -272,10 +290,14 @@
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivitiesByCourse[i].activityCode }}</p>
-                                            <p class="uppercase">{{
-                                                myActivitiesByCourse[i].activityType.activityTypeName }}</p>
+                                            <div *ngIf="myActivitiesByCourse[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase ">{{ myActivitiesByCourse[i].activityType.activityTypeName }}</p>
+                                            </div>
+                                            <div *ngIf="myActivitiesByCourse[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase">{{ myActivitiesByCourse[i].activityType.activityTypeName }}</p>
+                                            </div>
                                         </div>
-                                        <h3 class="capitalize">{{ myActivitiesByCourse[i].title }}</h3>
+                                        <h4 class="flex align-items-center h-2rem">{{ myActivitiesByCourse[i].title }}</h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
@@ -331,10 +353,14 @@
                                         </ng-template>
                                         <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
                                             <p class="uppercase">{{ myActivitiesByEvent[i].activityCode }}</p>
-                                            <p class="uppercase">{{ myActivitiesByEvent[i].activityType.activityTypeName
-                                                }}</p>
+                                            <div *ngIf="myActivitiesByEvent[i].activityType.activityTypeName == 'Event'" class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase ">{{ myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                            </div>
+                                            <div *ngIf="myActivitiesByEvent[i].activityType.activityTypeName == 'Course'" class="main-color border-round-lg py-1 px-2 text-white">
+                                              <p class="uppercase">{{ myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                            </div>
                                         </div>
-                                        <h3 class="capitalize">{{ myActivitiesByEvent[i].title }}</h3>
+                                        <h4 class="flex align-items-center h-2rem">{{ myActivitiesByEvent[i].title }}</h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
