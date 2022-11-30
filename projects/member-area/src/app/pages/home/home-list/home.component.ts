@@ -9,7 +9,9 @@ import { Polling } from "projects/interface/polling"
 import { PostType } from "projects/interface/post-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { BookmarkService } from "projects/main-area/src/app/service/bookmark.service"
+import { CommentService } from "projects/main-area/src/app/service/comment.service"
 import { LikeService } from "projects/main-area/src/app/service/like.service"
+import { PollingStatusService } from "projects/main-area/src/app/service/polling-status.service"
 import { PollingService } from "projects/main-area/src/app/service/polling.service"
 import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
@@ -62,6 +64,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   postBookmark: any[] = []
   postAttachmentBookmark: any[] = []
 
+  postComments: any[] = []
+
+
   getByPostIdForLike: any = new Object();
   addLike = this.fb.group({
     post: this.fb.group({
@@ -97,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private choosePollOptionSubs?: Subscription
   private getByIdPollOptionSubs?: Subscription
   private getByCodePostTypeSubsc?: Subscription
-
+  private getByIdPollingStatusSubs?: Subscription
   private getPostDataSubs?: Subscription
   private getPostAttachmentDataSubs?: Subscription
 
@@ -113,9 +118,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   private insertBookmarkDataSubs?: Subscription
   private updateBookmarkDataSubs?: Subscription
   private getIdBookmarkDataSubs?: Subscription
-
+  private getByIdCommentsSubs?: Subscription
   private getDataLikeSubs?: Subscription
   private getDataBookmarkSubs?: Subscription
+
+  private commentInsertSubs?: Subscription
+  private getAllCommentByPostSubs?: Subscription
 
   postForm = this.fb.group({
     title: ['', Validators.required],
@@ -128,12 +136,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     file: this.fb.array([])
   })
 
+  commentForm = this.fb.group({
+    commentBody: ['', Validators.required],
+    post: this.fb.group({
+      id: ['']
+    })
+  })
+
 
   constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
     private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
     private postAttachmentService: PostAttachmentService, private apiService: ApiService,
     private likeService: LikeService, private bookmarkService: BookmarkService,
-    private pollingService: PollingService) { }
+    private pollingService: PollingService, private polingStatusService: PollingStatusService,
+    private commentService: CommentService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true
@@ -232,17 +248,26 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
       post.postAttachment = result
     })
+
+    this.getAllCommentByPostSubs = this.commentService.getByPostAndOrder(post.id, true).subscribe(result => {
+      post.comments = result
+    })
+
+    console.log(post)
+
     this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
       this.pollOption.push(result)
-      console.log(result)
       let totalTemp = 0
       for (let j = 0; j < result.length; j++) {
         totalTemp += result[j].totalPoll
         post.totalPoll = totalTemp
       }
       this.post.push(post)
-      // console.log(this.pollOption)
     })
+
+
+
+    console.log(this.postComments)
   }
 
   addDataLike(post: any) {
@@ -327,12 +352,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  choosePollOption(pollId: string, i :any, j : any) {
+  choosePollOption(pollId: string, i: any, j: any) {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
       this.polling = result
       this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
-        this.pollOption[i][j].totalPoll = this.pollOption[i][j].totalPoll+1
-        this.pollOption[i][j].pollingStatusId = polling.id;
+        this.pollOption[i][j].totalPoll = this.pollOption[i][j].totalPoll + 1
+        this.getByIdPollingStatusSubs = this.polingStatusService.getById(polling.id).subscribe(pollingStatus => {
+          for (let k = 0; k < this.pollOption[i].length; k++) {
+            this.pollOption[i][k].pollingStatus = pollingStatus;
+          }
+        })
       })
     })
   }
@@ -426,6 +455,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   btnToggleComment() {
     this.isShowComment = !this.isShowComment
+  }
+
+  insertComment(postId: string, i: any) {
+    this.commentForm.patchValue({
+      post: {
+        id: postId
+      }
+    })
+
+    this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
+      this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
+        console.log(this.post[i])
+        this.post[i].comments.push(resultId ?? '')
+
+      })
+    })
   }
 
   ngOnDestroy(): void {

@@ -211,14 +211,33 @@
                   <p-card *ngIf="post[i].titlePoll" styleClass="pooling-content">
                     <h3 class="text-justify">{{post[i].titlePoll}}</h3>
                     <ng-container *ngFor="let po of pollOption[i]; index as j">
-                      <div class="mt-3 py-3 body-color cursor-pointer hover:bg-gray-100">
+
+                      <div *ngIf="!pollOption[i][j].pollingStatus"
+                        class="mt-3 py-3 body-color cursor-pointer hover:bg-gray-100">
                         <div class="flex align-items-center" (click)="choosePollOption(pollOption[i][j].id, i , j)">
                           <p class="text-center text-lg main-text w-full">{{pollOption[i][j].pollContent}}</p>
                           <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[i][j].totalPoll}} votes</p>
                         </div>
                       </div>
 
-                      <!-- {{pollOption[i][j] | json}} -->
+                      <ng-container *ngIf="pollOption[i][j].pollingStatus">
+                        <div *ngIf="pollOption[i][j].id != pollOption[i][j].pollingStatus.polling.id"
+                          class="mt-3 py-3 body-color cursor-pointer">
+                          <div class="flex align-items-center">
+                            <p class="text-center text-lg main-text w-full">{{pollOption[i][j].pollContent}}</p>
+                            <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[i][j].totalPoll}} votes</p>
+                          </div>
+                        </div>
+
+                        <div *ngIf="pollOption[i][j].id == pollOption[i][j].pollingStatus.polling.id"
+                          class="mt-3 py-3 main-color text-white cursor-pointer">
+                          <div class="flex align-items-center">
+                            <p class="text-center text-lg  w-full">{{pollOption[i][j].pollContent}}</p>
+                            <p class="min-w-max mr-3 ">{{pollOption[i][j].totalPoll}} votes</p>
+                          </div>
+                        </div>
+                      </ng-container>
+
                     </ng-container>
                     <div class="flex mt-5 align-items-center text-black-alpha-60">
                       <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
@@ -272,47 +291,41 @@
                     </div>
                   </div>
 
-                  <div class="mt-4 hidden">
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-max">
-                        <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                          <p class="font-medium">Alexa Victoria</p>
-                          <p class=" text-black-alpha-60">Lorem ipsum dolor sit, amet
-                            consectetur adipisicing elit. Quis id optio iste officiis
-                            eveniet ducimus rerum saepe quod reprehenderit voluptas!</p>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div class="flex mt-3">
-                      <div class="max-w-max mr-3">
-                        <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
-                      </div>
-                      <div class="w-max">
-                        <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                          <p class="font-medium">Alexa Victoria</p>
-                          <p class=" text-black-alpha-60">Lorem ipsum dolor sit amet.</p>
+                  <div class="mt-4 hidden">
+                    <ng-container *ngFor="let com of post[i].comments;index as j">
+                      <div class="flex mt-3">
+                        <div class="max-w-max mr-3">
+                          <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
+                        </div>
+                        <div class="w-max">
+                          <div class="bg-gray-100 px-3 py-2 border-round-xl">
+                            <p class="font-medium">{{ post[i].comments[j].user.fullName }}</p>
+                            <p class=" text-black-alpha-60">{{ post[i].comments[j].commentBody }} </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+
+                      <!-- {{post[i].comments[j] | json}} -->
+                    </ng-container>
+
 
                     <div class="flex mt-3">
                       <div class="max-w-max mr-3">
                         <img src="../../../assets/images/article.png" alt="" class="w-2rem h-2rem border-circle">
                       </div>
                       <div class="w-full">
-                        <form class="card w-full">
+                        <form [formGroup]="commentForm" class="card w-full">
                           <div class="field">
-                            <input pInputText class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text"
+                            <input formControlName="commentBody" pInputText
+                              class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text"
                               placeholder="write comment...">
                             <p class="text-xs text-black-alpha-60">Press Enter to Send.
                             </p>
                           </div>
                           <div class="hidden">
-                            <button type="submit"></button>
+                            <button [disabled]="commentForm.invalid" type="submit"
+                              (click)="insertComment(post[i].id, i)"></button>
                           </div>
                         </form>
                       </div>
