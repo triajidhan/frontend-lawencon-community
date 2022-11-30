@@ -9,39 +9,17 @@
                             <ng-template pTemplate="header">
                                 <img src="{{urlFile}}{{ activities[i].file.id}}" alt="activity img" class="h-8rem">
                             </ng-template>
-                            <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                <p class="uppercase">{{ activities[i].activityCode }}</p>
-                                <p class="uppercase">{{ activities[i].activityType.activityTypeName }}</p>
-                            </div>
-                            <h3>{{ activities[i].title }}</h3>
+                            <h3>Judul Arrticle</h3>
                             <div class="text-xs text-black-alpha-60 mt-3">
-                                <div class="flex mt-2">
-                                    <i class="fa-regular fa-calendar-days mr-2"></i>
-                                    <p>{{ activities[i].beginSchedule | date:'fullDate' }} to {{
-                                        activities[i].finishSchedule | date:'fullDate' }}</p>
-                                </div>
-                                <div class="flex mt-2">
-                                    <i class="fa-regular fa-clock mr-2"></i>
-                                    <p>{{ activities[i].beginSchedule | date:'shortTime' }} - {{
-                                        activities[i].finishSchedule | date:'shortTime' }}</p>
-                                </div>
-                                <div class="flex mt-2">
-                                    <i class="fa-solid fa-school mr-2"></i>
-                                    <p>{{ activities[i].provider }}</p>
-                                </div>
-                                <div class="flex mt-2">
-                                    <i class="fa-solid fa-location-dot mr-2"></i>
-                                    <p>{{ activities[i].location }}</p>
-                                </div>
-                                <div class="flex mt-2">
-                                    <i class="fa-solid fa-coins mr-2"></i>
-                                    <p>Rp. {{ activities[i].price }},-</p>
+                                <div class="flex mt-2 h-2rem overflow-hidden">
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas laborum nulla
+                                        veritatis vel, consectetur voluptates ab magni deleniti neque consequatur fugit
+                                        architecto quae! Dolorum sit nostrum, perferendis voluptas earum architecto?</p>
                                 </div>
                                 <div class="text-right mt-3">
                                     <p (click)="showPopUpDialog(activities[i].id, activities[i].price, activities[i].title)"
                                         class=" main-text underline cursor-pointer">
-                                        Join
-                                        Event</p>
+                                        Show Detail</p>
                                 </div>
                             </div>
 
