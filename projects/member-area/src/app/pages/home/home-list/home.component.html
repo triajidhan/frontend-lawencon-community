@@ -212,17 +212,17 @@
                     <h3 class="text-justify">{{post[i].titlePoll}}</h3>
                     <ng-container *ngFor="let po of pollOption[i]; index as j">
 
-                      <div *ngIf="!pollOption[i][j].pollingStatus"
-                        class="mt-3 py-3 body-color cursor-pointer hover:bg-gray-100">
-                        <div class="flex align-items-center" (click)="choosePollOption(pollOption[i][j].id, i , j)">
+                      <div *ngIf="!pollOption[i][j].pollingStatus" class="mt-3 body-color hover:bg-gray-100">
+                        <div class="flex align-items-center cursor-pointer py-3"
+                          (click)="choosePollOption(pollOption[i][j].id, i , j)">
                           <p class="text-center text-lg main-text w-full">{{pollOption[i][j].pollContent}}</p>
-                          <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[i][j].totalPoll}} votes</p>
+                          <!-- <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[i][j].totalPoll}} votes</p> -->
                         </div>
                       </div>
 
                       <ng-container *ngIf="pollOption[i][j].pollingStatus">
                         <div *ngIf="pollOption[i][j].id != pollOption[i][j].pollingStatus.polling.id"
-                          class="mt-3 py-3 body-color cursor-pointer">
+                          class="mt-3 py-3 body-color cursor-pointer" pTooltip="you have voted">
                           <div class="flex align-items-center">
                             <p class="text-center text-lg main-text w-full">{{pollOption[i][j].pollContent}}</p>
                             <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[i][j].totalPoll}} votes</p>
@@ -230,7 +230,7 @@
                         </div>
 
                         <div *ngIf="pollOption[i][j].id == pollOption[i][j].pollingStatus.polling.id"
-                          class="mt-3 py-3 main-color text-white cursor-pointer">
+                          class="mt-3 py-3 main-color text-white cursor-pointer" pTooltip="you have voted">
                           <div class="flex align-items-center">
                             <p class="text-center text-lg  w-full">{{pollOption[i][j].pollContent}}</p>
                             <p class="min-w-max mr-3 ">{{pollOption[i][j].totalPoll}} votes</p>
@@ -306,7 +306,6 @@
                         </div>
                       </div>
 
-                      <!-- {{post[i].comments[j] | json}} -->
                     </ng-container>
 
 
