@@ -25,52 +25,42 @@ import { finalize, Subscription } from "rxjs"
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  loadingPost = false;
-
-
   myId: string = ""
   myFullName: string = ""
   myProfile: string = ""
 
   startPositionPost = 0
   limitPost = 5
-
   startPositionPostLike = 0
   limitPostLike = 5
-
   startPositionPostBookmark = 0
   limitPostBookmark = 5
-
   startPositionPollOption = 0
   limitPollOption = 5
+
+  urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
   items!: MenuItem[]
   type!: string
   postType!: string
   display: boolean = false
   isShowComment: boolean = true
+  loadingPost = false
 
-  urlFile = `${BASE_URL.LOCALHOST}/files/download/`
-
+  polling: any = new Object()
+  getByPostIdForLike: any = new Object()
   fileArray: any[] = []
   postTypesRes!: PostType[]
   postTypes: any[] = []
-
   post: any[] = []
   pollOption: any[] = []
-  polling!: Polling
   postAttachment: any[] = []
-
   postLike: any[] = []
   postAttachmentLike: any[] = []
-
   postBookmark: any[] = []
   postAttachmentBookmark: any[] = []
-
   postComments: any[] = []
 
-
-  getByPostIdForLike: any = new Object();
   addLike = this.fb.group({
     post: this.fb.group({
       id: ['']
@@ -82,9 +72,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     isActive: [false]
   })
 
-  bookmarkRes!: Bookmark[]
-  bookmark: any[] = []
-
   addBookmark = this.fb.group({
     post: this.fb.group({
       id: ['']
@@ -95,38 +82,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     id: [''],
     isActive: [false]
   })
-
-  userObj: Object = new Object()
-  postAttachmentObj: Object = new Object()
-
-  private postInsertSubs?: Subscription
-  private postAttachInsertSubs?: Subscription
-  private getDataPollContentSubs?: Subscription
-  private choosePollOptionSubs?: Subscription
-  private getByIdPollOptionSubs?: Subscription
-  private getByCodePostTypeSubsc?: Subscription
-  private getByIdPollingStatusSubs?: Subscription
-  private getPostDataSubs?: Subscription
-  private getPostAttachmentDataSubs?: Subscription
-
-  private getPostLikeAttachmentDataSubs?: Subscription
-  private getPostBookmarkAttachmentDataSubs?: Subscription
-
-  private getCountLikeDataSubs?: Subscription
-  private insertLikeDataSubs?: Subscription
-  private updateLikeDataSubs?: Subscription
-  private getIdLikeDataSubs?: Subscription
-
-  private getCountBookmarkDataSubs?: Subscription
-  private insertBookmarkDataSubs?: Subscription
-  private updateBookmarkDataSubs?: Subscription
-  private getIdBookmarkDataSubs?: Subscription
-  private getByIdCommentsSubs?: Subscription
-  private getDataLikeSubs?: Subscription
-  private getDataBookmarkSubs?: Subscription
-
-  private commentInsertSubs?: Subscription
-  private getAllCommentByPostSubs?: Subscription
 
   postForm = this.fb.group({
     title: ['', Validators.required],
@@ -145,6 +100,31 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: ['']
     })
   })
+
+
+  private postInsertSubs?: Subscription
+  private getDataPollContentSubs?: Subscription
+  private choosePollOptionSubs?: Subscription
+  private getByIdPollOptionSubs?: Subscription
+  private getByCodePostTypeSubsc?: Subscription
+  private getByIdPollingStatusSubs?: Subscription
+  private getPostDataSubs?: Subscription
+  private getPostAttachmentDataSubs?: Subscription
+  private getPostLikeAttachmentDataSubs?: Subscription
+  private getPostBookmarkAttachmentDataSubs?: Subscription
+  private getCountLikeDataSubs?: Subscription
+  private insertLikeDataSubs?: Subscription
+  private updateLikeDataSubs?: Subscription
+  private getIdLikeDataSubs?: Subscription
+  private getCountBookmarkDataSubs?: Subscription
+  private insertBookmarkDataSubs?: Subscription
+  private updateBookmarkDataSubs?: Subscription
+  private getIdBookmarkDataSubs?: Subscription
+  private getByIdCommentsSubs?: Subscription
+  private getDataLikeSubs?: Subscription
+  private getDataBookmarkSubs?: Subscription
+  private commentInsertSubs?: Subscription
+  private getAllCommentByPostSubs?: Subscription
 
 
   constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
@@ -186,6 +166,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   init() {
+    this.activatedRoute.params.subscribe(result => {
+      this.type = result['type']
+    })
+
     this.startPositionPost = 0
     this.limitPost = 5
     this.startPositionPostLike = 0
@@ -197,9 +181,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.postLike = []
     this.postBookmark = []
     this.pollOption = []
-    this.activatedRoute.params.subscribe(result => {
-      this.type = result['type']
-    })
+
     this.initPost()
     this.initLike()
     this.initBookmark()
@@ -209,7 +191,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, true).subscribe(result => {
       for (let i = 0; i < result.length; i++) {
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
-          console.log(userLike);
           result[i].likeId = userLike.likeId
           result[i].countOfLike = userLike.countOfLike
           result[i].isActiveLike = userLike.isActive
@@ -257,8 +238,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       post.comments = result
     })
 
-    // console.log(post)
-
     this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
       this.pollOption.push(result)
       let totalTemp = 0
@@ -268,10 +247,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       this.post.push(post)
     })
-
-
-
-    // console.log(this.postComments)
   }
 
   addDataLike(post: any) {
@@ -443,7 +418,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
-  actLikePostLike(postId: string, likeId: string, i: any) {
+  actLikePostLike(likeId: string, i: any) {
     if (likeId) {
       this.getIdLikeDataSubs = this.likeService.getById(likeId).subscribe(result => {
         this.updateLike.controls.isActive.setValue(false)
@@ -455,7 +430,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  actBookmarkPostBookmark(postId: string, bookmarkId: string, i: any) {
+  actBookmarkPostBookmark(bookmarkId: string, i: any) {
     if (bookmarkId) {
       this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
         this.updateBookmark.controls.isActive.setValue(false)
@@ -480,7 +455,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-        console.log(this.post[i])
         this.post[i].comments.push(resultId ?? '')
 
       })
@@ -489,28 +463,28 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.postInsertSubs?.unsubscribe()
-    this.postAttachInsertSubs?.unsubscribe()
-    this.getPostDataSubs?.unsubscribe()
-    this.getByCodePostTypeSubsc?.unsubscribe()
-
-    this.getPostAttachmentDataSubs?.unsubscribe()
-    this.getCountLikeDataSubs?.unsubscribe()
     this.getDataPollContentSubs?.unsubscribe()
-
+    this.choosePollOptionSubs?.unsubscribe()
+    this.getByIdPollOptionSubs?.unsubscribe()
+    this.getByCodePostTypeSubsc?.unsubscribe()
+    this.getByIdPollingStatusSubs?.unsubscribe()
+    this.getPostDataSubs?.unsubscribe()
+    this.getPostAttachmentDataSubs?.unsubscribe()
+    this.getPostLikeAttachmentDataSubs?.unsubscribe()
+    this.getPostBookmarkAttachmentDataSubs?.unsubscribe()
+    this.getCountLikeDataSubs?.unsubscribe()
     this.insertLikeDataSubs?.unsubscribe()
     this.updateLikeDataSubs?.unsubscribe()
     this.getIdLikeDataSubs?.unsubscribe()
-
-    this.getPostLikeAttachmentDataSubs?.unsubscribe()
-    this.getPostBookmarkAttachmentDataSubs?.unsubscribe()
-
     this.getCountBookmarkDataSubs?.unsubscribe()
     this.insertBookmarkDataSubs?.unsubscribe()
     this.updateBookmarkDataSubs?.unsubscribe()
     this.getIdBookmarkDataSubs?.unsubscribe()
-
+    this.getByIdCommentsSubs?.unsubscribe()
     this.getDataLikeSubs?.unsubscribe()
     this.getDataBookmarkSubs?.unsubscribe()
+    this.commentInsertSubs?.unsubscribe()
+    this.getAllCommentByPostSubs?.unsubscribe()
   }
 
 }

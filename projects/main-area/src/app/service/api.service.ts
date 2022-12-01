@@ -64,6 +64,33 @@ export class ApiService {
         return result
     }
 
+    getCompany(): string | null {
+        const data = localStorage.getItem('data')
+        let result: null | string = ''
+        if (data) {
+            result = JSON.parse(data).company
+        }
+        return result
+    }
+
+    getIndustry(): string | null {
+        const data = localStorage.getItem('data')
+        let result: null | string = ''
+        if (data) {
+            result = JSON.parse(data).industry.industryName
+        }
+        return result
+    }
+
+    getPosition(): string | null {
+        const data = localStorage.getItem('data')
+        let result: null | string = ''
+        if (data) {
+            result = JSON.parse(data).position.positionName
+        }
+        return result
+    }
+
     getPhotoId(): number | null {
         const data = localStorage.getItem('data')
         let result: null | number = 0

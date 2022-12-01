@@ -1,8 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BASE_URL } from "projects/constant/base-url";
-import { Post } from "projects/interface/post";
-import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http"
+import { Injectable } from "@angular/core"
+import { BASE_URL } from "projects/constant/base-url"
+import { Post } from "projects/interface/post"
+import { Observable } from "rxjs"
 
 @Injectable({
     providedIn: "root"
@@ -12,12 +12,12 @@ export class PostService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getAll(startPosition: number, limit: number): Observable<any> {
-        return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/?startPosition=${startPosition}&limit=${limit}`)
+    getAll(startPosition: number, limit: number): Observable<Post[]> {
+        return this.httpClient.get<Post[]>(`${Object.values(BASE_URL)[0]}/posts/?startPosition=${startPosition}&limit=${limit}`)
     }
 
-    getByUser(userId: string): Observable<any> {
-        return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/users/?userId=${userId}`)
+    getByUser(userId: string): Observable<Post[]> {
+        return this.httpClient.get<Post[]>(`${Object.values(BASE_URL)[0]}/posts/users/?userId=${userId}`)
     }
 
     getByPostType(postTypeId: string): Observable<any> {
@@ -48,7 +48,7 @@ export class PostService {
         return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/is-active-order/?startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
     }
 
-    getByUserAndOrder(userId: string,startPosition: number, limit: number, asc: boolean): Observable<any> {
+    getByUserAndOrder(userId: string, startPosition: number, limit: number, asc: boolean): Observable<any> {
         return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/posts/users-order/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
     }
 

@@ -20,6 +20,7 @@ import { ProfileMemberRouting } from "./profile-member.routing"
 import { DialogModule } from "primeng/dialog"
 import { InfiniteScrollModule } from "ngx-infinite-scroll"
 import { StyleClassModule } from "primeng/styleclass"
+import { ImageModule } from "primeng/image"
 
 @NgModule({
     declarations: [
@@ -32,8 +33,8 @@ import { StyleClassModule } from "primeng/styleclass"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, PanelMenuModule,
-        ReactiveFormsModule, DropdownModule,DialogModule,
-        InfiniteScrollModule, StyleClassModule
+        ReactiveFormsModule, DropdownModule, DialogModule,
+        InfiniteScrollModule, StyleClassModule, ImageModule
     ],
     exports: [
         ProfileListMemberComponent, EditProfileMemberComponent, ChangePasswordMemberComponent
