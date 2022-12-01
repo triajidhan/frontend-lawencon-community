@@ -21,16 +21,18 @@ export class CommentService {
     return this.http.get<Comment>(`${Object.values(BASE_URL)[0]}/comments/id/${id}`)
   }
 
-  getByUser(userId: string): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users/?userId=${userId}`)
+  
+  getByUser(userId: string,startPosition: number,limit:number,asc:boolean): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
   }
 
   getByUserAndOrder(userId: string, asc: boolean): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users-order/?userId=${userId}&asc=${asc}`)
   }
+  
 
-  getByPost(postId: string): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users/?postId=${postId}`)
+  getByPost(postId: string,startPosition: number,limit:number,asc:boolean): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${Object.values(BASE_URL)[0]}/comments/users/?postId=${postId}&startPosition=${startPosition}&limit=${limit}&asc=${asc}`)
   }
 
   getByPostAndOrder(postId: string, asc: boolean): Observable<Comment[]> {
