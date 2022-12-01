@@ -7,7 +7,7 @@ import { ActivityService } from "projects/main-area/src/app/service/activity.ser
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { FileService } from "projects/main-area/src/app/service/file.service"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'activity-list',
@@ -15,7 +15,7 @@ import { Subscription } from "rxjs"
     styleUrls: ['../../../../styles.css']
 })
 export class ActivityListComponent implements OnInit {
-
+    loadingJoinActivity: boolean = false
     myId = ""
 
     startPosition = 0
@@ -215,7 +215,7 @@ export class ActivityListComponent implements OnInit {
         this.startPositionMyEvent = 0
         this.limitMyEvent = 6
 
-        
+
         this.startPositionMyActivityOnGoing = 0
         this.limitMyActivityOnGoing = 6
 
@@ -232,7 +232,7 @@ export class ActivityListComponent implements OnInit {
         this.initAllActivity()
         this.initAllActivityCourse()
         this.initAllActivityEvent()
-        
+
         this.initMyActivity()
         this.initMyActivityCourse()
         this.initMyActivityEvent()
@@ -269,7 +269,7 @@ export class ActivityListComponent implements OnInit {
 
     initMyActivity() {
         this.getAllMyActivitiesSubs = this.activityService.getByUser(this.myId, this.startPositionMyActivity, this.limitMyActivity, false).subscribe(result => {
-            
+
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivities(result[i])
             }
@@ -296,7 +296,7 @@ export class ActivityListComponent implements OnInit {
 
     initMyActivityOnGoing() {
         this.getAllMyActivitiesOnGoingSubs = this.paymentActivityDetailService.getByUser(this.myId, this.startPositionMyActivityOnGoing, this.limitMyActivityOnGoing, false).subscribe(result => {
-            
+
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesOnGoing(result[i].activity)
             }
@@ -308,7 +308,7 @@ export class ActivityListComponent implements OnInit {
             console.log(result)
 
             for (let i = 0; i < result.length; i++) {
-                
+
                 this.addDataMyActivitiesOnGoingCourse(result[i].activity)
             }
         })
@@ -386,6 +386,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     submitInsert() {
+      this.loadingJoinActivity = true
         this.paymentActivityForm.patchValue({
             file: {
                 files: this.resultFile,
@@ -398,7 +399,7 @@ export class ActivityListComponent implements OnInit {
 
         this.paymentActivityForm.value.net = this.activityPrice
 
-        this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).subscribe(() => {
+        this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).pipe(finalize(()=>this.loadingJoinActivity = false)).subscribe(() => {
             this.display = false
         })
     }

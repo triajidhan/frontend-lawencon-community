@@ -710,7 +710,7 @@
                     <p-fileUpload id="file" name="file" [customUpload]="true" (uploadHandler)="fileUpload($event)">
                     </p-fileUpload>
                 </div>
-                <button pButton [disabled]="paymentActivityForm.invalid" type="submit" (click)="submitInsert()"
+                <button pButton [loading]="loadingJoinActivity" [disabled]="paymentActivityForm.invalid" type="submit" (click)="submitInsert()"
                     class="main-color w-full mt-3" label="SUBMIT"></button>
             </form>
         </div>

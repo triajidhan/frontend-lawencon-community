@@ -19,7 +19,7 @@
         <div class="grid w-full md:w-10 lg:w-7">
             <div class="table w-full">
                 <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
+                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData"
                     [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
                     [globalFilterFields]="['id', 'title']">
 
@@ -43,7 +43,7 @@
                                 </button>
                             </td>
                             <td class="text-center">
-                                <button pButton type="button" label="APPROVE" (click)="approvePayment(data.id)">
+                                <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe" (click)="approvePayment(data.id)">
                                     <i class="fa-solid fa-pen text-sm mr-2"></i>
                                 </button>
                             </td>
