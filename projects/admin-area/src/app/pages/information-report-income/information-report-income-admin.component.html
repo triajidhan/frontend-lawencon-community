@@ -35,8 +35,8 @@
                         <div class="md:flex md:justify-content-between">
                             <div class="mb-3 md:mb-0">
                                 <label class="mr-3" for="range">Date Range</label>
-                                <p-calendar class="p-inputtext-sm" selectionMode="range" [readonlyInput]="true"
-                                    inputId="range">
+                                <p-calendar class="p-inputtext-sm" selectionMode="range" 
+                                    [(ngModel)]="rangeDates" (onSelect)="getValueDate()" inputId="range">
                                 </p-calendar>
                             </div>
 
@@ -67,8 +67,8 @@
                                 <p-tableCheckbox [value]="data"></p-tableCheckbox>
                             </td>
                             <td>{{i + 1}}</td>
-                            <td>{{data.memberCreate}}</td>
-                            <td>seharusnya groupby activityTypeName juga</td>
+                            <td>{{data.user.fullName}}</td>
+                            <td>{{data.activity.activityType.activityTypeName}}</td>
                             <td>{{data.net | currency:"IDR ":"symbol"}}</td>
                         </tr>
                     </ng-template>
