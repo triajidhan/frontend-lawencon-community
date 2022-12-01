@@ -18,6 +18,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll"
 import { DialogModule } from "primeng/dialog"
 import { ArticleListComponent } from "./article-list/article-list.component"
 import { ArticleDetailComponent } from "./article-detail/article-detail.component"
+import { ImageModule } from "primeng/image"
 
 @NgModule({
     declarations: [
@@ -30,7 +31,7 @@ import { ArticleDetailComponent } from "./article-detail/article-detail.componen
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
         CalendarModule, DropdownModule, InfiniteScrollModule,
-        DialogModule
+        DialogModule, ImageModule
     ],
     exports: [
         ArticleListComponent, ArticleDetailComponent

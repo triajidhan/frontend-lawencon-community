@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { Post } from "projects/interface/post"
 
 @Component({
   selector: 'home-detail',
