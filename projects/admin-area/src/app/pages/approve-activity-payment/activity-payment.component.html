@@ -19,9 +19,8 @@
         <div class="grid w-full md:w-10">
             <div class="table w-full">
                 <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData"
-                    [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
-                    [globalFilterFields]="['id', 'title']">
+                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [rowsPerPageOptions]="[5, 10]"
+                    tyleClass="p-datatable-gridlines" [globalFilterFields]="['id', 'title']">
 
 
                     <ng-template pTemplate="header">
@@ -47,7 +46,12 @@
                                 </button>
                             </td>
                             <td class="text-center">
-                                <button [loading]="loadingActivityPayment" pButton type="button" label="APPROVE" (click)="approvePayment(data.id)">
+                                <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
+                                    (click)="rejectPayment(data.id)">
+                                    <i class="fa-solid fa-xmark mr-2"></i>
+                                </button>
+                                <button [loading]="loadingActivityPayment" pButton type="button" label="APPROVE"
+                                    (click)="approvePayment(data.id)">
                                     <i class="fa-solid fa-pen text-sm mr-2"></i>
                                 </button>
                             </td>

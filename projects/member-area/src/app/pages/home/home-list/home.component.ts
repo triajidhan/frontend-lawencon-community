@@ -369,9 +369,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
         this.pollOption[i][j].totalPoll = this.pollOption[i][j].totalPoll + 1
         this.getByIdPollingStatusSubs = this.polingStatusService.getById(polling.id).subscribe(pollingStatus => {
+          let totalTemp = 0;
           for (let k = 0; k < this.pollOption[i].length; k++) {
             this.pollOption[i][k].pollingStatus = pollingStatus;
+            totalTemp += this.pollOption[i][k].totalPoll
           }
+          this.post[i].totalPoll = totalTemp
         })
       })
     })

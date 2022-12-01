@@ -12,6 +12,7 @@ export interface PaymentActivityDetail extends File, Activity {
 	file: File
 	userName: string
 	createdBy: string
-  countOfPaymentActivity : number;
+	countOfPaymentActivity: number
+	isActive: boolean
 }
 

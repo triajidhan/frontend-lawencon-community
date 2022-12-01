@@ -21,11 +21,12 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   totalData: number = 0
   loading: boolean = true
 
-  getTotalDataSubs!: Subscription
-  getAllSubs?: Subscription
-  getByIdUserSubs?: Subscription
-  getByIdPaymentSubscribe?: Subscription
-  approvePaymentSubs?: Subscription
+  private getTotalDataSubs?: Subscription
+  private getAllSubs?: Subscription
+  private getByIdUserSubs?: Subscription
+  private getByIdPaymentSubscribe?: Subscription
+  private approvePaymentSubs?: Subscription
+  private rejectPaymentSubs?: Subscription
 
   constructor(private paymentSubscribeService: PaymentSubscribeService,
     private userService: UserService) { }
@@ -61,7 +62,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
             }
           }
         )
-
       }
     )
   }
@@ -80,10 +80,23 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  rejectPayment(paymentSubsId: string) {
+    this.getByIdPaymentSubscribe = this.paymentSubscribeService.getById(paymentSubsId).subscribe(result => {
+      this.paymentSubscribe = result
+      this.paymentSubscribe.isActive = false
+      this.rejectPaymentSubs = this.paymentSubscribeService.update(this.paymentSubscribe).subscribe(() => {
+        this.getData()
+      })
+    })
+  }
+
   ngOnDestroy(): void {
+    this.getTotalDataSubs?.unsubscribe()
     this.getAllSubs?.unsubscribe()
     this.getByIdUserSubs?.unsubscribe()
     this.getByIdPaymentSubscribe?.unsubscribe()
     this.approvePaymentSubs?.unsubscribe()
+    this.rejectPaymentSubs?.unsubscribe()
   }
 }

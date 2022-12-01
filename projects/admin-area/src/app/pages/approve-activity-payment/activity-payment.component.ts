@@ -25,7 +25,10 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
     getByIdUserSubs?: Subscription
     getByIdPaymentActivitySubs?: Subscription
     approvePaymentSubs?: Subscription
+    rejectPaymentSubs?: Subscription
     getTotalDataSubs?: Subscription
+
+
     constructor(private paymentActivityDetailService: PaymentActivityDetailService,
         private userService: UserService) { }
 
@@ -51,27 +54,37 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getAll(startPage, maxPage).subscribe(
             result => {
-              this.getTotalDataSubs = this.paymentActivityDetailService.getTotalPaymentActivity().subscribe(total =>{
-                for (let i = 0; result.length; i++) {
-                    this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
-                        result[i].userName = resultUser.fullName
-                        this.data = result
-                        this.loading = false
-                        this.totalData = total.countOfPaymentActivity
-                    })
+                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalPaymentActivity().subscribe(total => {
+                    for (let i = 0; result.length; i++) {
+                        this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
+                            result[i].userName = resultUser.fullName
+                            this.data = result
+                            this.loading = false
+                            this.totalData = total.countOfPaymentActivity
+                        })
 
-                }
-              })
+                    }
+                })
             }
         )
     }
 
     approvePayment(paymentSubsId: string) {
-      this.loadingActivityPayment = true
+        this.loadingActivityPayment = true
         this.getByIdPaymentActivitySubs = this.paymentActivityDetailService.getById(paymentSubsId).subscribe(result => {
             this.paymentActivityDetail = result
             this.paymentActivityDetail.approve = true
-            this.approvePaymentSubs = this.paymentActivityDetailService.update(this.paymentActivityDetail).pipe(finalize(()=>this.loadingActivityPayment = false)).subscribe(() => {
+            this.approvePaymentSubs = this.paymentActivityDetailService.update(this.paymentActivityDetail).pipe(finalize(() => this.loadingActivityPayment = false)).subscribe(() => {
+                this.getData()
+            })
+        })
+    }
+
+    rejectPayment(paymentSubsId: string) {
+        this.getByIdPaymentActivitySubs = this.paymentActivityDetailService.getById(paymentSubsId).subscribe(result => {
+            this.paymentActivityDetail = result
+            this.paymentActivityDetail.isActive = false
+            this.rejectPaymentSubs = this.paymentActivityDetailService.update(this.paymentActivityDetail).subscribe(() => {
                 this.getData()
             })
         })
@@ -82,5 +95,6 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
         this.getByIdUserSubs?.unsubscribe()
         this.getByIdPaymentActivitySubs?.unsubscribe()
         this.approvePaymentSubs?.unsubscribe()
+        this.rejectPaymentSubs?.unsubscribe()
     }
 }
