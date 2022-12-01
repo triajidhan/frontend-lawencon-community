@@ -25,7 +25,7 @@ import { finalize, Subscription } from "rxjs"
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  loadingPost= false;
+  loadingPost = false;
 
 
   myId: string = ""
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
-  fileArray: any[] = [];
+  fileArray: any[] = []
   postTypesRes!: PostType[]
   postTypes: any[] = []
 
@@ -209,6 +209,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, true).subscribe(result => {
       for (let i = 0; i < result.length; i++) {
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
+          console.log(userLike);
           result[i].likeId = userLike.likeId
           result[i].countOfLike = userLike.countOfLike
           result[i].isActiveLike = userLike.isActive
@@ -256,7 +257,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       post.comments = result
     })
 
-    console.log(post)
+    // console.log(post)
 
     this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
       this.pollOption.push(result)
@@ -270,7 +271,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
 
-    console.log(this.postComments)
+    // console.log(this.postComments)
   }
 
   addDataLike(post: any) {
@@ -321,7 +322,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   postInsert() {
     if (this.postType == 'regular') {
       this.loadingPost = true
-      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).pipe(finalize(()=>this.loadingPost = false)).subscribe(result => {
+      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).pipe(finalize(() => this.loadingPost = false)).subscribe(result => {
         this.postForm.patchValue({
           postType: {
             id: result.id
@@ -341,7 +342,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     } else if (this.postType == 'premium') {
       this.loadingPost = true
-      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).pipe(finalize(()=>this.loadingPost)).subscribe(result => {
+      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).pipe(finalize(() => this.loadingPost)).subscribe(result => {
         this.postForm.patchValue({
           postType: {
             id: result.id

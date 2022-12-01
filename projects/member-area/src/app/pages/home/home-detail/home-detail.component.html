@@ -1,84 +1,98 @@
 <div class="w-full body-color">
     <div class=" flex justify-content-center flex-wrap">
         <div class="col-12 md:col-8 md:px-3 px-1 py-3">
-            <div class="w-full bg-black-alpha-20 pt-5">
-                <p-carousel [value]="carousel" [circular]="true">
-                    <ng-template let-item pTemplate="item">
-                        <div class="w-full h-25rem flex justify-content-center align-items-center">
-                            <p-image [src]="item.image" alt="Image">
-                            </p-image>
-                        </div>
-                    </ng-template>
-                </p-carousel>
-            </div>
+            <ng-container *ngIf="post.postAttachment">
+                <div *ngIf="post.postAttachment.length > 0" class="w-full bg-black-alpha-20 pt-5">
+                    <p-carousel [value]="post.postAttachment" [circular]="true">
+                        <ng-template let-item pTemplate="item">
+                            <div class="w-full h-25rem flex justify-content-center align-items-center">
+                                <p-image src="{{urlFile}}{{ item.file.id }}" alt="Image">
+                                </p-image>
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                </div>
+            </ng-container>
+
             <p-card>
                 <div class="md:mx-5">
-                    <div class="flex  align-items-center mb-3 mt-3">
+                    <div *ngIf="post.user" class="flex  align-items-center mb-3 mt-3">
                         <div class="max-w-max mr-3">
-                            <img src="../../../../assets/logos/user.jpg" class="w-3rem h-3rem border-circle"
-                                alt="profile image">
+                            <p-image [preview]="true" *ngIf="post.user.file" src="{{urlFile}}{{post.user.file}}"
+                                alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
+                            <p-image [preview]="true" *ngIf="!post.user.file" src="../../../../assets/logos/user.jpg"
+                                alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
                         </div>
                         <div class="w-full">
-                            <h3>Tri Aji Ramadhan</h3>
-                            <p class="text-black-alpha-60 text-xs mt-1">one minutes ago </p>
+                            <h3>{{ post.user.fullName }}</h3>
+                            <p class="text-black-alpha-60 text-xs mt-1">{{ post.createdAt |
+                                date:"shortTime" }} |
+                                {{ post.createdAt | date:"fullDate" }} </p>
                         </div>
-                        <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
-                            <h4 class="mx-3 my-1 text-purple-500">Lawencon</h4>
+                        <div *ngIf="post.user.company" class="min-w-max mr-3 bg-purple-100 border-round-xl">
+                            <h4 class="mx-3 my-1 text-purple-500">{{ post.user.company }}</h4>
                         </div>
-                        <div class="min-w-max mr-3 bg-green-100 border-round-xl">
-                            <h4 class="mx-3 my-1 text-green-500">Programmer</h4>
+                        <div *ngIf="post.user.company" class="min-w-max mr-3 bg-green-100 border-round-xl">
+                            <h4 class="mx-3 my-1 text-green-500">{{ post.user.position.positionName }}</h4>
                         </div>
                     </div>
                     <p-card styleClass="content-box">
-                        <h3 class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam, aut!
+                        <h3 class="text-justify">{{post.title}}
                         </h3>
                         <p class="text-black-alpha-60 mt-3 text-justify">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem illo obcaecati in
-                            similique
-                            vel earum modi eius temporibus aliquam officia.
+                            {{post.contents}}
                         </p>
                     </p-card>
 
-                    <p-card styleClass="pooling-content">
-                        <h3 class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-                            exercitationem.</h3>
+                    <p-card *ngIf="post.titlePoll" styleClass="pooling-content">
+                        <h3 class="text-justify">{{post.titlePoll}}</h3>
+                        <ng-container *ngFor="let po of pollOption; index as j">
 
-                        <div class="mt-3 body-color hover:bg-gray-100">
-                            <div class="flex align-items-center cursor-pointer py-3">
-                                <p class="text-center text-lg main-text w-full">Lorem ipsum dolor sit amet.</p>
-                                <p class="min-w-max mr-3 text-black-alpha-60">1 votes</p>
+                            <div *ngIf="!pollOption[j].pollingStatus" class="mt-3 body-color hover:bg-gray-100">
+                                <div class="flex align-items-center cursor-pointer py-3"
+                                    (click)="choosePollOption(pollOption[j].id , j)">
+                                    <p class="text-center text-lg main-text w-full">{{pollOption[j].pollContent}}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="mt-3 body-color hover:bg-gray-100">
-                            <div class="flex align-items-center cursor-pointer py-3">
-                                <p class="text-center text-lg main-text w-full">Lorem ipsum dolor sit amet.</p>
-                                <p class="min-w-max mr-3 text-black-alpha-60">1 votes</p>
-                            </div>
-                        </div>
+                            <ng-container *ngIf="pollOption[j].pollingStatus">
+                                <div *ngIf="pollOption[j].id != pollOption[j].pollingStatus.polling.id"
+                                    class="mt-3 py-3 body-color cursor-pointer" pTooltip="you have voted">
+                                    <div class="flex align-items-center">
+                                        <p class="text-center text-lg main-text w-full">{{pollOption[j].pollContent}}
+                                        </p>
+                                        <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[j].totalPoll}} votes
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <div class="mt-3 body-color hover:bg-gray-100">
-                            <div class="flex align-items-center cursor-pointer py-3">
-                                <p class="text-center text-lg main-text w-full">Lorem ipsum dolor sit amet.</p>
-                                <p class="min-w-max mr-3 text-black-alpha-60">1 votes</p>
-                            </div>
-                        </div>
+                                <div *ngIf="pollOption[j].id == pollOption[j].pollingStatus.polling.id"
+                                    class="mt-3 py-3 main-color text-white cursor-pointer" pTooltip="you have voted">
+                                    <div class="flex align-items-center">
+                                        <p class="text-center text-lg  w-full">{{pollOption[j].pollContent}}</p>
+                                        <p class="min-w-max mr-3 ">{{pollOption[j].totalPoll}} votes</p>
+                                    </div>
+                                </div>
+                            </ng-container>
 
+                        </ng-container>
                         <div class="flex mt-5 align-items-center text-black-alpha-60">
                             <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
-                            <p class="w-full">3 votes</p>
+                            <p class="w-full">{{post.totalPoll}} votes</p>
                         </div>
                     </p-card>
                     <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
                         <div class="flex align-items-center">
-                            <div
-                                class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
+                            <div class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                                (click)="actLikePost(post.id,post.likeId)">
 
-                                <i class="fa-regular fa-heart text-2xl mr-2"></i>
-                                <i class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
+                                <i *ngIf="!post.likeId || !post.isActiveLike"
+                                    class="fa-regular fa-heart text-2xl mr-2"></i>
+                                <i *ngIf="post.likeId && post.isActiveLike"
+                                    class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
 
 
-                                <p class="min-w-max">1 likes</p>
+                                <p class="min-w-max">{{ post.countOfLike }} likes</p>
                             </div>
 
                             <div class="ml-1 flex align-items-center px-3 py-2">
@@ -87,18 +101,20 @@
                             </div>
                         </div>
 
-                        <div
-                            class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
+                        <div class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                            (click)="actBookmark(post.id,post.bookmarkId)">
 
-                            <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
-                            <i class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
+                            <i *ngIf="!post.bookmarkId || !post.isActiveBookmark"
+                                class="fa-regular fa-bookmark text-2xl mr-2"></i>
+                            <i *ngIf="post.bookmarkId && post.isActiveBookmark"
+                                class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
 
                         </div>
                     </div>
 
 
                     <div class="mt-4">
-                        <ng-container>
+                        <ng-container *ngFor="let com of post.comments;index as j">
                             <div class="flex mt-3">
                                 <div class="max-w-max mr-3">
                                     <img src="../../../assets/images/article.png" alt=""
@@ -106,11 +122,10 @@
                                 </div>
                                 <div class="w-max">
                                     <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                                        <p class="font-medium">Tri Aji Ramadhan</p>
-                                        <p class=" text-black-alpha-60">Lorem ipsum, dolor sit amet consectetur
-                                            adipisicing
-                                            elit. Commodi, libero! </p>
+                                        <p class="font-medium">{{ post.comments[j].user.fullName }}</p>
+                                        <p class=" text-black-alpha-60">{{ post.comments[j].commentBody }} </p>
                                     </div>
+                                    <p class="text-xs text-black-alpha-60 mt-2">{{ post.comments[j].createdAt }}</p>
                                 </div>
                             </div>
 
@@ -123,7 +138,7 @@
                                     class="w-2rem h-2rem border-circle">
                             </div>
                             <div class="w-full">
-                                <form class="card w-full">
+                                <form [formGroup]="commentForm" class="card w-full">
                                     <div class="field">
                                         <input formControlName="commentBody" pInputText
                                             class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text"
@@ -132,7 +147,8 @@
                                         </p>
                                     </div>
                                     <div class="hidden">
-                                        <button type="submit"></button>
+                                        <button [disabled]="commentForm.invalid" type="submit"
+                                            (click)="insertComment(post.id)"></button>
                                     </div>
                                 </form>
                             </div>
