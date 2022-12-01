@@ -80,7 +80,7 @@
                                         </p-fileUpload>
                                     </div>
                                     <div class="col-12 my-3">
-                                        <button [disabled]="activityForm.invalid" pButton type="submit"
+                                        <button [loading]="loadingActivity" [disabled]="activityForm.invalid" pButton type="submit"
                                             id="activity-submit" label="SUBMIT" (click)="submitInsert()"
                                             class="main-color"></button>
                                     </div>

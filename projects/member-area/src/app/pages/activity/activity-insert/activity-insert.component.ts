@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
 import { ActivityType } from "projects/interface/activity-type"
 import { ActivityTypeService } from "projects/main-area/src/app/service/activity-type.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 import { ActivityService } from "../../../service/activity.service"
 
 @Component({
@@ -14,6 +14,7 @@ import { ActivityService } from "../../../service/activity.service"
     styleUrls: ['../../../../styles.css']
 })
 export class ActivityInsertComponent implements OnInit, OnDestroy {
+    loadingActivity: boolean = false;
 
     items!: MenuItem[]
     type!: string
@@ -102,6 +103,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     }
 
     submitInsert() {
+      this.loadingActivity = true;
         function getTimeZone() {
             var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
             return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
@@ -119,9 +121,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
                 id: this.activityForm.value.activityTypeId
             }
         })
-
-
-        this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).subscribe(() => {
+        this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).pipe(finalize(()=>this.loadingActivity = false)).subscribe(() => {
             this.router.navigateByUrl(`/activities/type/all`)
         })
     }

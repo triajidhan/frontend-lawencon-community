@@ -3,14 +3,14 @@ import { LazyLoadEvent, MenuItem } from "primeng/api"
 import { PaymentActivityDetail } from "projects/interface/payment-activity-detail"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'activity-payment',
     templateUrl: './activity-payment.component.html'
 })
 export class ActivityPaymentComponent implements OnInit, OnDestroy {
-
+    loadingActivityPayment: boolean = false
     items!: MenuItem[]
     data: any[] = []
 
@@ -25,7 +25,7 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
     getByIdUserSubs?: Subscription
     getByIdPaymentActivitySubs?: Subscription
     approvePaymentSubs?: Subscription
-
+    getTotalDataSubs?: Subscription
     constructor(private paymentActivityDetailService: PaymentActivityDetailService,
         private userService: UserService) { }
 
@@ -51,28 +51,27 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getAll(startPage, maxPage).subscribe(
             result => {
-                console.log(result)
+              this.getTotalDataSubs = this.paymentActivityDetailService.getTotalPaymentActivity().subscribe(total =>{
                 for (let i = 0; result.length; i++) {
                     this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
                         result[i].userName = resultUser.fullName
                         this.data = result
                         this.loading = false
-                        this.totalData = result.length
+                        this.totalData = total.countOfPaymentActivity
                     })
 
                 }
+              })
             }
         )
     }
 
     approvePayment(paymentSubsId: string) {
+      this.loadingActivityPayment = true;
         this.getByIdPaymentActivitySubs = this.paymentActivityDetailService.getById(paymentSubsId).subscribe(result => {
             this.paymentActivityDetail = result
             this.paymentActivityDetail.approve = true
-
-            console.log(this.paymentActivityDetail);
-
-            this.approvePaymentSubs = this.paymentActivityDetailService.update(this.paymentActivityDetail).subscribe(() => {
+            this.approvePaymentSubs = this.paymentActivityDetailService.update(this.paymentActivityDetail).pipe(finalize(()=>this.loadingActivityPayment = false)).subscribe(() => {
                 this.getData()
             })
         })
