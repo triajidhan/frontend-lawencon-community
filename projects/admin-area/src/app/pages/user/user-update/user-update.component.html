@@ -28,13 +28,13 @@
                         <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm color-body"
                             disabled>
                     </div>
-                    <div class="field col-12 md:col-6">
-                        <label for="photoId">Photo <span class="text-red-500">*</span></label>
-                        <p-fileUpload id="photoId" name="photoId" url="./upload.php" accept="image/*" [auto]="true">
+                    <div class="field col-12">
+                        <label for="file">Photo <span class="text-red-500">*</span></label>
+                        <p-fileUpload id="file" name="file" url="./upload.php" accept="image/*" [auto]="true">
                         </p-fileUpload>
                     </div>
                     <div class="col-12 my-3">
-                        <button pButton routerLink="/users" class="p-button-secondary mr-2" label="BACK"></button>
+                        <button pButton routerLink="/users" class="p-button-outlined mr-2" label="BACK"></button>
                         <button pButton type="button" id="user-save" label="SAVE" class="main-color"></button>
                     </div>
                 </div>

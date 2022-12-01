@@ -11,6 +11,7 @@ export interface PaymentSubscribe extends File, User {
 	file: File
 	createdBy: string
 	userName: string
-  countOfPaymentSubscribe: number;
+	countOfPaymentSubscribe: number
+	isActive: boolean
 }
 
