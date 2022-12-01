@@ -48,7 +48,7 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.startPage = startPage
     this.maxPage = maxPage
 
-    this.getAllSubs = this.paymentSubscribeService.getAll(startPage, maxPage).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
       result => {
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalPaymentSubscribe().subscribe(
           totalData => {
@@ -57,7 +57,7 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
                 result[i].userName = resultUser.fullName
                 this.data = result
                 this.loading = false
-                this.totalData = totalData.countOfPaymentSubscribe
+                this.totalData = result.length
               })
             }
           }

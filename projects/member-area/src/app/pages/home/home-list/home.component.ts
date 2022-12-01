@@ -8,6 +8,7 @@ import { Bookmark } from "projects/interface/bookmark"
 import { Polling } from "projects/interface/polling"
 import { PostType } from "projects/interface/post-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
+import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { BookmarkService } from "projects/main-area/src/app/service/bookmark.service"
 import { CommentService } from "projects/main-area/src/app/service/comment.service"
 import { LikeService } from "projects/main-area/src/app/service/like.service"
@@ -60,6 +61,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   postBookmark: any[] = []
   postAttachmentBookmark: any[] = []
   postComments: any[] = []
+
+  recentArticle: any[]=[]
 
   addLike = this.fb.group({
     post: this.fb.group({
@@ -126,13 +129,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   private commentInsertSubs?: Subscription
   private getAllCommentByPostSubs?: Subscription
 
+  private getRecentArticleSubs?: Subscription
+
 
   constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
     private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
     private postAttachmentService: PostAttachmentService, private apiService: ApiService,
     private likeService: LikeService, private bookmarkService: BookmarkService,
     private pollingService: PollingService, private polingStatusService: PollingStatusService,
-    private commentService: CommentService) { }
+    private commentService: CommentService,private articleService:ArticleService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true
@@ -146,6 +151,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       { label: 'Likes', routerLink: '/homes/type/likes', command: () => this.init() },
       { label: 'Bookmark', routerLink: '/homes/type/bookmarks', command: () => this.init() }
     ]
+
+    this.getRecentArticleSubs = this.articleService.getByIsActiveAndOrder(0,5,false).subscribe(result=>{
+      this.recentArticle = result
+
+      console.log(result)
+    })
 
     this.init()
   }
