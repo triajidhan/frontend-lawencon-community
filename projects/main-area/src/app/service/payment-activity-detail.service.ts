@@ -54,16 +54,16 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total/`)
 	}
 
-	getReportPartisipationMember(beginDate: string, finishDate: string, startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-member/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}`)
+	getReportPartisipationMember(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-member/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
 	getReportPartisipationMemberAll(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-member-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
 	}
 
-	getReportPartisipationSuper(beginDate: string, finishDate: string, startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}`)
+	getReportPartisipationSuper(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
 	getReportPartisipationSuperAll(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {
@@ -71,16 +71,16 @@ export class PaymentActivityDetailService {
 	}
 
 
-	getReportIncomeMember(beginDate: string, finishDate: string, startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-member/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}`)
+	getReportIncomeMember(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-member/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
 	getReportIncomeAllMember(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-member-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
 	}
 
-	getReportIncomeSuper(beginDate: string, finishDate: string, startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}`)
+	getReportIncomeSuper(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
 	getReportIncomeAllSuper(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {

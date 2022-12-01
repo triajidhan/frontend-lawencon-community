@@ -12,6 +12,7 @@ import { MenuModule } from 'primeng/menu'
 import { InformationReportIncomeComponent } from "./information-report-income.component"
 import { InformationReportIncomeRouting } from "./information-report-income.routing"
 import { CalendarModule } from "primeng/calendar"
+import { FormsModule } from "@angular/forms"
 
 @NgModule({
     declarations: [
@@ -22,7 +23,7 @@ import { CalendarModule } from "primeng/calendar"
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule, CalendarModule
+        MenuModule, CalendarModule,FormsModule
     ],
     exports: [
         InformationReportIncomeComponent

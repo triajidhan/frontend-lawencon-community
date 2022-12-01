@@ -1,4 +1,6 @@
+import { formatDate } from "@angular/common"
 import { Component, OnDestroy, OnInit } from "@angular/core"
+import { FormBuilder } from "@angular/forms"
 import { LazyLoadEvent, MenuItem } from "primeng/api"
 import { Activity } from "projects/interface/activity"
 import { ActivityService } from "projects/main-area/src/app/service/activity.service"
@@ -24,19 +26,27 @@ export class InformationReportMemberComponent implements OnInit, OnDestroy {
     beginSchedule = new Date("2020-01-01").toISOString()
     finishSchedule = new Date("2025-01-01").toISOString()
 
+    rangeDates: any[] = []
+
     getAllPaymentSubs?: Subscription
 
-    constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
+    constructor(private paymentActivityDetailService: PaymentActivityDetailService,private fb:FormBuilder) { }
 
     ngOnInit(): void {
+
         this.items = [
             { label: 'Home', routerLink: "/dashboard/super-admin" },
             { label: 'Member Information Report' }
         ]
+
+    }
+
+    getTimeZone() {
+        var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+        return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -45,15 +55,27 @@ export class InformationReportMemberComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationMember(this.beginSchedule, this.finishSchedule, startPage, maxPage).subscribe(result => {
-
-                console.log(result)
-
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationMember(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(result => {
                 this.data = result
                 this.loading = false
                 this.totalData = result.length
             }
         )
+    }
+
+    getValueDate(){
+        if (this.rangeDates[0] !== null && this.rangeDates[1] !== null) {
+            this.beginSchedule = formatDate(this.rangeDates[0]?? '', `yyyy-MM-dd'T'HH:mm:ss`, 'en')
+            this.finishSchedule =  formatDate(this.rangeDates[1]?? '', `yyyy-MM-dd'T'HH:mm:ss`, 'en')  
+    
+            
+            this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationMember(this.beginSchedule, this.finishSchedule, this.startPage, this.maxPage,false).subscribe(result => {
+                    this.data = result
+                    this.loading = false
+                    this.totalData = result.length
+                }
+            )
+        }
     }
 
     exportData() {
