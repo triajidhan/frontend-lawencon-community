@@ -29,7 +29,7 @@
                     <input pInputText id="pass" name="pass" formControlName="pass" type="password"
                         class="w-full p-inputtext-sm">
                 </div>
-                <button [disabled]="loginReq.invalid" pButton type="submit" (click)="submit()" class=" w-full mt-3"
+                <button [loading]="loadingLogin" [disabled]="loginReq.invalid" pButton type="submit" (click)="submit()" class=" w-full mt-3"
                     label="SIGN IN"></button>
             </form>
             <p class="text-center mt-5">No Account Yet? <b routerLink="/registrations"
