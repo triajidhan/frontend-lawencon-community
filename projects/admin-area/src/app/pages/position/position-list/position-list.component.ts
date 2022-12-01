@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router"
 import { ConfirmationService, LazyLoadEvent, MenuItem, PrimeNGConfig } from "primeng/api"
 import { Position } from "projects/interface/position"
 import { PositionService } from "projects/main-area/src/app/service/position.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'position-list',
@@ -11,6 +11,7 @@ import { Subscription } from "rxjs"
     providers: [ConfirmationService]
 })
 export class PositionListComponent implements OnInit, OnDestroy {
+    loadingDeleted: boolean = false
     items!: MenuItem[]
     data: any[] = []
 
@@ -69,8 +70,8 @@ export class PositionListComponent implements OnInit, OnDestroy {
                 this.getByIdSubs = this.positionService.getById(id).subscribe(result => {
                     this.position = result
                     this.position.isActive = false
-
-                    this.deleteSubs = this.positionService.update(this.position).subscribe(() => {
+                    this.loadingDeleted = true
+                    this.deleteSubs = this.positionService.update(this.position).pipe(finalize(()=>this.loadingDeleted = false)).subscribe(() => {
                         this.getData()
                     })
                 })

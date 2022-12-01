@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-12 my-3">
                         <button pButton routerLink="/positions" class="p-button-outlined mr-2" label="BACK"></button>
-                        <button pButton [disabled]="updatePositionForm.invalid" type="submit" id="position-save" label="SAVE" (click)="submitUpdate()"
+                        <button [loading]="loadingUpdate" pButton [disabled]="updatePositionForm.invalid" type="submit" id="position-save" label="SAVE" (click)="submitUpdate()"
                         class="main-color"></button>
                     </div>
                 </div>

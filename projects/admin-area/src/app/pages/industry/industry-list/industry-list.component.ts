@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ConfirmationService, LazyLoadEvent, MenuItem, PrimeNGConfig } from "primeng/api"
 import { Industry } from "projects/interface/industry"
 import { IndustryService } from "projects/main-area/src/app/service/industry.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'industry-list',
@@ -10,6 +10,7 @@ import { Subscription } from "rxjs"
     providers: [ConfirmationService]
 })
 export class IndustryListComponent implements OnInit, OnDestroy {
+    loadingDelete: boolean = false
     items!: MenuItem[]
     data: any[] = []
 
@@ -62,6 +63,7 @@ export class IndustryListComponent implements OnInit, OnDestroy {
     }
 
     getDeleteId(id: string) {
+      this.loadingDelete = true
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this industry?',
             accept: () => {
@@ -69,7 +71,7 @@ export class IndustryListComponent implements OnInit, OnDestroy {
                     this.industry = result
                     this.industry.isActive = false
 
-                    this.deleteSubs = this.industryService.update(this.industry).subscribe(() => {
+                    this.deleteSubs = this.industryService.update(this.industry).pipe(finalize(()=>this.loadingDelete = false)).subscribe(() => {
                         this.getData()
                     })
                 })
