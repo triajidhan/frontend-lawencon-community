@@ -2,22 +2,33 @@
     <div class=" flex justify-content-center flex-wrap">
         <div class="w-full md:w-10 container mt-3">
             <p-card infinite-scroll (scrolled)="onScroll()">
-
                 <div class="grid mt-3">
-                    <div *ngFor="let a of article; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
+                    <div *ngFor="let a of article; index as i" class="col-12 mt-2">
                         <p-card styleClass="activity-card">
-                            <ng-template pTemplate="header">
-                                <img src="{{urlFile}}{{ article[i].file.id}}" alt="article img" class="h-8rem">
-                            </ng-template>
-                            <h3>{{ article[i].title }}</h3>
-                            <div class="text-xs text-black-alpha-60 mt-3">
-                                <div class="flex mt-2 h-2rem overflow-hidden">
-                                    <p>{{ article[i].contents }}</p>
+                            <div class="grid w-full ">
+                                <div class="col-4">
+                                    <div
+                                        class="w-full h-12rem flex justify-content-center align-items-center overflow-hidden">
+                                        <p-image [preview]="true" src="{{urlFile}}{{ article[i].file.id}}"
+                                            alt="article img" imageClass="w-full">
+                                        </p-image>
+                                    </div>
                                 </div>
-                                <div class="text-right mt-3">
-                                    <p routerLink="/articles/members/details/{{article[i].id}}"
-                                        class=" main-text underline cursor-pointer">
-                                        Show Detail</p>
+                                <div class="col-8 flex align-items-center">
+                                    <div>
+                                        <h2>{{ article[i].title }}</h2>
+                                        <div class="text-xs text-black-alpha-60 mt-3">
+                                            <div class="flex mt-2 h-2rem overflow-hidden line-height-2 text-justify">
+                                                <p>{{ article[i].contents }}</p>
+                                            </div>
+                                            <p>. . .</p>
+                                            <div class="text-right mt-3">
+                                                <p routerLink="/articles/members/details/{{article[i].id}}"
+                                                    class=" main-text underline cursor-pointer">
+                                                    Show Detail</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </p-card>

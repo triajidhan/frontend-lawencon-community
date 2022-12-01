@@ -2,12 +2,12 @@
     <div class=" flex justify-content-center flex-wrap">
         <div class="col-12 md:col-8 md:px-3 px-1 py-3">
             <div class="w-full bg-black-alpha-20 pt-5">
-                <p-carousel [value]="carousel">
+                <p-carousel [value]="carousel" [circular]="true">
                     <ng-template let-item pTemplate="item">
-                        <!-- <div class="w-full max-h-max flex justify-content-center align-items-center"> -->
-                        <p-image [src]="item.image" alt="Image">
-                        </p-image>
-                        <!-- </div> -->
+                        <div class="w-full h-25rem flex justify-content-center align-items-center">
+                            <p-image [src]="item.image" alt="Image">
+                            </p-image>
+                        </div>
                     </ng-template>
                 </p-carousel>
             </div>

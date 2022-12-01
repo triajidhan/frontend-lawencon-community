@@ -14,6 +14,8 @@ import { ArticleUpdateComponent } from "./article-update/article-update.componen
 import { ArticleInsertComponent } from "./article-insert/article-insert.component"
 import { ArticleListComponent } from "./article-list/article-list.component"
 import { ReactiveFormsModule } from "@angular/forms"
+import { ImageModule } from "primeng/image"
+import { ConfirmDialogModule } from "primeng/confirmdialog"
 
 @NgModule({
     declarations: [
@@ -24,7 +26,8 @@ import { ReactiveFormsModule } from "@angular/forms"
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule, ReactiveFormsModule
+        MenuModule, ReactiveFormsModule, ImageModule,
+        ConfirmDialogModule
     ],
     exports: [
         ArticleListComponent, ArticleInsertComponent, ArticleUpdateComponent

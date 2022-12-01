@@ -16,7 +16,6 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
   resultFile !: string
   insertArticleForm = this.formBuilder.group({
     title: ['', Validators.required],
-    articleCode: ['', Validators.required],
     contents: ['', Validators.required],
     file: this.formBuilder.group({
       files: [''],

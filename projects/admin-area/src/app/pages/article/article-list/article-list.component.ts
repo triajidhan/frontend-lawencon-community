@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ConfirmationService, LazyLoadEvent, MenuItem, PrimeNGConfig } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
 import { Article } from "projects/interface/article"
 import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { Subscription } from "rxjs"
@@ -20,6 +21,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     totalData: number = 0
     loading: boolean = true
     display: boolean = false
+    resultExtension!: string
+    resultFile !: string
+
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
     getAllSubs?: Subscription
     getByIdSubs?: Subscription
@@ -76,6 +81,22 @@ export class ArticleListComponent implements OnInit, OnDestroy {
                     })
                 })
             }
+        })
+    }
+
+    fileUpload(event: any): void {
+        const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(event.files[0])
+            reader.onload = () => {
+                if (typeof reader.result === "string") resolve(reader.result)
+            }
+            reader.onerror = error => reject(error)
+        })
+
+        toBase64(event.files[0].name).then(result => {
+            this.resultFile = result.substring(result.indexOf(",") + 1, result.length)
+            this.resultExtension = result.split(";")[0].split('/')[1]
         })
     }
 

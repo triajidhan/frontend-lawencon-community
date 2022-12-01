@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
-import { MenuItem } from "primeng/api"
+import { ConfirmationService, MenuItem } from "primeng/api"
 import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { Subscription } from "rxjs"
 
 @Component({
   selector: 'article-update',
-  templateUrl: './article-update.component.html'
+  templateUrl: './article-update.component.html',
+  providers: [ConfirmationService]
 })
 export class ArticleUpdateComponent implements OnInit, OnDestroy {
   items!: MenuItem[]
@@ -16,9 +17,9 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
   article: any = new Object()
 
   updateArticleForm = this.fb.group({
-    id:[''],
+    id: [''],
     title: [''],
-    contents : [''],
+    contents: [''],
     file: this.fb.group({
       files: [''],
       ext: ['']
@@ -27,25 +28,26 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
 
   updateSubscription!: Subscription
   getByIdSubscription!: Subscription
+
   constructor(private fb: FormBuilder,
     private articleService: ArticleService,
     private router: Router, private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    this.init();
+    this.init()
   }
 
-  init(){
+  init() {
     this.items = [
       { label: 'Home', routerLink: '/dashboard/admin' },
       { label: 'Article', routerLink: '/articles' },
       { label: 'Article Update' }
     ]
 
-    this.activatedRoute.params.subscribe(id=>{
+    this.activatedRoute.params.subscribe(id => {
       console.log(id);
-      this.getByIdSubscription = this.articleService.getById(id['id']).subscribe(result=>{
+      this.getByIdSubscription = this.articleService.getById(id['id']).subscribe(result => {
         this.article = result
         this.updateArticleForm.controls.title.setValue(result.title)
         this.updateArticleForm.controls.contents.setValue(result.contents)
@@ -70,14 +72,14 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
     })
   }
 
-  submitUpdate(){
+  submitUpdate() {
     this.updateArticleForm.patchValue({
       file: {
         files: this.resultFile,
         ext: this.resultExtension
       }
     })
-    this.updateSubscription = this.articleService.update(this.updateArticleForm.value).subscribe(()=>{
+    this.updateSubscription = this.articleService.update(this.updateArticleForm.value).subscribe(() => {
       this.init()
     })
   }
