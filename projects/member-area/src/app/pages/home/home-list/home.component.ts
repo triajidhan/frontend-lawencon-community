@@ -16,7 +16,7 @@ import { PollingService } from "projects/main-area/src/app/service/polling.servi
 import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
   selector: 'home',
@@ -24,6 +24,9 @@ import { Subscription } from "rxjs"
   styleUrls: ['../../../../styles.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  loadingPost= false;
+
 
   myId: string = ""
   myFullName: string = ""
@@ -317,7 +320,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   postInsert() {
     if (this.postType == 'regular') {
-      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).subscribe(result => {
+      this.loadingPost = true
+      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.REGULAR).pipe(finalize(()=>this.loadingPost = false)).subscribe(result => {
         this.postForm.patchValue({
           postType: {
             id: result.id
@@ -331,11 +335,13 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.postForm.controls.title.setValue("")
           this.postForm.controls.contents.setValue("")
           this.postForm.controls.titlePoll.setValue("")
+          this.fileArray = []
           this.init()
         })
       })
     } else if (this.postType == 'premium') {
-      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).subscribe(result => {
+      this.loadingPost = true
+      this.getByCodePostTypeSubsc = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.PREMIUM).pipe(finalize(()=>this.loadingPost)).subscribe(result => {
         this.postForm.patchValue({
           postType: {
             id: result.id
@@ -346,6 +352,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
           this.display = false
+          this.postForm.controls.title.setValue("")
+          this.postForm.controls.contents.setValue("")
+          this.postForm.controls.titlePoll.setValue("")
+          this.fileArray = []
           this.init()
         })
       })

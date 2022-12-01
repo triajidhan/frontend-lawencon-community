@@ -133,7 +133,7 @@
                         <ul class="list-none p-0 m-0">
                           <li><a
                               class="block px-3 pt-2 pb-3 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
-                              routerLink="/posts/details/{{post[i].id}}">
+                              routerLink="/homes/details/{{post[i].id}}">
                               show detail
                             </a></li>
                         </ul>
@@ -724,7 +724,7 @@
             (uploadHandler)="fileUpload($event)" [multiple]="true">
           </p-fileUpload>
         </div>
-        <button pButton [disabled]="postForm.invalid" type="submit" (click)="postInsert()"
+        <button pButton [loading]="loadingPost" [disabled]="postForm.invalid" type="submit" (click)="postInsert()"
           class="main-color w-full mt-3" label="SUBMIT"></button>
       </form>
     </div>

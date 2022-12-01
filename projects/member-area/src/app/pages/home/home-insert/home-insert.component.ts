@@ -9,7 +9,7 @@ import { PollingService } from "projects/main-area/src/app/service/polling.servi
 import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'home-insert',
@@ -17,7 +17,7 @@ import { Subscription } from "rxjs"
     styleUrls: ['../../../../styles.css']
 })
 export class HomeInsertComponent implements OnInit, OnDestroy {
-
+    loadingPolling: boolean = false;
     type!: string
     date?: Date
 
@@ -61,7 +61,8 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
     }
 
     postInsert() {
-        this.getByCodePostTypeSubscription = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.POLL).subscribe(result => {
+      this.loadingPolling = true
+        this.getByCodePostTypeSubscription = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.POLL).pipe(finalize(()=>this.loadingPolling = false)).subscribe(result => {
             this.postForm.patchValue({
                 postType: {
                     id: result.id

@@ -112,7 +112,7 @@
                                             </button>
                                         </div>
                                     </form>
-                                    <button pButton [disabled]="postForm.invalid || pollingArr.invalid" type="submit"
+                                    <button pButton [loading]="loadingPolling" [disabled]="postForm.invalid || pollingArr.invalid" type="submit"
                                         (click)="postInsert()" class="main-color w-full mt-3" label="SUBMIT"></button>
                                 </div>
                             </form>
