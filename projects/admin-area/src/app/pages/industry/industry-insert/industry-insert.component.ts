@@ -3,14 +3,14 @@ import { FormBuilder, Validators } from "@angular/forms"
 import { Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
 import { IndustryService } from "projects/main-area/src/app/service/industry.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'industry-insert',
     templateUrl: './industry-insert.component.html'
 })
 export class IndustryInsertComponent implements OnInit, OnDestroy{
-
+    loadingInsert = false;
 
     items!: MenuItem[]
     insertSubscription!: Subscription;
@@ -33,7 +33,8 @@ export class IndustryInsertComponent implements OnInit, OnDestroy{
     }
 
     submitInsert(){
-      this.insertSubscription = this.industryService.insert(this.insertIndustryForm.value).subscribe(()=>{
+      this.loadingInsert = true;
+      this.insertSubscription = this.industryService.insert(this.insertIndustryForm.value).pipe(finalize(()=>this.loadingInsert = false)).subscribe(()=>{
         this.router.navigateByUrl(`/industries`)
       })
     }

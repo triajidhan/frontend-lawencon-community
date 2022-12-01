@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-12 my-3">
                         <button pButton routerLink="/industries" class="p-button-outlined mr-2" label="BACK"></button>
-                        <button pButton type="submit" id="industry-save" label="SUBMIT" class="main-color" (click)="submitUpdate()"></button>
+                        <button pButton [loading]="loadingIndustry" type="submit" id="industry-save" label="SUBMIT" class="main-color" (click)="submitUpdate()"></button>
                     </div>
                 </div>
             </form>

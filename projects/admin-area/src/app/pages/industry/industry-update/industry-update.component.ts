@@ -3,13 +3,14 @@ import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
 import { IndustryService } from "projects/main-area/src/app/service/industry.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
   selector: 'industry-update',
   templateUrl: './industry-update.component.html'
 })
 export class IndustryUpdateComponent implements OnInit, OnDestroy {
+  loadingIndustry: boolean = false
   items!: MenuItem[]
   updateSubscription!: Subscription
   getByIdSubscription!: Subscription
@@ -42,7 +43,8 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
   }
 
   submitUpdate(){
-    this.updateSubscription = this.industryService.update(this.updateIndustryForm.value).subscribe(()=>{
+    this.loadingIndustry = true
+    this.updateSubscription = this.industryService.update(this.updateIndustryForm.value).pipe(finalize(()=>this.loadingIndustry)).subscribe(()=>{
       this.router.navigateByUrl(`/industries`)
     })
   }

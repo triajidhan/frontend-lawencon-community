@@ -5,13 +5,14 @@ import { MenuItem } from "primeng/api"
 
 import { PositionService } from "projects/main-area/src/app/service/position.service";
 
-import { Subscription } from "rxjs";
+import { finalize, Subscription } from "rxjs";
 
 @Component({
     selector: 'position-insert',
     templateUrl: './position-insert.component.html'
 })
 export class PositionInsertComponent implements OnInit,OnDestroy {
+    loadingInsert = false
     items!: MenuItem[]
     insertSubscription!: Subscription;
 
@@ -31,7 +32,8 @@ export class PositionInsertComponent implements OnInit,OnDestroy {
     }
 
     submitInsert(){
-      this.insertSubscription = this.positionService.insert(this.insertPositionForm.value).subscribe(()=>{
+      this.loadingInsert = true
+      this.insertSubscription = this.positionService.insert(this.insertPositionForm.value).pipe(finalize(()=>this.loadingInsert = false)).subscribe(()=>{
         this.router.navigateByUrl(`/positions`)
       })
     }

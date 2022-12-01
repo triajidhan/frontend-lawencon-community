@@ -3,13 +3,14 @@ import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { MenuItem } from "primeng/api"
 import { PositionService } from "projects/main-area/src/app/service/position.service"
-import { Subscription } from "rxjs"
+import { finalize, Subscription } from "rxjs"
 
 @Component({
     selector: 'position-update',
     templateUrl: './position-update.component.html'
 })
 export class PositionUpdateComponent implements OnInit,OnDestroy {
+    loadingUpdate: boolean = false
     items!: MenuItem[]
     updateSubscription!: Subscription
     getByIdSubscription!: Subscription
@@ -43,7 +44,8 @@ export class PositionUpdateComponent implements OnInit,OnDestroy {
     }
 
     submitUpdate(){
-        this.updateSubscription = this.positionService.update(this.updatePositionForm.value).subscribe(()=>{
+      this.loadingUpdate = true
+        this.updateSubscription = this.positionService.update(this.updatePositionForm.value).pipe(finalize(()=>this.loadingUpdate = false)).subscribe(()=>{
             this.router.navigateByUrl(`/positions`)
         })
     }

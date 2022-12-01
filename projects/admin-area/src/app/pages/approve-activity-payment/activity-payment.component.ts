@@ -67,7 +67,7 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
     }
 
     approvePayment(paymentSubsId: string) {
-      this.loadingActivityPayment = true;
+      this.loadingActivityPayment = true
         this.getByIdPaymentActivitySubs = this.paymentActivityDetailService.getById(paymentSubsId).subscribe(result => {
             this.paymentActivityDetail = result
             this.paymentActivityDetail.approve = true
