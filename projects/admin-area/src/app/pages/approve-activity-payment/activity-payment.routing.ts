@@ -4,7 +4,7 @@ import { ActivityPaymentComponent } from "./activity-payment.component"
 
 const routes: Routes = [
     {
-        path: '',
+        path: ':type',
         component: ActivityPaymentComponent
     }
 ]

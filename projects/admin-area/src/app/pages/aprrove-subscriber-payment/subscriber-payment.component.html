@@ -18,42 +18,120 @@
         </div>
         <div class="grid w-full md:w-10 lg:w-9">
             <div class="table w-full">
-                <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [rowsPerPageOptions]="[5, 10]"
-                    tyleClass="p-datatable-gridlines" [globalFilterFields]="['id', 'title']">
+                <p-tabMenu [model]="navMenus"></p-tabMenu>
 
+               <div *ngIf="type == 'approve-payments'" class="table w-full">
+                    <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [rowsPerPageOptions]="[5, 10]"
+                        tyleClass="p-datatable-gridlines" [globalFilterFields]="['id', 'title']">
 
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="no" class="text-center">No.</th>
-                            <th pSortableColumn="fullName">Full Name</th>
-                            <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
-                            <th pSortableColumn="action" class="text-center">Action</th>
-                        </tr>
-                    </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="no" class="text-center">No.</th>
+                                <th pSortableColumn="fullName">Full Name</th>
+                                <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
+                                <th pSortableColumn="action" class="text-center">Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-i="rowIndex">
+                            <tr>
+                                <td class="text-center">{{i + 1}}</td>
+                                <td>{{data.user.fullName}}</td>
+                                <td class="text-center">
+                                    <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
+                                        (click)="rejectPayment(data.id)">
+                                        <i class="fa-solid fa-xmark mr-2"></i>
+                                    </button>
+                                    <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe"
+                                        (click)="approvePayment(data.id)">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
 
-                    <ng-template pTemplate="body" let-data let-i="rowIndex">
-                        <tr>
-                            <td class="text-center">{{i + 1}}</td>
-                            <td>{{data.userName}}</td>
-                            <td class="text-center">
-                                <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
-                                    <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
-                                    (click)="rejectPayment(data.id)">
-                                    <i class="fa-solid fa-xmark mr-2"></i>
-                                </button>
-                                <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe"
-                                    (click)="approvePayment(data.id)">
-                                    <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                 
+                <div *ngIf="type == 'approves'" class="table w-full">
+                    <p-table #dt1 [value]="dataApprove" [lazy]="true" (onLazyLoad)="loadDataApproved($event)" responsiveLayout="scroll"
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [rowsPerPageOptions]="[5, 10]"
+                        tyleClass="p-datatable-gridlines" [globalFilterFields]="['id', 'title']">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="no" class="text-center">No.</th>
+                                <th pSortableColumn="fullName">Full Name</th>
+                                <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
+                                <th pSortableColumn="action" class="text-center">Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-i="rowIndex">
+                            <tr>
+                                <td class="text-center">{{i + 1}}</td>
+                                <td>{{data.user.fullName}}</td>
+                                <td class="text-center">
+                                    <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
+                                        (click)="rejectPayment(data.id)">
+                                        <i class="fa-solid fa-xmark mr-2"></i>
+                                    </button>
+                                    <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe"
+                                        (click)="approvePayment(data.id)">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+                <div *ngIf="type == 'rejects'" class="table w-full">
+                    <p-table #dt1 [value]="dataReject" [lazy]="true" (onLazyLoad)="loadDataReject($event)" responsiveLayout="scroll"
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [rowsPerPageOptions]="[5, 10]"
+                        tyleClass="p-datatable-gridlines" [globalFilterFields]="['id', 'title']">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="no" class="text-center">No.</th>
+                                <th pSortableColumn="fullName">Full Name</th>
+                                <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
+                                <th pSortableColumn="action" class="text-center">Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-i="rowIndex">
+                            <tr>
+                                <td class="text-center">{{i + 1}}</td>
+                                <td>{{data.user.fullName}}</td>
+                                <td class="text-center">
+                                    <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
+                                        (click)="rejectPayment(data.id)">
+                                        <i class="fa-solid fa-xmark mr-2"></i>
+                                    </button>
+                                    <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe"
+                                        (click)="approvePayment(data.id)">
+                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
             </div>
         </div>
     </div>

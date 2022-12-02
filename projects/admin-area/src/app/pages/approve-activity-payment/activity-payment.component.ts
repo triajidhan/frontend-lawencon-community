@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
+import { ActivatedRoute } from "@angular/router"
 import { LazyLoadEvent, MenuItem } from "primeng/api"
 import { PaymentActivityDetail } from "projects/interface/payment-activity-detail"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
@@ -12,10 +13,15 @@ import { finalize, Subscription } from "rxjs"
 export class ActivityPaymentComponent implements OnInit, OnDestroy {
     loadingActivityPayment: boolean = false
     items!: MenuItem[]
+    navMenus!: MenuItem[]
     data: any[] = []
+    dataApprove: any[] = []
+    dataReject: any[] = []
 
     id!: number
+    type!: string
     paymentActivityDetail!: PaymentActivityDetail
+
     startPage: number = 0
     maxPage: number = 5
     totalData: number = 0
@@ -30,20 +36,29 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
 
     constructor(private paymentActivityDetailService: PaymentActivityDetailService,
-        private userService: UserService) { }
+        private userService: UserService, private activatedRoute: ActivatedRoute) { }
 
 
     ngOnInit(): void {
+
+        this.activatedRoute.params.subscribe(result => {
+            this.type = result['type']
+          })
 
         this.items = [
             { label: 'Home', routerLink: "/dashboard/admin" },
             { label: 'Member Activity Payment' }
         ]
 
+        this.navMenus = [
+            { label: 'Approve Payment', routerLink: "/approve-activity-payments/approve-payments" },
+            { label: 'Approved', routerLink: "/approve-activity-payments/approves" },
+            { label: 'Rejected', routerLink: "/approve-activity-payments/rejects" }
+        ]
+
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -52,18 +67,53 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActive(startPage, maxPage, false).subscribe(
             result => {
-                console.log(result)
-                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalPaymentActivity().subscribe(total => {
-                    for (let i = 0; result.length; i++) {
-                        this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
-                            result[i].userName = resultUser.fullName
-                            this.data = result
-                            this.loading = false
-                            this.totalData = result.length
-                        })
-                    }
+                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(total => {
+                    this.data = result
+                    this.loading = false
+                    this.totalData = total.countOfPaymentActivity
+                })
+            }
+        )
+    }
+
+    loadDataApprove(event: LazyLoadEvent) {
+        this.getDataApprove(event.first, event.rows)
+    }
+
+    getDataApprove(startPage: number = this.startPage, maxPage: number = this.maxPage): void {
+        this.loading = true;
+        this.startPage = startPage
+        this.maxPage = maxPage
+
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedTrue(startPage, maxPage, false).subscribe(
+            result => {
+                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedTrue().subscribe(total => {
+                    this.dataApprove = result
+                    this.loading = false
+                    this.totalData = total.countOfPaymentActivity
+                })
+            }
+        )
+    }
+
+
+    loadDataReject(event: LazyLoadEvent) {
+        this.getDataReject(event.first, event.rows)
+    }
+
+    getDataReject(startPage: number = this.startPage, maxPage: number = this.maxPage): void {
+        this.loading = true;
+        this.startPage = startPage
+        this.maxPage = maxPage
+
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
+            result => {
+                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(total => {
+                    this.dataReject = result
+                    this.loading = false
+                    this.totalData = total.countOfPaymentActivity
                 })
             }
         )

@@ -37,6 +37,16 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
             { label: 'Member Information Report' }
 
         ]
+
+        console.log("Partisipasi super")
+
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, 0, 10,false).subscribe(result => {
+                console.log(result)
+                this.data = result
+                this.loading = false
+                this.totalData = result.length
+            }
+        )
     }
 
     getTimeZone() {
@@ -45,7 +55,6 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -53,10 +62,9 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
         this.loading = true;
         this.startPage = startPage
         this.maxPage = maxPage
-
+        
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(
             result => {
-                console.log(result)
                 this.data = result
                 this.loading = false
                 this.totalData = result.length

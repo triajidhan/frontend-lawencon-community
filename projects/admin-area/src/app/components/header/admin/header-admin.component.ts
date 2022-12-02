@@ -40,12 +40,12 @@ export class HeaderAdminComponent {
                     {
                         label: 'Subscribers',
                         icon: 'fa-solid fa-users',
-                        routerLink: '/approve-subscriber-payments'
+                        routerLink: '/approve-subscriber-payments/approve-payments'
                     },
                     {
                         label: 'Activities',
                         icon: 'fa-solid fa-coins',
-                        routerLink: '/approve-activity-payments'
+                        routerLink: '/approve-activity-payments/approve-payments'
                     }
                 ]
             },

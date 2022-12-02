@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
+import { ActivatedRoute } from "@angular/router"
 import { LazyLoadEvent, MenuItem } from "primeng/api"
 import { PaymentSubscribe } from "projects/interface/payment-subscribe"
 import { PaymentSubscribeService } from "projects/main-area/src/app/service/payment-subscribe.service"
@@ -12,9 +13,13 @@ import { finalize, Subscription } from "rxjs"
 export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   loadingSubscribe = false;
   items!: MenuItem[]
+  navMenus!:MenuItem[]
   data: any[] = []
+  dataApprove: any[] = []
+  dataReject: any[] = []
 
   id!: number
+  type!: string
   paymentSubscribe!: PaymentSubscribe
   startPage: number = 0
   maxPage: number = 5
@@ -29,17 +34,42 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   private rejectPaymentSubs?: Subscription
 
   constructor(private paymentSubscribeService: PaymentSubscribeService,
-    private userService: UserService) { }
+    private userService: UserService,private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.activatedRoute.params.subscribe(result => {
+      this.type = result['type']
+    })
+
     this.items = [
       { label: 'Home', routerLink: "/dashboard/admin" },
       { label: 'Member Subscriber Payment' }
     ]
+
+    this.navMenus = [
+      { label: 'Approve Payment', routerLink: "/approve-subscriber-payments/approve-payments" },
+      { label: 'Approved', routerLink: "/approve-subscriber-payments/approves" },
+      { label: 'Rejected', routerLink: "/approve-subscriber-payments/rejects" }
+    ]
+
+
+    this.getAllSubs = this.paymentSubscribeService.getByIsActive(this.startPage, this.maxPage,false).subscribe(
+      result => {
+        console.log(result)
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalPaymentSubscribe().subscribe(
+          totalData => {
+              this.data = result
+              this.loading = false
+              this.totalData = totalData.countOfPaymentSubscribe
+            
+          }
+        )
+      }
+    )
   }
 
   loadData(event: LazyLoadEvent) {
-    console.log(event)
     this.getData(event.first, event.rows)
   }
 
@@ -48,18 +78,66 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.startPage = startPage
     this.maxPage = maxPage
 
-    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByIsActive(startPage, maxPage,false).subscribe(
       result => {
+        console.log(result)
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalPaymentSubscribe().subscribe(
           totalData => {
-            for (let i = 0; totalData.countOfPaymentSubscribe; i++) {
-              this.getByIdUserSubs = this.userService.getById(result[i].createdBy ?? '').subscribe(resultUser => {
-                result[i].userName = resultUser.fullName
-                this.data = result
-                this.loading = false
-                this.totalData = result.length
-              })
-            }
+              this.data = result
+              this.loading = false
+              this.totalData = totalData.countOfPaymentSubscribe
+            
+          }
+        )
+      }
+    )
+  }
+
+
+  loadDataApproved(event: LazyLoadEvent) {
+    console.log(event)
+    this.getDataApproved(event.first, event.rows)
+  }
+
+  getDataApproved(startPage: number = this.startPage, maxPage: number = this.maxPage): void {
+    this.loading = true;
+    this.startPage = startPage
+    this.maxPage = maxPage
+
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedTrue(startPage, maxPage,false).subscribe(
+      result => {
+        console.log(result)
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedTrue().subscribe(
+          totalData => {
+              this.dataApprove = result 
+              this.loading = false
+              this.totalData = totalData.countOfPaymentSubscribe
+            
+          }
+        )
+      }
+    )
+  }
+
+
+
+  loadDataReject(event: LazyLoadEvent) {
+    this.getDataReject(event.first, event.rows)
+  }
+
+  getDataReject(startPage: number = this.startPage, maxPage: number = this.maxPage): void {
+    this.loading = true;
+    this.startPage = startPage
+    this.maxPage = maxPage
+
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
+      result => {
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
+          totalData => {
+              this.dataReject = result
+              this.loading = false
+              this.totalData = totalData.countOfPaymentSubscribe
+            
           }
         )
       }
