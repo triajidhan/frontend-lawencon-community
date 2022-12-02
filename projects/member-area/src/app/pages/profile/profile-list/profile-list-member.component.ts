@@ -196,9 +196,11 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     }
 
     initPost() {
-        this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, true).subscribe(result => {
+        this.getPostDataSubs = this.postService.getByUserAndOrder(this.myId, this.startPositionPost, this.limitPost, false).subscribe(result => {
+
             for (let i = 0; i < result.length; i++) {
                 this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
+                    console.log(userLike)
                     result[i].likeId = userLike.likeId
                     result[i].countOfLike = userLike.countOfLike
                     result[i].isActiveLike = userLike.isActive
@@ -210,6 +212,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 })
                 this.addDataPost(result[i])
             }
+            console.log(result)
         })
     }
 

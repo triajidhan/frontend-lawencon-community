@@ -21,6 +21,7 @@ import { StyleClassModule } from "primeng/styleclass"
 import { HomeDetailComponent } from "./home-detail/home-detail.component"
 import { CarouselModule } from 'primeng/carousel'
 import { ImageModule } from 'primeng/image'
+import { ConfirmDialogModule } from "primeng/confirmdialog"
 
 @NgModule({
     declarations: [
@@ -34,7 +35,7 @@ import { ImageModule } from 'primeng/image'
         MenuModule, TabMenuModule, DialogModule,
         ReactiveFormsModule, DropdownModule,
         InfiniteScrollModule, StyleClassModule,
-        CarouselModule, ImageModule
+        CarouselModule, ImageModule, ConfirmDialogModule
     ],
     exports: [
         HomeComponent, HomeInsertComponent, HomeDetailComponent

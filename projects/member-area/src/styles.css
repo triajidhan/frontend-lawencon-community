@@ -49,6 +49,10 @@
     margin-top: 1.5rem;
 }
 
+.h-details {
+    height: 3.5rem;
+}
+
 /*====================== ACTIVITY  ======================*/
 
 :host ::ng-deep .activity-card .p-card-content {

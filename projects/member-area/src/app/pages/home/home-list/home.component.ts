@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
-import { MenuItem, PrimeNGConfig } from "primeng/api"
+import { ConfirmationService, MenuItem, PrimeNGConfig } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
-import { Bookmark } from "projects/interface/bookmark"
-import { Polling } from "projects/interface/polling"
 import { PostType } from "projects/interface/post-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { ArticleService } from "projects/main-area/src/app/service/article.service"
@@ -22,13 +20,15 @@ import { finalize, Subscription } from "rxjs"
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
-  styleUrls: ['../../../../styles.css']
+  styleUrls: ['../../../../styles.css'],
+  providers: [ConfirmationService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
   myId: string = ""
   myFullName: string = ""
   myProfile: string = ""
+  myStatusSubscribe!: boolean
 
   startPositionPost = 0
   limitPost = 5
@@ -42,14 +42,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
   items!: MenuItem[]
+  idx!: any
   type!: string
+  postId!: string
   postType!: string
   display: boolean = false
+  displayEdit: boolean = false
   isShowComment: boolean = true
   loadingPost = false
 
   polling: any = new Object()
   getByPostIdForLike: any = new Object()
+  unitPost: any = new Object()
+
   fileArray: any[] = []
   postTypesRes!: PostType[]
   postTypes: any[] = []
@@ -62,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   postAttachmentBookmark: any[] = []
   postComments: any[] = []
 
-  recentArticle: any[]=[]
+  recentArticle: any[] = []
 
   addLike = this.fb.group({
     post: this.fb.group({
@@ -97,6 +102,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     file: this.fb.array([])
   })
 
+  updatePostForm = this.fb.group({
+    id: [''],
+    title: ['', Validators.required],
+    contents: ['', Validators.required]
+  })
+
   commentForm = this.fb.group({
     commentBody: ['', Validators.required],
     post: this.fb.group({
@@ -106,6 +117,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   private postInsertSubs?: Subscription
+  private postUpdateSubs?: Subscription
+  private postDeleteSubs?: Subscription
+  private getByIdPostSubs?: Subscription
   private getDataPollContentSubs?: Subscription
   private choosePollOptionSubs?: Subscription
   private getByIdPollOptionSubs?: Subscription
@@ -128,7 +142,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getDataBookmarkSubs?: Subscription
   private commentInsertSubs?: Subscription
   private getAllCommentByPostSubs?: Subscription
-
   private getRecentArticleSubs?: Subscription
 
 
@@ -137,7 +150,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private postAttachmentService: PostAttachmentService, private apiService: ApiService,
     private likeService: LikeService, private bookmarkService: BookmarkService,
     private pollingService: PollingService, private polingStatusService: PollingStatusService,
-    private commentService: CommentService,private articleService:ArticleService) { }
+    private commentService: CommentService, private articleService: ArticleService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true
@@ -145,6 +159,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.myId = String(this.apiService.getId())
     this.myFullName = String(this.apiService.getName())
     this.myProfile = String(this.apiService.getPhotoId())
+    this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
 
     this.items = [
       { label: 'Thread', routerLink: '/homes/type/threads', command: () => this.init() },
@@ -152,7 +167,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       { label: 'Bookmark', routerLink: '/homes/type/bookmarks', command: () => this.init() }
     ]
 
-    this.getRecentArticleSubs = this.articleService.getByIsActiveAndOrder(0,5,false).subscribe(result=>{
+    this.getRecentArticleSubs = this.articleService.getByIsActiveAndOrder(0, 5, false).subscribe(result => {
       this.recentArticle = result
 
       console.log(result)
@@ -258,6 +273,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       this.post.push(post)
     })
+    console.log(post)
   }
 
   addDataLike(post: any) {
@@ -305,6 +321,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.display = true
   }
 
+  postEditDialog(postId: string, i: any) {
+    this.idx = i
+    this.getByIdPostSubs = this.postService.getById(postId).subscribe(result => {
+      this.unitPost = result
+      this.updatePostForm.controls['title'].setValue(result.title)
+      this.updatePostForm.controls['contents'].setValue(result.contents)
+      this.updatePostForm.controls['id'].setValue(result.id)
+    })
+
+    this.postId = postId
+    this.displayEdit = true
+  }
+
   postInsert() {
     if (this.postType == 'regular') {
       this.loadingPost = true
@@ -323,6 +352,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.postForm.controls.contents.setValue("")
           this.postForm.controls.titlePoll.setValue("")
           this.fileArray = []
+          this.postType = ""
           this.init()
         })
       })
@@ -343,10 +373,22 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.postForm.controls.contents.setValue("")
           this.postForm.controls.titlePoll.setValue("")
           this.fileArray = []
+          this.postType = ""
           this.init()
         })
       })
     }
+  }
+
+  postUpdate() {
+    this.postUpdateSubs = this.postService.update(this.updatePostForm.value).subscribe(() => {
+      this.displayEdit = false
+      this.post[this.idx].title = this.updatePostForm.value.title
+      this.post[this.idx].contents = this.updatePostForm.value.contents
+      this.updatePostForm.controls.title.setValue("")
+      this.updatePostForm.controls.contents.setValue("")
+      this.postType = ""
+    })
   }
 
   choosePollOption(pollId: string, i: any, j: any) {
@@ -420,10 +462,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       })
       this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(response => {
-        this.post[i].countOfLike = this.post[i].countOfLike + 1;
+        this.post[i].countOfLike = this.post[i].countOfLike + 1
         this.post[i].likeId = response.id
         this.post[i].isActiveLike = true
-
       })
     }
 
@@ -447,7 +488,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.updateBookmark.controls.isActive.setValue(false)
         this.updateBookmark.controls['id'].setValue(result.id)
         this.updateBookmarkDataSubs = this.bookmarkService.update(this.updateBookmark.value).subscribe(() => {
-          this.postBookmark.splice(i, 1);
+          this.postBookmark.splice(i, 1)
         })
       })
     }
@@ -465,15 +506,36 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
 
     this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
+      this.post[i].countOfComment = this.post[i].countOfComment + 1
+      this.commentForm.controls['commentBody'].setValue("")
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
         this.post[i].comments.push(resultId ?? '')
-
       })
     })
   }
 
+  showPopUpDelete(id: string, i: any) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this post?',
+      accept: () => {
+        this.getByIdPostSubs = this.postService.getById(id).subscribe(result => {
+          this.unitPost = result
+          this.unitPost.isActive = false
+
+          this.postDeleteSubs = this.postService.update(this.unitPost).subscribe(() => {
+            this.post.splice(i, 1)
+          })
+        })
+      }
+    })
+  }
+
+
   ngOnDestroy(): void {
     this.postInsertSubs?.unsubscribe()
+    this.postUpdateSubs?.unsubscribe()
+    this.postDeleteSubs?.unsubscribe()
+    this.getByIdPostSubs?.unsubscribe()
     this.getDataPollContentSubs?.unsubscribe()
     this.choosePollOptionSubs?.unsubscribe()
     this.getByIdPollOptionSubs?.unsubscribe()
@@ -496,6 +558,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getDataBookmarkSubs?.unsubscribe()
     this.commentInsertSubs?.unsubscribe()
     this.getAllCommentByPostSubs?.unsubscribe()
+    this.getRecentArticleSubs?.unsubscribe()
   }
-
 }
