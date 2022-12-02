@@ -52,17 +52,17 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getAll(startPage, maxPage).subscribe(
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
             result => {
+                console.log(result)
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalPaymentActivity().subscribe(total => {
                     for (let i = 0; result.length; i++) {
                         this.getByIdUserSubs = this.userService.getById(result[i].createdBy).subscribe(resultUser => {
                             result[i].userName = resultUser.fullName
                             this.data = result
                             this.loading = false
-                            this.totalData = total.countOfPaymentActivity
+                            this.totalData = result.length
                         })
-
                     }
                 })
             }
