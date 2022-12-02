@@ -100,6 +100,16 @@ export class ApiService {
         return result
     }
 
+    getStatusSubscribe(): boolean | null {
+        const data = localStorage.getItem('data')
+        let result: null | boolean = false
+        if (data) {
+            result = JSON.parse(data).statusSubscribe
+        }
+        return result
+    }
+
+
     logOut() {
         localStorage.clear()
     }

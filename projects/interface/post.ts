@@ -22,4 +22,6 @@ export interface Post extends File, PostType, User {
 	totalPoll: any
 	isActiveLike: any
 	isActiveBookmark: any
+	isActive: boolean
+	countOfComment: number
 }
