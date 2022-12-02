@@ -22,8 +22,8 @@ export class PaymentSubscribeService {
         return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/id/${id}`)
     }
 
-    getByIsActive(startPosition: number, limit: number): Observable<PaymentSubscribe[]> {
-        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active/?startPosition=${startPosition}&limit=${limit}`)
+    getByIsActive(startPosition: number, limit: number,ascending: boolean): Observable<PaymentSubscribe[]> {
+        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
     }
 
     getTotalPaymentSubscribe(): Observable<PaymentSubscribe> {

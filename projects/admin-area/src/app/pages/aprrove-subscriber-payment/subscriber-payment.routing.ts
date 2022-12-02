@@ -4,7 +4,7 @@ import { SubscriberPaymentComponent } from "./subscriber-payment.component"
 
 const routes: Routes = [
     {
-        path: '',
+        path: ':type',
         component: SubscriberPaymentComponent
     }
 ]

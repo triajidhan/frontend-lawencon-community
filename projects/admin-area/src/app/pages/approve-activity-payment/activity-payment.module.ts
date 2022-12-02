@@ -11,6 +11,7 @@ import { TableModule } from 'primeng/table'
 import { MenuModule } from 'primeng/menu'
 import { ActivityPaymentComponent } from "./activity-payment.component"
 import { ActivityPaymentRouting } from "./activity-payment.routing"
+import {TabMenuModule} from 'primeng/tabmenu'
 
 @NgModule({
     declarations: [
@@ -21,7 +22,7 @@ import { ActivityPaymentRouting } from "./activity-payment.routing"
         CardModule, CommonModule, BreadcrumbModule,
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
-        MenuModule
+        MenuModule, TabMenuModule
     ],
     exports: [
         ActivityPaymentComponent
