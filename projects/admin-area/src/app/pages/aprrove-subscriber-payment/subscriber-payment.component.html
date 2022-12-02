@@ -31,11 +31,10 @@
                             <th pSortableColumn="action" class="text-center">Action</th>
                         </tr>
                     </ng-template>
-
                     <ng-template pTemplate="body" let-data let-i="rowIndex">
                         <tr>
                             <td class="text-center">{{i + 1}}</td>
-                            <td>{{data.userName}}</td>
+                            <td>{{data.user.fullName}}</td>
                             <td class="text-center">
                                 <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
                                     <i class="fa-solid fa-pen text-sm mr-2"></i>

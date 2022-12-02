@@ -50,16 +50,13 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
 
     this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
       result => {
-        this.getTotalDataSubs = this.paymentSubscribeService.getTotalPaymentSubscribe().subscribe(
+        console.log(result)
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
-            for (let i = 0; totalData.countOfPaymentSubscribe; i++) {
-              this.getByIdUserSubs = this.userService.getById(result[i].createdBy ?? '').subscribe(resultUser => {
-                result[i].userName = resultUser.fullName
-                this.data = result
-                this.loading = false
-                this.totalData = result.length
-              })
-            }
+              this.data = result
+              this.loading = false
+              this.totalData = totalData.countOfPaymentSubscribe
+            
           }
         )
       }

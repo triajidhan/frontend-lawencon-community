@@ -54,6 +54,18 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-approve-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
+	getTotalByIsActiveTrueAndApprovedFalse(): Observable<PaymentActivityDetail>{
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-is-active-approve-false/`)
+	}
+
+	getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]>{
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-approve-true/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+	}
+
+	getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentActivityDetail>{
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-is-active-approve-true/`)
+	}
+
 	getByIsActiveFalse(startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]>{
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
