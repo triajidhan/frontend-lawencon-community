@@ -27,7 +27,7 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
 
     rangeDates: any[] = []
 
-    getAllPaymentSubs?: Subscription
+    private getAllPaymentSubs?: Subscription
 
     constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
 
@@ -40,12 +40,12 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
 
         console.log("Partisipasi super")
 
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, 0, 10,false).subscribe(result => {
-                console.log(result)
-                this.data = result
-                this.loading = false
-                this.totalData = result.length
-            }
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, 0, 10, false).subscribe(result => {
+            console.log(result)
+            this.data = result
+            this.loading = false
+            this.totalData = result.length
+        }
         )
     }
 
@@ -62,8 +62,8 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
         this.loading = true;
         this.startPage = startPage
         this.maxPage = maxPage
-        
-        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(
+
+        this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, startPage, maxPage, false).subscribe(
             result => {
                 this.data = result
                 this.loading = false
@@ -72,13 +72,13 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
         )
     }
 
-    getValueDate(){
+    getValueDate() {
         if (this.rangeDates[0] !== null && this.rangeDates[1] !== null) {
-            this.beginSchedule = formatDate(this.rangeDates[0]?? '', `yyyy-MM-dd'T'HH:mm:ss`, 'en')
-            this.finishSchedule =  formatDate(this.rangeDates[1]?? '', `yyyy-MM-dd'T'HH:mm:ss`, 'en')  
-    
-            
-            this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, this.startPage, this.maxPage,false).subscribe(
+            this.beginSchedule = formatDate(this.rangeDates[0] ?? '', `yyyy-MM-dd'T'HH:mm:ss`, 'en')
+            this.finishSchedule = formatDate(this.rangeDates[1] ?? '', `yyyy-MM-dd'T'HH:mm:ss`, 'en')
+
+
+            this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, this.startPage, this.maxPage, false).subscribe(
                 result => {
                     console.log(result)
                     this.data = result

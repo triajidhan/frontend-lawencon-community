@@ -16,18 +16,18 @@ import { Subscription } from "rxjs"
 })
 export class EditProfileAdminComponent implements OnInit, OnDestroy {
 
-  private positionsSubscription!: Subscription
-  private industriesSubscription!: Subscription
-  private getByIdUserSubscription!: Subscription
-  private editUserSubscription!: Subscription
-  private positionGetByIdSubscription!: Subscription
-  private industriesGetByIdSubscription!: Subscription
+  private positionsSubscription?: Subscription
+  private industriesSubscription?: Subscription
+  private getByIdUserSubscription?: Subscription
+  private editUserSubscription?: Subscription
+  private positionGetByIdSubscription?: Subscription
+  private industriesGetByIdSubscription?: Subscription
 
   resultExtension!: string
   resultFile !: string
-  positionsRes!: Position[]
-  industriesRes!: Industry[]
-  user: any = new Object();
+  positionsRes: any[] = []
+  industriesRes: any[] = []
+  user: any = new Object()
   roleCode: string | null = ""
   fullName: string = ''
   email: string = ''
@@ -62,18 +62,32 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
   }
 
   init() {
-    this.positions = [];
-    this.industries = [];
+    this.positions = []
+    this.industries = []
     this.activatedRoute.params.subscribe(result => {
       this.getByIdUserSubscription = this.userService.getById(result['id']).subscribe(user => {
         this.user = user
         this.editProfileForm.controls['id'].setValue(result[`id`])
         this.editProfileForm.controls['fullName'].setValue(user[`fullName`])
-        this.editProfileForm.controls['company'].setValue(user[`company`])
+        if (user[`company`]) {
+          this.editProfileForm.controls['company'].setValue(user[`company`])
+        }
         this.email = user.email
-        this.editProfileForm.controls['industryId'].setValue(user[`industry`].id)
-        this.editProfileForm.controls['positionId'].setValue(user[`position`].id)
+        if (user[`industry`]) {
+          this.editProfileForm.controls['industryId'].setValue(user[`industry`].id)
+        }
+        if (user[`position`]) {
+          this.editProfileForm.controls['positionId'].setValue(user[`position`].id)
+        }
         this.editProfileForm.value.email = user.email
+        if (user[`file`]) {
+          this.editProfileForm.patchValue({
+            file: {
+              files: user.file.files,
+              ext: user.file.ext
+            }
+          })
+        }
       })
     })
 
@@ -116,28 +130,23 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
     })
   }
 
-  logOut() {
-    this.apiService.logOut()
-    this.router.navigateByUrl("/login/member")
-  }
-
   back() {
     if (this.roleCode == "SA") {
       this.router.navigateByUrl("/profiles/super-admin")
-    } else if (this.roleCode == "A") {
-      this.router.navigateByUrl("/profiles/admin")
     } else {
-      this.router.navigateByUrl("/profiles/member")
+      this.router.navigateByUrl("/profiles/admin")
     }
   }
 
   updateUser() {
-    this.editProfileForm.patchValue({
-      file: {
-        files: this.resultFile,
-        ext: this.resultExtension
-      }
-    })
+    if (this.resultFile) {
+      this.editProfileForm.patchValue({
+        file: {
+          files: this.resultFile,
+          ext: this.resultExtension
+        }
+      })
+    }
     this.editProfileForm.patchValue({
       position: {
         id: this.editProfileForm.value.positionId
@@ -151,11 +160,14 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
     })
 
     this.editUserSubscription = this.userService.update(this.editProfileForm.value).subscribe(() => {
-      this.init()
+      if (this.roleCode == "SA") {
+        this.router.navigateByUrl("/profiles/super-admin")
+      } else {
+        this.router.navigateByUrl("/profiles/admin")
+      }
     })
 
   }
-
 
   ngOnDestroy(): void {
     this.positionsSubscription?.unsubscribe()

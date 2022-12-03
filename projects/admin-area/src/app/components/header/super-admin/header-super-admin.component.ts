@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core"
+import { Router } from "@angular/router"
 import { MenuItem } from 'primeng/api'
+import { BASE_URL } from "projects/constant/base-url"
+import { ApiService } from "projects/main-area/src/app/service/api.service"
 
 @Component({
     selector: 'header-super-admin',
@@ -8,12 +11,18 @@ import { MenuItem } from 'primeng/api'
 })
 export class HeaderSuperAdminComponent implements OnInit {
 
-
+    myProfile?: string
     navMenus!: MenuItem[]
-
     profiles!: MenuItem[]
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
+
+    constructor(private apiService: ApiService, private router: Router) { }
 
     ngOnInit() {
+        if (this.apiService.getPhotoId()) {
+            this.myProfile = String(this.apiService.getPhotoId())
+        }
+
         this.profiles = [
             {
                 items: [{
@@ -76,13 +85,16 @@ export class HeaderSuperAdminComponent implements OnInit {
                     },
                     {
                         label: 'Log Out',
-                        icon: 'fa-solid fa-power-off',
-                        routerLink: '/login/admin'
+                        icon: 'fa-solid fa-power-off'
                     }
                 ]
             }
         ]
+    }
 
+    logOut() {
+        this.apiService.logOut()
+        this.router.navigateByUrl("/login/admin")
     }
 
 }

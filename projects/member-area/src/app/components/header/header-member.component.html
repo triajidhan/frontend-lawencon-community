@@ -1,48 +1,50 @@
-<div class="w-full container-fluid">
-    <p-menubar [model]="navMenus">
-        <ng-template pTemplate="start">
-            <div class="navbar-brand flex" routerLink="/threads">
-                <img src="../../../../assets/logos/brand.png" class="w-3rem h-3rem mr-3" alt="ilc-image">
-                <div class="mr-3 main-text">
-                    <h5 class="title">Lawencon</h5>
-                    <p class="sub-title">International Community</p>
+<div class="flex justify-content-center border-nav">
+    <div class="w-full container">
+        <p-menubar [model]="navMenus">
+            <ng-template pTemplate="start">
+                <div class="navbar-brand flex" routerLink="/threads">
+                    <img src="../../../../assets/logos/brand.png" class="w-3rem h-3rem mr-3" alt="ilc-image">
+                    <div class="mr-3 main-text">
+                        <h5 class="title">Lawencon</h5>
+                        <p class="sub-title">International Community</p>
+                    </div>
                 </div>
-            </div>
-        </ng-template>
+            </ng-template>
 
-        <div class="flex align-items-center">
-            <div>
-                <button pButton class="mr-3 bg-orange-300" label="START PREMIUM" (click)="showPopUpDialog()">
-                    <i class="fa-regular fa-gem text-2xl mr-2"></i>
-                </button>
-            </div>
-            <div class="relative profile">
-                <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100 px-3" pStyleClass="@next"
-                    enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
-                    <span>
-                        <img src="../../../../assets/images/img (3).jpg" class="img-fluid images table-img"
-                            alt="user admin image">
-                    </span>
-                    <i class="pi pi-chevron-down text-xs ml-2"></i>
+            <div class="flex align-items-center">
+                <div>
+                    <button pButton class="mr-3 bg-orange-300" label="START PREMIUM" (click)="showPopUpDialog()">
+                        <i class="fa-regular fa-gem text-2xl mr-2"></i>
+                    </button>
                 </div>
-                <div class="absolute right-0 py-3 shadow-2 w-12rem bg-white hidden">
-                    <ul class="list-none p-0 m-0">
-                        <li><a class="block px-3 pt-2 pb-3 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
-                                routerLink="/profiles/member">
-                                <i class="fa-solid fa-user mr-2"></i>
-                                Profile
-                            </a></li>
-                        <li><a (click)="logOut()"
-                                class="block px-3 py-2 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
-                                routerLink="/login/member">
-                                <i class="fa-solid fa-power-off mr-2"></i>
-                                Log Out
-                            </a></li>
-                    </ul>
+                <div class="relative profile">
+                    <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100 px-3"
+                        pStyleClass="@next" enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
+                        <span>
+                            <img src="../../../../assets/images/img (3).jpg" class="img-fluid images table-img"
+                                alt="user admin image">
+                        </span>
+                        <i class="pi pi-chevron-down text-xs ml-2"></i>
+                    </div>
+                    <div class="absolute right-0 py-3 shadow-2 w-12rem bg-white hidden">
+                        <ul class="list-none p-0 m-0">
+                            <li><a class="block px-3 pt-2 pb-3 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
+                                    routerLink="/profiles/member">
+                                    <i class="fa-solid fa-user mr-2"></i>
+                                    Profile
+                                </a></li>
+                            <li><a (click)="logOut()"
+                                    class="block px-3 py-2 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
+                                    routerLink="/login/member">
+                                    <i class="fa-solid fa-power-off mr-2"></i>
+                                    Log Out
+                                </a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </p-menubar>
+        </p-menubar>
+    </div>
 </div>
 
 

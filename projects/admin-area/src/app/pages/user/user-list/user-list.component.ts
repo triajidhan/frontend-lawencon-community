@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ConfirmationService, LazyLoadEvent, MenuItem, PrimeNGConfig } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
 import { User } from "projects/interface/user"
 import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
@@ -20,11 +21,15 @@ export class UserListComponent implements OnInit, OnDestroy {
     totalData: number = 0
     loading: boolean = true
     display: boolean = false
+    resultExtension!: string
+    resultFile !: string
 
-    getAllSubs?: Subscription
-    getByIdSubs?: Subscription
-    deleteSubs?: Subscription
-    contDataSubs?: Subscription
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
+
+    private getAllSubs?: Subscription
+    private getByIdSubs?: Subscription
+    private deleteSubs?: Subscription
+    private contDataSubs?: Subscription
 
     constructor(private userService: UserService, private confirmationService: ConfirmationService,
         private primengConfig: PrimeNGConfig) { }
@@ -64,6 +69,8 @@ export class UserListComponent implements OnInit, OnDestroy {
     getDeleteId(id: string) {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this user?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.getByIdSubs = this.userService.getById(id).subscribe(result => {
                     this.user = result
@@ -73,6 +80,22 @@ export class UserListComponent implements OnInit, OnDestroy {
                     })
                 })
             }
+        })
+    }
+
+    fileUpload(event: any): void {
+        const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(event.files[0])
+            reader.onload = () => {
+                if (typeof reader.result === "string") resolve(reader.result)
+            }
+            reader.onerror = error => reject(error)
+        })
+
+        toBase64(event.files[0].name).then(result => {
+            this.resultFile = result.substring(result.indexOf(",") + 1, result.length)
+            this.resultExtension = result.split(";")[0].split('/')[1]
         })
     }
 

@@ -109,6 +109,15 @@ export class ApiService {
         return result
     }
 
+    getBalances(): number | null {
+        const data = localStorage.getItem('data')
+        let result: null | number = 0
+        if (data) {
+            result = JSON.parse(data).balance.totalBalance
+        }
+        return result
+    }
+
 
     logOut() {
         localStorage.clear()

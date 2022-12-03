@@ -1,6 +1,6 @@
-<div class="container-fluid main-color">
-    <div class="text-center pb-6 pt-3 text-white">
-        <h1 class="line-height-1">Hi Alexa</h1>
+<div class="main-color">
+    <div class="text-center pb-3 pt-3 text-white">
+        <h1 class="line-height-1">Hi {{fullName}}</h1>
         <h4 class="line-height-1">welcome to</h4>
         <h1 class="line-height-1">LAWENCON</h1>
         <h4 class="line-height-1">INTERNATIONAL</h4>
@@ -8,55 +8,59 @@
     </div>
 </div>
 
-<div class="flex justify-content-center container-fluid body-color text-center pt-7">
-    <div class="container row g-5 justify-content-center">
-        <div class="col-md-4">
-            <div class="card">
-                <h2 class="my-4">Users</h2>
+<div class="flex justify-content-center body-color text-center pt-7">
+    <div class="container-fluid grid w-full">
+        <div class="col-12 md:col-4">
+            <p-card>
+                <h1 class="mb-4">Users</h1>
                 <div class="flex justify-content-center">
-                    <div class="main-color text-white text-8xl p-3 mb-3 rounded-circle w-11rem h-11rem">
+                    <div
+                        class="bg-cyan-600 text-white text-8xl p-3 mb-3 border-circle w-11rem h-11rem flex justify-content-center align-items-center">
                         <i class="fa-solid fa-users"></i>
                     </div>
                 </div>
-                <div class="card-body grid">
+                <div class="grid">
                     <div class="col-6">
-                        <h5 class="card-text">Admin</h5>
-                        <h3>5</h3>
+                        <h3 class="card-text">Admin</h3>
+                        <h2>5</h2>
                     </div>
                     <div class="col-6">
-                        <h5 class="card-text">Member</h5>
-                        <h3>{{totalUser}}</h3>
+                        <h3 class="card-text">Member</h3>
+                        <h2>{{totalUser}}</h2>
                     </div>
                 </div>
-            </div>
+            </p-card>
         </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <h2 class="my-4">Position</h2>
+        <div class="col-12 md:col-4">
+            <p-card>
+                <h1 class="mb-4">Position</h1>
                 <div class="flex justify-content-center">
-                    <div class="main-color text-white text-8xl p-3 mb-5 rounded-circle w-11rem h-11rem">
+                    <div
+                        class="bg-indigo-500 text-white text-8xl p-3 mb-3 border-circle w-11rem h-11rem flex justify-content-center align-items-center">
                         <i class="fa-solid fa-briefcase"></i>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="text-center mt-1">
                     <h1 class="mb-3">{{totalPosition}}</h1>
                 </div>
-            </div>
+            </p-card>
         </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <h2 class="my-4">Industry</h2>
+        <div class="col-12 md:col-4">
+            <p-card>
+                <h1 class="mb-4">Industry</h1>
                 <div class="flex justify-content-center">
-                    <div class="main-color text-white text-8xl p-3 mb-5 rounded-circle w-11rem h-11rem">
+                    <div
+                        class="bg-orange-500 text-white text-8xl p-3 mb-3 border-circle w-11rem h-11rem flex justify-content-center align-items-center">
                         <i class="fa-solid fa-industry"></i>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="text-center mt-1">
                     <h1 class="mb-3">{{totalIndustry}}</h1>
                 </div>
-            </div>
+            </p-card>
         </div>
+
     </div>
 </div>

@@ -8,37 +8,37 @@ import { PositionService } from "projects/main-area/src/app/service/position.ser
 import { finalize, Subscription } from "rxjs";
 
 @Component({
-    selector: 'position-insert',
-    templateUrl: './position-insert.component.html'
+  selector: 'position-insert',
+  templateUrl: './position-insert.component.html'
 })
-export class PositionInsertComponent implements OnInit,OnDestroy {
-    loadingInsert = false
-    items!: MenuItem[]
-    insertSubscription!: Subscription;
+export class PositionInsertComponent implements OnInit, OnDestroy {
+  loadingInsert = false
+  items!: MenuItem[]
+  private insertSubscription?: Subscription;
 
-    insertPositionForm = this.fb.group({
-      positionName: ['', Validators.required],
+  insertPositionForm = this.fb.group({
+    positionName: ['', Validators.required],
   })
 
-    constructor(private fb: FormBuilder,
-      private positionService: PositionService,
-      private router: Router) {}
-    ngOnInit(): void {
-        this.items = [
-            { label: 'Home', routerLink: '/dashboard/super-admin' },
-            { label: 'Position', routerLink: '/Positions' },
-            { label: 'Position Insert' }
-        ]
-    }
+  constructor(private fb: FormBuilder,
+    private positionService: PositionService,
+    private router: Router) { }
+  ngOnInit(): void {
+    this.items = [
+      { label: 'Home', routerLink: '/dashboard/super-admin' },
+      { label: 'Position', routerLink: '/positions' },
+      { label: 'Position Insert' }
+    ]
+  }
 
-    submitInsert(){
-      this.loadingInsert = true
-      this.insertSubscription = this.positionService.insert(this.insertPositionForm.value).pipe(finalize(()=>this.loadingInsert = false)).subscribe(()=>{
-        this.router.navigateByUrl(`/positions`)
-      })
-    }
+  submitInsert() {
+    this.loadingInsert = true
+    this.insertSubscription = this.positionService.insert(this.insertPositionForm.value).pipe(finalize(() => this.loadingInsert = false)).subscribe(() => {
+      this.router.navigateByUrl(`/positions`)
+    })
+  }
 
-    ngOnDestroy(): void {
-      this.insertSubscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.insertSubscription?.unsubscribe();
+  }
 }

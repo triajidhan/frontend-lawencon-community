@@ -28,6 +28,10 @@ img {
     max-width: 1200px;
 }
 
+.container-fluid {
+    max-width: 1400px;
+}
+
 .body-color {
     background-color: var(--body-color) !important;
 }
@@ -100,4 +104,12 @@ img {
 
 .images {
     cursor: pointer;
+}
+
+.h-details {
+    max-height: 3.5rem;
+}
+
+.border-nav {
+    border-bottom: 4px solid rgba(208, 207, 207, 0.5);
 }

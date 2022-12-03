@@ -26,10 +26,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
     urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
-    getAllSubs?: Subscription
-    getByIdSubs?: Subscription
-    deleteSubs?: Subscription
-    contDataSubs?: Subscription
+    private getAllSubs?: Subscription
+    private getByIdSubs?: Subscription
+    private deleteSubs?: Subscription
+    private contDataSubs?: Subscription
 
     constructor(private articleService: ArticleService, private confirmationService: ConfirmationService,
         private primengConfig: PrimeNGConfig) { }
@@ -70,7 +70,9 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
     getDeleteId(id: string) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to delete this articles?',
+            message: 'Are you sure that you want to delete this article?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.getByIdSubs = this.articleService.getById(id).subscribe(result => {
                     this.article = result

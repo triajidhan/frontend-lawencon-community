@@ -12,14 +12,14 @@ import { finalize, Subscription } from "rxjs"
 export class IndustryUpdateComponent implements OnInit, OnDestroy {
   loadingIndustry: boolean = false
   items!: MenuItem[]
-  updateSubscription!: Subscription
-  getByIdSubscription!: Subscription
+  private updateSubscription?: Subscription
+  private getByIdSubscription?: Subscription
 
   industry: any = new Object();
 
   updateIndustryForm = this.fb.group({
     industryName: ['', Validators.required],
-    id : [''],
+    id: [''],
   })
 
   constructor(private fb: FormBuilder,
@@ -42,13 +42,14 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
     })
   }
 
-  submitUpdate(){
+  submitUpdate() {
     this.loadingIndustry = true
-    this.updateSubscription = this.industryService.update(this.updateIndustryForm.value).pipe(finalize(()=>this.loadingIndustry)).subscribe(()=>{
+    this.updateSubscription = this.industryService.update(this.updateIndustryForm.value).pipe(finalize(() => this.loadingIndustry)).subscribe(() => {
       this.router.navigateByUrl(`/industries`)
     })
   }
   ngOnDestroy(): void {
-    this.updateSubscription.unsubscribe()
+    this.updateSubscription?.unsubscribe()
+    this.getByIdSubscription?.unsubscribe()
   }
 }

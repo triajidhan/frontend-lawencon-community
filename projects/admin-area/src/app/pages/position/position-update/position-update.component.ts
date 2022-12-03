@@ -9,23 +9,24 @@ import { finalize, Subscription } from "rxjs"
     selector: 'position-update',
     templateUrl: './position-update.component.html'
 })
-export class PositionUpdateComponent implements OnInit,OnDestroy {
+export class PositionUpdateComponent implements OnInit, OnDestroy {
     loadingUpdate: boolean = false
     items!: MenuItem[]
+
     updateSubscription!: Subscription
     getByIdSubscription!: Subscription
 
-    position:any = new Object()
+    position: any = new Object()
 
     updatePositionForm = this.fb.group({
-        positionName:['',Validators.required],
-        id:[''],
+        positionName: ['', Validators.required],
+        id: [''],
 
     })
 
-    constructor(private fb:FormBuilder,
+    constructor(private fb: FormBuilder,
         private positionService: PositionService,
-        private router: Router, private activatedRoute:ActivatedRoute){}
+        private router: Router, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
         this.items = [
@@ -36,16 +37,16 @@ export class PositionUpdateComponent implements OnInit,OnDestroy {
 
         this.activatedRoute.params.subscribe(result => {
             this.updateSubscription = this.positionService.getById(result['id']).subscribe(position => {
-              this.position = position;
-              this.updatePositionForm.controls['positionName'].setValue(position.positionName)
-              this.updatePositionForm.controls['id'].setValue(position.id)
+                this.position = position;
+                this.updatePositionForm.controls['positionName'].setValue(position.positionName)
+                this.updatePositionForm.controls['id'].setValue(position.id)
             })
         })
     }
 
-    submitUpdate(){
-      this.loadingUpdate = true
-        this.updateSubscription = this.positionService.update(this.updatePositionForm.value).pipe(finalize(()=>this.loadingUpdate = false)).subscribe(()=>{
+    submitUpdate() {
+        this.loadingUpdate = true
+        this.updateSubscription = this.positionService.update(this.updatePositionForm.value).pipe(finalize(() => this.loadingUpdate = false)).subscribe(() => {
             this.router.navigateByUrl(`/positions`)
         })
     }

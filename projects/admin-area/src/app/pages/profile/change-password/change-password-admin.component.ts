@@ -11,11 +11,12 @@ import { Subscription } from "rxjs";
 })
 export class ChangePasswordAdminComponent implements OnInit, OnDestroy {
 
-    private getByIdUserSubscription!: Subscription
-    private editUserSubscription!: Subscription
+    private getByIdUserSubscription?: Subscription
+    private editUserSubscription?: Subscription
 
-    user: any = new Object();
+    user: any = new Object()
     roleCode: string | null = ""
+
     editProfileForm = this.fb.group({
         id: [''],
         pass: ['']
@@ -37,22 +38,21 @@ export class ChangePasswordAdminComponent implements OnInit, OnDestroy {
         })
     }
 
-    logOut() {
-        this.apiService.logOut()
-        this.router.navigateByUrl("/login/member")
-    }
-
     back() {
         if (this.roleCode == "SA") {
             this.router.navigateByUrl("/profiles/super-admin")
-        } else if (this.roleCode == "A") {
+        } else {
             this.router.navigateByUrl("/profiles/admin")
         }
     }
 
     updateUser() {
         this.editUserSubscription = this.userService.update(this.editProfileForm.value).subscribe(() => {
-            this.init()
+            if (this.roleCode == "SA") {
+                this.router.navigateByUrl("/profiles/super-admin")
+            } else {
+                this.router.navigateByUrl("/profiles/admin")
+            }
         })
 
     }

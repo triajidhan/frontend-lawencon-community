@@ -11,9 +11,9 @@ import { Subscription } from "rxjs"
 })
 export class ArticleInsertComponent implements OnInit, OnDestroy {
   items!: MenuItem[]
-  insertSubscription!: Subscription
   resultExtension!: string
   resultFile !: string
+
   insertArticleForm = this.formBuilder.group({
     title: ['', Validators.required],
     contents: ['', Validators.required],
@@ -22,6 +22,8 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
       ext: ['']
     })
   })
+
+  private insertSubscription?: Subscription
 
   constructor(private formBuilder: FormBuilder,
     private articleService: ArticleService,
@@ -65,6 +67,6 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.insertSubscription.unsubscribe();
+    this.insertSubscription?.unsubscribe();
   }
 }
