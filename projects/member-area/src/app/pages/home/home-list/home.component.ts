@@ -46,15 +46,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   type!: string
   postId!: string
   postType!: string
+  activeIndex: number = 0
   display: boolean = false
   displayEdit: boolean = false
-  isShowComment: boolean = true
+  displayGalleria: boolean = false
   loadingPost = false
 
   polling: any = new Object()
   getByPostIdForLike: any = new Object()
   unitPost: any = new Object()
 
+  images: any[] = []
   fileArray: any[] = []
   postTypesRes!: PostType[]
   postTypes: any[] = []
@@ -115,6 +117,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   })
 
+  responsiveOptions: any[] = [
+    {
+      breakpoint: '1024px',
+      numVisible: 5
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 3
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1
+    }
+  ]
 
   private postInsertSubs?: Subscription
   private postUpdateSubs?: Subscription
@@ -494,10 +510,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  btnToggleComment() {
-    this.isShowComment = !this.isShowComment
-  }
-
   insertComment(postId: string, i: any) {
     this.commentForm.patchValue({
       post: {
@@ -528,6 +540,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       }
     })
+  }
+
+  imageClick(i: number, j: number) {
+    this.images = this.post[i].postAttachment
+    this.activeIndex = j
+    this.displayGalleria = true
   }
 
 

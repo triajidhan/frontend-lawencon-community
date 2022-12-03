@@ -113,3 +113,11 @@ img {
 .border-nav {
     border-bottom: 4px solid rgba(208, 207, 207, 0.5);
 }
+
+.img-cover {
+    bottom: 0.25rem;
+}
+
+.blur {
+    backdrop-filter: blur(10px);
+}
