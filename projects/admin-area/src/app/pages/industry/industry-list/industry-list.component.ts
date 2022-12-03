@@ -22,10 +22,10 @@ export class IndustryListComponent implements OnInit, OnDestroy {
     loading: boolean = true
     display: boolean = false
 
-    getAllSubs?: Subscription
-    getByIdSubs?: Subscription
-    deleteSubs?: Subscription
-    contDataSubs?: Subscription
+    private getAllSubs?: Subscription
+    private getByIdSubs?: Subscription
+    private deleteSubs?: Subscription
+    private contDataSubs?: Subscription
 
     constructor(private industryService: IndustryService, private confirmationService: ConfirmationService,
         private primengConfig: PrimeNGConfig) { }
@@ -63,15 +63,17 @@ export class IndustryListComponent implements OnInit, OnDestroy {
     }
 
     getDeleteId(id: string) {
-      this.loadingDelete = true
+        this.loadingDelete = true
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this industry?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.getByIdSubs = this.industryService.getById(id).subscribe(result => {
                     this.industry = result
                     this.industry.isActive = false
 
-                    this.deleteSubs = this.industryService.update(this.industry).pipe(finalize(()=>this.loadingDelete = false)).subscribe(() => {
+                    this.deleteSubs = this.industryService.update(this.industry).pipe(finalize(() => this.loadingDelete = false)).subscribe(() => {
                         this.getData()
                     })
                 })

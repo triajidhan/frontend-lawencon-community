@@ -8,10 +8,6 @@
     border-radius: 0;
 }
 
-.container-fluid {
-    border-bottom: 4px solid rgba(208, 207, 207, 0.5);
-}
-
 @media screen and (min-width: 575px) {
     :host ::ng-deep .settings {
         display: none;

@@ -26,8 +26,8 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
     })
   })
 
-  updateSubscription!: Subscription
-  getByIdSubscription!: Subscription
+  private updateSubscription?: Subscription
+  private getByIdSubscription?: Subscription
 
   constructor(private fb: FormBuilder,
     private articleService: ArticleService,
@@ -48,10 +48,17 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe(id => {
       console.log(id);
       this.getByIdSubscription = this.articleService.getById(id['id']).subscribe(result => {
+        console.log(result);
         this.article = result
         this.updateArticleForm.controls.title.setValue(result.title)
         this.updateArticleForm.controls.contents.setValue(result.contents)
         this.updateArticleForm.controls.id.setValue(result.id)
+        this.updateArticleForm.patchValue({
+          file: {
+            files: result.file.files,
+            ext: result.file.ext
+          }
+        })
       })
     })
   }
@@ -73,19 +80,23 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
   }
 
   submitUpdate() {
-    this.updateArticleForm.patchValue({
-      file: {
-        files: this.resultFile,
-        ext: this.resultExtension
-      }
-    })
+    console.log(this.resultFile);
+    if (this.resultFile) {
+      this.updateArticleForm.patchValue({
+        file: {
+          files: this.resultFile,
+          ext: this.resultExtension
+        }
+      })
+    }
     this.updateSubscription = this.articleService.update(this.updateArticleForm.value).subscribe(() => {
-      this.init()
+      console.log("save")
+      this.router.navigateByUrl(`/articles`)
     })
   }
 
   ngOnDestroy(): void {
-    this.updateSubscription.unsubscribe()
-    this.getByIdSubscription.unsubscribe()
+    this.updateSubscription?.unsubscribe()
+    this.getByIdSubscription?.unsubscribe()
   }
 }

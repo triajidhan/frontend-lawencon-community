@@ -12,10 +12,7 @@ import { Subscription } from "rxjs"
 export class UserInsertComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
 
-    resultExtension!: string
-    resultFile !: string
-
-    private insertSubscription!: Subscription
+    private insertSubscription?: Subscription
 
     insertUserForm = this.formBuilder.group({
         fullName: ['', Validators.required],
@@ -39,29 +36,8 @@ export class UserInsertComponent implements OnInit, OnDestroy {
         ]
     }
 
-    fileUpload(event: any): void {
-        const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
-            const reader = new FileReader()
-            reader.readAsDataURL(event.files[0])
-            reader.onload = () => {
-                if (typeof reader.result === "string") resolve(reader.result)
-            }
-            reader.onerror = error => reject(error)
-        })
-
-        toBase64(event.files[0].name).then(result => {
-            this.resultFile = result.substring(result.indexOf(",") + 1, result.length)
-            this.resultExtension = result.split(";")[0].split('/')[1]
-        })
-    }
 
     submitInsert() {
-        this.insertUserForm.patchValue({
-            file: {
-                files: this.resultFile,
-                ext: this.resultExtension
-            }
-        })
         this.insertSubscription = this.userService.insert(this.insertUserForm.value).subscribe(() => {
             console.log("save")
             this.router.navigateByUrl(`/users`)
@@ -69,6 +45,6 @@ export class UserInsertComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.insertSubscription.unsubscribe();
+        this.insertSubscription?.unsubscribe();
     }
 }

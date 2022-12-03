@@ -1,84 +1,88 @@
-<div class="w-full body-color">
-    <div class=" flex justify-content-center flex-wrap">
-        <div class="grid w-full md:w-10 mt-1">
-            <p-breadcrumb [model]="items" class="w-full body-color"></p-breadcrumb>
-        </div>
-        <div class="grid w-full md:w-10 ">
-            <h1 class="text-center w-full mt-5 mb-2">
-                <div class=" flex justify-content-center mb-5">
-                    <div
-                        class="border-circle main-color text-white flex align-items-center justify-content-center w-3rem h-3rem">
-                        <i class="fa-solid fa-users text-xl"></i>
+<div class="flex body-color justify-content-center">
+    <div class="w-full body-color container">
+        <div class=" flex justify-content-center flex-wrap">
+            <div class="grid w-full mt-1">
+                <p-breadcrumb [model]="items" class="w-full body-color"></p-breadcrumb>
+            </div>
+            <div class="grid w-full ">
+                <h1 class="text-center w-full mt-5 mb-2">
+                    <div class="flex justify-content-center align-items-center mb-5">
+                        <div
+                            class="border-circle main-color text-white flex align-items-center justify-content-center w-3rem h-3rem">
+                            <i class="fa-solid fa-users text-xl"></i>
+                        </div>
+                        <h4 class="ml-3 md:text-3xl text-2xl">
+                            Admin Users
+                        </h4>
                     </div>
-                    <h2 class=" ml-3">
-                        Admin Users
-                    </h2>
+                </h1>
+            </div>
+            <div class="grid w-full ">
+                <button pButton routerLink="/users/new" label="INSERT" class="mb-5 ml-2 main-color">
+                    <i class="fa-solid fa-plus mr-2 text-sm"></i>
+                </button>
+            </div>
+            <div class="grid w-full">
+                <div class="table w-full">
+                    <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
+                        [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
+                        [globalFilterFields]="['id', 'title']">
+
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="no" class="text-center">No.</th>
+                                <th pSortableColumn="fullName">Full Name</th>
+                                <th pSortableColumn="email">Email</th>
+                                <th pSortableColumn="photo">Photo</th>
+                                <th pSortableColumn="isActive">Is Active</th>
+                                <th pSortableColumn="action" class="text-center">Action</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-data let-i="rowIndex">
+                            <tr>
+                                <td class="text-center">{{i + 1}}</td>
+                                <td>{{data.fullName}}</td>
+                                <td>{{data.email}}</td>
+                                <td>
+                                    <ng-container *ngIf="data.file">
+                                        <p-image *ngIf="data.file.files != '' && data.file.files" [preview]="true"
+                                            src="{{urlFile}}{{ data.file.id}}" imageClass="img-fluid images table-img"
+                                            alt="article admin image">
+                                        </p-image>
+                                        <p-image *ngIf="data.file.files == '' || !data.file.files" [preview]="true"
+                                            src="../../../../assets/logos/user.jpg"
+                                            imageClass="img-fluid images table-img" alt="article admin image">
+                                        </p-image>
+                                    </ng-container>
+                                    <p-image *ngIf="!data.file" [preview]="true" src="../../../../assets/logos/user.jpg"
+                                        imageClass="img-fluid images table-img" alt="article admin image">
+                                    </p-image>
+                                </td>
+                                <td>{{data.isActive}}</td>
+                                <td class="text-center">
+                                    <div class="flex justify-content-center">
+                                        <button pButton routerLink="/users/edit/{{data.id}}" type="button"
+                                            class="mr-1 main-color" label="UPDATE">
+                                            <i class="fa-solid fa-pen text-sm mr-2"></i>
+                                        </button>
+                                        <button pButton (click)="getDeleteId(data.id)" type="button"
+                                            class="p-button-danger" label="DELETE">
+                                            <i class="fa-solid fa-trash-can text-sm mr-2"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
-            </h1>
-        </div>
-        <div class="grid w-full md:w-10 ">
-            <button pButton routerLink="/users/new" label="INSERT" class="mb-5 ml-2 main-color">
-                <i class="fa-solid fa-plus mr-2 text-sm"></i>
-            </button>
-        </div>
-        <div class="grid w-full md:w-10">
-            <div class="table w-full">
-                <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                    [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
-                    [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
-                    [globalFilterFields]="['id', 'title']">
-
-
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="no" class="text-center">No.</th>
-                            <th pSortableColumn="fullName">Full Name</th>
-                            <th pSortableColumn="email">Email</th>
-                            <th pSortableColumn="company">Company</th>
-                            <th pSortableColumn="position">Position</th>
-                            <th pSortableColumn="photo">Photo</th>
-                            <th pSortableColumn="isActive">Is Active</th>
-                            <th pSortableColumn="action" class="text-center">Action</th>
-                        </tr>
-                    </ng-template>
-
-                    <ng-template pTemplate="body" let-data let-i="rowIndex">
-                        <tr>
-                            <td class="text-center">{{i + 1}}</td>
-                            <td>{{data.fullName}}</td>
-                            <td>{{data.email}}</td>
-                            <td>
-                                <div *ngIf="data.position != null; else elseBlock">{{data.position}}</div>
-                                <ng-template #elseBlock>-</ng-template>
-                            </td>
-                            <td>
-                                <div *ngIf="data.company != null; else elseBlock">{{data.company}}</div>
-                                <ng-template #elseBlock>-</ng-template>
-                            </td>
-                            <td>
-                                <img src="../../../../assets/logos/brand.png" class="img-fluid images table-img"
-                                    alt="user admin image">
-                            </td>
-                            <td>{{data.isActive}}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button pButton routerLink="/users/edit/{{data.id}}" type="button"
-                                        class="mr-1 main-color" label="UPDATE">
-                                        <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                    </button>
-                                    <button pButton (click)="getDeleteId(data.id)" type="button" class="p-button-danger"
-                                        label="DELETE">
-                                        <i class="fa-solid fa-trash-can text-sm mr-2"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
             </div>
         </div>
     </div>
 </div>
 
-<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}"
+    rejectButtonStyleClass="p-button-outlined" acceptButtonStyleClass="p-button-danger">
 </p-confirmDialog>

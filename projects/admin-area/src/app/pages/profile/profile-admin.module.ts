@@ -17,6 +17,7 @@ import { ProfileAdminRouting } from "./profile-admin.routing"
 import { ProfileListAdminComponent } from "./profile-list/profile-list-admin.component"
 import { PanelMenuModule } from 'primeng/panelmenu'
 import { DropdownModule } from "primeng/dropdown"
+import { ImageModule } from "primeng/image"
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import { DropdownModule } from "primeng/dropdown"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, PanelMenuModule,
-        ReactiveFormsModule, DropdownModule
+        ReactiveFormsModule, DropdownModule, ImageModule
     ],
     exports: [
         ProfileListAdminComponent, EditProfileAdminComponent, ChangePasswordAdminComponent

@@ -1,50 +1,66 @@
-<div class="w-full body-color">
-    <div class=" flex justify-content-center flex-wrap">
-        <div class="grid w-full md:w-10 container">
+<div class="flex body-color justify-content-center">
+    <div class="w-full body-color container">
+        <div class=" flex justify-content-center flex-wrap">
+            <div class="grid w-full container">
+                <div class="col-12">
+                    <div class=" flex align-items-center mb-4 mt-5">
+                        <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-user icon text-xl"></i>
+                        </div>
+                        <h2 class=" ml-3">
+                            Your Profile
+                        </h2>
+                    </div>
+                    <p-card>
+                        <div class="flex mx-5 justify-content-center md:justify-content-end">
+                            <div class=" flex align-items-center bg-green-400 border-round-2xl px-3 py-2 mb-3">
+                                <h3 class="text-white">
+                                    Balances : {{balances | currency:"IDR ":"symbol"}}
+                                </h3>
+                            </div>
+                        </div>
 
-            <div class="col">
-                <div class=" flex align-items-center mb-4 mt-5">
-                    <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-user icon text-xl"></i>
-                    </div>
-                    <h2 class=" ml-3">
-                        Your Profile
-                    </h2>
+                        <div class="grid mx-5">
+                            <div class="col-12 md:col-4 lg:col-3 text-center">
+                                <p-image [preview]="true" *ngIf="profile" src="{{urlFile}}{{profile}}"
+                                    imageClass="table-img w-10rem h-10rem" alt="user admin image"></p-image>
+                                <p-image [preview]="true" *ngIf="!profile" src="../../../../assets/logos/user.jpg"
+                                    imageClass="table-img w-10rem h-10rem" alt="user admin image"></p-image>
+                            </div>
+                            <div
+                                class="col-12 md:col-8 lg:col-9 flex justify-content-center md:justify-content-start align-items-center flex-wrap">
+                                <div class="text-center md:text-left">
+                                    <h1>{{name}}</h1>
+                                    <p class="text-black-alpha-60 mt-2">{{email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex sm:mx-5 flex-wrap sm:justify-content-center md:justify-content-end">
+                            <div class="w-full sm:w-max flex align-items-center mt-5 sm:mr-1 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                                (click)="changePass()">
+                                <div
+                                    class="border-circle bg-black-alpha-40 icon-box flex align-items-center justify-content-center w-3rem h-3rem">
+                                    <i class="fa-solid fa-code icon text-xl"></i>
+                                </div>
+                                <h3 class=" ml-3">
+                                    Change Password
+                                </h3>
+                            </div>
+
+                            <div class="w-full sm:w-max flex align-items-center mt-2 sm:mt-5 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                                (click)="editProfile()">
+                                <div
+                                    class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center w-3rem h-3rem">
+                                    <i class="fa-solid fa-pen icon text-xl"></i>
+                                </div>
+                                <h3 class=" ml-3">
+                                    Edit Profile
+                                </h3>
+                            </div>
+
+                        </div>
+                    </p-card>
                 </div>
-                <p-card>
-                    <div class="flex mx-5">
-                        <div class="max-w-max mr-7">
-                            <img src="../../../assets/images/article.png" alt="" class="w-10rem h-10rem border-circle">
-                        </div>
-                        <div class="flex align-items-center flex-wrap">
-                            <div>
-                                <h1>{{name}}</h1>
-                                <p class="text-black-alpha-60">{{roleName}}</p>
-                                <p class="text-black-alpha-60">{{email}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex mx-5 justify-content-end">
-                        <div class=" flex align-items-center mt-5 mr-5 cursor-pointer" (click)="changePass()">
-                            <div
-                                class="border-circle bg-black-alpha-40 icon-box flex align-items-center justify-content-center">
-                                <i class="fa-solid fa-code icon text-xl"></i>
-                            </div>
-                            <h3 class=" ml-3">
-                                Change Password
-                            </h3>
-                        </div>
-                        <div class=" flex align-items-center mt-5 cursor-pointer" (click)="editProfile()">
-                            <div
-                                class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
-                                <i class="fa-solid fa-pen icon text-xl"></i>
-                            </div>
-                            <h3 class=" ml-3">
-                                Edit Profile
-                            </h3>
-                        </div>
-                    </div>
-                </p-card>
             </div>
         </div>
     </div>
