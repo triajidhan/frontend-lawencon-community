@@ -19,6 +19,7 @@
             </div>
             <div class="grid w-full lg:w-9">
                 <div class="table w-full">
+
                     <p-tabMenu [model]="navMenus"></p-tabMenu>
 
                     <div *ngIf="type == 'approve-payments'" class="table w-full">
@@ -71,7 +72,6 @@
                                     <th pSortableColumn="no" class="text-center">No.</th>
                                     <th pSortableColumn="fullName">Full Name</th>
                                     <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
-                                    <th pSortableColumn="action" class="text-center">Action</th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
@@ -80,16 +80,6 @@
                                     <td>{{data.user.fullName}}</td>
                                     <td class="text-center">
                                         <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
-                                            <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
-                                            (click)="rejectPayment(data.id)">
-                                            <i class="fa-solid fa-xmark mr-2"></i>
-                                        </button>
-                                        <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe"
-                                            (click)="approvePayment(data.id)">
                                             <i class="fa-solid fa-pen text-sm mr-2"></i>
                                         </button>
                                     </td>
@@ -109,7 +99,6 @@
                                     <th pSortableColumn="no" class="text-center">No.</th>
                                     <th pSortableColumn="fullName">Full Name</th>
                                     <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
-                                    <th pSortableColumn="action" class="text-center">Action</th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
@@ -118,16 +107,6 @@
                                     <td>{{data.user.fullName}}</td>
                                     <td class="text-center">
                                         <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
-                                            <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                        </button>
-                                    </td>
-                                    <td class="flex justify-content-center">
-                                        <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
-                                            (click)="rejectPayment(data.id)">
-                                            <i class="fa-solid fa-xmark mr-2"></i>
-                                        </button>
-                                        <button pButton type="button" label="APPROVE" [loading]="loadingSubscribe"
-                                            (click)="approvePayment(data.id)">
                                             <i class="fa-solid fa-pen text-sm mr-2"></i>
                                         </button>
                                     </td>
