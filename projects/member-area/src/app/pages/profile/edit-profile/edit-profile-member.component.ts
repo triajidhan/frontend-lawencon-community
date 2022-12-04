@@ -51,6 +51,10 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
     position: this.fb.group({
       id: [this.positionId]
     }),
+    file: this.fb.group({
+      files: [''],
+      ext: ['']
+    }),
     version: [''],
     industryId: [''],
     positionId: ['']
@@ -72,16 +76,32 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
   }
 
   init() {
-    this.positions = [];
-    this.industries = [];
+    this.positions = []
+    this.industries = []
     this.activatedRoute.params.subscribe(result => {
-      this.getByIdUserSubscription = this.userService.getById(result[`id`]).subscribe(result => {
-        this.user = result
-        this.id = result.id
-        this.fullName = result.fullName
-        this.company = result.company
-        // this.positionId = result.position.id
-        this.industryId = result.industry.id
+      this.getByIdUserSubscription = this.userService.getById(result[`id`]).subscribe(user => {
+        this.user = user
+        this.editProfileForm.controls['id'].setValue(result[`id`])
+        this.editProfileForm.controls['fullName'].setValue(user[`fullName`])
+        if (user[`company`]) {
+          this.editProfileForm.controls['company'].setValue(user[`company`])
+        }
+        this.email = user.email
+        if (user[`industry`]) {
+          this.editProfileForm.controls['industryId'].setValue(user[`industry`].id)
+        }
+        if (user[`position`]) {
+          this.editProfileForm.controls['positionId'].setValue(user[`position`].id)
+        }
+        this.editProfileForm.value.email = user.email
+        if (user[`file`]) {
+          this.editProfileForm.patchValue({
+            file: {
+              files: user.file.files,
+              ext: user.file.ext
+            }
+          })
+        }
       })
     })
 
@@ -115,9 +135,17 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
 
 
   updateUser() {
+    if (this.resultFile) {
+      this.editProfileForm.patchValue({
+        file: {
+          files: this.resultFile,
+          ext: this.resultExtension
+        }
+      })
+    }
     this.editProfileForm.patchValue({
-      industry: {
-        id: this.editProfileForm.value.industryId
+      position: {
+        id: this.editProfileForm.value.positionId
       }
     })
 
@@ -126,9 +154,9 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
         id: this.editProfileForm.value.industryId
       }
     })
-    this.editProfileForm.value.id = this.user.id
+
     this.editUserSubscription = this.userService.update(this.editProfileForm.value).subscribe(() => {
-      this.init()
+      this.router.navigateByUrl("/profiles/member")
     })
 
   }

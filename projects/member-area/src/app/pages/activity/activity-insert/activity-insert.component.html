@@ -1,7 +1,7 @@
 <div class="w-full body-color">
     <div class=" flex justify-content-center flex-wrap">
-        <div class="grid w-full md:w-10 container">
-            <div class="col-4">
+        <div class="grid w-full lg:w-10 container">
+            <div class="col-12 md:col-4">
                 <div class=" flex align-items-center mb-4 mt-5">
                     <div class="border-circle bg-indigo-500 icon-box flex align-items-center justify-content-center">
                         <i class="fa-regular fa-file icon text-2xl"></i>
@@ -15,7 +15,7 @@
                 </p-card>
 
             </div>
-            <div class="col-8">
+            <div class="col-12 md:col-8">
                 <div class="flex justify-content-end my-4">
                     <button pButton type="button" class="p-button-outlined" label="Back"
                         routerLink="/activities/type/all">
@@ -24,8 +24,8 @@
                 <div>
                     <p-card>
                         <div class="grid w-full bg-white">
-                            <h3 class="mx-3 border-0 md:px-4">Create your own activity :</h3>
-                            <form [formGroup]="activityForm" class="card w-full mx-3 border-0 md:px-4 my-3">
+                            <h3 class="ml-3 border-0 md:px-4">Create your own activity :</h3>
+                            <form [formGroup]="activityForm" class="card w-full ml-3 border-0 md:px-4 my-3">
                                 <div class="formgrid grid">
                                     <div class="field col-12 md:col-6">
                                         <label for="title">Title<span class="text-red-500">*</span></label>
@@ -50,17 +50,15 @@
                                     <div class="field col-12 md:col-6">
                                         <label for="beginSchedule" class="w-full">Begin Schedule<span
                                                 class="text-red-500">*</span></label>
-                                        <p-calendar [showTime]="true" class="w-full" inputId="beginSchedule" clas
-                                            styleClass="calendar" id="beginSchedule" formControlName="beginSchedule"
-                                            [required]="true">
+                                        <p-calendar [showTime]="true" inputId="beginSchedule" styleClass="calendar"
+                                            id="beginSchedule" formControlName="beginSchedule" [required]="true">
                                         </p-calendar>
                                     </div>
                                     <div class="field col-12 md:col-6">
                                         <label for="finishSchedule" class="w-full">Finish Schedule<span
                                                 class="text-red-500">*</span></label>
-                                        <p-calendar [showTime]="true" class="w-full" inputId="finishSchedule" clas
-                                            styleClass="calendar" id="finishSchedule" formControlName="finishSchedule"
-                                            [required]="true">
+                                        <p-calendar [showTime]="true" inputId="finishSchedule" styleClass="calendar"
+                                            id="finishSchedule" formControlName="finishSchedule" [required]="true">
                                         </p-calendar>
                                     </div>
                                     <div class="field col-12 md:col-6">
@@ -80,8 +78,8 @@
                                         </p-fileUpload>
                                     </div>
                                     <div class="col-12 my-3">
-                                        <button [loading]="loadingActivity" [disabled]="activityForm.invalid" pButton type="submit"
-                                            id="activity-submit" label="SUBMIT" (click)="submitInsert()"
+                                        <button [loading]="loadingActivity" [disabled]="activityForm.invalid" pButton
+                                            type="submit" id="activity-submit" label="SUBMIT" (click)="submitInsert()"
                                             class="main-color"></button>
                                     </div>
                                 </div>

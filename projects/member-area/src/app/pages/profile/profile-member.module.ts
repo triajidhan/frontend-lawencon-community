@@ -21,6 +21,8 @@ import { DialogModule } from "primeng/dialog"
 import { InfiniteScrollModule } from "ngx-infinite-scroll"
 import { StyleClassModule } from "primeng/styleclass"
 import { ImageModule } from "primeng/image"
+import { GalleriaModule } from "primeng/galleria"
+import { ConfirmDialogModule } from "primeng/confirmdialog"
 
 @NgModule({
     declarations: [
@@ -34,7 +36,8 @@ import { ImageModule } from "primeng/image"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, PanelMenuModule,
         ReactiveFormsModule, DropdownModule, DialogModule,
-        InfiniteScrollModule, StyleClassModule, ImageModule
+        InfiniteScrollModule, StyleClassModule, ImageModule,
+        GalleriaModule, ConfirmDialogModule
     ],
     exports: [
         ProfileListMemberComponent, EditProfileMemberComponent, ChangePasswordMemberComponent

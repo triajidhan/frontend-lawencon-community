@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
-import { MenuItem, PrimeNGConfig } from "primeng/api"
+import { ConfirmationService, MenuItem, PrimeNGConfig } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { PostType } from "projects/interface/post-type"
@@ -21,7 +21,8 @@ import { finalize, Subscription } from "rxjs"
 @Component({
     selector: 'profile-list-member',
     templateUrl: './profile-list-member.component.html',
-    styleUrls: ['../../../../styles.css']
+    styleUrls: ['../../../../styles.css'],
+    providers: [ConfirmationService]
 })
 export class ProfileListMemberComponent implements OnInit, OnDestroy {
     myId: string = ""
@@ -31,6 +32,8 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     myCompany: string = ""
     myIndustry: string = ""
     myPosition: string = ""
+    myBalances: number = 0
+    myStatusSubscribe!: boolean
 
     startPositionPost = 0
     limitPost = 5
@@ -44,12 +47,19 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
     items!: MenuItem[]
+    idx!: any
     type!: string
+    postId!: string
     postType!: string
+    activeIndex: number = 0
     display: boolean = false
+    displayEdit: boolean = false
+    displayGalleria: boolean = false
     isShowComment: boolean = true
     loadingPost = false
+    unitPost: any = new Object()
 
+    images: any[] = []
     polling: any = new Object()
     getByPostIdForLike: any = new Object()
     fileArray: any[] = []
@@ -97,6 +107,12 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         file: this.fb.array([])
     })
 
+    updatePostForm = this.fb.group({
+        id: [''],
+        title: ['', Validators.required],
+        contents: ['', Validators.required]
+    })
+
     commentForm = this.fb.group({
         commentBody: ['', Validators.required],
         post: this.fb.group({
@@ -104,8 +120,26 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         })
     })
 
+    responsiveOptions: any[] = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ]
+
 
     private postInsertSubs?: Subscription
+    private postUpdateSubs?: Subscription
+    private postDeleteSubs?: Subscription
+    private getByIdPostSubs?: Subscription
     private getDataPollContentSubs?: Subscription
     private choosePollOptionSubs?: Subscription
     private getByIdPollOptionSubs?: Subscription
@@ -135,7 +169,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         private postAttachmentService: PostAttachmentService, private apiService: ApiService,
         private likeService: LikeService, private bookmarkService: BookmarkService,
         private pollingService: PollingService, private polingStatusService: PollingStatusService,
-        private commentService: CommentService, private router: Router) { }
+        private commentService: CommentService, private router: Router, private confirmationService: ConfirmationService) { }
 
 
     ngOnInit(): void {
@@ -148,6 +182,8 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.myCompany = String(this.apiService.getCompany())
         this.myIndustry = String(this.apiService.getIndustry())
         this.myPosition = String(this.apiService.getPosition())
+        this.myBalances = Number(this.apiService.getBalances())
+        this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
 
         this.items = [
             { label: 'Edit Profile', routerLink: '/profiles/member/edit/' + this.myId },
@@ -305,6 +341,19 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.display = true
     }
 
+    postEditDialog(postId: string, i: any) {
+        this.idx = i
+        this.getByIdPostSubs = this.postService.getById(postId).subscribe(result => {
+            this.unitPost = result
+            this.updatePostForm.controls['title'].setValue(result.title)
+            this.updatePostForm.controls['contents'].setValue(result.contents)
+            this.updatePostForm.controls['id'].setValue(result.id)
+        })
+
+        this.postId = postId
+        this.displayEdit = true
+    }
+
     postInsert() {
         if (this.postType == 'regular') {
             this.loadingPost = true
@@ -347,6 +396,17 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 })
             })
         }
+    }
+
+    postUpdate() {
+        this.postUpdateSubs = this.postService.update(this.updatePostForm.value).subscribe(() => {
+            this.displayEdit = false
+            this.post[this.idx].title = this.updatePostForm.value.title
+            this.post[this.idx].contents = this.updatePostForm.value.contents
+            this.updatePostForm.controls.title.setValue("")
+            this.updatePostForm.controls.contents.setValue("")
+            this.postType = ""
+        })
     }
 
     choosePollOption(pollId: string, i: any, j: any) {
@@ -448,6 +508,30 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         })
     }
 
+    showPopUpDelete(id: string, i: any) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this post?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.getByIdPostSubs = this.postService.getById(id).subscribe(result => {
+                    this.unitPost = result
+                    this.unitPost.isActive = false
+
+                    this.postDeleteSubs = this.postService.update(this.unitPost).subscribe(() => {
+                        this.post.splice(i, 1)
+                    })
+                })
+            }
+        })
+    }
+
+    imageClick(i: number, j: number) {
+        this.images = this.post[i].postAttachment
+        this.activeIndex = j
+        this.displayGalleria = true
+    }
+
     changePass() {
         this.router.navigateByUrl("/profiles/member/change-password/" + this.myId)
     }
@@ -458,6 +542,9 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.postInsertSubs?.unsubscribe()
+        this.postUpdateSubs?.unsubscribe()
+        this.postDeleteSubs?.unsubscribe()
+        this.getByIdPostSubs?.unsubscribe()
         this.getDataPollContentSubs?.unsubscribe()
         this.choosePollOptionSubs?.unsubscribe()
         this.getByIdPollOptionSubs?.unsubscribe()

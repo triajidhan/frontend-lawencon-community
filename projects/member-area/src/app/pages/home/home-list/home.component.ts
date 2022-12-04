@@ -24,7 +24,6 @@ import { finalize, Subscription } from "rxjs"
   providers: [ConfirmationService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
   myId: string = ""
   myFullName: string = ""
   myCompany: string = ""

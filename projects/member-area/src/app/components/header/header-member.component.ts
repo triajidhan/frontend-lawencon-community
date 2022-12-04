@@ -19,11 +19,11 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
     resultExtension!: string
     resultFile !: string
 
-    name?: string | null
-    photoId?: number | null
+    myProfile?: string
     myStatusSubscribe!: boolean
-    fileDownload = `${BASE_URL.LOCALHOST}/files/download/`
     display: boolean = false
+
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
     paymentSubsForm = this.fb.group({
         price: [50000],
@@ -45,7 +45,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
 
         this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
         if (this.apiService.getPhotoId()) {
-            this.photoId = this.apiService.getPhotoId()
+            this.myProfile = String(this.apiService.getPhotoId())
         }
 
         this.navMenus = [

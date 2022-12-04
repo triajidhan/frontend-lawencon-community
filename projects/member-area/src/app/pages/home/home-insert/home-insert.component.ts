@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormArray, FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
-import { MenuItem } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { ActivityType } from "projects/interface/activity-type"
 import { Polling } from "projects/interface/polling"
-import { PollingService } from "projects/main-area/src/app/service/polling.service"
-import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
+import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
 import { finalize, Subscription } from "rxjs"
@@ -27,9 +26,13 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
     pollings: Polling[] = []
     post: any[] = []
     fileArray: any[] = []
+    recentArticle: any[] = []
 
-    insertPostSubscription?: Subscription
-    getByCodePostTypeSubscription?: Subscription
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
+
+    private insertPostSubscription?: Subscription
+    private getByCodePostTypeSubscription?: Subscription
+    private getRecentArticleSubs?: Subscription
 
     postForm = this.fb.group({
         title: ['', Validators.required],
@@ -51,18 +54,24 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
 
 
     constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder,
-        private router: Router, private postService: PostService, private postTypeService: PostTypeService) { }
+        private router: Router, private postService: PostService,
+        private postTypeService: PostTypeService, private articleService: ArticleService) { }
 
     ngOnInit(): void {
-
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
+        })
+
+        this.getRecentArticleSubs = this.articleService.getByIsActiveAndOrder(0, 5, false).subscribe(result => {
+            this.recentArticle = result
+
+            console.log(result)
         })
     }
 
     postInsert() {
-      this.loadingPolling = true
-        this.getByCodePostTypeSubscription = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.POLL).pipe(finalize(()=>this.loadingPolling = false)).subscribe(result => {
+        this.loadingPolling = true
+        this.getByCodePostTypeSubscription = this.postTypeService.getByPostTypeCode(POST_TYPE_CODE.POLL).pipe(finalize(() => this.loadingPolling = false)).subscribe(result => {
             this.postForm.patchValue({
                 postType: {
                     id: result.id
@@ -100,5 +109,6 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.insertPostSubscription?.unsubscribe()
         this.getByCodePostTypeSubscription?.unsubscribe()
+        this.getRecentArticleSubs?.unsubscribe()
     }
 }

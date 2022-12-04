@@ -10,12 +10,13 @@ import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { CardModule } from 'primeng/card'
 import { RouterModule } from '@angular/router'
-import { Toast, ToastrModule } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
+import { TimeAgoPipe } from './pipe/time-ago.pipe';
 
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent
+    AppComponent, LoginComponent, TimeAgoPipe
   ],
   imports: [
     BrowserModule,
