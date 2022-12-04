@@ -18,8 +18,20 @@
     }
 }
 
+@media screen and (min-width: 575px) {
+    :host ::ng-deep .premiums {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 575px) {
     .profile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .start-premium {
         display: none;
     }
 }
@@ -49,9 +61,7 @@
     margin-top: 1.5rem;
 }
 
-.h-details {
-    height: 3.5rem;
-}
+
 
 /*====================== ACTIVITY  ======================*/
 

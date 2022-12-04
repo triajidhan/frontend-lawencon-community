@@ -2,7 +2,7 @@
     <div class="w-full container">
         <p-menubar [model]="navMenus">
             <ng-template pTemplate="start">
-                <div class="navbar-brand flex" routerLink="/threads">
+                <div class="navbar-brand flex" routerLink="/homes/type/threads">
                     <img src="../../../../assets/logos/brand.png" class="w-3rem h-3rem mr-3" alt="ilc-image">
                     <div class="mr-3 main-text">
                         <h5 class="title">Lawencon</h5>
@@ -12,9 +12,10 @@
             </ng-template>
 
             <div class="flex align-items-center">
-                <div>
-                    <button pButton class="mr-3 bg-orange-300" label="START PREMIUM" (click)="showPopUpDialog()">
-                        <i class="fa-regular fa-gem text-2xl mr-2"></i>
+                <div *ngIf="!myStatusSubscribe" class="start-premium">
+                    <button pButton class="mr-1 bg-orange-300 text-sm" label="START PREMIUM"
+                        (click)="showPopUpDialog()">
+                        <i class="fa-regular fa-gem text-lg mr-1"></i>
                     </button>
                 </div>
                 <div class="relative profile">
@@ -50,11 +51,8 @@
 
 <p-dialog [(visible)]="display">
     <div class="grid bg-white border-round-xl max-w-27rem mb-5">
-        <ng-template pTemplate="header">
-            <h3>Header Content</h3>
-        </ng-template>
         <div class="col-12 md:px-3 px-1">
-            <div class=" flex align-items-center justify-content-center mb-5">
+            <div *ngIf="!myStatusSubscribe" class="flex align-items-center justify-content-center mb-5">
                 <div class="border-circle bg-orange-300 icon-box flex align-items-center justify-content-center">
                     <i class="fa-regular fa-gem icon text-xl"></i>
                 </div>

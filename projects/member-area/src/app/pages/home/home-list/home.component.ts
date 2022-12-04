@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   myId: string = ""
   myFullName: string = ""
+  myCompany: string = ""
   myProfile: string = ""
   myStatusSubscribe!: boolean
 
@@ -174,8 +175,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.myId = String(this.apiService.getId())
     this.myFullName = String(this.apiService.getName())
-    this.myProfile = String(this.apiService.getPhotoId())
     this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
+    if (this.apiService.getPhotoId()) {
+      this.myProfile = String(this.apiService.getPhotoId())
+    }
+    if (this.apiService.getCompany()) {
+      this.myCompany = String(this.apiService.getCompany())
+    }
 
     this.items = [
       { label: 'Thread', routerLink: '/homes/type/threads', command: () => this.init() },
@@ -529,6 +535,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   showPopUpDelete(id: string, i: any) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this post?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.getByIdPostSubs = this.postService.getById(id).subscribe(result => {
           this.unitPost = result

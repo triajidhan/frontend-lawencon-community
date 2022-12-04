@@ -23,10 +23,11 @@ import { CarouselModule } from 'primeng/carousel'
 import { ImageModule } from 'primeng/image'
 import { ConfirmDialogModule } from "primeng/confirmdialog"
 import { GalleriaModule } from 'primeng/galleria'
+import { TimeAgoPipe } from "projects/main-area/src/app/pipe/time-ago.pipe"
 
 @NgModule({
     declarations: [
-        HomeComponent, HomeInsertComponent, HomeDetailComponent
+        HomeComponent, HomeInsertComponent, HomeDetailComponent, TimeAgoPipe
     ],
     imports: [
         HomeRouting, ButtonModule, InputTextModule,
