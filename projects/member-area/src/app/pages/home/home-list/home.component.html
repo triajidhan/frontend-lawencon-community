@@ -1,7 +1,7 @@
 <div class="w-full body-color">
   <div class=" flex justify-content-center flex-wrap">
-    <div class="grid w-full md:w-10 container">
-      <div class="col-4">
+    <div class="grid w-full lg:w-10 container">
+      <div class="md:col-4 md:block hidden">
         <div class=" flex align-items-center mb-4 mt-5">
           <div class="border-circle bg-blue-600 icon-box flex align-items-center justify-content-center">
             <i class="fa-regular fa-file-lines icon text-2xl"></i>
@@ -24,25 +24,26 @@
                   recentArticle[i].contents
                   }}
                 </p>
-                <p>
+                <p *ngIf="recentArticle[i].contents.length > 130">
                   . . .
                 </p>
               </div>
               <div class="text-right mt-3 flex justify-content-between">
                 <p class="text-black-alpha-60">
-                  {{ recentArticle[i].createdAt | date: "dd/MM/yyyy" }} | {{ recentArticle[i].createdAt | date:
-                  "shortTime"
-                  }}
+                  {{ recentArticle[i].createdAt | timeAgo }}
                 </p>
-                <a routerLink="/articles/members/details/{{recentArticle[i].id}}" class="text-primary">show details</a>
+                <div routerLink="/articles/members/details/{{recentArticle[i].id}}"
+                  class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                  <p>Show details</p>
+                </div>
               </div>
             </div>
           </ng-container>
         </p-card>
       </div>
-      <div class="col-8 mt-3">
+      <div class="col-12 md:col-8 mt-3">
         <p-card>
-          <div class="flex mx-5">
+          <div class="flex sm:mx-5">
             <div class="max-w-max">
               <div class="w-3rem h-3rem border-circle overflow-hidden">
                 <p-image [preview]="true" *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}" alt="profile image"
@@ -52,35 +53,34 @@
               </div>
             </div>
             <div (click)="postDialog('regular')"
-              class="w-full bg-black-alpha-10 ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
+              class="w-full bg-black-alpha-10 ml-2 sm:ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
               <p class="text-black-alpha-50">What do you think?</p>
             </div>
           </div>
-          <div class="flex mx-3">
+          <div class="flex sm:mx-3">
             <div
               class=" flex align-items-center mt-3 mr-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
               routerLink="/homes/new">
               <div class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
                 <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
               </div>
-              <h3 class=" ml-3">
+              <h3 class="hidden sm:block ml-3">
                 Poll Post
               </h3>
             </div>
-            <div
+            <div *ngIf="myStatusSubscribe"
               class=" flex align-items-center mt-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
               (click)="postDialog('premium')">
               <div class="border-circle bg-orange-400 icon-box flex align-items-center justify-content-center">
                 <i class="fa-regular fa-gem icon text-2xl"></i>
               </div>
-              <h3 class=" ml-3">
+              <h3 class="hidden sm:block ml-3">
                 Premium Post
               </h3>
             </div>
           </div>
         </p-card>
         <div class="pt-3">
-
 
           <ng-container *ngIf="type == 'threads'">
             <p-card infinite-scroll (scrolled)="onScroll()">
@@ -89,7 +89,7 @@
               <ng-container *ngFor="let p of post; index as i">
                 <div class="md:mx-5 h-max">
 
-                  <div class="flex  align-items-center mb-3 mt-7 relative z-1">
+                  <div class="flex align-items-center mb-3 mt-7 relative z-1">
                     <div class="max-w-max mr-3">
                       <div class="w-3rem h-3rem border-circle overflow-hidden">
                         <p-image [preview]="true" *ngIf="post[i].user.file" src="{{urlFile}}{{post[i].user.file.id}}"
@@ -100,11 +100,11 @@
                     </div>
                     <div class="w-full">
                       <h3>{{ post[i].user.fullName }}</h3>
-                      <p class="text-black-alpha-60 text-xs mt-1">{{ post[i].createdAt |
-                        date:"shortTime" }} |
-                        {{ post[i].createdAt | date:"fullDate" }} </p>
+                      <p class="text-black-alpha-60 text-xs mt-1">
+                        {{ post[i].createdAt | timeAgo }} </p>
                     </div>
-                    <div *ngIf="post[i].user.company" class="min-w-max mr-3 bg-green-100 border-round-xl">
+                    <div *ngIf="post[i].user.company"
+                      class="hidden sm:block min-w-max mr-3 bg-green-100 border-round-xl">
                       <h4 class="mx-3 my-1 text-green-500">{{ post[i].user.company }}</h4>
                     </div>
 
@@ -174,7 +174,7 @@
                         </ng-container>
                         <ng-container *ngIf="post[i].postAttachment.length == 2">
                           <div
-                            class="w-6 flex justify-content-center align-content-center h-30rem bg-black-alpha-30 overflow-hidden">
+                            class="w-6 flex justify-content-center align-content-center h-20rem sm:h-30rem bg-black-alpha-30 overflow-hidden">
                             <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
                               alt="post image" class="w-auto">
                           </div>
@@ -182,7 +182,7 @@
                         <ng-container *ngIf="post[i].postAttachment.length > 2">
                           <ng-container *ngIf="j == 0">
                             <div
-                              class="w-6 flex justify-content-center align-content-center h-30rem  overflow-hidden pb-1">
+                              class="w-6 flex justify-content-center align-content-center h-20rem sm:h-30rem  overflow-hidden pb-1">
                               <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
                                 alt="post image" class="w-auto">
                             </div>
@@ -195,7 +195,7 @@
                           <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
                             <ng-container *ngIf="j == 1">
                               <div
-                                class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1">
+                                class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1">
                                 <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
                                   alt="post image" class="h-auto">
                               </div>
@@ -203,7 +203,7 @@
                             <ng-container *ngIf="post[i].postAttachment.length == 3">
                               <ng-container *ngIf="j == 2">
                                 <div
-                                  class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1">
+                                  class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1">
                                   <img (click)="imageClick(i, j)"
                                     src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}" alt="post image"
                                     class="h-auto">
@@ -213,11 +213,11 @@
                             <ng-container *ngIf="post[i].postAttachment.length > 3">
                               <ng-container *ngIf="j == 2">
                                 <div
-                                  class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1 relative">
+                                  class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1 relative">
                                   <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}" alt="post image"
                                     class="h-auto">
                                   <div (click)="imageClick(i, j)"
-                                    class="absolute w-full h-15rem bg-black-alpha-90 opacity-70 flex justify-content-center align-items-center img-cover">
+                                    class="absolute w-full h-10rem sm:h-15rem bg-black-alpha-90 opacity-70 flex justify-content-center align-items-center img-cover">
                                     <h1 class="text-white">
                                       {{post[i].postAttachment.length -3}} +</h1>
                                   </div>
@@ -276,7 +276,8 @@
                             class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
 
 
-                          <p class="min-w-max">{{ post[i].countOfLike }} likes</p>
+                          <p class="min-w-max">{{ post[i].countOfLike }} <span class="hidden sm:inline">likes</span>
+                          </p>
                         </div>
                       </div>
 
@@ -301,7 +302,7 @@
                         class="flex-order-1 flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
                         <div class="ml-1 flex align-items-center">
                           <i class="fa-regular fa-message text-2xl mr-2"></i>
-                          <p class="">{{ post[i].countOfComment }} comments</p>
+                          <p class="">{{ post[i].countOfComment }} <span class="hidden sm:inline">comments</span></p>
                         </div>
                       </div>
 
@@ -321,6 +322,8 @@
                                 <p class="font-medium">{{ post[i].comments[j].user.fullName }}</p>
                                 <p class=" text-black-alpha-60">{{ post[i].comments[j].commentBody }} </p>
                               </div>
+                              <p class="text-black-alpha-60 text-xs mt-1 ml-3">
+                                {{ post[i].comments[j].createdAt | timeAgo }} </p>
                             </div>
                           </div>
                         </ng-container>
@@ -355,98 +358,10 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
               </ng-container>
             </p-card>
 
-            <!-- <p-card>
-                <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
-
-                <div class="md:mx-5">
-                    <div class="flex  align-items-center mb-3 mt-7">
-                        <div class="max-w-max mr-3">
-                            <img src="../../../assets/images/article.png" alt=""
-                                class="w-3rem h-3rem border-circle">
-                        </div>
-                        <div class="w-full">
-                            <h3>Rifki Dzaky</h3>
-                            <p class="text-black-alpha-60">Upload 1 hour ago</p>
-                        </div>
-                        <div class="min-w-max mr-3 bg-purple-100 border-round-xl">
-                            <h4 class="mx-3 my-1 text-purple-500">Lawencon</h4>
-                        </div>
-                        <div class="min-w-max mr-3 bg-green-100 border-round-xl">
-                            <h4 class="mx-3 my-1 text-green-500">Java Developer</h4>
-                        </div>
-                        <div class=" cursor-pointer">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                        </div>
-                    </div>
-                    <p-card styleClass="content-box">
-                        <h3 class="text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit
-                        </h3>
-                        <p class="text-black-alpha-60 mt-3 text-justify">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit.
-                            Tempore eos eius voluptates,
-                            exercitationem assumenda optio ut molestias necessitatibus ipsam ducimus
-                            delectus
-                            aut
-                            omnis dolore dicta! Neque libero eligendi reiciendis qui.
-                        </p>
-                        <div>
-                            <img src="../../../assets/images/article.png" alt="pos image"
-                                class="w-4 pr-3 mt-3">
-                            <img src="../../../assets/images/article.png" alt="pos image"
-                                class="w-4 pr-3 mt-3">
-                            <img src="../../../assets/images/article.png" alt="pos image"
-                                class="w-4 pr-3 mt-3">
-                        </div>
-                    </p-card>
-
-                    <p-card styleClass="pooling-content">
-                        <h3 class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit</h3>
-                        <div class="mt-3 py-3 body-color">
-                            <div class="flex align-items-center">
-                                <p class="text-center text-lg main-text w-full">Option 1</p>
-                                <p class="min-w-max mr-3">5 votes</p>
-                            </div>
-                        </div>
-                        <div class="mt-3 py-3 body-color">
-                            <div class="flex align-items-center">
-                                <p class="text-center text-lg main-text w-full">Option 2</p>
-                                <p class="min-w-max mr-3">5 votes</p>
-                            </div>
-                        </div>
-                        <div class="mt-3 py-3 body-color">
-                            <div class="flex align-items-center">
-                                <p class="text-center text-lg main-text w-full">Option 3</p>
-                                <p class="min-w-max mr-3">5 votes</p>
-                            </div>
-                        </div>
-
-                        <div class="flex mt-5 align-items-center text-black-alpha-60">
-                            <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
-                            <p class="w-full">15 votes</p>
-
-                            <p class="min-w-max">Until 2 day</p>
-
-                        </div>
-                    </p-card>
-
-                    <div class="flex mt-5 align-items-center text-black-alpha-60">
-                        <i class="fa-regular fa-heart text-2xl mr-2 cursor-pointer"></i>
-                        <p class="min-w-max">15 likes</p>
-
-                        <i class="fa-regular fa-message text-2xl ml-5 mr-2 cursor-pointer"></i>
-                        <p class="w-full">15 comments</p>
-
-                        <i class="fa-regular fa-bookmark text-2xl mr-2 cursor-pointer"></i>
-                    </div>
-                </div>
-            </p-card> -->
           </ng-container>
 
           <ng-container *ngIf="type == 'likes'">
@@ -464,6 +379,14 @@
                           alt="profile image" styleClass="w-3rem h-3rem"></p-image>
                       </div>
                     </div>
+
+                    <!-- <div class="w-3rem h-3rem border-circle overflow-hidden">
+                      <p-image [preview]="true" *ngIf="p.post.user.file" src="{{urlFile}}{{p.post.user.file.id}}"
+                        alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                      <p-image [preview]="true" *ngIf="!p.post.user.file" src="../../../../assets/logos/user.jpg"
+                        alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                    </div> -->
+
                     <div class="w-full">
                       <h3>{{ postLike[i].user.fullName }}</h3>
                       <p class="text-black-alpha-60 text-xs mt-1">{{ postLike[i].post.createdAt |
@@ -492,9 +415,8 @@
                         </ul>
                       </div>
                     </div>
-
-
                   </div>
+
                   <p-card styleClass="content-box">
                     <h3 class="text-justify">{{postLike[i].post.title}}
                     </h3>
@@ -502,8 +424,8 @@
                       {{postLike[i].post.contents }}
                     </p>
                   </p-card>
-
                   <div class="flex w-full column-gap-1 cursor-pointer">
+
                     <ng-container *ngFor="let pa of postLike[i].post.postAttachment;index as j">
                       <ng-container *ngIf="postLike[i].post.postAttachment.length == 1">
                         <img (click)="imageClick(i, j)" src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}"
@@ -562,6 +484,7 @@
                         </ng-container>
                       </div>
                     </ng-container>
+
                   </div>
 
                   <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
@@ -581,7 +504,6 @@
               </ng-container>
             </p-card>
           </ng-container>
-
 
           <ng-container *ngIf="type == 'bookmarks'">
             <p-card infinite-scroll (scrolled)="onScrollLike()">
@@ -635,6 +557,7 @@
                       {{p.post.contents }}
                     </p>
                   </p-card>
+
 
                   <div *ngIf="p.post.postAttachment" class="flex w-full column-gap-1 cursor-pointer">
                     <ng-container *ngFor="let pa of p.post.postAttachment;index as j">
@@ -697,6 +620,7 @@
                         </ng-container>
                       </div>
                     </ng-container>
+
                   </div>
 
                   <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
@@ -732,16 +656,20 @@
     </ng-container>
     <h3 class="capitalize">{{postType}} Post</h3>
   </ng-template>
-  <div class="grid bg-white border-round-xl w-30rem">
+  <div class="grid bg-white border-round-xl w-full lg:w-30rem">
     <div class="col-12">
       <div class="flex mb-3">
         <div class="max-w-max mr-3">
-          <img *ngIf="!myProfile" src="{{urlFile}}{{myProfile}}" alt="" class="w-3rem h-3rem border-circle">
-          <img *ngIf="myProfile" src="../../../../assets/logos/user.jpg" alt="" class="w-3rem h-3rem border-circle">
+          <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+            class="w-3rem h-3rem border-circle">
+          <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
+            class="w-3rem h-3rem border-circle">
         </div>
         <div class="w-full">
           <h3>{{ myFullName }}</h3>
-          <p class="text-black-alpha-60">Java Developer</p>
+          <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
+            <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
+          </div>
         </div>
       </div>
       <form class="card" [formGroup]="postForm">
@@ -773,16 +701,20 @@
     </div>
     <h3 class="capitalize">Edit Post</h3>
   </ng-template>
-  <div class="grid bg-white border-round-xl w-30rem">
+  <div class="grid bg-white border-round-xl w-full lg:w-30rem">
     <div class="col-12">
       <div class="flex mb-3">
         <div class="max-w-max mr-3">
-          <img *ngIf="!myProfile" src="{{urlFile}}{{myProfile}}" alt="" class="w-3rem h-3rem border-circle">
-          <img *ngIf="myProfile" src="../../../../assets/logos/user.jpg" alt="" class="w-3rem h-3rem border-circle">
+          <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+            class="w-3rem h-3rem border-circle">
+          <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
+            class="w-3rem h-3rem border-circle">
         </div>
         <div class="w-full">
           <h3>{{ myFullName }}</h3>
-          <p class="text-black-alpha-60">Java Developer</p>
+          <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
+            <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
+          </div>
         </div>
       </div>
       <form class="card" [formGroup]="updatePostForm">
@@ -801,20 +733,10 @@
   </div>
 </p-dialog>
 
-<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}"
+  rejectButtonStyleClass="p-button-outlined" acceptButtonStyleClass="p-button-danger">
 </p-confirmDialog>
 
-<!-- <p-galleria [value]="images" [(visible)]="displayGalleria" [responsiveOptions]="responsiveOptions" [numVisible]="5"
-  [circular]="true" [fullScreen]="true" [showItemNavigators]="true" [baseZIndex]="100000">
-  <ng-template pTemplate="item" let-item>
-    <img src="{{urlFile}}{{item.file.id}}" style="width: 100%; display: block; ; height: 100%;" />
-  </ng-template>
-  <ng-template pTemplate="thumbnail" let-item>
-    <div class="grid grid-nogutter justify-content-center">
-      <img src="{{urlFile}}{{item.file.id}}" class="w-full p-3" style="height: 100px;" />
-    </div>
-  </ng-template>
-</p-galleria> -->
 
 <p-galleria [value]="images" [(visible)]="displayGalleria" [responsiveOptions]="responsiveOptions"
   [containerStyle]="{'max-width': '850px'}" [numVisible]="7" [circular]="true" [fullScreen]="true"

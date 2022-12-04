@@ -21,6 +21,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
 
     name?: string | null
     photoId?: number | null
+    myStatusSubscribe!: boolean
     fileDownload = `${BASE_URL.LOCALHOST}/files/download/`
     display: boolean = false
 
@@ -42,6 +43,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.primengConfig.ripple = true
 
+        this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
         if (this.apiService.getPhotoId()) {
             this.photoId = this.apiService.getPhotoId()
         }
@@ -73,6 +75,11 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
                         routerLink: '/income-information-reports/members'
                     }
                 ]
+            },
+            {
+                label: 'Start Premium',
+                icon: 'fa-regular fa-gem',
+                styleClass: 'premiums',
             },
             {
                 label: 'Settings',
