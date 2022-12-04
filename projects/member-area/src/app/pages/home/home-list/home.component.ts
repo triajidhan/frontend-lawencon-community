@@ -191,8 +191,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.getRecentArticleSubs = this.articleService.getByIsActiveAndOrder(0, 5, false).subscribe(result => {
       this.recentArticle = result
-
-      console.log(result)
     })
 
     this.init()
@@ -295,13 +293,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       this.post.push(post)
     })
-    console.log(post)
   }
 
   addDataLike(post: any) {
     this.getPostLikeAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
       post.post.postAttachment = result
+
+      post.post.countOfPostAttachment = result.length
     })
+
     this.postLike.push(post)
   }
 
@@ -309,6 +309,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getPostBookmarkAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
       post.post.postAttachment = result
     })
+    
     this.postBookmark.push(post)
   }
 
