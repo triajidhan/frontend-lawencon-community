@@ -1,7 +1,7 @@
 <div class="w-full body-color">
     <div class=" flex justify-content-center flex-wrap">
-        <div class="grid w-full md:w-10 container">
-            <div class="col-4">
+        <div class="grid w-full lg:w-10 container">
+            <div class="col-12 md:col-4">
                 <div class=" flex align-items-center mb-4 mt-5">
                     <div
                         class="border-circle bg-black-alpha-40 icon-box flex align-items-center justify-content-center">
@@ -17,7 +17,7 @@
             </div>
 
 
-            <div class="col-8">
+            <div class="col-12 md:col-8">
                 <div class=" flex align-items-center mb-4 mt-5">
                     <div class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
                         <i class="fa-solid fa-pen icon text-xl"></i>
@@ -29,12 +29,12 @@
                 <div>
                     <p-card>
                         <div class="grid w-full bg-white">
-                            <form [formGroup]="editProfileForm" class="card w-full mx-3 border-0 md:px-4 my-3">
+                            <form [formGroup]="editProfileForm" class="card w-full ml-3 border-0 md:px-4 my-3">
                                 <div class="formgrid grid">
                                     <div class="field col-12">
-                                        <label for="file">Photo Profile <span class="text-red-500">*</span></label>
-                                        <p-fileUpload id="file" name="file" url="./upload.php" accept="image/*"
-                                            [auto]="true" (uploadHandler)="fileUpload($event)">
+                                        <label for="file">Photo <span class="text-red-500">*</span></label>
+                                        <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
+                                            (uploadHandler)="fileUpload($event)">
                                         </p-fileUpload>
                                     </div>
                                     <div class="field col-12 md:col-6">
@@ -64,7 +64,7 @@
                                         <label for="positionName">Position <span class="text-red-500">*</span></label>
                                         <p-dropdown [options]="positions" styleClass="w-full p-inputtext-sm"
                                             optionLabel="positionName" optionValue="postTypeCode" name="position"
-                                            id="positionName" formControlName="postTypeCode"
+                                            id="positionName" formControlName="positionId"
                                             placeholder="Select an Position">
                                         </p-dropdown>
 

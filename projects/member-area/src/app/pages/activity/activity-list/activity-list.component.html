@@ -1,7 +1,7 @@
 <div class="w-full body-color">
     <div class=" flex justify-content-center flex-wrap">
         <div class="grid w-full md:w-10 container">
-            <div class="col-4">
+            <div class="col-12 sm:col-4">
                 <div class=" flex align-items-center mb-4 mt-5">
                     <div class="border-circle bg-indigo-500 icon-box flex align-items-center justify-content-center">
                         <i class="fa-regular fa-file icon text-2xl"></i>
@@ -14,14 +14,14 @@
                     <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
                 </p-card>
             </div>
-            <div class="col-8">
-                <div class="flex justify-content-end" routerLink="/activities/new">
-                    <div class=" flex align-items-center mb-4 mt-5 cursor-pointer hover:text-black-alpha-60">
-                        <h2 class=" mr-3">
+            <div class="col-12 sm:col-8">
+                <div class="flex justify-content-end ">
+                    <div routerLink="/activities/new"
+                        class="cursor-pointer px-3 py-2 hover:bg-indigo-50 flex align-items-center mb-3 mt-4 hover:text-black-alpha-60">
+                        <h2 class="hidden sm:block mr-3">
                             Create Activity
                         </h2>
-                        <div
-                            class="border-circle main-color icon-box flex align-items-center justify-content-center hover:bg-purple-500">
+                        <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
                             <i class="fa-solid fa-plus icon text-xl"></i>
                         </div>
                     </div>
@@ -35,65 +35,67 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true"
-                                                    *ngIf="activities[i].file.files && activities[i].file.files != ''"
-                                                    src="{{urlFile}}{{ activities[i].file.id}}" imageClass="h-8rem">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!activities[i].file.files && activities[i].activityType.activityTypeName == 'Course') || (activities[i].file.files =='' && activities[i].activityType.activityTypeName == 'Course') "
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
                                                     src="../../../../assets/images/course.jpg" alt="activity image"
-                                                    imageClass="h-8rem"> </p-image>
+                                                    imageClass="w-full"> </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!activities[i].file.files && activities[i].activityType.activityTypeName == 'Event') || (activities[i].file.files =='' && activities[i].activityType.activityTypeName == 'Event') "
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
                                                     src="../../../../assets/images/event.jpg" alt="activity image"
-                                                    imageClass="h-8rem"> </p-image>
+                                                    imageClass="w-full"> </p-image>
                                             </div>
                                         </ng-template>
 
                                         <div
                                             class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ activities[i].activityCode }}</p>
-                                            <div *ngIf="activities[i].activityType.activityTypeName == 'Event'"
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
                                                 class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{ activities[i].activityType.activityTypeName }}
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
                                                 </p>
                                             </div>
-                                            <div *ngIf="activities[i].activityType.activityTypeName == 'Course'"
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{ activities[i].activityType.activityTypeName }}
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem capitalize">{{ activities[i].title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ activities[i].beginSchedule | date:'fullDate' }} to {{
-                                                    activities[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ activities[i].beginSchedule | date:'shortTime' }} - {{
-                                                    activities[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ activities[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ activities[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>{{ activities[i].price | currency:"IDR ":"symbol"}}</p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(activities[i].id, activities[i].price, activities[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -104,70 +106,73 @@
                     <ng-container *ngIf="type == 'courses'">
                         <p-card infinite-scroll (scrolled)="onScrollActivityByCourse()">
                             <div class="grid">
-                                <div *ngFor="let ac of activitiesCourse; index as i"
+                                <div *ngFor="let p of activitiesCourse; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true"
-                                                    *ngIf="activitiesCourse[i].file.files && activitiesCourse[i].file.files != ''"
-                                                    src="{{urlFile}}{{ activitiesCourse[i].file.id}}"
-                                                    imageClass="h-8rem w-full">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!activitiesCourse[i].file.files && activitiesCourse[i].activityType.activityTypeName == 'Course') || (activitiesCourse[i].file.files =='' && activitiesCourse[i].activityType.activityTypeName == 'Course') "
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
                                                     src="../../../../assets/images/course.jpg" alt="activity image"
-                                                    imageClass="h-8rem w-full"> </p-image>
+                                                    imageClass="w-full"> </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!activitiesCourse[i].file.files && activitiesCourse[i].activityType.activityTypeName == 'Event') || (activitiesCourse[i].file.files =='' && activitiesCourse[i].activityType.activityTypeName == 'Event') "
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
                                                     src="../../../../assets/images/event.jpg" alt="activity image"
-                                                    imageClass="h-8rem w-full"> </p-image>
+                                                    imageClass="w-full"> </p-image>
                                             </div>
                                         </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ activitiesCourse[i].activityCode }}</p>
-                                            <div *ngIf="activitiesCourse[i].activityType.activityTypeName == 'Event'"
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
                                                 class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    activitiesCourse[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
-                                            <div *ngIf="activitiesCourse[i].activityType.activityTypeName == 'Course'"
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{
-                                                    activitiesCourse[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem capitalize">{{
-                                            activitiesCourse[i].title }}</h4>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ activitiesCourse[i].beginSchedule | date:'fullDate' }} to {{
-                                                    activitiesCourse[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ activitiesCourse[i].beginSchedule | date:'shortTime' }} - {{
-                                                    activitiesCourse[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ activitiesCourse[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ activitiesCourse[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ activitiesCourse[i].price | currency:"IDR ":"symbol" }},-</p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(activitiesCourse[i].id, activitiesCourse[i].price, activitiesCourse[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -179,65 +184,73 @@
                     <ng-container *ngIf="type == 'events'">
                         <p-card infinite-scroll (scrolled)="onScrollActivityByEvent()">
                             <div class="grid">
-                                <div *ngFor="let ac of activitiesEvent; index as i"
+                                <div *ngFor="let p of activitiesEvent; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="activitiesEvent[i].file.files && activitiesEvent[i].file.files != ''"
-                                                src="{{urlFile}}{{ activitiesEvent[i].file.id}}" styleClass="h-8rem">
-                                            </p-image>
-                                            <p-image
-                                                *ngIf="(!activitiesEvent[i].file.files && activitiesEvent[i].activityType.activityTypeName == 'Course') || (activitiesEvent[i].file.files =='' && activitiesEvent[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!activitiesEvent[i].file.files && activitiesEvent[i].activityType.activityTypeName == 'Event') || (activitiesEvent[i].file.files =='' && activitiesEvent[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ activitiesEvent[i].activityCode }}</p>
-                                            <div *ngIf="activitiesEvent[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    activitiesEvent[i].activityType.activityTypeName }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="activitiesEvent[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{ activitiesEvent[i].activityType.activityTypeName
-                                                    }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{ activitiesEvent[i].title }}</h4>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ activitiesEvent[i].beginSchedule | date:'fullDate' }} to {{
-                                                    activitiesEvent[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ activitiesEvent[i].beginSchedule | date:'shortTime' }} - {{
-                                                    activitiesEvent[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ activitiesEvent[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ activitiesEvent[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ activitiesEvent[i].price | currency:"IDR ":"symbol" }},-</p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(activitiesEvent[i].id, activitiesEvent[i].price, activitiesEvent[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -249,64 +262,72 @@
                     <ng-container *ngIf="type == 'my-activities'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivity()">
                             <div class="grid">
-                                <div *ngFor="let ma of myActivities; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
+                                <div *ngFor="let p of myActivities; index as i" class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="myActivities[i].file.files && myActivities[i].file.files != ''"
-                                                src="{{urlFile}}{{ myActivities[i].file.id}}" styleClass="h-8rem">
-                                            </p-image>
-                                            <p-image
-                                                *ngIf="(!myActivities[i].file.files && myActivities[i].activityType.activityTypeName == 'Course') || (myActivities[i].file.files =='' && myActivities[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivities[i].file.files && myActivities[i].activityType.activityTypeName == 'Event') || (myActivities[i].file.files =='' && myActivities[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ myActivities[i].activityCode }}</p>
-                                            <div *ngIf="myActivities[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{ myActivities[i].activityType.activityTypeName
-                                                    }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="myActivities[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{ myActivities[i].activityType.activityTypeName }}
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{ myActivities[i].title }}</h4>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ myActivities[i].beginSchedule | date:'fullDate' }} to {{
-                                                    myActivities[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ myActivities[i].beginSchedule | date:'shortTime' }} - {{
-                                                    myActivities[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ myActivities[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ myActivities[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivities[i].price | currency:"IDR ":"symbol" }},-</p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(myActivities[i].id, myActivities[i].price, myActivities[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -317,67 +338,73 @@
                     <ng-container *ngIf="type == 'my-courses'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityCourse()">
                             <div class="grid">
-                                <div *ngFor="let mabc of myActivitiesByCourse; index as i"
+                                <div *ngFor="let p of myActivitiesByCourse; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="myActivitiesByCourse[i].file.files && myActivitiesByCourse[i].file.files != ''"
-                                                src="{{urlFile}}{{ myActivitiesByCourse[i].file.id}}"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByCourse[i].file.files && myActivitiesByCourse[i].activityType.activityTypeName == 'Course') || (myActivitiesByCourse[i].file.files =='' && myActivitiesByCourse[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByCourse[i].file.files && myActivitiesByCourse[i].activityType.activityTypeName == 'Event') || (myActivitiesByCourse[i].file.files =='' && myActivitiesByCourse[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ myActivitiesByCourse[i].activityCode }}</p>
-                                            <div *ngIf="myActivitiesByCourse[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    myActivitiesByCourse[i].activityType.activityTypeName }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="myActivitiesByCourse[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{
-                                                    myActivitiesByCourse[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{ myActivitiesByCourse[i].title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ myActivitiesByCourse[i].beginSchedule | date:'fullDate' }} to {{
-                                                    myActivitiesByCourse[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ myActivitiesByCourse[i].beginSchedule | date:'shortTime' }} - {{
-                                                    myActivitiesByCourse[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ myActivitiesByCourse[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ myActivitiesByCourse[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesByCourse[i].price | currency:"IDR ":"symbol" }},-
-                                                </p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(myActivitiesByCourse[i].id, myActivitiesByCourse[i].price, myActivitiesByCourse[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -389,67 +416,73 @@
                     <ng-container *ngIf="type == 'my-events'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityEvent()">
                             <div class="grid">
-                                <div *ngFor="let mave of myActivitiesByEvent; index as i"
+                                <div *ngFor="let p of myActivitiesByEvent; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="myActivitiesByEvent[i].file.files && myActivitiesByEvent[i].file.files != ''"
-                                                src="{{urlFile}}{{ myActivitiesByEvent[i].file.id}}"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByEvent[i].file.files && myActivitiesByEvent[i].activityType.activityTypeName == 'Course') || (myActivitiesByEvent[i].file.files =='' && myActivitiesByEvent[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByEvent[i].file.files && myActivitiesByEvent[i].activityType.activityTypeName == 'Event') || (myActivitiesByEvent[i].file.files =='' && myActivitiesByEvent[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ myActivitiesByEvent[i].activityCode }}</p>
-                                            <div *ngIf="myActivitiesByEvent[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="myActivitiesByEvent[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{
-                                                    myActivitiesByEvent[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{ myActivitiesByEvent[i].title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ myActivitiesByEvent[i].beginSchedule | date:'fullDate' }} to {{
-                                                    myActivitiesByEvent[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ myActivitiesByEvent[i].beginSchedule | date:'shortTime' }} - {{
-                                                    myActivitiesByEvent[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ myActivitiesByEvent[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ myActivitiesByEvent[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesByEvent[i].price | currency:"IDR ":"symbol" }},-
-                                                </p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(myActivitiesByEvent[i].id, myActivitiesByEvent[i].price, myActivitiesByEvent[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -461,67 +494,73 @@
                     <ng-container *ngIf="type == 'my-activities-on-going'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityOnGoing()">
                             <div class="grid">
-                                <div *ngFor="let ma of myActivitiesOnGoing; index as i"
+                                <div *ngFor="let p of myActivitiesOnGoing; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="myActivitiesOnGoing[i].file.files && myActivities[i].file.files != ''"
-                                                src="{{urlFile}}{{ myActivitiesOnGoing[i].file.id}}"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesOnGoing[i].file.files && myActivitiesOnGoing[i].activityType.activityTypeName == 'Course') || (myActivitiesOnGoing[i].file.files =='' && myActivitiesOnGoing[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesOnGoing[i].file.files && myActivitiesOnGoing[i].activityType.activityTypeName == 'Event') || (myActivitiesOnGoing[i].file.files =='' && myActivitiesOnGoing[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ myActivitiesOnGoing[i].activityCode }}</p>
-                                            <div *ngIf="myActivitiesOnGoing[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    myActivitiesOnGoing[i].activityType.activityTypeName }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="myActivitiesOnGoing[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{
-                                                    myActivitiesOnGoing[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{ myActivitiesOnGoing[i].title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ myActivitiesOnGoing[i].beginSchedule | date:'fullDate' }} to {{
-                                                    myActivitiesOnGoing[i].finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ myActivitiesOnGoing[i].beginSchedule | date:'shortTime' }} - {{
-                                                    myActivitiesOnGoing[i].finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ myActivitiesOnGoing[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ myActivitiesOnGoing[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesOnGoing[i].price | currency:"IDR ":"symbol" }},-
-                                                </p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(myActivitiesOnGoing[i].id, myActivitiesOnGoing[i].price, myActivitiesOnGoing[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -533,72 +572,73 @@
                     <ng-container *ngIf="type == 'my-courses-on-going'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityCourseOnGoing()">
                             <div class="grid">
-                                <div *ngFor="let mabc of myActivitiesByCourseOnGoing; index as i"
+                                <div *ngFor="let p of myActivitiesByCourseOnGoing; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="myActivitiesByCourseOnGoing[i].file.files && myActivitiesByCourseOnGoing[i].file.files != ''"
-                                                src="{{urlFile}}{{ myActivitiesByCourseOnGoing[i].file.id}}"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByCourseOnGoing[i].file.files && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course') || (myActivitiesByCourseOnGoing[i].file.files =='' && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByCourseOnGoing[i].file.files && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Event') || (myActivitiesByCourseOnGoing[i].file.files =='' && myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ myActivitiesByCourseOnGoing[i].activityCode }}</p>
-                                            <div *ngIf="myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    myActivitiesByCourseOnGoing[i].activityType.activityTypeName }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="myActivitiesByCourseOnGoing[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{
-                                                    myActivitiesByCourseOnGoing[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{
-                                            myActivitiesByCourseOnGoing[i].title }}</h4>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ myActivitiesByCourseOnGoing[i].beginSchedule | date:'fullDate' }}
-                                                    to {{
-                                                    myActivitiesByCourseOnGoing[i].finishSchedule | date:'fullDate' }}
-                                                </p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ myActivitiesByCourseOnGoing[i].beginSchedule | date:'shortTime' }}
-                                                    - {{
-                                                    myActivitiesByCourseOnGoing[i].finishSchedule | date:'shortTime' }}
-                                                </p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ myActivitiesByCourseOnGoing[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ myActivitiesByCourseOnGoing[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesByCourseOnGoing[i].price | currency:"IDR
-                                                    ":"symbol" }},-
-                                                </p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(myActivitiesByCourseOnGoing[i].id, myActivitiesByCourseOnGoing[i].price, myActivitiesByCourseOnGoing[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -610,72 +650,73 @@
                     <ng-container *ngIf="type == 'my-events-on-going'">
                         <p-card infinite-scroll (scrolled)="onScrollMyActivityEventOnGoing()">
                             <div class="grid">
-                                <div *ngFor="let mave of myActivitiesByEventOnGoing; index as i"
+                                <div *ngFor="let p of myActivitiesByEventOnGoing; index as i"
                                     class="col-12 lg:col-4 md:col-6 mt-2">
                                     <p-card styleClass="activity-card">
                                         <ng-template pTemplate="header">
-                                            <p-image
-                                                *ngIf="myActivitiesByEventOnGoing[i].file.files && myActivitiesByEventOnGoing[i].file.files != ''"
-                                                src="{{urlFile}}{{ myActivitiesByEventOnGoing[i].file.id}}"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByEventOnGoing[i].file.files && myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Course') || (myActivitiesByEventOnGoing[i].file.files =='' && myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Course') "
-                                                src="../../../../assets/images/course.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                            <p-image
-                                                *ngIf="(!myActivitiesByEventOnGoing[i].file.files && myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Event') || (myActivitiesByEventOnGoing[i].file.files =='' && myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Event') "
-                                                src="../../../../assets/images/event.jpg" alt="activity image"
-                                                styleClass="h-8rem"></p-image>
-                                        </ng-template>
-                                        <div class="flex justify-content-between mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ myActivitiesByEventOnGoing[i].activityCode }}</p>
-                                            <div *ngIf="myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Event'"
-                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{
-                                                    myActivitiesByEventOnGoing[i].activityType.activityTypeName }}</p>
+                                            <div
+                                                class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
+                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
+                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    src="../../../../assets/images/course.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
+                                                <p-image [preview]="true"
+                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    src="../../../../assets/images/event.jpg" alt="activity image"
+                                                    imageClass="w-full"> </p-image>
                                             </div>
-                                            <div *ngIf="myActivitiesByEventOnGoing[i].activityType.activityTypeName == 'Course'"
+                                        </ng-template>
+
+                                        <div
+                                            class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
+                                            <p class="uppercase">{{ p.activityCode }}</p>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                                class="bg-blue-400 border-round-lg py-1 px-2 text-white">
+                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{
-                                                    myActivitiesByEventOnGoing[i].activityType.activityTypeName }}</p>
+                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem">{{
-                                            myActivitiesByEventOnGoing[i].title }}</h4>
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ myActivitiesByEventOnGoing[i].beginSchedule | date:'fullDate' }}
-                                                    to {{
-                                                    myActivitiesByEventOnGoing[i].finishSchedule | date:'fullDate' }}
-                                                </p>
+                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
+                                                    p.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ myActivitiesByEventOnGoing[i].beginSchedule | date:'shortTime' }}
-                                                    - {{
-                                                    myActivitiesByEventOnGoing[i].finishSchedule | date:'shortTime' }}
-                                                </p>
+                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
+                                                    p.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ myActivitiesByEventOnGoing[i].provider }}</p>
+                                                <p>{{ p.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ myActivitiesByEventOnGoing[i].location }}</p>
+                                                <p>{{ p.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>Rp. {{ myActivitiesByEventOnGoing[i].price | currency:"IDR ":"symbol"
-                                                    }},-
-                                                </p>
+                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3">
-                                                <p (click)="showPopUpDialog(myActivitiesByEventOnGoing[i].id, myActivitiesByEventOnGoing[i].price, myActivitiesByEventOnGoing[i].title)"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Join
-                                                    Event</p>
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ p.createdAt }}
+                                                </p>
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -691,14 +732,17 @@
 </div>
 
 <p-dialog [(visible)]="display">
-    <div class="grid bg-white border-round-xl max-w-27rem mb-5">
+    <ng-template pTemplate="header">
+        <div class="border-circle bg-blue-300 icon-box flex align-items-center justify-content-center">
+            <i class="fa-solid fa-chart-line icon"></i>
+        </div>
+        <h3 class="capitalize">Let's Join</h3>
+    </ng-template>
+    <div class="grid bg-white border-round-xl w-full md:w-27rem mb-5">
         <div class="col-12 md:px-3 px-1">
             <div class=" flex align-items-center justify-content-center mb-5">
-                <div class="border-circle bg-blue-300 icon-box flex align-items-center justify-content-center">
-                    <i class="fa-solid fa-chart-line icon"></i>
-                </div>
                 <h2 class=" ml-3 capitalize">
-                    Let's Join {{activityTitle}}
+                    {{activityTitle}}
                 </h2>
             </div>
             <form class="card" [formGroup]="paymentActivityForm">
@@ -710,8 +754,8 @@
                     <p-fileUpload id="file" name="file" [customUpload]="true" (uploadHandler)="fileUpload($event)">
                     </p-fileUpload>
                 </div>
-                <button pButton [loading]="loadingJoinActivity" [disabled]="paymentActivityForm.invalid" type="submit" (click)="submitInsert()"
-                    class="main-color w-full mt-3" label="SUBMIT"></button>
+                <button pButton [loading]="loadingJoinActivity" [disabled]="paymentActivityForm.invalid" type="submit"
+                    (click)="submitInsert()" class="main-color w-full mt-3" label="SUBMIT"></button>
             </form>
         </div>
     </div>

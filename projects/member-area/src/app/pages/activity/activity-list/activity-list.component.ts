@@ -110,25 +110,25 @@ export class ActivityListComponent implements OnInit {
             {
                 label: 'Activity',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/all',command:()=>this.init()},
-                    { label: 'Event', routerLink: '/activities/type/events',command:()=>this.init()},
-                    { label: 'Course', routerLink: '/activities/type/courses',command:()=>this.init()}
+                    { label: 'All', routerLink: '/activities/type/all', command: () => this.init() },
+                    { label: 'Event', routerLink: '/activities/type/events', command: () => this.init() },
+                    { label: 'Course', routerLink: '/activities/type/courses', command: () => this.init() }
                 ]
             },
             {
                 label: 'My Activity',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/my-activities',command:()=>this.init()},
-                    { label: 'My Event', routerLink: '/activities/type/my-events' ,command:()=>this.init()},
-                    { label: 'My Course', routerLink: '/activities/type/my-courses' ,command:()=>this.init()}
+                    { label: 'All', routerLink: '/activities/type/my-activities', command: () => this.init() },
+                    { label: 'My Event', routerLink: '/activities/type/my-events', command: () => this.init() },
+                    { label: 'My Course', routerLink: '/activities/type/my-courses', command: () => this.init() }
                 ]
             },
             {
                 label: 'On Going',
                 items: [
-                    { label: 'All', routerLink: '/activities/type/my-activities-on-going',command:()=>this.init()},
-                    { label: 'My Event', routerLink: '/activities/type/my-events-on-going' ,command:()=>this.init()},
-                    { label: 'My Course', routerLink: '/activities/type/my-courses-on-going' ,command:()=>this.init()}
+                    { label: 'All', routerLink: '/activities/type/my-activities-on-going', command: () => this.init() },
+                    { label: 'My Event', routerLink: '/activities/type/my-events-on-going', command: () => this.init() },
+                    { label: 'My Course', routerLink: '/activities/type/my-courses-on-going', command: () => this.init() }
                 ]
             }
         ]
@@ -184,17 +184,17 @@ export class ActivityListComponent implements OnInit {
 
     init() {
 
-        this.activities =  []
-        this.activitiesCourse =  []
+        this.activities = []
+        this.activitiesCourse = []
         this.activitiesEvent = []
 
-        this.myActivities =  []
+        this.myActivities = []
         this.myActivitiesByEvent = []
-        this.myActivitiesByCourse =  []
+        this.myActivitiesByCourse = []
 
-        this.myActivitiesOnGoing =  []
+        this.myActivitiesOnGoing = []
         this.myActivitiesByEventOnGoing = []
-        this.myActivitiesByCourseOnGoing =  []
+        this.myActivitiesByCourseOnGoing = []
 
         this.startPosition = 0
         this.limit = 6
@@ -304,7 +304,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityCourseOnGoing() {
-        this.getAllMyActivityOnGoingCourseSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('course',this.myId, this.startPositionMyCourseOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
+        this.getAllMyActivityOnGoingCourseSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('course', this.myId, this.startPositionMyCourseOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
             console.log(result)
 
             for (let i = 0; i < result.length; i++) {
@@ -315,7 +315,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityEventOnGoing() {
-        this.getAllMyActivityOnGoingEventSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('event',this.myId, this.startPositionMyEventOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
+        this.getAllMyActivityOnGoingEventSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('event', this.myId, this.startPositionMyEventOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesOnGoingEvent(result[i].activity)
             }
@@ -386,7 +386,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     submitInsert() {
-      this.loadingJoinActivity = true
+        this.loadingJoinActivity = true
         this.paymentActivityForm.patchValue({
             file: {
                 files: this.resultFile,
@@ -399,7 +399,7 @@ export class ActivityListComponent implements OnInit {
 
         this.paymentActivityForm.value.net = this.activityPrice
 
-        this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).pipe(finalize(()=>this.loadingJoinActivity = false)).subscribe(() => {
+        this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).pipe(finalize(() => this.loadingJoinActivity = false)).subscribe(() => {
             this.display = false
         })
     }

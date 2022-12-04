@@ -21,6 +21,10 @@ import { Subscription } from "rxjs"
 export class HomeDetailComponent implements OnInit, OnDestroy {
 
   myId: string = ""
+  myCompany: string = ""
+  myProfile: string = ""
+  myStatusSubscribe!: boolean
+
   post: any = new Object()
   fileArray: any[] = []
   pollOption: any[] = []
@@ -57,6 +61,21 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     })
   })
 
+  responsiveOptions: any[] = [
+    {
+      breakpoint: '1024px',
+      numVisible: 5
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 3
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1
+    }
+  ]
+
   private getByIdPostSubscription?: Subscription
   private getCountLikeDataSubs?: Subscription
   private getCountBookmarkDataSubs?: Subscription
@@ -89,6 +108,13 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
 
   init() {
     this.myId = String(this.apiService.getId())
+    this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
+    if (this.apiService.getPhotoId()) {
+      this.myProfile = String(this.apiService.getPhotoId())
+    }
+    if (this.apiService.getCompany()) {
+      this.myCompany = String(this.apiService.getCompany())
+    }
 
     this.activatedRoute.params.subscribe(id => {
       this.getByIdPostSubscription = this.postService.getById(id['id']).subscribe(result => {
@@ -128,54 +154,6 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
       }
     })
   }
-
-  fileUpload(event: any): void {
-    for (let i = 0; i < event.files.length; i++) {
-      this.fileUploadMultiple(event, i).then(result => {
-        this.fileArray.push({ ext: result[0], files: result[1] })
-      })
-    }
-  }
-
-  async fileUploadMultiple(event: any, index: number) {
-    const file: [string, string] = ['', '']
-    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        if (typeof reader.result === "string") resolve(reader.result)
-      }
-      reader.onerror = error => reject(error)
-    })
-    const result = await toBase64(event.files[index])
-    const resultStr = result.substring(result.indexOf(",") + 1, result.length)
-    const resultExt = result.substring(result.indexOf("/") + 1, result.indexOf(";"))
-    file[0] = resultExt
-    file[1] = resultStr
-    return file
-  }
-
-  // calculateDiff(sentDate: string) {
-  //   var date1: any = new Date(sentDate)
-  //   var date2: any = new Date()
-  //   var diff: any = Math.floor((date2 - date1) / (1000))
-  //   if (diff < 60) {
-  //     return diff + " seconds ago"
-  //   } else {
-  //     diff = Math.floor(diff / 60)
-  //     if (diff < 60) {
-  //       return diff + " minutes ago"
-  //     } else {
-  //       diff = Math.floor(diff / 60)
-  //       if (diff < 24) {
-  //         return diff + " hours ago"
-  //       } else {
-  //         diff = Math.floor(diff / 24)
-  //         return diff + " days ago"
-  //       }
-  //     }
-  //   }
-  // }
 
   choosePollOption(pollId: string, j: any) {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
@@ -262,9 +240,10 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     })
 
     this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
+      this.post.countOfComment = this.post.countOfComment + 1
+      this.commentForm.controls['commentBody'].setValue("")
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
         this.post.comments.push(resultId ?? '')
-
       })
     })
   }

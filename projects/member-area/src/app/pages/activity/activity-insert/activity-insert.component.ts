@@ -67,6 +67,14 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
                     { label: 'My Event', routerLink: '/activities/type/my-events' },
                     { label: 'My Course', routerLink: '/activities/type/my-courses' }
                 ]
+            },
+            {
+                label: 'On Going',
+                items: [
+                    { label: 'All', routerLink: '/activities/type/my-activities-on-going' },
+                    { label: 'My Event', routerLink: '/activities/type/my-events-on-going' },
+                    { label: 'My Course', routerLink: '/activities/type/my-courses-on-going' }
+                ]
             }
         ]
 
@@ -103,7 +111,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     }
 
     submitInsert() {
-      this.loadingActivity = true;
+        this.loadingActivity = true;
         function getTimeZone() {
             var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
             return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
@@ -121,7 +129,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
                 id: this.activityForm.value.activityTypeId
             }
         })
-        this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).pipe(finalize(()=>this.loadingActivity = false)).subscribe(() => {
+        this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).pipe(finalize(() => this.loadingActivity = false)).subscribe(() => {
             this.router.navigateByUrl(`/activities/type/all`)
         })
     }

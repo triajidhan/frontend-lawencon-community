@@ -1,28 +1,28 @@
-<div class="w-full body-color">
-    <div class=" flex justify-content-center flex-wrap">
-        <div class="col-12 md:col-8 md:px-3 px-1 py-3">
-
-            <button pButton routerLink="/articles/members" label="BACK" class="mb-4 ml-2 md:ml-0 p-button-outlined">
-                <i class="fa-solid fa-angle-left mr-2 text-sm"></i>
-            </button>
-
-            <div class="w-full">
-                <ng-container *ngIf="article.file">
-                    <p-image [preview]="true" styleClass="w-full" src="{{urlFile}}{{ article.file.id}}"
-                        alt="article image">
-                    </p-image>
-                </ng-container>
-            </div>
-            <p-card>
-                <div class="md:mx-5 mb-3">
-                    <div class="w-full">
-                        <h2>{{article.title}}</h2>
-                        <p class="text-black-alpha-60  mt-3 text-justify">
-                            {{article.contents}}
-                        </p>
-                    </div>
-                </div>
-            </p-card>
+<div class="w-full body-color flex justify-content-center">
+    <div class="w-full lg:w-10 container mt-3">
+        <button pButton routerLink="/articles/members" label="BACK" class="mb-4 ml-2 lg:ml-0 p-button-outlined">
+            <i class="fa-solid fa-angle-left mr-2 text-sm"></i>
+        </button>
+        <div class="w-full">
+            <ng-container *ngIf="article.file">
+                <p-image [preview]="true" styleClass="w-full" src="{{urlFile}}{{ article.file.id}}" alt="article image">
+                </p-image>
+            </ng-container>
         </div>
+        <p-card>
+            <div class="md:mx-5 mb-3">
+                <div class="text-right">
+                    <p class=" mb-3 text-black-alpha-60">
+                        {{ article.createdAt }}
+                    </p>
+                </div>
+                <div class="w-full">
+                    <h2>{{article.title}}</h2>
+                    <p class="text-black-alpha-60  mt-3 text-justify">
+                        {{article.contents}}
+                    </p>
+                </div>
+            </div>
+        </p-card>
     </div>
 </div>

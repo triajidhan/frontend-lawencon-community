@@ -30,7 +30,7 @@
               </div>
               <div class="text-right mt-3 flex justify-content-between">
                 <p class="text-black-alpha-60">
-                  {{ recentArticle[i].createdAt | timeAgo }}
+                  {{ recentArticle[i].createdAt }}
                 </p>
                 <div routerLink="/articles/members/details/{{recentArticle[i].id}}"
                   class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
@@ -101,7 +101,7 @@
                     <div class="w-full">
                       <h3>{{ post[i].user.fullName }}</h3>
                       <p class="text-black-alpha-60 text-xs mt-1">
-                        {{ post[i].createdAt | timeAgo }} </p>
+                        {{ post[i].createdAt }} </p>
                     </div>
                     <div *ngIf="post[i].user.company"
                       class="hidden sm:block min-w-max mr-3 bg-green-100 border-round-xl">
@@ -323,7 +323,7 @@
                                 <p class=" text-black-alpha-60">{{ post[i].comments[j].commentBody }} </p>
                               </div>
                               <p class="text-black-alpha-60 text-xs mt-1 ml-3">
-                                {{ post[i].comments[j].createdAt | timeAgo }} </p>
+                                {{ post[i].comments[j].createdAt }} </p>
                             </div>
                           </div>
                         </ng-container>
@@ -334,9 +334,9 @@
 
                         <div class="flex mt-3">
                           <div class="max-w-max mr-3">
-                            <img *ngIf="!myProfile" src="{{urlFile}}{{myProfile}}" alt=""
+                            <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt=""
                               class="w-2rem h-2rem border-circle">
-                            <img *ngIf="myProfile" src="../../../../assets/logos/user.jpg" alt=""
+                            <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt=""
                               class="w-2rem h-2rem border-circle">
                           </div>
                           <div class="w-full">

@@ -33,5 +33,4 @@ export class TimeAgoPipe implements PipeTransform {
         return value
     }
 
-
 }

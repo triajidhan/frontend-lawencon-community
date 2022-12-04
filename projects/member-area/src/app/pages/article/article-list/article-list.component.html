@@ -2,11 +2,11 @@
     <div class=" flex justify-content-center flex-wrap">
         <div class="w-full md:w-10 container mt-3">
             <p-card infinite-scroll (scrolled)="onScroll()">
-                <div class="grid mt-3">
+                <div class="grid ">
                     <div *ngFor="let a of article; index as i" class="col-12 mt-2">
                         <p-card styleClass="activity-card">
                             <div class="grid w-full ">
-                                <div class="col-4">
+                                <div class="col-12 md:col-4">
                                     <div
                                         class="w-full h-12rem flex justify-content-center align-items-center overflow-hidden">
                                         <p-image [preview]="true" src="{{urlFile}}{{ article[i].file.id}}"
@@ -14,18 +14,23 @@
                                         </p-image>
                                     </div>
                                 </div>
-                                <div class="col-8 flex align-items-center">
-                                    <div>
+                                <div class="col-12 md:col-8 flex align-items-center">
+                                    <div class="w-full">
                                         <h2>{{ article[i].title }}</h2>
-                                        <div class="text-black-alpha-60 mt-3">
+                                        <div class="text-black-alpha-60 mt-3 w-full">
                                             <div class="flex mt-2 h-details overflow-hidden line-height-2 text-justify">
                                                 <p>{{ article[i].contents }}</p>
                                             </div>
-                                            <p>. . .</p>
-                                            <div class="text-right mt-3">
-                                                <p routerLink="/articles/members/details/{{article[i].id}}"
-                                                    class=" main-text underline cursor-pointer">
-                                                    Show Detail</p>
+                                            <p *ngIf="article[i].contents.length > 200">. . .</p>
+
+                                            <div class="text-right mt-3 flex justify-content-between">
+                                                <p class="text-black-alpha-60">
+                                                    {{ article[i].createdAt }}
+                                                </p>
+                                                <div routerLink="/articles/members/details/{{article[i].id}}"
+                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
+                                                    <p>Show details</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
