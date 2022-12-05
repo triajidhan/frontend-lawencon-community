@@ -23,6 +23,7 @@ import { CarouselModule } from 'primeng/carousel'
 import { ImageModule } from 'primeng/image'
 import { ConfirmDialogModule } from "primeng/confirmdialog"
 import { GalleriaModule } from 'primeng/galleria'
+import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudule"
 
 @NgModule({
     declarations: [
@@ -37,7 +38,7 @@ import { GalleriaModule } from 'primeng/galleria'
         ReactiveFormsModule, DropdownModule,
         InfiniteScrollModule, StyleClassModule,
         CarouselModule, ImageModule, ConfirmDialogModule,
-        GalleriaModule
+        GalleriaModule, TimeAgoModule
     ],
     exports: [
         HomeComponent, HomeInsertComponent, HomeDetailComponent

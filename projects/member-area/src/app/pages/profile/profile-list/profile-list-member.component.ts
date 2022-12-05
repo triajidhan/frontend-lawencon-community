@@ -248,7 +248,6 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 })
                 this.addDataPost(result[i])
             }
-            console.log(result)
         })
     }
 
@@ -281,7 +280,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             post.postAttachment = result
         })
 
-        this.getAllCommentByPostSubs = this.commentService.getByPostAndOrder(post.id, true).subscribe(result => {
+        this.getAllCommentByPostSubs = this.commentService.getByPost(post.id, 0, 2, false).subscribe(result => {
             post.comments = result
         })
 

@@ -279,7 +279,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       post.postAttachment = result
     })
 
-    this.getAllCommentByPostSubs = this.commentService.getByPostAndOrder(post.id, true).subscribe(result => {
+    this.getAllCommentByPostSubs = this.commentService.getByPost(post.id, 0, 2, false).subscribe(result => {
       post.comments = result
     })
 
@@ -308,7 +308,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getPostBookmarkAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
       post.post.postAttachment = result
     })
-    
+
     this.postBookmark.push(post)
   }
 

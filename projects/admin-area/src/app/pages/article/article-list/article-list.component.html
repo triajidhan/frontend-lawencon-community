@@ -49,7 +49,7 @@
                                     <p class="h-details overflow-hidden">
                                         {{data.contents}}
                                     </p>
-                                    <p>. . .</p>
+                                    <p *ngIf="data.contents.length > 200">. . .</p>
                                 </td>
                                 <td>
                                     <p-image [preview]="true" src="{{urlFile}}{{ data.file.id}}"

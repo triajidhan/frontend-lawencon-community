@@ -20,6 +20,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll"
 import { DialogModule } from "primeng/dialog"
 import { PanelMenuModule } from 'primeng/panelmenu'
 import { ImageModule } from "primeng/image"
+import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudule"
 
 @NgModule({
     declarations: [
@@ -32,7 +33,7 @@ import { ImageModule } from "primeng/image"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
         CalendarModule, DropdownModule, InfiniteScrollModule,
-        DialogModule, PanelMenuModule, ImageModule
+        DialogModule, PanelMenuModule, ImageModule, TimeAgoModule
     ],
     exports: [
         ActivityListComponent, ActivityInsertComponent
