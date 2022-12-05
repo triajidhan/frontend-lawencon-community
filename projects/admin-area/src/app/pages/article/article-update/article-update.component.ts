@@ -41,7 +41,7 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
   init() {
     this.items = [
       { label: 'Home', routerLink: '/dashboard/admin' },
-      { label: 'Article', routerLink: '/articles' },
+      { label: 'Article', routerLink: '/articles/admin' },
       { label: 'Article Update' }
     ]
 

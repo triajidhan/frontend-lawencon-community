@@ -17,43 +17,43 @@ export const adminAreaRoutes: Routes = [
         path: 'users',
         component: ContentSuperAdminComponent,
         loadChildren: () => import('./pages/user/user.module').then(u => u.UserModule),
-        canLoad:[SuperAdminGuard]
+        canLoad: [SuperAdminGuard]
     },
     {
         path: 'positions',
         component: ContentSuperAdminComponent,
         loadChildren: () => import('./pages/position/position.module').then(u => u.PositionModule),
-        canLoad:[SuperAdminGuard]
+        canLoad: [SuperAdminGuard]
     },
     {
         path: 'industries',
         component: ContentSuperAdminComponent,
         loadChildren: () => import('./pages/industry/industry.module').then(u => u.IndustryModule),
-        canLoad:[SuperAdminGuard]
+        canLoad: [SuperAdminGuard]
     },
     {
         path: 'member-reports',
         component: ContentSuperAdminComponent,
         loadChildren: () => import('./pages/member-report/member-report.module').then(u => u.MemberReportModule),
-        canLoad:[SuperAdminGuard]
+        canLoad: [SuperAdminGuard]
     },
     {
-        path: 'articles',
+        path: 'articles/admin',
         component: ContentAdminComponent,
         loadChildren: () => import('./pages/article/article.module').then(u => u.ArticleModule),
-        canLoad:[AdminGuard]
+        canLoad: [AdminGuard]
     },
     {
         path: 'approve-activity-payments',
         component: ContentAdminComponent,
         loadChildren: () => import('./pages/approve-activity-payment/activity-payment.module').then(u => u.ActivityPaymentModule),
-        canLoad:[AdminGuard]
+        canLoad: [AdminGuard]
     },
     {
         path: 'approve-subscriber-payments',
         component: ContentAdminComponent,
         loadChildren: () => import('./pages/aprrove-subscriber-payment/subscriber-payment.module').then(u => u.SubscriberPaymentModule),
-        canLoad:[AdminGuard]
+        canLoad: [AdminGuard]
     },
     {
         path: 'member-information-reports/super-admin',

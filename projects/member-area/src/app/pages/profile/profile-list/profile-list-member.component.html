@@ -42,8 +42,8 @@
                                     <div *ngIf="myPosition != 'null'" class="w-max mr-3 bg-purple-100 border-round-xl">
                                         <h3 class="mx-3 my-2 text-purple-500">{{ myPosition }}</h3>
                                     </div>
-                                    <div *ngIf="myIndustry != 'null'" class="w-max mr-3 bg-purple-100 border-round-xl">
-                                        <h3 class="mx-3 my-2 text-purple-500">{{ myIndustry }}</h3>
+                                    <div *ngIf="myIndustry != 'null'" class="w-max mr-3 bg-indigo-100 border-round-xl">
+                                        <h3 class="mx-3 my-2 text-indigo-500">{{ myIndustry }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -210,8 +210,10 @@
                                         <div
                                             class="flex flex-wrap justify-content-center text-white align-items-center">
                                             <i class="fa-solid fa-lock text-2xl"></i>
-                                            <h1 class="ml-3">Locked</h1>
-                                            <h1 class="text-white text-center w-full">Premium Only</h1>
+                                            <div>
+                                                <h3 class="ml-3">Locked</h3>
+                                                <h3 class="text-white text-center w-full">Premium Only</h3>
+                                            </div>
                                         </div>
                                     </div>
 
