@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { LazyLoadEvent, MenuItem } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
 import { PaymentActivityDetail } from "projects/interface/payment-activity-detail"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
@@ -17,6 +18,9 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
     data: any[] = []
     dataApprove: any[] = []
     dataReject: any[] = []
+
+    urlFile = `${BASE_URL.LOCALHOST}/files/download/`
+
 
     id!: number
     type!: string
@@ -67,8 +71,9 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActive(startPage, maxPage, false).subscribe(
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
             result => {
+                console.log(result)
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(total => {
                     this.data = result
                     this.loading = false
@@ -89,6 +94,7 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedTrue(startPage, maxPage, false).subscribe(
             result => {
+                
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedTrue().subscribe(total => {
                     this.dataApprove = result
                     this.loading = false
