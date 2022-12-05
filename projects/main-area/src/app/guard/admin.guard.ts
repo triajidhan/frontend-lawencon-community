@@ -21,13 +21,13 @@ export class AdminGuard implements CanLoad,CanActivate{
             if(role == ROLE_CODE.MEMBER){
                 this.router.navigateByUrl("/homes/type/threads")
             }else if(role == ROLE_CODE.SUPER_ADMIN){
-                this.router.navigateByUrl("/login/member")
+                this.router.navigateByUrl("/dashboard/super-admin")
             }
 
             return true
         }
 
-        this.router.navigateByUrl("/login/member")
+        this.router.navigateByUrl("/login/admin")
         return false
     }
 
@@ -36,16 +36,16 @@ export class AdminGuard implements CanLoad,CanActivate{
         const role = this.apiService.getRoleCode();
 
         if(token){
-            if(role == ROLE_CODE.MEMBER){
+            if(role == ROLE_CODE.MEMBER.toString()){
                 this.router.navigateByUrl("/homes/type/threads")
-            }else if(role == ROLE_CODE.SUPER_ADMIN){
-                this.router.navigateByUrl("/login/member")
+            }else if(role == ROLE_CODE.SUPER_ADMIN.toString()){
+                this.router.navigateByUrl("/dashboard/super-admin")
             }
 
             return true
         }
 
-        this.router.navigateByUrl("/login/member")
+        this.router.navigateByUrl("/login/admin")
         return false
     }
 

@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
+import { AdminGuard } from "projects/main-area/src/app/guard/admin.guard"
+import { SuperAdminGuard } from "projects/main-area/src/app/guard/super-admin.guard"
 import { ContentAdminComponent } from "../../components/content/admin/content-admin.component"
 import { ContentSuperAdminComponent } from "../../components/content/super-admin/content-super-admin.component"
 import { AdminComponent } from "./admin/admin.component"
@@ -14,7 +16,8 @@ const routes: Routes = [
                 path: "",
                 component: SuperAdminComponent
             }
-        ]
+        ],
+        canActivate:[SuperAdminGuard]
     },
     {
         path: 'admin',
@@ -24,7 +27,8 @@ const routes: Routes = [
                 path: "",
                 component: AdminComponent,
             }
-        ]
+        ],
+        canActivate:[AdminGuard]
     }
 ]
 
