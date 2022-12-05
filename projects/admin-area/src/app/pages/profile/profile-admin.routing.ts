@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core"
 import { RouterModule, Routes } from "@angular/router"
+import { AdminGuard } from "projects/main-area/src/app/guard/admin.guard"
+import { SuperAdminGuard } from "projects/main-area/src/app/guard/super-admin.guard"
 import { ContentAdminComponent } from "../../components/content/admin/content-admin.component"
 import { ContentSuperAdminComponent } from "../../components/content/super-admin/content-super-admin.component"
 import { ChangePasswordAdminComponent } from "./change-password/change-password-admin.component"
@@ -22,7 +24,8 @@ const routes: Routes = [
                 path: 'edit/:id',
                 component: EditProfileAdminComponent
             }
-        ]
+        ],
+        canActivate:[SuperAdminGuard]
     },
     {
         path: 'admin',
@@ -40,7 +43,8 @@ const routes: Routes = [
                 path: 'edit/:id',
                 component: EditProfileAdminComponent
             }
-        ]
+        ],
+        canActivate:[AdminGuard]
     }
 ]
 

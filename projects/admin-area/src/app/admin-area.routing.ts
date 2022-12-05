@@ -1,4 +1,6 @@
 import { Routes } from "@angular/router"
+import { AdminGuard } from "projects/main-area/src/app/guard/admin.guard"
+import { SuperAdminGuard } from "projects/main-area/src/app/guard/super-admin.guard"
 import { ContentAdminComponent } from "./components/content/admin/content-admin.component"
 import { ContentSuperAdminComponent } from "./components/content/super-admin/content-super-admin.component"
 
@@ -14,37 +16,44 @@ export const adminAreaRoutes: Routes = [
     {
         path: 'users',
         component: ContentSuperAdminComponent,
-        loadChildren: () => import('./pages/user/user.module').then(u => u.UserModule)
+        loadChildren: () => import('./pages/user/user.module').then(u => u.UserModule),
+        canLoad:[SuperAdminGuard]
     },
     {
         path: 'positions',
         component: ContentSuperAdminComponent,
-        loadChildren: () => import('./pages/position/position.module').then(u => u.PositionModule)
+        loadChildren: () => import('./pages/position/position.module').then(u => u.PositionModule),
+        canLoad:[SuperAdminGuard]
     },
     {
         path: 'industries',
         component: ContentSuperAdminComponent,
-        loadChildren: () => import('./pages/industry/industry.module').then(u => u.IndustryModule)
+        loadChildren: () => import('./pages/industry/industry.module').then(u => u.IndustryModule),
+        canLoad:[SuperAdminGuard]
     },
     {
         path: 'member-reports',
         component: ContentSuperAdminComponent,
-        loadChildren: () => import('./pages/member-report/member-report.module').then(u => u.MemberReportModule)
+        loadChildren: () => import('./pages/member-report/member-report.module').then(u => u.MemberReportModule),
+        canLoad:[SuperAdminGuard]
     },
     {
         path: 'articles',
         component: ContentAdminComponent,
-        loadChildren: () => import('./pages/article/article.module').then(u => u.ArticleModule)
+        loadChildren: () => import('./pages/article/article.module').then(u => u.ArticleModule),
+        canLoad:[AdminGuard]
     },
     {
         path: 'approve-activity-payments',
         component: ContentAdminComponent,
-        loadChildren: () => import('./pages/approve-activity-payment/activity-payment.module').then(u => u.ActivityPaymentModule)
+        loadChildren: () => import('./pages/approve-activity-payment/activity-payment.module').then(u => u.ActivityPaymentModule),
+        canLoad:[AdminGuard]
     },
     {
         path: 'approve-subscriber-payments',
         component: ContentAdminComponent,
-        loadChildren: () => import('./pages/aprrove-subscriber-payment/subscriber-payment.module').then(u => u.SubscriberPaymentModule)
+        loadChildren: () => import('./pages/aprrove-subscriber-payment/subscriber-payment.module').then(u => u.SubscriberPaymentModule),
+        canLoad:[AdminGuard]
     },
     {
         path: 'member-information-reports/super-admin',
