@@ -32,7 +32,7 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.items = [
       { label: 'Home', routerLink: '/dashboard/admin' },
-      { label: 'Article', routerLink: '/articles' },
+      { label: 'Article', routerLink: '/articles/admin' },
       { label: 'Article Insert' }
     ]
   }

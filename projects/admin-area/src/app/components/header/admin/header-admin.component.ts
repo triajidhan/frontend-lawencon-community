@@ -42,7 +42,7 @@ export class HeaderAdminComponent {
         this.navMenus = [
             {
                 label: 'Article',
-                routerLink: '/articles'
+                routerLink: '/articles/admin'
             },
             {
                 label: 'Approve Payment',

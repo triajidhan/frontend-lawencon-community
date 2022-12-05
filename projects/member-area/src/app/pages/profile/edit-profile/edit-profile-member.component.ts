@@ -206,6 +206,7 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
     this.editUserSubscription?.unsubscribe()
     this.positionGetByIdSubscription?.unsubscribe()
     this.industriesGetByIdSubscription?.unsubscribe()
+    this.getByIdUserUpateSubscription?.unsubscribe()
   }
 
 }
