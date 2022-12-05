@@ -28,6 +28,7 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
     rangeDates: any[] = []
 
     getAllPaymentSubs?: Subscription
+    getTotalPaymentSubs?: Subscription
 
     constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
 
@@ -56,7 +57,7 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncomeMember(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(
             result => {
-                
+                //this.getTotalPaymentSubs = 
                 this.data = result
                 this.loading = false
                 this.totalData = result.length
