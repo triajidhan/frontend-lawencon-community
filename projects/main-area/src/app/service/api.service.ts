@@ -122,5 +122,4 @@ export class ApiService {
     logOut() {
         localStorage.clear()
     }
-
 }
