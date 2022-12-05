@@ -4,6 +4,7 @@ import { LazyLoadEvent, MenuItem } from "primeng/api"
 import { Activity } from "projects/interface/activity"
 import { ActivityService } from "projects/main-area/src/app/service/activity.service"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
+import { ReportService } from "projects/main-area/src/app/service/report.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
 
@@ -29,8 +30,9 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
 
     getAllPaymentSubs?: Subscription
     getTotalPaymentSubs?: Subscription
+    exportsSubscription?:Subscription
 
-    constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
+    constructor(private paymentActivityDetailService: PaymentActivityDetailService,private reportService:ReportService) { }
 
     ngOnInit(): void {
         this.items = [
@@ -58,12 +60,10 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncomeMember(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(
             result => {
                 this.getTotalPaymentSubs = this.paymentActivityDetailService.getTotalByReportIncomeMember(this.beginSchedule,this.finishSchedule).subscribe(total=>{
-                    console.log(result)
+                    this.data = result
+                    this.loading = false
+                    this.totalData = total.countOfPaymentActivity
                 })
-
-                this.data = result
-                this.loading = false
-                this.totalData = result.length
             }
         )
     }
@@ -77,19 +77,29 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
             
             this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncomeMember(this.beginSchedule, this.finishSchedule, this.startPage, this.maxPage,false).subscribe(
                 result => {
-                    this.data = result
-                    this.loading = false
-                    this.totalData = result.length
+                    this.getTotalPaymentSubs = this.paymentActivityDetailService.getTotalByReportIncomeMember(this.beginSchedule,this.finishSchedule).subscribe(total=>{
+                        this.data = result
+                        this.loading = false
+                        this.totalData = total.countOfPaymentActivity
+                    })
                 }
             )
         }
     }
 
     exportData() {
+        this.exportsSubscription = this.reportService.getReportIncomeMember(this.beginSchedule, this.finishSchedule).subscribe(result => {
+            const anchor = document.createElement('a');
+            anchor.download = "total-income-member.pdf";
+            anchor.href = (window.webkitURL || window.URL).createObjectURL(result.body as any);
+            anchor.click();
+        })
 
     }
 
     ngOnDestroy(): void {
         this.getAllPaymentSubs?.unsubscribe()
+        this.getTotalPaymentSubs?.unsubscribe()
+        this.exportsSubscription?.unsubscribe()
     }
 }

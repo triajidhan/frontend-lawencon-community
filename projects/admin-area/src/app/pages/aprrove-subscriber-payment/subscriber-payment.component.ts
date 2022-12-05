@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { LazyLoadEvent, MenuItem } from "primeng/api"
+import { BASE_URL } from "projects/constant/base-url"
 import { PaymentSubscribe } from "projects/interface/payment-subscribe"
 import { PaymentSubscribeService } from "projects/main-area/src/app/service/payment-subscribe.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
@@ -17,6 +18,8 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   data: any[] = []
   dataApprove: any[] = []
   dataReject: any[] = []
+
+  urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
   id!: number
   type!: string
@@ -54,10 +57,10 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     ]
 
 
-    this.getAllSubs = this.paymentSubscribeService.getByIsActive(this.startPage, this.maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(this.startPage, this.maxPage,false).subscribe(
       result => {
         console.log(result)
-        this.getTotalDataSubs = this.paymentSubscribeService.getTotalPaymentSubscribe().subscribe(
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedTrue().subscribe(
           totalData => {
               this.data = result
               this.loading = false
@@ -78,10 +81,10 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.startPage = startPage
     this.maxPage = maxPage
 
-    this.getAllSubs = this.paymentSubscribeService.getByIsActive(startPage, maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
       result => {
         console.log(result)
-        this.getTotalDataSubs = this.paymentSubscribeService.getTotalPaymentSubscribe().subscribe(
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
               this.data = result
               this.loading = false
@@ -92,7 +95,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
       }
     )
   }
-
 
   loadDataApproved(event: LazyLoadEvent) {
     console.log(event)

@@ -4,6 +4,7 @@ import { LazyLoadEvent, MenuItem } from "primeng/api"
 import { Activity } from "projects/interface/activity"
 import { ActivityService } from "projects/main-area/src/app/service/activity.service"
 import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
+import { ReportService } from "projects/main-area/src/app/service/report.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
 
@@ -29,8 +30,9 @@ export class InformationReportIncomeAdminComponent implements OnInit, OnDestroy 
 
     private getAllReportSubs?: Subscription
     private getTotalReportSubs?: Subscription
+    private exportsSubscription?: Subscription
 
-    constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
+    constructor(private paymentActivityDetailService: PaymentActivityDetailService,private reportService:ReportService) { }
 
     ngOnInit(): void {
         this.items = [
@@ -85,11 +87,17 @@ export class InformationReportIncomeAdminComponent implements OnInit, OnDestroy 
     }
 
     exportData() {
-
+        this.exportsSubscription = this.reportService.getReportIncomeMember(this.beginSchedule, this.finishSchedule).subscribe(result => {
+            const anchor = document.createElement('a');
+            anchor.download = "total-income-super.pdf";
+            anchor.href = (window.webkitURL || window.URL).createObjectURL(result.body as any);
+            anchor.click();
+        })
     }
 
     ngOnDestroy(): void {
         this.getAllReportSubs?.unsubscribe()
         this.getTotalReportSubs?.unsubscribe()
+        this.exportsSubscription?.unsubscribe()
     }
 }

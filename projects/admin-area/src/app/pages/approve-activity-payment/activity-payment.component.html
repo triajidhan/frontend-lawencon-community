@@ -41,13 +41,13 @@
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
-                                    <td>{{data.userName}}</td>
+                                    <td>{{data.user.fullName }}</td>
                                     <td>{{data.activity.activityType.activityTypeName}}</td>
                                     <td>{{data.activity.title}}</td>
                                     <td class="text-center">
-                                        <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
-                                            <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                        </button>
+                                        <ng-container *ngIf="data.file">
+                                            <a href="{{ urlFile }}{{ data.file.id }}">Download</a>
+                                        </ng-container>
                                     </td>
                                     <td class="flex justify-content-center">
                                         <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
@@ -84,13 +84,13 @@
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
-                                    <td>{{data.userName}}</td>
+                                    <td>{{data.user.fullName }}</td>
                                     <td>{{data.activity.activityType.activityTypeName}}</td>
                                     <td>{{data.activity.title}}</td>
                                     <td class="text-center">
-                                        <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
-                                            <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                        </button>
+                                        <ng-container *ngIf="data.file">
+                                            <a href="{{ urlFile }}{{ data.file.id }}">Download</a>
+                                        </ng-container>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -117,13 +117,13 @@
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
-                                    <td>{{data.userName}}</td>
+                                    <td>{{data.user.fullName }}</td>
                                     <td>{{data.activity.activityType.activityTypeName}}</td>
                                     <td>{{data.activity.title}}</td>
                                     <td class="text-center">
-                                        <button pButton type="button" class="p-button-secondary" label="DOWNLOAD">
-                                            <i class="fa-solid fa-pen text-sm mr-2"></i>
-                                        </button>
+                                        <ng-container *ngIf="data.file">
+                                            <a href="{{ urlFile }}{{ data.file.id }}">Download</a>
+                                        </ng-container>
                                     </td>
                                 </tr>
                             </ng-template>
