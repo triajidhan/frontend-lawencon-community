@@ -19,7 +19,7 @@ export class SuperAdminGuard implements CanLoad,CanActivate{
         if(token){
             if(role == ROLE_CODE.MEMBER.toString()){
                 this.router.navigateByUrl("/homes/type/threads")
-            }else if(role == ROLE_CODE.SUPER_ADMIN.toString()){
+            }else if(role == ROLE_CODE.ADMIN.toString()){
                 this.router.navigateByUrl("/login/admin")
             }
 
@@ -37,7 +37,7 @@ export class SuperAdminGuard implements CanLoad,CanActivate{
         if(token){
             if(role == ROLE_CODE.MEMBER.toString()){
                 this.router.navigateByUrl("/homes/type/threads")
-            }else if(role == ROLE_CODE.SUPER_ADMIN.toString()){
+            }else if(role == ROLE_CODE.ADMIN.toString()){
                 this.router.navigateByUrl("/login/admin")
             }
 

@@ -28,6 +28,7 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
     rangeDates: any[] = []
 
     private getAllPaymentSubs?: Subscription
+    private getTotalReportSubs?:Subscription
 
     constructor(private paymentActivityDetailService: PaymentActivityDetailService) { }
 
@@ -63,11 +64,14 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
         this.startPage = startPage
         this.maxPage = maxPage
 
+
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, startPage, maxPage, false).subscribe(
             result => {
-                this.data = result
-                this.loading = false
-                this.totalData = result.length
+                this.getTotalReportSubs = this.paymentActivityDetailService.getTotalByReportIncomeSuper(this.beginSchedule,this.finishSchedule).subscribe(total=>{
+                    this.data = result
+                    this.loading = false
+                    this.totalData = total.countOfPaymentActivity
+                })
             }
         )
     }
@@ -80,10 +84,11 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
 
             this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, this.startPage, this.maxPage, false).subscribe(
                 result => {
-                    console.log(result)
-                    this.data = result
-                    this.loading = false
-                    this.totalData = result.length
+                    this.getTotalReportSubs = this.paymentActivityDetailService.getTotalByReportIncomeSuper(this.beginSchedule,this.finishSchedule).subscribe(total=>{
+                        this.data = result
+                        this.loading = false
+                        this.totalData = total.countOfPaymentActivity
+                    })
                 }
             )
         }
@@ -95,5 +100,6 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
 
     ngOnDestroy(): void {
         this.getAllPaymentSubs?.unsubscribe()
+        this.getTotalReportSubs?.unsubscribe()
     }
 }

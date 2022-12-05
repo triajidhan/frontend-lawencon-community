@@ -57,7 +57,10 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncomeMember(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(
             result => {
-                //this.getTotalPaymentSubs = 
+                this.getTotalPaymentSubs = this.paymentActivityDetailService.getTotalByReportIncomeMember(this.beginSchedule,this.finishSchedule).subscribe(total=>{
+                    console.log(result)
+                })
+
                 this.data = result
                 this.loading = false
                 this.totalData = result.length
