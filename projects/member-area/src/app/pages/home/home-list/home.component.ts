@@ -274,7 +274,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       post.postAttachment = result
     })
 
-    this.getAllCommentByPostSubs = this.commentService.getByPostAndOrder(post.id, true).subscribe(result => {
+    this.getAllCommentByPostSubs = this.commentService.getByPost(post.id,0,2, true).subscribe(result => {
       post.comments = result
     })
 
