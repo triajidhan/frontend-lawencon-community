@@ -40,7 +40,7 @@
                                         <h3>{{ post.user.fullName }}</h3>
                                     </ng-container>
                                     <p class="text-black-alpha-60 text-xs mt-1">
-                                        {{ post.createdAt }} </p>
+                                        {{ post.createdAt | timeAgo }} </p>
                                 </div>
                                 <div *ngIf="post.user.company"
                                     class="hidden sm:block min-w-max mr-3 bg-green-100 border-round-xl">
@@ -176,7 +176,7 @@
                                                         </p>
                                                     </div>
                                                     <p class="text-black-alpha-60 text-xs mt-1 ml-3">
-                                                        {{ post.comments[j].createdAt }} </p>
+                                                        {{ post.comments[j].createdAt| timeAgo }} </p>
                                                 </div>
                                             </div>
                                         </ng-container>

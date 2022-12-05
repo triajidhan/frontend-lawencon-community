@@ -22,6 +22,7 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
   private editUserSubscription?: Subscription
   private positionGetByIdSubscription!: Subscription
   private industriesGetByIdSubscription!: Subscription
+  private getByIdUserUpateSubscription?: Subscription
 
   myId: string = ""
   items!: MenuItem[]
@@ -29,7 +30,7 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
   resultFile !: string
   positionsRes!: Position[]
   industriesRes!: Industry[]
-  user: any = new Object();
+  user: any = new Object()
   roleCode: string | null = ""
   fullName: string = ''
   email: string = ''
@@ -39,6 +40,20 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
   id: string = ''
   positions: any[] = []
   industries: any[] = []
+
+  newUser: any = {
+    id: [''],
+    fullName: [''],
+    email: [''],
+    company: [''],
+    statusSubscribe: [false],
+    industry: {},
+    position: {},
+    balance: {},
+    role: {},
+    token: [''],
+    file: {}
+  }
 
   editProfileForm = this.fb.group({
     id: [this.id],
@@ -156,9 +171,14 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
     })
 
     this.editUserSubscription = this.userService.update(this.editProfileForm.value).subscribe(() => {
-      this.router.navigateByUrl("/profiles/member")
+      const token = this.apiService.getToken()
+      this.getByIdUserUpateSubscription = this.userService.getById(this.editProfileForm.value.id).subscribe(result => {
+        this.newUser = result
+        this.newUser.token = token
+        this.apiService.saveData(this.newUser)
+        this.router.navigateByUrl("/profiles/member")
+      })
     })
-
   }
 
   fileUpload(event: any): void {

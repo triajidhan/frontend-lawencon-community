@@ -25,7 +25,7 @@
 
                                             <div class="text-right mt-3 flex justify-content-between">
                                                 <p class="text-black-alpha-60">
-                                                    {{ article[i].createdAt }}
+                                                    {{ article[i].createdAt | timeAgo }}
                                                 </p>
                                                 <div routerLink="/articles/members/details/{{article[i].id}}"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">

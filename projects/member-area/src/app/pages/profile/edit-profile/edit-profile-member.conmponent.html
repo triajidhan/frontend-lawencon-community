@@ -12,7 +12,7 @@
                     </h2>
                 </div>
                 <p-card>
-                    <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
+                    <!-- <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu> -->
                 </p-card>
             </div>
 
@@ -63,7 +63,7 @@
                                     <div class="field col-12 md:col-6">
                                         <label for="positionName">Position <span class="text-red-500">*</span></label>
                                         <p-dropdown [options]="positions" styleClass="w-full p-inputtext-sm"
-                                            optionLabel="positionName" optionValue="postTypeCode" name="position"
+                                            optionLabel="positionName" optionValue="id" name="position"
                                             id="positionName" formControlName="positionId"
                                             placeholder="Select an Position">
                                         </p-dropdown>

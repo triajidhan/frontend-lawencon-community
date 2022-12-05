@@ -30,7 +30,7 @@
               </div>
               <div class="text-right mt-3 flex justify-content-between">
                 <p class="text-black-alpha-60">
-                  {{ recentArticle[i].createdAt }}
+                  {{ recentArticle[i].createdAt | timeAgo }}
                 </p>
                 <div routerLink="/articles/members/details/{{recentArticle[i].id}}"
                   class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
@@ -46,11 +46,17 @@
           <div class="flex sm:mx-5">
             <div class="max-w-max">
               <div class="w-3rem h-3rem border-circle overflow-hidden">
-                <p-image [preview]="true" *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                  styleClass="w-3rem h-3rem"></p-image>
-                <p-image [preview]="true" *ngIf="myProfile == 'null'" src="../../../../assets/logos/user.jpg"
-                  alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                <ng-template #isProfile>
+                  <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                    styleClass="w-3rem h-3rem"></p-image>
+                </ng-template>
+                <ng-template #isNotProfile>
+                  <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
+                    styleClass="w-3rem h-3rem"></p-image>
+                </ng-template>
               </div>
+
             </div>
             <div (click)="postDialog('regular')"
               class="w-full bg-black-alpha-10 ml-2 sm:ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
@@ -101,7 +107,7 @@
                     <div class="w-full">
                       <h3>{{ post[i].user.fullName }}</h3>
                       <p class="text-black-alpha-60 text-xs mt-1">
-                        {{ post[i].createdAt }} </p>
+                        {{ post[i].createdAt | timeAgo }} </p>
                     </div>
                     <div *ngIf="post[i].user.company"
                       class="hidden sm:block min-w-max mr-3 bg-green-100 border-round-xl">
@@ -154,7 +160,7 @@
                       <div class="flex flex-wrap justify-content-center text-white align-items-center">
                         <i class="fa-solid fa-lock text-2xl"></i>
                         <h1 class="ml-3">Locked</h1>
-                        <h1 class="text-white text-center w-full">18 +</h1>
+                        <h1 class="text-white text-center w-full">Premium Only</h1>
                       </div>
                     </div>
 
@@ -323,7 +329,7 @@
                                 <p class=" text-black-alpha-60">{{ post[i].comments[j].commentBody }} </p>
                               </div>
                               <p class="text-black-alpha-60 text-xs mt-1 ml-3">
-                                {{ post[i].comments[j].createdAt }} </p>
+                                {{ post[i].comments[j].createdAt | timeAgo }} </p>
                             </div>
                           </div>
                         </ng-container>
@@ -373,25 +379,18 @@
                   <div class="flex  align-items-center mb-3 mt-7">
                     <div class="max-w-max mr-3">
                       <div class="w-3rem h-3rem border-circle overflow-hidden">
-                        <p-image [preview]="true" *ngIf="postLike[i].user.file" src="{{urlFile}}{{postLike[i].user.file.id}}"
-                          alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                        <p-image [preview]="true" *ngIf="postLike[i].user.file"
+                          src="{{urlFile}}{{postLike[i].user.file.id}}" alt="profile image" styleClass="w-3rem h-3rem">
+                        </p-image>
                         <p-image [preview]="true" *ngIf="!postLike[i].user.file" src="../../../../assets/logos/user.jpg"
                           alt="profile image" styleClass="w-3rem h-3rem"></p-image>
                       </div>
                     </div>
 
-                    <!-- <div class="w-3rem h-3rem border-circle overflow-hidden">
-                      <p-image [preview]="true" *ngIf="p.post.user.file" src="{{urlFile}}{{p.post.user.file.id}}"
-                        alt="profile image" styleClass="w-3rem h-3rem"></p-image>
-                      <p-image [preview]="true" *ngIf="!p.post.user.file" src="../../../../assets/logos/user.jpg"
-                        alt="profile image" styleClass="w-3rem h-3rem"></p-image>
-                    </div> -->
-
                     <div class="w-full">
                       <h3>{{ postLike[i].user.fullName }}</h3>
-                      <p class="text-black-alpha-60 text-xs mt-1">{{ postLike[i].post.createdAt |
-                        date:"shortTime" }} |
-                        {{ postLike[i].post.createdAt | date:"fullDate" }} </p>
+                      <p class="text-black-alpha-60 text-xs mt-1">
+                        {{ postLike[i].post.createdAt | timeAgo }} </p>
                     </div>
                     <div class="min-w-max mr-3 bg-green-100 border-round-xl">
                       <h4 class="mx-3 my-1 text-green-500">{{ postLike[i].user.company }}</h4>
@@ -428,22 +427,24 @@
 
                     <ng-container *ngFor="let pa of postLike[i].post.postAttachment;index as j">
                       <ng-container *ngIf="postLike[i].post.postAttachment.length == 1">
-                        <img (click)="imageClick(i, j)" src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}"
-                          alt="post image">
+                        <img (click)="imageClick(i, j)"
+                          src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}" alt="post image">
                       </ng-container>
                       <ng-container *ngIf="postLike[i].post.postAttachment.length == 2">
                         <div
                           class="w-6 flex justify-content-center align-content-center h-30rem bg-black-alpha-30 overflow-hidden">
-                          <img (click)="imageClick(i, j)" src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}"
-                            alt="post image" class="w-auto">
+                          <img (click)="imageClick(i, j)"
+                            src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}" alt="post image"
+                            class="w-auto">
                         </div>
                       </ng-container>
                       <ng-container *ngIf="postLike[i].post.postAttachment.length > 2">
                         <ng-container *ngIf="j == 0">
                           <div
                             class="w-6 flex justify-content-center align-content-center h-30rem  overflow-hidden pb-1">
-                            <img (click)="imageClick(i, j)" src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}"
-                              alt="post image" class="w-auto">
+                            <img (click)="imageClick(i, j)"
+                              src="{{urlFile}}{{ postLike[i].post.postAttachment[j].file.id }}" alt="post image"
+                              class="w-auto">
                           </div>
                         </ng-container>
                       </ng-container>
@@ -493,7 +494,6 @@
                         class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
                         (click)="actLikePostLike(postLike[i].likeId,i)">
 
-                        <i class="fa-regular fa-heart text-2xl mr-2"></i>
                         <i class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
 
                         <p class="min-w-max">{{ postLike[i].countOfLike }} likes</p>
@@ -514,17 +514,18 @@
                   <div class="flex  align-items-center mb-3 mt-7">
                     <div class="max-w-max mr-3">
                       <div class="w-3rem h-3rem border-circle overflow-hidden">
-                        <p-image [preview]="true" *ngIf="postBookmark[i].user.file" src="{{urlFile}}{{postBookmark[i].user.file.id}}"
-                          alt="profile image" styleClass="w-3rem h-3rem"></p-image>
-                        <p-image [preview]="true" *ngIf="!postBookmark[i].user.file" src="../../../../assets/logos/user.jpg"
-                          alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                        <p-image [preview]="true" *ngIf="postBookmark[i].user.file"
+                          src="{{urlFile}}{{postBookmark[i].user.file.id}}" alt="profile image"
+                          styleClass="w-3rem h-3rem"></p-image>
+                        <p-image [preview]="true" *ngIf="!postBookmark[i].user.file"
+                          src="../../../../assets/logos/user.jpg" alt="profile image" styleClass="w-3rem h-3rem">
+                        </p-image>
                       </div>
                     </div>
                     <div class="w-full">
                       <h3>{{ p.user.fullName }}</h3>
-                      <p class="text-black-alpha-60 text-xs mt-1">{{ p.post.createdAt |
-                        date:"shortTime" }} |
-                        {{ p.post.createdAt | date:"fullDate" }} </p>
+                      <p class="text-black-alpha-60 text-xs mt-1">
+                        {{ p.post.createdAt | timeAgo }} </p>
                     </div>
                     <div class="min-w-max mr-3 bg-green-100 border-round-xl">
                       <h4 class="mx-3 my-1 text-green-500">{{ p.user.company }}</h4>
@@ -597,9 +598,8 @@
                             <ng-container *ngIf="j == 2">
                               <div
                                 class="w-full flex justify-content-center align-content-center h-15rem overflow-hidden pb-1">
-                                <img (click)="imageClick(i, j)"
-                                  src="{{urlFile}}{{ p.post.postAttachment[j].file.id }}" alt="post image"
-                                  class="h-auto">
+                                <img (click)="imageClick(i, j)" src="{{urlFile}}{{ p.post.postAttachment[j].file.id }}"
+                                  alt="post image" class="h-auto">
                               </div>
                             </ng-container>
                           </ng-container>
@@ -623,12 +623,10 @@
 
                   </div>
 
-                  <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
+                  <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-end">
                     <div
                       class="flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
                       (click)="actBookmarkPostBookmark(p.bookmarkId,i)">
-
-                      <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
                       <i class="fa-solid fa-bookmark text-2xl mr-2 main-text"></i>
                     </div>
                   </div>

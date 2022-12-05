@@ -13,10 +13,22 @@
 
                     <div class="grid mx-5">
                         <div class="col-12 md:col-4 lg:col-3 text-center">
-                            <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}"
-                                imageClass="table-img w-10rem h-10rem" alt="user admin image"></p-image>
-                            <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
-                                imageClass="table-img w-10rem h-10rem" alt="user admin image"></p-image>
+                            <div class="flex justify-content-center">
+                                <div class="border-circle overflow-hidden w-10rem h-10rem">
+                                    <div
+                                        *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                                    </div>
+                                    <ng-template #isProfile>
+                                        <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                                            styleClass="w-10rem h-10rem "></p-image>
+                                    </ng-template>
+                                    <ng-template #isNotProfile>
+                                        <p-image [preview]="true" src="../../../../assets/logos/user.jpg"
+                                            alt="profile image" styleClass="w-10rem h-10rem">
+                                        </p-image>
+                                    </ng-template>
+                                </div>
+                            </div>
                         </div>
                         <div
                             class="col-12 md:col-8 lg:col-9 flex justify-content-center md:justify-content-start align-items-center flex-wrap">
@@ -95,6 +107,7 @@
                                     src="../../../../assets/logos/user.jpg" alt="profile image"
                                     styleClass="w-3rem h-3rem"></p-image>
                             </div>
+
                         </div>
                         <div (click)="postDialog('regular')"
                             class="w-full bg-black-alpha-10 ml-2 sm:ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
@@ -133,10 +146,10 @@
                                 <div class="flex align-items-center mb-3 mt-7 relative z-1">
                                     <div class="max-w-max mr-3">
                                         <div class="w-3rem h-3rem border-circle overflow-hidden">
-                                            <p-image [preview]="true" *ngIf="post[i].user.file"
+                                            <p-image [preview]="true" *ngIf="post[i].user.file.files != ''"
                                                 src="{{urlFile}}{{post[i].user.file.id}}" alt="profile image"
                                                 styleClass="w-3rem h-3rem"></p-image>
-                                            <p-image [preview]="true" *ngIf="!post[i].user.file"
+                                            <p-image [preview]="true" *ngIf="post[i].user.file.files == ''"
                                                 src="../../../../assets/logos/user.jpg" alt="profile image"
                                                 styleClass="w-3rem h-3rem"></p-image>
                                         </div>
@@ -144,7 +157,7 @@
                                     <div class="w-full">
                                         <h3>{{ post[i].user.fullName }}</h3>
                                         <p class="text-black-alpha-60 text-xs mt-1">
-                                            {{ post[i].createdAt }} </p>
+                                            {{ post[i].createdAt | timeAgo }} </p>
                                     </div>
                                     <div *ngIf="post[i].user.company"
                                         class="hidden sm:block min-w-max mr-3 bg-green-100 border-round-xl">
@@ -198,7 +211,7 @@
                                             class="flex flex-wrap justify-content-center text-white align-items-center">
                                             <i class="fa-solid fa-lock text-2xl"></i>
                                             <h1 class="ml-3">Locked</h1>
-                                            <h1 class="text-white text-center w-full">18 +</h1>
+                                            <h1 class="text-white text-center w-full">Premium Only</h1>
                                         </div>
                                     </div>
 
@@ -368,14 +381,12 @@
                                             <ng-container *ngFor="let com of post[i].comments;index as j">
                                                 <div class="flex mt-3">
                                                     <div class="max-w-max mr-3">
-                                                        <img *ngIf="post[i].comments[j].user.file"
-                                                            src="{{urlFile}}{{post[i].comments[j].user.file.id}}"
-                                                            alt="profile image" class="w-2rem h-2rem border-circle">
-                                                        <img *ngIf="!post[i].comments[j].user.file"
-                                                            src="../../../../assets/logos/user.jpg" alt="profile image"
+                                                        <img *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}"
+                                                            alt="" class="w-2rem h-2rem border-circle">
+                                                        <img *ngIf="myProfile == 'null'"
+                                                            src="../../../../assets/logos/user.jpg" alt=""
                                                             class="w-2rem h-2rem border-circle">
                                                     </div>
-
                                                     <div class="w-max">
                                                         <div class="bg-gray-100 px-3 py-2 border-round-xl">
                                                             <p class="font-medium">{{ post[i].comments[j].user.fullName
@@ -385,7 +396,7 @@
                                                                 post[i].comments[j].commentBody }} </p>
                                                         </div>
                                                         <p class="text-black-alpha-60 text-xs mt-1 ml-3">
-                                                            {{ post[i].comments[j].createdAt }} </p>
+                                                            {{ post[i].comments[j].createdAt | timeAgo }} </p>
                                                     </div>
                                                 </div>
                                             </ng-container>
@@ -396,10 +407,11 @@
 
                                             <div class="flex mt-3">
                                                 <div class="max-w-max mr-3">
-                                                    <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt=""
-                                                        class="w-2rem h-2rem border-circle">
-                                                    <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                                                    <img *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}"
                                                         alt="" class="w-2rem h-2rem border-circle">
+                                                    <img *ngIf="myProfile == 'null'"
+                                                        src="../../../../assets/logos/user.jpg" alt=""
+                                                        class="w-2rem h-2rem border-circle">
                                                 </div>
                                                 <div class="w-full">
                                                     <form [formGroup]="commentForm" class="card w-full">

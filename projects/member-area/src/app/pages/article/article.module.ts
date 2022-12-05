@@ -19,6 +19,7 @@ import { DialogModule } from "primeng/dialog"
 import { ArticleListComponent } from "./article-list/article-list.component"
 import { ArticleDetailComponent } from "./article-detail/article-detail.component"
 import { ImageModule } from "primeng/image"
+import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudule"
 
 @NgModule({
     declarations: [
@@ -31,7 +32,7 @@ import { ImageModule } from "primeng/image"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
         CalendarModule, DropdownModule, InfiniteScrollModule,
-        DialogModule, ImageModule
+        DialogModule, ImageModule, TimeAgoModule
     ],
     exports: [
         ArticleListComponent, ArticleDetailComponent

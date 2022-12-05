@@ -15,25 +15,6 @@
                                 disabled value={{email}}>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <label for="company">Company <span class="text-red-500">*</span></label>
-                            <input pInputText id="company" formControlName="company" name="company" type="text"
-                                class="w-full p-inputtext-sm">
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <label for="industryName">Industry <span class="text-red-500">*</span></label>
-                            <p-dropdown [options]="industries" styleClass="w-full p-inputtext-sm"
-                                optionLabel="industryName" optionValue="id" name="industry" id="industryName"
-                                formControlName="industryId" placeholder="Select an Industry">
-                            </p-dropdown>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <label for="positionName">Position <span class="text-red-500">*</span></label>
-                            <p-dropdown [options]="positions" styleClass="w-full p-inputtext-sm"
-                                optionLabel="positionName" optionValue="id" name="position" id="positionName"
-                                formControlName="positionId" placeholder="Select an Position">
-                            </p-dropdown>
-                        </div>
-                        <div class="field col-12 md:col-6">
                             <label for="file">Photo <span class="text-red-500">*</span></label>
                             <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
                                 (uploadHandler)="fileUpload($event)">
