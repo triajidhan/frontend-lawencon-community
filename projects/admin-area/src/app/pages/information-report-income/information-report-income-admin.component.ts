@@ -87,7 +87,7 @@ export class InformationReportIncomeAdminComponent implements OnInit, OnDestroy 
     }
 
     exportData() {
-        this.exportsSubscription = this.reportService.getReportIncomeMember(this.beginSchedule, this.finishSchedule).subscribe(result => {
+        this.exportsSubscription = this.reportService.getReportIncomeSuper(this.beginSchedule, this.finishSchedule).subscribe(result => {
             const anchor = document.createElement('a');
             anchor.download = "total-income-super.pdf";
             anchor.href = (window.webkitURL || window.URL).createObjectURL(result.body as any);

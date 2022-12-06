@@ -44,6 +44,10 @@ export class UserService {
     return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/total-user/role-code/?roleCode=${roleCode}`)
   }
 
+  getTotalSubscribe() {
+    return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/total-user-subscribe/`)
+  }
+
   getByIsActive(startPosition: number, limit: number): Observable<any> {
     return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/is-active/?startPosition=${startPosition}&limit=${limit}`)
   }
