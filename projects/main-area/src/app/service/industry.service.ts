@@ -26,8 +26,8 @@ export class IndustryService {
 		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/total-industry`)
 	}
 
-	getByIsActiveAll(): Observable<Industry> {
-		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/is-active-all/`)
+	getByIsActiveAll(): Observable<Industry[]> {
+		return this.httpClient.get<Industry[]>(`${Object.values(BASE_URL)[0]}/industries/is-active-all/`)
 	}
 
 	getByIsActive(startPosition: number, limit: number): Observable<any> {

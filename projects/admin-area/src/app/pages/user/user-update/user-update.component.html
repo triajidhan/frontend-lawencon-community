@@ -19,6 +19,9 @@
                     </div>
                 </h1>
             </div>
+            <div class="grid w-full">
+                <button pButton type="button" routerLink="/users" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+            </div>
             <div class="grid w-full mb-5 p-3 bg-white">
                 <form [formGroup]="updateUserForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                     <div class="formgrid grid">
@@ -33,8 +36,7 @@
                                 value="{{user.email}}" disabled>
                         </div>
                         <div class="col-12 my-3">
-                            <button pButton routerLink="/users" class="p-button-outlined mr-2" label="BACK"></button>
-                            <button pButton [disabled]="updateUserForm.invalid" (click)="userUpdate()" type="button"
+                            <button pButton [disabled]="updateUserForm.invalid" (click)="userUpdate()" type="submit"
                                 id="user-save" label="SAVE" class="main-color"></button>
                         </div>
                     </div>

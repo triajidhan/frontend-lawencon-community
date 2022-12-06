@@ -9,7 +9,10 @@
                                 <div class="col-12 md:col-4">
                                     <div
                                         class="w-full h-12rem flex justify-content-center align-items-center overflow-hidden">
-                                        <p-image [preview]="true" src="{{urlFile}}{{ article[i].file.id}}"
+                                        <p-image *ngIf="article[i].file.files" [preview]="true" src="{{urlFile}}{{ article[i].file.id}}"
+                                            alt="article img" imageClass="w-full">
+                                        </p-image>
+                                        <p-image *ngIf="!article[i].file.files" [preview]="true" src="../../../../assets/images/event.jpg"
                                             alt="article img" imageClass="w-full">
                                         </p-image>
                                     </div>

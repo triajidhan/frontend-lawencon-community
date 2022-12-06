@@ -21,7 +21,8 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     updateUserForm = this.formBuilder.group({
         id: [''],
         fullName: ['', Validators.required],
-        email: ['']
+        email: [''], 
+        version: [0]
     })
 
     constructor(private formBuilder: FormBuilder,
@@ -41,6 +42,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
                 this.updateUserForm.controls['fullName'].setValue(user.fullName)
                 this.updateUserForm.controls['email'].setValue(user.email)
                 this.updateUserForm.controls['id'].setValue(user.id)
+                this.updateUserForm.controls['version'].setValue(user.version)
             })
         })
     }

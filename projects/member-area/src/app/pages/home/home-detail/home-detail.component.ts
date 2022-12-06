@@ -152,6 +152,7 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
         totalTemp += result[j].totalPoll
         post.totalPoll = totalTemp
       }
+      console.log(this.post)
     })
   }
 

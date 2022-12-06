@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.primengConfig.ripple = true
 
-        this.positionsSubscription = this.positionService.getAll().subscribe(result => {
+        this.positionsSubscription = this.positionService.getByIsActiveAll().subscribe(result => {
             this.positionsRes = result
             for (let i = 0; i < this.positionsRes.length; i++) {
                 this.positions.push({
@@ -66,7 +66,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                 })
             }
         })
-        this.industriesSubscription = this.industryService.getAll().subscribe(result => {
+        this.industriesSubscription = this.industryService.getByIsActiveAll().subscribe(result => {
             this.industriesRes = result
             for (let i = 0; i < this.industriesRes.length; i++) {
                 this.industries.push({

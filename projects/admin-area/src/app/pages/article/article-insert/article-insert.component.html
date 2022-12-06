@@ -17,6 +17,9 @@
                     </div>
                 </h1>
             </div>
+            <div class="grid w-full lg:w-8 md:w-10">
+                <button pButton type="button" routerLink="/articles/admin" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+            </div>
             <div class="grid w-full lg:w-8 md:w-10 mb-5 p-3 bg-white">
                 <form [formGroup]="insertArticleForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                     <div class="formgrid grid">
@@ -37,7 +40,6 @@
                             </p-fileUpload>
                         </div>
                         <div class="col-12 my-3">
-                            <button pButton routerLink="/articles" class="p-button-outlined mr-2" label="BACK"></button>
                             <button pButton [disabled]="insertArticleForm.invalid" type="submit" id="article-submit"
                                 label="SUBMIT" (click)="submitInsert()" class="main-color"></button>
                         </div>

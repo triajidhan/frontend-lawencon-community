@@ -35,7 +35,7 @@ export class IndustryListComponent implements OnInit, OnDestroy {
 
         this.items = [
             { label: 'Home', routerLink: "/dashboard/super-admin" },
-            { label: 'industry' }
+            { label: 'Industry' }
         ]
     }
 
