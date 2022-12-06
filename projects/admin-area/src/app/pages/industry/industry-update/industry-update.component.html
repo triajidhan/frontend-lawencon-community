@@ -17,6 +17,9 @@
                     </div>
                 </h1>
             </div>
+            <div class="grid w-full ">
+                <button pButton type="button" routerLink="/industries" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+            </div>
             <div class="grid w-full mb-5 p-3 bg-white">
                 <form class="card w-full mx-3 border-0 md:px-4 my-3" [formGroup]="updateIndustryForm">
                     <div class="formgrid grid">
@@ -31,8 +34,6 @@
                                 class="w-full p-inputtext-sm" disabled value="{{industry.industryCode}}">
                         </div>
                         <div class="col-12 my-3">
-                            <button pButton routerLink="/industries" class="p-button-outlined mr-2"
-                                label="BACK"></button>
                             <button pButton [loading]="loadingIndustry" type="submit" id="industry-save" label="SUBMIT"
                                 class="main-color" (click)="submitUpdate()"></button>
                         </div>

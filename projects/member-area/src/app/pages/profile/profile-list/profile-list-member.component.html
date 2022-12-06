@@ -143,12 +143,10 @@
                                 <div class="flex align-items-center mb-3 mt-7 relative z-1">
                                     <div class="max-w-max mr-3">
                                         <div class="w-3rem h-3rem border-circle overflow-hidden">
-                                            <p-image [preview]="true" *ngIf="post[i].user.file.files != ''"
-                                                src="{{urlFile}}{{post[i].user.file.id}}" alt="profile image"
-                                                imageClass="w-3rem h-3rem"></p-image>
-                                            <p-image [preview]="true" *ngIf="post[i].user.file.files == ''"
-                                                src="../../../../assets/logos/user.jpg" alt="profile image"
-                                                imageClass="w-3rem h-3rem"></p-image>
+                                            <p-image [preview]="true" *ngIf="post[i].user.file" src="{{urlFile}}{{post[i].user.file.id}}"
+                                            alt="profile image" imageClass="w-3rem h-3rem"></p-image>
+                                          <p-image [preview]="true" *ngIf="!post[i].user.file" src="../../../../assets/logos/user.jpg"
+                                            alt="profile image" imageClass="w-3rem h-3rem"></p-image>
                                         </div>
                                     </div>
                                     <div class="w-full">
@@ -458,9 +456,9 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                    <p-image [preview]="true" *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}" alt="profile image"
                         imageClass="w-3rem h-3rem border-circle"></p-image>
-                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                    <p-image [preview]="true" *ngIf="myProfile == 'null'" src="../../../../assets/logos/user.jpg"
                         alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
                 </div>
                 <div class="w-full">
@@ -503,9 +501,9 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                    <p-image [preview]="true" *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}" alt="profile image"
                         imageClass="w-3rem h-3rem border-circle"></p-image>
-                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                    <p-image [preview]="true" *ngIf="myProfile == 'null'" src="../../../../assets/logos/user.jpg"
                         alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
                 </div>
                 <div class="w-full">

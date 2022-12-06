@@ -25,8 +25,8 @@ export class PositionService {
 		return this.httpClient.get<Position>(`${Object.values(BASE_URL)[0]}/positions/id/${id}`)
 	}
 
-	getByIsActiveAll(): Observable<Position> {
-		return this.httpClient.get<Position>(`${Object.values(BASE_URL)[0]}/positions/is-active-all/`)
+	getByIsActiveAll(): Observable<Position[]> {
+		return this.httpClient.get<Position[]>(`${Object.values(BASE_URL)[0]}/positions/is-active-all/`)
 	}
 
 	getByIsActive(startPosition: number, limit: number): Observable<any> {

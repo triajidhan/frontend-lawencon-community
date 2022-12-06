@@ -13,8 +13,11 @@
         <p-card>
           <ng-container *ngFor="let ra of recentArticle;index as i">
             <div class="py-5 border-bottom-1 border-black-alpha-50 border-round-left-md">
-              <p-image [preview]="true" src="{{urlFile}}{{ recentArticle[i].file.id }}" alt="article image"
+              <p-image *ngIf="recentArticle[i].file.files" [preview]="true" src="{{urlFile}}{{ recentArticle[i].file.id }}" alt="article image"
                 class="img-fluid"></p-image>
+                <p-image *ngIf="!recentArticle[i].file.files" [preview]="true" src="../../../../assets/images/event.jpg" alt="article image"
+                class="img-fluid"></p-image>
+
               <h3 class="mt-3">
                 {{ recentArticle[i].title }}
               </h3>
@@ -153,6 +156,7 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="relative">
                     <div *ngIf="post[i].postType.postTypeName == 'Premium' && !myStatusSubscribe"
                       pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30 
@@ -172,60 +176,60 @@
                       </p>
                     </p-card>
 
-                    <div *ngIf="post[i].postAttachment" class="flex w-full column-gap-1 cursor-pointer">
-                      <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
-                        <ng-container *ngIf="post[i].postAttachment.length == 1">
-                          <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                    <div *ngIf="post[i].fileId" class="flex w-full column-gap-1 cursor-pointer">
+                      <ng-container *ngFor="let pa of post[i].fileId;index as j">
+                        <ng-container *ngIf="post[i].fileId.length == 1">
+                          <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
                             alt="post image">
                         </ng-container>
-                        <ng-container *ngIf="post[i].postAttachment.length == 2">
+                        <ng-container *ngIf="post[i].fileId.length == 2">
                           <div
                             class="w-6 flex justify-content-center align-content-center h-20rem sm:h-30rem bg-black-alpha-30 overflow-hidden">
-                            <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                            <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
                               alt="post image" class="w-auto">
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="post[i].postAttachment.length > 2">
+                        <ng-container *ngIf="post[i].fileId.length > 2">
                           <ng-container *ngIf="j == 0">
                             <div
                               class="w-6 flex justify-content-center align-content-center h-20rem sm:h-30rem  overflow-hidden pb-1">
-                              <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                              <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
                                 alt="post image" class="w-auto">
                             </div>
                           </ng-container>
                         </ng-container>
                       </ng-container>
 
-                      <ng-container *ngIf="post[i].postAttachment.length > 2">
+                      <ng-container *ngIf="post[i].fileId.length > 2">
                         <div class="flex w-6 flex-wrap">
-                          <ng-container *ngFor="let pa of post[i].postAttachment;index as j">
+                          <ng-container *ngFor="let pa of post[i].fileId;index as j">
                             <ng-container *ngIf="j == 1">
                               <div
                                 class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1">
-                                <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}"
+                                <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
                                   alt="post image" class="h-auto">
                               </div>
                             </ng-container>
-                            <ng-container *ngIf="post[i].postAttachment.length == 3">
+                            <ng-container *ngIf="post[i].fileId.length == 3">
                               <ng-container *ngIf="j == 2">
                                 <div
                                   class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1">
                                   <img (click)="imageClick(i, j)"
-                                    src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}" alt="post image"
+                                    src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image"
                                     class="h-auto">
                                 </div>
                               </ng-container>
                             </ng-container>
-                            <ng-container *ngIf="post[i].postAttachment.length > 3">
+                            <ng-container *ngIf="post[i].fileId.length > 3">
                               <ng-container *ngIf="j == 2">
                                 <div
                                   class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1 relative">
-                                  <img src="{{urlFile}}{{ post[i].postAttachment[j].file.id }}" alt="post image"
+                                  <img src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image"
                                     class="h-auto">
                                   <div (click)="imageClick(i, j)"
                                     class="absolute w-full h-10rem sm:h-15rem bg-black-alpha-90 opacity-70 flex justify-content-center align-items-center img-cover">
                                     <h1 class="text-white">
-                                      {{post[i].postAttachment.length -3}} +</h1>
+                                      {{post[i].fileId.length -3}} +</h1>
                                   </div>
                                 </div>
                               </ng-container>
@@ -235,64 +239,68 @@
                       </ng-container>
                     </div>
 
-                    <p-card *ngIf="post[i].titlePoll" styleClass="pooling-content">
-                      <h3 class="text-justify">{{post[i].titlePoll}}</h3>
-                      <ng-container *ngFor="let po of pollOption[i]; index as j">
+                    <p-card *ngIf="p.titlePoll" styleClass="pooling-content">
+                      <h3 class="text-justify">{{p.titlePoll}}</h3>
 
-                        <div *ngIf="!pollOption[i][j].pollingStatus" class="mt-3 body-color hover:bg-gray-100">
-                          <div class="flex align-items-center cursor-pointer py-3"
-                            (click)="choosePollOption(pollOption[i][j].id, i , j)">
-                            <p class="text-center text-lg main-text w-full">{{pollOption[i][j].pollContent}}</p>
+                      <ng-container *ngFor="let po of post[i].pollContents; index as j">
+
+                          <div *ngIf="!p.choosenPolling" class="mt-3 body-color hover:bg-gray-100">
+                            <div class="flex align-items-center cursor-pointer py-3"
+                            (click)="choosePollOption(p.pollId[j], i , j)">
+                            <p class="text-center text-lg main-text w-full">{{po}}</p>
                           </div>
                         </div>
+                     
 
-                        <ng-container *ngIf="pollOption[i][j].pollingStatus">
-                          <div *ngIf="pollOption[i][j].id != pollOption[i][j].pollingStatus.polling.id"
+                        <ng-container *ngIf="p.choosenPolling">
+                          <div *ngIf="p.pollId[j] != p.choosenPolling"
                             class="mt-3 py-3 body-color cursor-pointer" pTooltip="you have voted">
                             <div class="flex align-items-center">
-                              <p class="text-center text-lg main-text w-full">{{pollOption[i][j].pollContent}}</p>
-                              <p class="min-w-max mr-3 text-black-alpha-60">{{pollOption[i][j].totalPoll}} votes</p>
+                              <p class="text-center text-lg main-text w-full">{{po}}</p>
+                              <p class="min-w-max mr-3 text-black-alpha-60">{{p.totalPoll[j]}} votes</p>
                             </div>
                           </div>
 
-                          <div *ngIf="pollOption[i][j].id == pollOption[i][j].pollingStatus.polling.id"
+                          <div *ngIf="p.pollId[j] == p.choosenPolling"
                             class="mt-3 py-3 main-color text-white cursor-pointer" pTooltip="you have voted">
                             <div class="flex align-items-center">
-                              <p class="text-center text-lg  w-full">{{pollOption[i][j].pollContent}}</p>
-                              <p class="min-w-max mr-3 ">{{pollOption[i][j].totalPoll}} votes</p>
+                              <p class="text-center text-lg  w-full">{{po}}</p>
+                              <p class="min-w-max mr-3 ">{{p.totalPoll[j]}} votes</p>
                             </div>
                           </div>
-                        </ng-container>
-
                       </ng-container>
+                    </ng-container>
+
                       <div class="flex mt-5 align-items-center text-black-alpha-60">
                         <i class="fa-solid fa-check-to-slot text-2xl mr-2 cursor-pointer"></i>
-                        <p class="w-full">{{post[i].totalPoll}} votes</p>
+                        <p class="w-full">{{p.totalVote}} votes</p>
                       </div>
+
                     </p-card>
+
                     <div class="flex flex-wrap mt-5 align-items-center text-black-alpha-60 ">
                       <div class="flex align-items-center">
                         <div
                           class="flex-order-0 flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
-                          (click)="actLikePost(post[i].id,post[i].likeId,i)">
+                          (click)="actLikePost(p.id,p.likeId,i)">
 
-                          <i *ngIf="!post[i].likeId || !post[i].isActiveLike"
+                          <i *ngIf="!p.likeId || !p.statusLike"
                             class="fa-regular fa-heart text-2xl mr-2"></i>
-                          <i *ngIf="post[i].likeId && post[i].isActiveLike"
+                          <i *ngIf="p.likeId && p.statusLike"
                             class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
 
 
-                          <p class="min-w-max">{{ post[i].countOfLike }} <span class="hidden sm:inline">likes</span>
+                          <p class="min-w-max">{{ p.countOfLike }} <span class="hidden sm:inline">likes</span>
                           </p>
                         </div>
                       </div>
 
                       <div class="flex-order-2 flex align-items-center cursor-pointer flex-grow-1 justify-content-end"
-                        (click)="actBookmark(post[i].id,post[i].bookmarkId,i)">
+                        (click)="actBookmark(p.id,p.bookmarkId,i)">
                         <div
                           class="hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
                           <div
-                            *ngIf="!post[i].bookmarkId || !post[i].isActiveBookmark; then isntBookmark else isBookmark">
+                            *ngIf="!p.bookmarkId || !p.statusBookmark; then isntBookmark else isBookmark">
                           </div>
                           <ng-template #isntBookmark>
                             <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
@@ -308,33 +316,33 @@
                         class="flex-order-1 flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
                         <div class="ml-1 flex align-items-center">
                           <i class="fa-regular fa-message text-2xl mr-2"></i>
-                          <p class="">{{ post[i].countOfComment }} <span class="hidden sm:inline">comments</span></p>
+                          <p class="">{{ p.countOfComment }} <span class="hidden sm:inline">comments</span></p>
                         </div>
                       </div>
 
                       <div class="flex-order-3 w-full mt-2 hidden">
-                        <ng-container *ngFor="let com of post[i].comments;index as j">
+                        <ng-container *ngFor="let us of p.userComment;index as j">
                           <div class="flex mt-3">
                             <div class="max-w-max mr-3">
-                              <p-image [preview]="true" *ngIf="post[i].comments[j].user.file"
-                                src="{{urlFile}}{{post[i].comments[j].user.file.id}}" alt="profile image"
+                              <p-image [preview]="true" *ngIf="us.file"
+                                src="{{urlFile}}{{us.file.id}}" alt="profile image"
                                 imageClass="w-2rem h-2rem border-circle"></p-image>
-                              <p-image [preview]="true" *ngIf="!post[i].comments[j].user.file"
+                              <p-image [preview]="true" *ngIf="!us.file"
                                 src="../../../../assets/logos/user.jpg" alt="profile image"
                                 imageClass="w-2rem h-2rem border-circle"></p-image>
                             </div>
 
                             <div class="w-max">
                               <div class="bg-gray-100 px-3 py-2 border-round-xl">
-                                <p class="font-medium">{{ post[i].comments[j].user.fullName }}</p>
-                                <p class=" text-black-alpha-60">{{ post[i].comments[j].commentBody }} </p>
+                                <p class="font-medium">{{ us.fullName }}</p>
+                                <p class=" text-black-alpha-60">{{ p.commentBody[j] }} </p>
                               </div>
                               <p class="text-black-alpha-60 text-xs mt-1 ml-3">
-                                {{ post[i].comments[j].createdAt | timeAgo }} </p>
+                                {{ p.createdAtComment[j] | timeAgo }} </p>
                             </div>
                           </div>
                         </ng-container>
-                        <div routerLink="/homes/details/{{post[i].id}}"
+                        <div routerLink="/homes/details/{{p.id}}"
                           class="mt-2 cursor-pointer w-full text-right font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
                           <p>Show all comments</p>
                         </div>
@@ -357,7 +365,7 @@
                               </div>
                               <div class="hidden">
                                 <button [disabled]="commentForm.invalid" type="submit"
-                                  (click)="insertComment(post[i].id, i)"></button>
+                                  (click)="insertComment(p.id, i)"></button>
                               </div>
                             </form>
                           </div>
@@ -371,7 +379,7 @@
 
           </ng-container>
 
-          <ng-container *ngIf="type == 'likes'">
+          <!-- <ng-container *ngIf="type == 'likes'">
             <p-card infinite-scroll (scrolled)="onScrollLike()">
               <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
 
@@ -634,7 +642,7 @@
                 </div>
               </ng-container>
             </p-card>
-          </ng-container>
+          </ng-container> -->
         </div>
       </div>
     </div>

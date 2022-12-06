@@ -26,7 +26,6 @@ export class CanActiveAuth implements CanActivate{
             }else if(data == ROLE_CODE.ADMIN.toString()){
                 this.router.navigateByUrl('/dashboard/admin')
             }
-
             return false
         }else{
             return true

@@ -17,6 +17,9 @@
                     </div>
                 </h1>
             </div>
+            <div class="grid w-full md:w-8 ">
+                <button pButton type="button" routerLink="/industries" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+            </div>
             <div class="grid w-full md:w-8 mb-5 p-3 bg-white">
                 <form [formGroup]="insertIndustryForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                     <div class="formgrid grid">
@@ -26,8 +29,6 @@
                                 type="text" class="w-full p-inputtext-sm" required>
                         </div>
                         <div class="col-12 my-3">
-                            <button pButton routerLink="/industries" class="p-button-outlined mr-2"
-                                label="BACK"></button>
                             <button [disabled]="insertIndustryForm.invalid" pButton type="submit" id="industry-submit"
                                 label="SUBMIT" (click)="submitInsert()" class="main-color"
                                 [loading]="loadingInsert"></button>

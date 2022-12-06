@@ -62,7 +62,7 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
     });
     this.insertSubscription = this.articleService.insert(this.insertArticleForm.value).subscribe(() => {
       console.log("save")
-      this.router.navigateByUrl(`/articles`)
+      this.router.navigateByUrl(`/articles/admin`)
     })
   }
 

@@ -18,10 +18,6 @@ export class UserInsertComponent implements OnInit, OnDestroy {
         fullName: ['', Validators.required],
         email: ['', Validators.required],
         pass: ['', Validators.required],
-        file: this.formBuilder.group({
-            files: [''],
-            ext: ['']
-        })
     })
 
     constructor(private formBuilder: FormBuilder,

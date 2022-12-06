@@ -18,7 +18,7 @@
                 </h1>
             </div>
             <div class="grid w-full  ">
-                <button pButton routerLink="/articles/new" label="INSERT" class="mb-5 ml-2 main-color">
+                <button pButton routerLink="/articles/admin/new" label="INSERT" class="mb-5 ml-2 main-color">
                     <i class="fa-solid fa-plus mr-2 text-sm"></i>
                 </button>
             </div>
@@ -52,14 +52,17 @@
                                     <p *ngIf="data.contents.length > 200">. . .</p>
                                 </td>
                                 <td>
-                                    <p-image [preview]="true" src="{{urlFile}}{{ data.file.id}}"
+                                    <p-image *ngIf="data.file.files" [preview]="true" src="{{urlFile}}{{ data.file.id}}"
+                                        imageClass="img-fluid images table-img" alt="article admin image">
+                                    </p-image>
+                                    <p-image *ngIf="!data.file.files" [preview]="true" src="../../../../assets/images/event.jpg"
                                         imageClass="img-fluid images table-img" alt="article admin image">
                                     </p-image>
                                 </td>
-                                <td>{{data.isActive}}</td>
+                                <td>  {{data.isActive}}</td>
                                 <td class="text-center">
                                     <div class="flex justify-content-center">
-                                        <button pButton routerLink="/articles/edit/{{data.id}}" type="button"
+                                        <button pButton routerLink="/articles/admin/edit/{{data.id}}" type="button"
                                             class="mr-1 main-color" label="UPDATE">
                                             <i class="fa-solid fa-pen text-sm mr-2"></i>
                                         </button>

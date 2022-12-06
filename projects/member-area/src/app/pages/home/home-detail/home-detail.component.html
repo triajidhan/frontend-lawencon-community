@@ -4,7 +4,7 @@
             <ng-container *ngIf="post.user">
                 <div class="col-12 lg:col-10 md:px-3 px-1 py-3">
                     <ng-container *ngIf="post.postAttachment">
-                        <div class="h-20rem sm:h-25rem md:h-30rem bg-black-alpha-90">
+                        <div *ngIf="post.postAttachment.length > 0" class="h-20rem sm:h-25rem md:h-30rem bg-black-alpha-90">
                             <p-galleria [value]="post.postAttachment" [responsiveOptions]="responsiveOptions"
                                 [containerStyle]="{'max-width': '1000px'}" [numVisible]="7" [circular]="true">
                                 <ng-template pTemplate="item" let-item>
