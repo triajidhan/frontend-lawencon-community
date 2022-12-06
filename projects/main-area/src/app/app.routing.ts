@@ -6,6 +6,7 @@ import { ContentModuleAdmin } from "projects/admin-area/src/app/components/conte
 import { ContentMemberModule } from "projects/member-area/src/app/components/content/content-member.module";
 import { MemberAreaModule } from "projects/member-area/src/app/member-area.module";
 import { memberAreaRoutes } from "projects/member-area/src/app/member-area.routing";
+import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { CanActiveAuth } from "./guard/can-active-auth-load.guard";
 import { LoginComponent } from "./pages/login/login.component";
 
@@ -20,12 +21,16 @@ export const mainRoutes: Routes = [
     {
         path: "login/member",
         component: LoginComponent,
-        canActivate:[CanActiveAuth]
+        canActivate: [CanActiveAuth]
     },
     {
         path: "login/admin",
         component: LoginComponent,
-        canActivate:[CanActiveAuth]
+        canActivate: [CanActiveAuth]
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
     }
 ]
 

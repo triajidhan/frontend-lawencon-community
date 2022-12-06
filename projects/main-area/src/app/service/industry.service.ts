@@ -14,8 +14,8 @@ export class IndustryService {
 
 	constructor(private httpClient: HttpClient) { }
 
-	getAll(): Observable<Industry> {
-		return this.httpClient.get<Industry>(`${Object.values(BASE_URL)[0]}/industries/`)
+	getAll(): Observable<Industry[]> {
+		return this.httpClient.get<Industry[]>(`${Object.values(BASE_URL)[0]}/industries/`)
 	}
 
 	getById(id: string): Observable<Industry> {

@@ -6,7 +6,7 @@ import { MenuItem } from "primeng/api"
 import { ActivityType } from "projects/interface/activity-type"
 import { ActivityTypeService } from "projects/main-area/src/app/service/activity-type.service"
 import { finalize, Subscription } from "rxjs"
-import { ActivityService } from "../../../service/activity.service"
+import { ActivityService } from "projects/main-area/src/app/service/activity.service"
 
 @Component({
     selector: 'activity-insert',

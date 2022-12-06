@@ -15,18 +15,15 @@
                         <div class="col-12 md:col-4 lg:col-3 text-center">
                             <div class="flex justify-content-center">
                                 <div class="border-circle overflow-hidden w-10rem h-10rem">
-                                    <div
-                                        *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
-                                    </div>
-                                    <ng-template #isProfile>
+                                    <ng-container *ngIf="(myProfile != 'null' && myProfile != '')">
                                         <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                                            styleClass="w-10rem h-10rem "></p-image>
-                                    </ng-template>
-                                    <ng-template #isNotProfile>
+                                            imageClass="table-img w-10rem h-10rem"></p-image>
+                                    </ng-container>
+                                    <ng-container *ngIf="(myProfile == 'null' || myProfile == '')">
                                         <p-image [preview]="true" src="../../../../assets/logos/user.jpg"
-                                            alt="profile image" styleClass="w-10rem h-10rem">
+                                            alt="profile image" imageClass="table-img w-10rem h-10rem">
                                         </p-image>
-                                    </ng-template>
+                                    </ng-container>
                                 </div>
                             </div>
                         </div>
@@ -102,10 +99,10 @@
                         <div class="max-w-max">
                             <div class="w-3rem h-3rem border-circle overflow-hidden">
                                 <p-image [preview]="true" *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}"
-                                    alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                                    alt="profile image" imageClass="w-3rem h-3rem"></p-image>
                                 <p-image [preview]="true" *ngIf="myProfile == 'null'"
                                     src="../../../../assets/logos/user.jpg" alt="profile image"
-                                    styleClass="w-3rem h-3rem"></p-image>
+                                    imageClass="w-3rem h-3rem"></p-image>
                             </div>
 
                         </div>
@@ -148,10 +145,10 @@
                                         <div class="w-3rem h-3rem border-circle overflow-hidden">
                                             <p-image [preview]="true" *ngIf="post[i].user.file.files != ''"
                                                 src="{{urlFile}}{{post[i].user.file.id}}" alt="profile image"
-                                                styleClass="w-3rem h-3rem"></p-image>
+                                                imageClass="w-3rem h-3rem"></p-image>
                                             <p-image [preview]="true" *ngIf="post[i].user.file.files == ''"
                                                 src="../../../../assets/logos/user.jpg" alt="profile image"
-                                                styleClass="w-3rem h-3rem"></p-image>
+                                                imageClass="w-3rem h-3rem"></p-image>
                                         </div>
                                     </div>
                                     <div class="w-full">
@@ -207,17 +204,14 @@
                                     <div *ngIf="post[i].postType.postTypeName == 'Premium' && !myStatusSubscribe"
                                         pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30 
                                               flex justify-content-center align-items-center">
-                                        <div
-                                            class="flex flex-wrap justify-content-center text-white align-items-center">
-                                            <i class="fa-solid fa-lock text-2xl"></i>
-                                            <div>
-                                                <h3 class="ml-3">Locked</h3>
-                                                <h3 class="text-white text-center w-full">Premium Only</h3>
-                                            </div>
+                                        <div class="text-center text-white">
+                                            <i class="fa-solid fa-lock text-5xl"></i>
+                                            <h2 class="mt-2">Locked</h2>
+                                            <h2 class="text-white text-center w-full">Premium Only</h2>
                                         </div>
                                     </div>
 
-                                    <p-card styleClass="content-box">
+                                    <p-card imageClass="content-box">
                                         <h3 class="text-justify">{{post[i].title}}
                                         </h3>
                                         <p class="text-black-alpha-60 mt-3 text-justify">
@@ -292,7 +286,7 @@
                                         </ng-container>
                                     </div>
 
-                                    <p-card *ngIf="post[i].titlePoll" styleClass="pooling-content">
+                                    <p-card *ngIf="post[i].titlePoll" imageClass="pooling-content">
                                         <h3 class="text-justify">{{post[i].titlePoll}}</h3>
                                         <ng-container *ngFor="let po of pollOption[i]; index as j">
 
@@ -383,11 +377,12 @@
                                             <ng-container *ngFor="let com of post[i].comments;index as j">
                                                 <div class="flex mt-3">
                                                     <div class="max-w-max mr-3">
-                                                        <img *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}"
-                                                            alt="" class="w-2rem h-2rem border-circle">
-                                                        <img *ngIf="myProfile == 'null'"
-                                                            src="../../../../assets/logos/user.jpg" alt=""
-                                                            class="w-2rem h-2rem border-circle">
+                                                        <p-image [preview]="true" *ngIf="myProfile != 'null'"
+                                                            src="{{urlFile}}{{myProfile}}" alt="photo profile"
+                                                            imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                        <p-image [preview]="true" *ngIf="myProfile == 'null'"
+                                                            src="../../../../assets/logos/user.jpg" alt="photo profile"
+                                                            imageClass="w-2rem h-2rem border-circle"></p-image>
                                                     </div>
                                                     <div class="w-max">
                                                         <div class="bg-gray-100 px-3 py-2 border-round-xl">
@@ -409,11 +404,12 @@
 
                                             <div class="flex mt-3">
                                                 <div class="max-w-max mr-3">
-                                                    <img *ngIf="myProfile != 'null'" src="{{urlFile}}{{myProfile}}"
-                                                        alt="" class="w-2rem h-2rem border-circle">
-                                                    <img *ngIf="myProfile == 'null'"
-                                                        src="../../../../assets/logos/user.jpg" alt=""
-                                                        class="w-2rem h-2rem border-circle">
+                                                    <p-image [preview]="true" *ngIf="myProfile != 'null'"
+                                                        src="{{urlFile}}{{myProfile}}" alt="photo profile"
+                                                        imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                    <p-image [preview]="true" *ngIf="myProfile == 'null'"
+                                                        src="../../../../assets/logos/user.jpg" alt="photo profile"
+                                                        imageClass="w-2rem h-2rem border-circle"></p-image>
                                                 </div>
                                                 <div class="w-full">
                                                     <form [formGroup]="commentForm" class="card w-full">
@@ -462,10 +458,10 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                        class="w-3rem h-3rem border-circle">
-                    <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
-                        class="w-3rem h-3rem border-circle">
+                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                        imageClass="w-3rem h-3rem border-circle"></p-image>
+                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                        alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
                 </div>
                 <div class="w-full">
                     <h3>{{ myFullName }}</h3>
@@ -507,10 +503,10 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                        class="w-3rem h-3rem border-circle">
-                    <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
-                        class="w-3rem h-3rem border-circle">
+                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                        imageClass="w-3rem h-3rem border-circle"></p-image>
+                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                        alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
                 </div>
                 <div class="w-full">
                     <h3>{{ myFullName }}</h3>

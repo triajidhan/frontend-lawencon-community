@@ -1,21 +1,22 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FilterTokenInterceptor } from './filter/filter-token.interceptor';
-import { AppComponent } from './app.component';
-import { AppRouting } from './app.routing';
-import { LoginComponent } from './pages/login/login.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FilterTokenInterceptor } from './filter/filter-token.interceptor'
+import { AppComponent } from './app.component'
+import { AppRouting } from './app.routing'
+import { LoginComponent } from './pages/login/login.component'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { CardModule } from 'primeng/card'
 import { RouterModule } from '@angular/router'
 import { ToastrModule } from 'ngx-toastr'
+import { NotFoundComponent } from './components/not-found/not-found.component'
 
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent
+    AppComponent, LoginComponent, NotFoundComponent
   ],
   imports: [
     BrowserModule,

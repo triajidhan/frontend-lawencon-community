@@ -5,7 +5,7 @@ import { ToastrService } from "ngx-toastr"
 import { ConfirmationService, MenuItem } from "primeng/api"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { Subscription } from "rxjs"
-import { UserService } from "../../../service/user.service"
+import { UserService } from "projects/main-area/src/app/service/user.service"
 
 @Component({
     selector: 'change-password-member',

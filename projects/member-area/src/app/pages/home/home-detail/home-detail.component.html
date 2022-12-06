@@ -28,10 +28,10 @@
                                         <ng-container *ngIf="post.user">
                                             <p-image [preview]="true" *ngIf="post.user.file"
                                                 src="{{urlFile}}{{post.user.file.id}}" alt="profile image"
-                                                styleClass="w-3rem h-3rem"></p-image>
+                                                imageClass="w-3rem h-3rem"></p-image>
                                             <p-image [preview]="true" *ngIf="!post.user.file"
                                                 src="../../../../assets/logos/user.jpg" alt="profile image"
-                                                styleClass="w-3rem h-3rem"></p-image>
+                                                imageClass="w-3rem h-3rem"></p-image>
                                         </ng-container>
                                     </div>
                                 </div>
@@ -160,12 +160,13 @@
                                         <ng-container *ngFor="let com of post.comments;index as j">
                                             <div class="flex mt-3">
                                                 <div class="max-w-max mr-3">
-                                                    <img *ngIf="post.comments[j].user.file"
+                                                    <p-image [preview]="true" *ngIf="post.comments[j].user.file"
                                                         src="{{urlFile}}{{post.comments[j].user.file.id}}"
-                                                        alt="profile image" class="w-2rem h-2rem border-circle">
-                                                    <img *ngIf="!post.comments[j].user.file"
+                                                        alt="profile image" imageClass="w-2rem h-2rem border-circle">
+                                                    </p-image>
+                                                    <p-image [preview]="true" *ngIf="!post.comments[j].user.file"
                                                         src="../../../../assets/logos/user.jpg" alt="profile image"
-                                                        class="w-2rem h-2rem border-circle">
+                                                        imageClass="w-2rem h-2rem border-circle"></p-image>
                                                 </div>
 
                                                 <div class="w-max">
@@ -183,10 +184,12 @@
 
                                         <div class="flex mt-3">
                                             <div class="max-w-max mr-3">
-                                                <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt=""
-                                                    class="w-2rem h-2rem border-circle">
-                                                <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
-                                                    alt="" class="w-2rem h-2rem border-circle">
+                                                <p-image [preview]="true" *ngIf="myProfile != ''"
+                                                    src="{{urlFile}}{{myProfile}}" alt=""
+                                                    imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                <p-image [preview]="true" *ngIf="myProfile == ''"
+                                                    src="../../../../assets/logos/user.jpg" alt=""
+                                                    imageClass="w-2rem h-2rem border-circle"></p-image>
                                             </div>
                                             <div class="w-full">
                                                 <form [formGroup]="commentForm" class="card w-full">
