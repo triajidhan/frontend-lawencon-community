@@ -19,14 +19,14 @@ export class ReportService{
 	}
 
 	getReportPartisipationSuper(beginDate: string, finishDate: string): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/reports/payment-partisipation-super/?beginDate=${beginDate}&finishDate=${finishDate}`)
+		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/reports/payment-partisipation-super/?beginDate=${beginDate}&finishDate=${finishDate}`, {responseType:'blob' as 'json',observe: 'response'})
 	}
 
 	getReportIncomeMember(beginDate: string, finishDate: string): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/reports/payment-total-income-member/?beginDate=${beginDate}&finishDate=${finishDate}`)
+		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/reports/payment-total-income-member/?beginDate=${beginDate}&finishDate=${finishDate}`, {responseType:'blob' as 'json',observe: 'response'})
 	}
 
 	getReportIncomeSuper(beginDate: string, finishDate: string): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/reports/payment-total-income-super/?beginDate=${beginDate}&finishDate=${finishDate}`)
+		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/reports/payment-total-income-super/?beginDate=${beginDate}&finishDate=${finishDate}`, {responseType:'blob' as 'json',observe: 'response'})
 	}
 }

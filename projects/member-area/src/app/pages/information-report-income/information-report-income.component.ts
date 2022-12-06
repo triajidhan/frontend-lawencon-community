@@ -48,7 +48,6 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -57,17 +56,19 @@ export class InformationReportIncomeComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
+
+        
+
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportIncomeMember(this.beginSchedule, this.finishSchedule, startPage, maxPage,false).subscribe(
             result => {
                 this.getTotalPaymentSubs = this.paymentActivityDetailService.getTotalByReportIncomeMember(this.beginSchedule,this.finishSchedule).subscribe(total=>{
                     this.data = result
                     this.loading = false
                     this.totalData = total.countOfPaymentActivity
-                })
+                 })         
             }
         )
     }
-
 
     getValueDate(){
         if (this.rangeDates[0] !== null && this.rangeDates[1] !== null) {

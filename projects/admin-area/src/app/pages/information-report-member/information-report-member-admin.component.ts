@@ -42,12 +42,12 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
         ]
 
         this.getAllPaymentSubs = this.paymentActivityDetailService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule, 0, 10, false).subscribe(result => {
-            console.log(result)
-            this.data = result
-            this.loading = false
-            this.totalData = result.length
-        }
-        )
+            this.getTotalReportSubs = this.paymentActivityDetailService.getTotalByReportIncomeSuper(this.beginSchedule,this.finishSchedule).subscribe(total=>{
+                this.data = result
+                this.loading = false
+                this.totalData = total.countOfPaymentActivity
+            })
+        })
     }
 
     getTimeZone() {
@@ -95,9 +95,10 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
     }
 
     exportData() {
-        this.exportsSubscription = this.reportService.getReportIncomeMember(this.beginSchedule, this.finishSchedule).subscribe(result => {
+        this.exportsSubscription = this.reportService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule).subscribe(result => {
+            console.log(result)
             const anchor = document.createElement('a');
-            anchor.download = "total-income-super.pdf";
+            anchor.download = "partisipation-super.pdf";
             anchor.href = (window.webkitURL || window.URL).createObjectURL(result.body as any);
             anchor.click();
         })
