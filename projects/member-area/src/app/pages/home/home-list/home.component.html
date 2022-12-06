@@ -49,11 +49,11 @@
                 <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
                 <ng-template #isProfile>
                   <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                    styleClass="w-3rem h-3rem"></p-image>
+                    imageClass="w-3rem h-3rem"></p-image>
                 </ng-template>
                 <ng-template #isNotProfile>
                   <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
-                    styleClass="w-3rem h-3rem"></p-image>
+                    imageClass="w-3rem h-3rem"></p-image>
                 </ng-template>
               </div>
 
@@ -99,9 +99,9 @@
                     <div class="max-w-max mr-3">
                       <div class="w-3rem h-3rem border-circle overflow-hidden">
                         <p-image [preview]="true" *ngIf="post[i].user.file" src="{{urlFile}}{{post[i].user.file.id}}"
-                          alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                          alt="profile image" imageClass="w-3rem h-3rem"></p-image>
                         <p-image [preview]="true" *ngIf="!post[i].user.file" src="../../../../assets/logos/user.jpg"
-                          alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                          alt="profile image" imageClass="w-3rem h-3rem"></p-image>
                       </div>
                     </div>
                     <div class="w-full">
@@ -157,10 +157,10 @@
                     <div *ngIf="post[i].postType.postTypeName == 'Premium' && !myStatusSubscribe"
                       pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30 
                       flex justify-content-center align-items-center">
-                      <div class="flex flex-wrap justify-content-center text-white align-items-center">
-                        <i class="fa-solid fa-lock text-2xl"></i>
-                        <h1 class="ml-3">Locked</h1>
-                        <h1 class="text-white text-center w-full">Premium Only</h1>
+                      <div class="text-center text-white">
+                        <i class="fa-solid fa-lock text-5xl"></i>
+                        <h2 class="mt-2">Locked</h2>
+                        <h2 class="text-white text-center w-full">Premium Only</h2>
                       </div>
                     </div>
 
@@ -316,11 +316,12 @@
                         <ng-container *ngFor="let com of post[i].comments;index as j">
                           <div class="flex mt-3">
                             <div class="max-w-max mr-3">
-                              <img *ngIf="post[i].comments[j].user.file"
+                              <p-image [preview]="true" *ngIf="post[i].comments[j].user.file"
                                 src="{{urlFile}}{{post[i].comments[j].user.file.id}}" alt="profile image"
-                                class="w-2rem h-2rem border-circle">
-                              <img *ngIf="!post[i].comments[j].user.file" src="../../../../assets/logos/user.jpg"
-                                alt="profile image" class="w-2rem h-2rem border-circle">
+                                imageClass="w-2rem h-2rem border-circle"></p-image>
+                              <p-image [preview]="true" *ngIf="!post[i].comments[j].user.file"
+                                src="../../../../assets/logos/user.jpg" alt="profile image"
+                                imageClass="w-2rem h-2rem border-circle"></p-image>
                             </div>
 
                             <div class="w-max">
@@ -340,10 +341,10 @@
 
                         <div class="flex mt-3">
                           <div class="max-w-max mr-3">
-                            <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt=""
-                              class="w-2rem h-2rem border-circle">
-                            <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt=""
-                              class="w-2rem h-2rem border-circle">
+                            <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt=""
+                              imageClass="w-2rem h-2rem border-circle"></p-image>
+                            <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                              alt="" imageClass="w-2rem h-2rem border-circle"></p-image>
                           </div>
                           <div class="w-full">
                             <form [formGroup]="commentForm" class="card w-full">
@@ -380,10 +381,10 @@
                     <div class="max-w-max mr-3">
                       <div class="w-3rem h-3rem border-circle overflow-hidden">
                         <p-image [preview]="true" *ngIf="postLike[i].user.file"
-                          src="{{urlFile}}{{postLike[i].user.file.id}}" alt="profile image" styleClass="w-3rem h-3rem">
+                          src="{{urlFile}}{{postLike[i].user.file.id}}" alt="profile image" imageClass="w-3rem h-3rem">
                         </p-image>
                         <p-image [preview]="true" *ngIf="!postLike[i].user.file" src="../../../../assets/logos/user.jpg"
-                          alt="profile image" styleClass="w-3rem h-3rem"></p-image>
+                          alt="profile image" imageClass="w-3rem h-3rem"></p-image>
                       </div>
                     </div>
 
@@ -516,9 +517,9 @@
                       <div class="w-3rem h-3rem border-circle overflow-hidden">
                         <p-image [preview]="true" *ngIf="postBookmark[i].user.file"
                           src="{{urlFile}}{{postBookmark[i].user.file.id}}" alt="profile image"
-                          styleClass="w-3rem h-3rem"></p-image>
+                          imageClass="w-3rem h-3rem"></p-image>
                         <p-image [preview]="true" *ngIf="!postBookmark[i].user.file"
-                          src="../../../../assets/logos/user.jpg" alt="profile image" styleClass="w-3rem h-3rem">
+                          src="../../../../assets/logos/user.jpg" alt="profile image" imageClass="w-3rem h-3rem">
                         </p-image>
                       </div>
                     </div>
@@ -658,10 +659,10 @@
     <div class="col-12">
       <div class="flex mb-3">
         <div class="max-w-max mr-3">
-          <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-            class="w-3rem h-3rem border-circle">
-          <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
-            class="w-3rem h-3rem border-circle">
+          <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+            imageClass="w-3rem h-3rem border-circle"></p-image>
+          <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
+            imageClass="w-3rem h-3rem border-circle"></p-image>
         </div>
         <div class="w-full">
           <h3>{{ myFullName }}</h3>
@@ -703,10 +704,10 @@
     <div class="col-12">
       <div class="flex mb-3">
         <div class="max-w-max mr-3">
-          <img *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-            class="w-3rem h-3rem border-circle">
-          <img *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
-            class="w-3rem h-3rem border-circle">
+          <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+            imageClass="w-3rem h-3rem border-circle"></p-image>
+          <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
+            imageClass="w-3rem h-3rem border-circle"></p-image>
         </div>
         <div class="w-full">
           <h3>{{ myFullName }}</h3>

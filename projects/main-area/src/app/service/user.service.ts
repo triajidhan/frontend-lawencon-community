@@ -16,6 +16,10 @@ export class UserService {
     return this.http.post<Login>(`${BASE_URL.LOCALHOST}/login`, data)
   }
 
+  registerUser(data: any): Observable<User> {
+    return this.http.post<User>(`${BASE_URL.LOCALHOST}/users/register/`, data);
+  }
+
   getTotalUser(): Observable<any> {
     return this.http.get<any>(`${BASE_URL.LOCALHOST}/users/total-user`)
   }
@@ -24,7 +28,7 @@ export class UserService {
     return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/`)
   }
 
-  getById(id: string): Observable<User> {
+  getById(id: any): Observable<User> {
     return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/id/${id}`)
   }
 
@@ -32,7 +36,7 @@ export class UserService {
     return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/role/?roleCode=${roleCode}&startPosition=${startPosition}&limit=${limit}`)
   }
 
-  getByEmail(email: string): Observable<User> {
+  getByEmail(email: any): Observable<User> {
     return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/email/?email=${email}`)
   }
 

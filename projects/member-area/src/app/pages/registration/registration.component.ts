@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { PrimeNGConfig } from 'primeng/api';
-import { Industry } from "projects/interface/industry";
-import { Position } from "projects/interface/position";
-import { Subscription } from "rxjs";
-import { IndustryService } from "../../service/industry.service";
-import { PositionService } from "../../service/position.service";
-import { UserService } from "../../service/user.service";
-import { VerificationCodeService } from "../../service/verivication-code.service";
+import { FormBuilder, Validators } from "@angular/forms"
+import { Router } from "@angular/router"
+import { PrimeNGConfig } from 'primeng/api'
+import { Industry } from "projects/interface/industry"
+import { Position } from "projects/interface/position"
+import { VerificationCodeService } from "projects/main-area/src/app/service/verivication-code.service"
+import { Subscription } from "rxjs"
+import { IndustryService } from "projects/main-area/src/app/service/industry.service"
+import { PositionService } from "projects/main-area/src/app/service/position.service"
+import { UserService } from "projects/main-area/src/app/service/user.service"
 
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
-import { UserService } from "projects/member-area/src/app/service/user.service"
+import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
 
 @Component({

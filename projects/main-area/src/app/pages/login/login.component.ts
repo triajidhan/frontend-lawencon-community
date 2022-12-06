@@ -13,7 +13,8 @@ import { UserService } from "../../service/user.service"
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-    loadingLogin : boolean = false;
+    loadingLogin: boolean = false
+
     private loginSubscription?: Subscription
 
     loginReq = this.fb.group({
@@ -31,8 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     submit(): void {
-      this.loadingLogin  = true;
-        this.loginSubscription = this.userService.login(this.loginReq.value).pipe(finalize(()=>this.loadingLogin = false)).subscribe(result => {
+        this.loadingLogin = true;
+        this.loginSubscription = this.userService.login(this.loginReq.value).pipe(finalize(() => this.loadingLogin = false)).subscribe(result => {
             this.apiService.saveData(result)
             console.log(result)
             if (result.role.roleCode == 'M') {

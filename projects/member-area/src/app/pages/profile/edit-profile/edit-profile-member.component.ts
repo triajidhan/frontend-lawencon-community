@@ -5,9 +5,9 @@ import { MenuItem } from "primeng/api"
 import { Industry } from "projects/interface/industry"
 import { Position } from "projects/interface/position"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
-import { IndustryService } from "projects/member-area/src/app/service/industry.service"
-import { PositionService } from "projects/member-area/src/app/service/position.service"
-import { UserService } from "projects/member-area/src/app/service/user.service"
+import { IndustryService } from "projects/main-area/src/app/service/industry.service"
+import { PositionService } from "projects/main-area/src/app/service/position.service"
+import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
 
 @Component({
