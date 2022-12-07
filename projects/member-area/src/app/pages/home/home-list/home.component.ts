@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   startPositionPollOption = 0
   limitPollOption = 5
 
+  indexComment ?:number | null
   urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
   items!: MenuItem[]
@@ -55,6 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   polling: any = new Object()
   getByPostIdForLike: any = new Object()
   unitPost: any = new Object()
+  unitComment: any = new Object()
 
   images: any[] = []
   fileArray: any[] = []
@@ -117,6 +119,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   })
 
+  updateCommentForm = this.fb.group({
+    id: [''],
+    commentBody: ['', Validators.required],
+    post: this.fb.group({
+      id: ['']
+    })
+  })
+
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -136,13 +146,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private postUpdateSubs?: Subscription
   private postDeleteSubs?: Subscription
   private getByIdPostSubs?: Subscription
-  private getDataPollContentSubs?: Subscription
   private choosePollOptionSubs?: Subscription
   private getByIdPollOptionSubs?: Subscription
   private getByCodePostTypeSubsc?: Subscription
-  private getByIdPollingStatusSubs?: Subscription
   private getPostDataSubs?: Subscription
-  private getPostAttachmentDataSubs?: Subscription
   private getPostLikeAttachmentDataSubs?: Subscription
   private getPostBookmarkAttachmentDataSubs?: Subscription
   private getCountLikeDataSubs?: Subscription
@@ -157,7 +164,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getDataLikeSubs?: Subscription
   private getDataBookmarkSubs?: Subscription
   private commentInsertSubs?: Subscription
-  private getAllCommentByPostSubs?: Subscription
+  private getByIdCommentSubs?: Subscription
+  private commentDeleteSubs?: Subscription
+  private getByIdCommentUpdateSubs?: Subscription
+  private commentUpdateSubs?: Subscription
   private getRecentArticleSubs?: Subscription
 
 
@@ -391,7 +401,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
       this.polling = result
       this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
-        // console.log(polling)
         this.post[i].totalVote = this.post[i].totalVote + 1
         this.post[i].statusPolling = true
         this.post[i].choosenPolling = pollId
@@ -503,13 +512,36 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.post[i].commentBody.push(resultId.commentBody)
         this.post[i].userComment.push(resultId.user)
         this.post[i].commentId.push(resultId.id)
-        // this.commentForm.value.commentBody = ""
         this.commentForm.controls['commentBody'].setValue('')
       })
     })
   }
 
-  showPopUpDelete(id: string, i: any) {
+  updateComment(postId: string, commentId: string, j : number, i : number) {
+    this.updateCommentForm.patchValue({
+      post: {
+        id: postId
+      }
+    })
+    this.commentUpdateSubs = this.commentService.update(this.updateCommentForm.value).subscribe(() => {
+      this.indexComment = null
+      this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(resultId => {
+      this.post[i].commentBody.splice(j, 1, resultId.commentBody)
+      this.post[i].userComment.splice(j, 1, resultId.user)
+      this.post[i].commentId.splice(j, 1, resultId.id)
+    })
+    })
+  }
+
+  showEditComment(commentId: string, i: number, j: number) {
+    this.indexComment = j
+    this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(result => {
+      this.updateCommentForm.controls['commentBody'].setValue(result.commentBody)
+      this.updateCommentForm.controls['id'].setValue(result.id)
+    })
+  }
+
+  showPopUpDelete(id: string, i: number) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this post?',
       header: 'Delete Confirmation',
@@ -521,6 +553,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
           this.postDeleteSubs = this.postService.update(this.unitPost).subscribe(() => {
             this.post.splice(i, 1)
+          })
+        })
+      }
+    })
+  }
+
+  showPopUpDeleteComment(id: string, i: number, j: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this comment?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.getByIdCommentSubs = this.commentService.getById(id).subscribe(result => {
+          this.unitComment = result
+          this.unitComment.isActive = false
+
+          this.commentDeleteSubs = this.commentService.update(this.unitComment).subscribe(() => {
+            this.post[i].commentBody.splice(j, 1)
+            this.post[i].userComment.splice(j, 1)
+            this.post[i].commentId.splice(j, 1)
           })
         })
       }
@@ -539,13 +591,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.postUpdateSubs?.unsubscribe()
     this.postDeleteSubs?.unsubscribe()
     this.getByIdPostSubs?.unsubscribe()
-    this.getDataPollContentSubs?.unsubscribe()
     this.choosePollOptionSubs?.unsubscribe()
     this.getByIdPollOptionSubs?.unsubscribe()
     this.getByCodePostTypeSubsc?.unsubscribe()
-    this.getByIdPollingStatusSubs?.unsubscribe()
     this.getPostDataSubs?.unsubscribe()
-    this.getPostAttachmentDataSubs?.unsubscribe()
     this.getPostLikeAttachmentDataSubs?.unsubscribe()
     this.getPostBookmarkAttachmentDataSubs?.unsubscribe()
     this.getCountLikeDataSubs?.unsubscribe()
@@ -560,7 +609,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getDataLikeSubs?.unsubscribe()
     this.getDataBookmarkSubs?.unsubscribe()
     this.commentInsertSubs?.unsubscribe()
-    this.getAllCommentByPostSubs?.unsubscribe()
+    this.getByIdCommentSubs?.unsubscribe()
+    this.commentDeleteSubs?.unsubscribe()
+    this.getByIdCommentUpdateSubs?.unsubscribe()
+    this.commentUpdateSubs?.unsubscribe()
     this.getRecentArticleSubs?.unsubscribe()
   }
 }
