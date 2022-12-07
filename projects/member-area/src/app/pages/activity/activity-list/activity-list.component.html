@@ -500,15 +500,15 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
-                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                <p-image [preview]="true" *ngIf="p.activity.file.files && p.activity.file.files != ''"
+                                                    src="{{urlFile}}{{ p.activity.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    *ngIf="(!p.activity.file.files && p.activity.activityType.activityTypeName == 'Course') || (p.activity.file.files =='' && p.activity.activityType.activityTypeName == 'Course') "
                                                     src="../../../../assets/images/course.jpg" alt="activity image"
                                                     imageClass="w-full"> </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    *ngIf="(!p.activity.file.files && p.activity.activityType.activityTypeName == 'Event') || (p.activity.file.files =='' && p.activity.activityType.activityTypeName == 'Event') "
                                                     src="../../../../assets/images/event.jpg" alt="activity image"
                                                     imageClass="w-full"> </p-image>
                                             </div>
@@ -516,50 +516,50 @@
 
                                         <div
                                             class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ p.activityCode }}</p>
-                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                            <p class="uppercase">{{ p.activity.activityCode }}</p>
+                                            <div *ngIf="p.activity.activityType.activityTypeName == 'Event'"
                                                 class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                <p class="uppercase ">{{ p.activity.activityType.activityTypeName }}
                                                 </p>
                                             </div>
-                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
+                                            <div *ngIf="p.activity.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                <p class="uppercase">{{ p.activity.activityType.activityTypeName }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.activity.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
-                                                    p.finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.activity.beginSchedule | date:'fullDate' }} to {{
+                                                    p.activity.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
-                                                    p.finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.activity.beginSchedule | date:'shortTime' }} - {{
+                                                    p.activity.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ p.provider }}</p>
+                                                <p>{{ p.activity.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ p.location }}</p>
+                                                <p>{{ p.activity.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
+                                                <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
                                             <div class="text-right mt-3 flex justify-content-between">
                                                 <p class="text-black-alpha-60">
-                                                    {{ p.createdAt | timeAgo }}
+                                                    {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                <div (click)="showPopUpDialog(p.activity.id, p.activity.price, p.activity.title)"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                    <p>Join {{ p.activity.activityType.activityTypeName }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -578,15 +578,15 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
-                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                <p-image [preview]="true" *ngIf="p.activity.file.files && p.activity.file.files != ''"
+                                                    src="{{urlFile}}{{ p.activity.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    *ngIf="(!p.activity.file.files && p.activity.activityType.activityTypeName == 'Course') || (p.activity.file.files =='' && p.activity.activityType.activityTypeName == 'Course') "
                                                     src="../../../../assets/images/course.jpg" alt="activity image"
                                                     imageClass="w-full"> </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    *ngIf="(!p.activity.file.files && p.activity.activityType.activityTypeName == 'Event') || (p.activity.file.files =='' && p.activity.activityType.activityTypeName == 'Event') "
                                                     src="../../../../assets/images/event.jpg" alt="activity image"
                                                     imageClass="w-full"> </p-image>
                                             </div>
@@ -594,50 +594,50 @@
 
                                         <div
                                             class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ p.activityCode }}</p>
-                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                            <p class="uppercase">{{ p.activity.activityCode }}</p>
+                                            <div *ngIf="p.activity.activityType.activityTypeName == 'Event'"
                                                 class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                <p class="uppercase ">{{ p.activity.activityType.activityTypeName }}
                                                 </p>
                                             </div>
-                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
+                                            <div *ngIf="p.activity.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                <p class="uppercase">{{ p.activity.activityType.activityTypeName }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.activity.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
-                                                    p.finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.activity.beginSchedule | date:'fullDate' }} to {{
+                                                    p.activity.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
-                                                    p.finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.activity.beginSchedule | date:'shortTime' }} - {{
+                                                    p.activity.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ p.provider }}</p>
+                                                <p>{{ p.activity.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ p.location }}</p>
+                                                <p>{{ p.activity.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
+                                                <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
                                             <div class="text-right mt-3 flex justify-content-between">
                                                 <p class="text-black-alpha-60">
-                                                    {{ p.createdAt | timeAgo }}
+                                                    {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                <div (click)="showPopUpDialog(p.activity.id, p.activity.price, p.activity.title)"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                    <p>Join {{ p.activity.activityType.activityTypeName }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -656,15 +656,15 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true" *ngIf="p.file.files && p.file.files != ''"
-                                                    src="{{urlFile}}{{ p.file.id}}" imageClass="w-full">
+                                                <p-image [preview]="true" *ngIf="p.activity.file.files && p.activity.file.files != ''"
+                                                    src="{{urlFile}}{{ p.activity.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Course') || (p.file.files =='' && p.activityType.activityTypeName == 'Course') "
+                                                    *ngIf="(!p.activity.file.files && p.activity.activityType.activityTypeName == 'Course') || (p.activity.file.files =='' && p.activity.activityType.activityTypeName == 'Course') "
                                                     src="../../../../assets/images/course.jpg" alt="activity image"
                                                     imageClass="w-full"> </p-image>
                                                 <p-image [preview]="true"
-                                                    *ngIf="(!p.file.files && p.activityType.activityTypeName == 'Event') || (p.file.files =='' && p.activityType.activityTypeName == 'Event') "
+                                                    *ngIf="(!p.activity.file.files && p.activity.activityType.activityTypeName == 'Event') || (p.activity.file.files =='' && p.activity.activityType.activityTypeName == 'Event') "
                                                     src="../../../../assets/images/event.jpg" alt="activity image"
                                                     imageClass="w-full"> </p-image>
                                             </div>
@@ -672,50 +672,50 @@
 
                                         <div
                                             class="flex justify-content-between align-items-center mb-3 text-black-alpha-60 text-xs">
-                                            <p class="uppercase">{{ p.activityCode }}</p>
-                                            <div *ngIf="p.activityType.activityTypeName == 'Event'"
+                                            <p class="uppercase">{{ p.activity.activityCode }}</p>
+                                            <div *ngIf="p.activity.activityType.activityTypeName == 'Event'"
                                                 class="bg-blue-400 border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase ">{{ p.activityType.activityTypeName }}
+                                                <p class="uppercase ">{{ p.activity.activityType.activityTypeName }}
                                                 </p>
                                             </div>
-                                            <div *ngIf="p.activityType.activityTypeName == 'Course'"
+                                            <div *ngIf="p.activity.activityType.activityTypeName == 'Course'"
                                                 class="main-color border-round-lg py-1 px-2 text-white">
-                                                <p class="uppercase">{{ p.activityType.activityTypeName }}
+                                                <p class="uppercase">{{ p.activity.activityType.activityTypeName }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.title }}
+                                        <h4 class="flex align-items-center h-2rem capitalize">{{ p.activity.title }}
                                         </h4>
                                         <div class="text-xs text-black-alpha-60 mt-3">
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-calendar-days mr-2"></i>
-                                                <p>{{ p.beginSchedule | date:'fullDate' }} to {{
-                                                    p.finishSchedule | date:'fullDate' }}</p>
+                                                <p>{{ p.activity.beginSchedule | date:'fullDate' }} to {{
+                                                    p.activity.finishSchedule | date:'fullDate' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-regular fa-clock mr-2"></i>
-                                                <p>{{ p.beginSchedule | date:'shortTime' }} - {{
-                                                    p.finishSchedule | date:'shortTime' }}</p>
+                                                <p>{{ p.activity.beginSchedule | date:'shortTime' }} - {{
+                                                    p.activity.finishSchedule | date:'shortTime' }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-school mr-2"></i>
-                                                <p>{{ p.provider }}</p>
+                                                <p>{{ p.activity.provider }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-location-dot mr-2"></i>
-                                                <p>{{ p.location }}</p>
+                                                <p>{{ p.activity.location }}</p>
                                             </div>
                                             <div class="flex mt-2">
                                                 <i class="fa-solid fa-coins mr-2"></i>
-                                                <p>{{ p.price | currency:"IDR ":"symbol"}}</p>
+                                                <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
                                             <div class="text-right mt-3 flex justify-content-between">
                                                 <p class="text-black-alpha-60">
-                                                    {{ p.createdAt | timeAgo }}
+                                                    {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                <div (click)="showPopUpDialog(p.activity.id, p.activity.price, p.activity.title)"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
+                                                    <p>Join {{ p.activity.activityType.activityTypeName }}</p>
                                                 </div>
                                             </div>
                                         </div>

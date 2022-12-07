@@ -253,7 +253,6 @@ export class ActivityListComponent implements OnInit {
 
     initAllActivityCourse() {
         this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
-            console.log(result)
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByCourse(result[i])
             }
@@ -262,7 +261,6 @@ export class ActivityListComponent implements OnInit {
 
     initAllActivityEvent() {
         this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E', this.startPositionEvent, this.limitEvent, true).subscribe(result => {
-            console.log(result)
 
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByEvent(result[i])
@@ -296,23 +294,20 @@ export class ActivityListComponent implements OnInit {
     }
 
 
-
     initMyActivityOnGoing() {
         this.getAllMyActivitiesOnGoingSubs = this.paymentActivityDetailService.getByUser(this.myId, this.startPositionMyActivityOnGoing, this.limitMyActivityOnGoing, false).subscribe(result => {
 
             for (let i = 0; i < result.length; i++) {
-                this.addDataMyActivitiesOnGoing(result[i].activity)
+                this.addDataMyActivitiesOnGoing(result[i])
             }
         })
     }
 
     initMyActivityCourseOnGoing() {
         this.getAllMyActivityOnGoingCourseSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('course', this.myId, this.startPositionMyCourseOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
-            console.log(result)
 
             for (let i = 0; i < result.length; i++) {
-
-                this.addDataMyActivitiesOnGoingCourse(result[i].activity)
+                this.addDataMyActivitiesOnGoingCourse(result[i])
             }
         })
     }
@@ -320,7 +315,7 @@ export class ActivityListComponent implements OnInit {
     initMyActivityEventOnGoing() {
         this.getAllMyActivityOnGoingEventSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('event', this.myId, this.startPositionMyEventOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
-                this.addDataMyActivitiesOnGoingEvent(result[i].activity)
+                this.addDataMyActivitiesOnGoingEvent(result[i])
             }
         })
     }
@@ -355,6 +350,7 @@ export class ActivityListComponent implements OnInit {
 
     addDataMyActivitiesOnGoing(activity: any) {
         this.myActivitiesOnGoing.push(activity)
+        console.log(this.myActivitiesOnGoing)
     }
 
     addDataMyActivitiesOnGoingCourse(activity: any) {

@@ -73,7 +73,6 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
             result => {
-                console.log(result)
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(total => {
                     this.data = result
                     this.loading = false
@@ -92,10 +91,10 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedTrue(startPage, maxPage, false).subscribe(
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByPaymentApproved(startPage, maxPage, false).subscribe(
             result => {
                 
-                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedTrue().subscribe(total => {
+                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByPaymentApproved().subscribe(total => {
                     this.dataApprove = result
                     this.loading = false
                     this.totalData = total.countOfPaymentActivity
@@ -114,9 +113,9 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
         this.startPage = startPage
         this.maxPage = maxPage
 
-        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
+        this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByPaymentReject(startPage, maxPage, false).subscribe(
             result => {
-                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(total => {
+                this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByPaymentReject().subscribe(total => {
                     this.dataReject = result
                     this.loading = false
                     this.totalData = total.countOfPaymentActivity
