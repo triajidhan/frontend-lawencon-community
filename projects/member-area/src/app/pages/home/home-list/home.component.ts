@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { ConfirmationService, MenuItem, PrimeNGConfig } from "primeng/api"
@@ -234,20 +234,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   initPost() {
     this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, false).subscribe(result => {
-      // console.log(result)
-      // for (let i = 0; i < result.length; i++) {
-      //   this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
-      //     result[i].likeId = userLike.likeId
-      //     result[i].countOfLike = userLike.countOfLike
-      //     result[i].isActiveLike = userLike.isActive
-      //   })
-
-      //   this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, this.myId).subscribe(userBookmark => {
-      //     result[i].bookmarkId = userBookmark.id
-      //     result[i].isActiveBookmark = userBookmark.isActive
-      //   })
         this.addDataPost(result)
-      // }
     })
   }
 
@@ -276,36 +263,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   addDataPost(post: any) {
-    // this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
-    //   post.postAttachment = result
-    // })
-
-    // this.getAllCommentByPostSubs = this.commentService.getByPost(post.id, 0, 2, false).subscribe(result => {
-    //   post.comments = result
-    // })
-
-    // this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
-    //   this.pollOption.push(result)
-    //   let totalTemp = 0
-    //   for (let j = 0; j < result.length; j++) {
-    //     totalTemp += result[j].totalPoll
-    //     post.totalPoll = totalTemp
-    //   }
     for (let i = 0; i < post.length; i++) {
       this.post.push(post[i])
       console.log(this.post)
     }
-    // })
   }
 
   addDataLike(post: any) {
     this.getPostLikeAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
       post.post.postAttachment = result
-
       post.post.countOfPostAttachment = result.length
     })
 
-    this.postLike.push(post)
+    this.postLike.unshift(post)
   }
 
   addDataBookmark(post: any) {
@@ -313,7 +283,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       post.post.postAttachment = result
     })
 
-    this.postBookmark.push(post)
+    this.postBookmark.unshift(post)
   }
 
   fileUpload(event: any): void {
@@ -421,15 +391,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
       this.polling = result
       this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
-        // this.pollOption[i][j].totalPoll = this.pollOption[i][j].totalPoll + 1
-        // this.getByIdPollingStatusSubs = this.polingStatusService.getById(polling.id).subscribe(pollingStatus => {
-        //   let totalTemp = 0;
-        //   for (let k = 0; k < this.pollOption[i].length; k++) {
-        //     this.pollOption[i][k].pollingStatus = pollingStatus;
-        //     totalTemp += this.pollOption[i][k].totalPoll
-        //   }
-        //   this.post[i].totalPoll = totalTemp
-        // })
+        // console.log(polling)
+        this.post[i].totalVote = this.post[i].totalVote + 1
+        this.post[i].statusPolling = true
+        this.post[i].choosenPolling = pollId
+        this.post[i].totalPoll[j] = this.post[i].totalPoll[j] + 1
       })
     })
   }
@@ -529,9 +495,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
       this.post[i].countOfComment = this.post[i].countOfComment + 1
-      this.commentForm.controls['commentBody'].setValue("")
+
+      this.post[i].createdAtComment.push((new Date()).toString())
+      console.log(this.post[i])
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-        // this.post[i].commentBody.
+        console.log(resultId)
+        this.post[i].commentBody.push(resultId.commentBody)
+        this.post[i].userComment.push(resultId.user)
+        this.post[i].commentId.push(resultId.id)
+        // this.commentForm.value.commentBody = ""
+        this.commentForm.controls['commentBody'].setValue('')
       })
     })
   }
