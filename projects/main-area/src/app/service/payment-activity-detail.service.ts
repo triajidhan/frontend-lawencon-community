@@ -46,27 +46,47 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-activity/?activityId=${activityId}`)
 	}
 
-	getByIsActive(startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]> {
+	getByIsActive(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getByIsActiveTrueAndApprovedFalse(startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]>{
+
+
+	getByIsActiveTrueAndApprovedFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-approve-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getTotalByIsActiveTrueAndApprovedFalse(): Observable<PaymentActivityDetail>{
+	getTotalByIsActiveTrueAndApprovedFalse(): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-is-active-approve-false/`)
 	}
 
-	getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]>{
+	getByPaymentApproved(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/payment-approved/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+	}
+
+	getTotalByPaymentApproved(): Observable<PaymentActivityDetail> {
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-payment-approved/`)
+	}
+
+	getByPaymentReject(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
+		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/payment-reject/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+	}
+
+	getTotalByPaymentReject(): Observable<PaymentActivityDetail> {
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-payment-reject/`)
+	}
+
+
+
+	getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-approve-true/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentActivityDetail>{
+	getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-is-active-approve-true/`)
 	}
 
-	getByIsActiveFalse(startPosition: number, limit: number,ascending:boolean): Observable<PaymentActivityDetail[]>{
+	getByIsActiveFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
@@ -92,7 +112,7 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getReportPartisipationSuperAll(beginDate: string, finishDate: string,ascending:boolean): Observable<PaymentActivityDetail[]> {
+	getReportPartisipationSuperAll(beginDate: string, finishDate: string, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-super-all/?beginDate=${beginDate}&finishDate=${finishDate}&asc=${ascending}`)
 	}
 

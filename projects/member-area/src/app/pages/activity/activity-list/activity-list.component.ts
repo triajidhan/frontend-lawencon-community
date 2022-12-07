@@ -253,6 +253,7 @@ export class ActivityListComponent implements OnInit {
 
     initAllActivityCourse() {
         this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
+            console.log(result)
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByCourse(result[i])
             }
@@ -261,6 +262,8 @@ export class ActivityListComponent implements OnInit {
 
     initAllActivityEvent() {
         this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E', this.startPositionEvent, this.limitEvent, true).subscribe(result => {
+            console.log(result)
+
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByEvent(result[i])
             }
