@@ -9,6 +9,7 @@ import { memberAreaRoutes } from "projects/member-area/src/app/member-area.routi
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { CanActiveAuth } from "./guard/can-active-auth-load.guard";
 import { LoginComponent } from "./pages/login/login.component";
+import { SiteMapComponent } from "./site-map/site-map.component";
 
 export const mainRoutes: Routes = [
     ...adminAreaRoutes,
@@ -27,6 +28,10 @@ export const mainRoutes: Routes = [
         path: "login/admin",
         component: LoginComponent,
         canActivate: [CanActiveAuth]
+    },
+    {
+        path: "site-map",
+        component: SiteMapComponent,
     },
     {
         path: '**',

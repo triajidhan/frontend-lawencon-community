@@ -12,11 +12,12 @@ import { CardModule } from 'primeng/card'
 import { RouterModule } from '@angular/router'
 import { ToastrModule } from 'ngx-toastr'
 import { NotFoundComponent } from './components/not-found/not-found.component'
+import { SiteMapComponent } from './site-map/site-map.component'
 
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, NotFoundComponent
+    AppComponent, LoginComponent, NotFoundComponent, SiteMapComponent
   ],
   imports: [
     BrowserModule,

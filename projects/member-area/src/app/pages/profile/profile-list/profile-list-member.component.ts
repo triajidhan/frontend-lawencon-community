@@ -44,6 +44,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     startPositionPollOption = 0
     limitPollOption = 5
 
+    indexComment?: number | null
     urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
     items!: MenuItem[]
@@ -55,13 +56,14 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     display: boolean = false
     displayEdit: boolean = false
     displayGalleria: boolean = false
-    isShowComment: boolean = true
     loadingPost = false
-    unitPost: any = new Object()
 
-    images: any[] = []
     polling: any = new Object()
     getByPostIdForLike: any = new Object()
+    unitPost: any = new Object()
+    unitComment: any = new Object()
+
+    images: any[] = []
     fileArray: any[] = []
     postTypesRes!: PostType[]
     postTypes: any[] = []
@@ -73,6 +75,8 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     postBookmark: any[] = []
     postAttachmentBookmark: any[] = []
     postComments: any[] = []
+
+    recentArticle: any[] = []
 
     addLike = this.fb.group({
         post: this.fb.group({
@@ -120,6 +124,14 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         })
     })
 
+    updateCommentForm = this.fb.group({
+        id: [''],
+        commentBody: ['', Validators.required],
+        post: this.fb.group({
+            id: ['']
+        })
+    })
+
     responsiveOptions: any[] = [
         {
             breakpoint: '1024px',
@@ -134,7 +146,6 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             numVisible: 1
         }
     ]
-
 
     private postInsertSubs?: Subscription
     private postUpdateSubs?: Subscription
@@ -162,6 +173,11 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     private getDataBookmarkSubs?: Subscription
     private commentInsertSubs?: Subscription
     private getAllCommentByPostSubs?: Subscription
+    private getByIdCommentSubs?: Subscription
+    private commentDeleteSubs?: Subscription
+    private getByIdCommentUpdateSubs?: Subscription
+    private commentUpdateSubs?: Subscription
+    private getRecentArticleSubs?: Subscription
 
 
     constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
@@ -169,7 +185,8 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         private postAttachmentService: PostAttachmentService, private apiService: ApiService,
         private likeService: LikeService, private bookmarkService: BookmarkService,
         private pollingService: PollingService, private polingStatusService: PollingStatusService,
-        private commentService: CommentService, private router: Router, private confirmationService: ConfirmationService) { }
+        private commentService: CommentService, private router: Router,
+        private confirmationService: ConfirmationService) { }
 
 
     ngOnInit(): void {
@@ -178,8 +195,11 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.myId = String(this.apiService.getId())
         this.myFullName = String(this.apiService.getName())
         this.myEmail = String(this.apiService.getEmail())
-        this.myProfile = String(this.apiService.getPhotoId())
+        if (this.apiService.getPhotoId()) {
+            this.myProfile = String(this.apiService.getPhotoId())
+          }
         this.myCompany = String(this.apiService.getCompany())
+          
         this.myIndustry = String(this.apiService.getIndustry())
         this.myPosition = String(this.apiService.getPosition())
         this.myBalances = Number(this.apiService.getBalances())
@@ -231,23 +251,10 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.initBookmark()
     }
 
+
     initPost() {
         this.getPostDataSubs = this.postService.getByUserAndOrder(this.myId, this.startPositionPost, this.limitPost, false).subscribe(result => {
-
-            for (let i = 0; i < result.length; i++) {
-                this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].id, this.myId).subscribe(userLike => {
-                    console.log(userLike)
-                    result[i].likeId = userLike.likeId
-                    result[i].countOfLike = userLike.countOfLike
-                    result[i].isActiveLike = userLike.isActive
-                })
-
-                this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].id, this.myId).subscribe(userBookmark => {
-                    result[i].bookmarkId = userBookmark.id
-                    result[i].isActiveBookmark = userBookmark.isActive
-                })
-                this.addDataPost(result[i])
-            }
+            this.addDataPost(result)
         })
     }
 
@@ -276,37 +283,27 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     }
 
     addDataPost(post: any) {
-        this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
-            post.postAttachment = result
-        })
-
-        this.getAllCommentByPostSubs = this.commentService.getByPost(post.id, 0, 2, false).subscribe(result => {
-            post.comments = result
-        })
-
-        this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
-            this.pollOption.push(result)
-            let totalTemp = 0
-            for (let j = 0; j < result.length; j++) {
-                totalTemp += result[j].totalPoll
-                post.totalPoll = totalTemp
-            }
-            this.post.push(post)
-        })
+        for (let i = 0; i < post.length; i++) {
+            this.post.push(post[i])
+            console.log(this.post)
+        }
     }
 
     addDataLike(post: any) {
         this.getPostLikeAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
             post.post.postAttachment = result
+            post.post.countOfPostAttachment = result.length
         })
-        this.postLike.push(post)
+
+        this.postLike.unshift(post)
     }
 
     addDataBookmark(post: any) {
         this.getPostBookmarkAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
             post.post.postAttachment = result
         })
-        this.postBookmark.push(post)
+
+        this.postBookmark.unshift(post)
     }
 
     fileUpload(event: any): void {
@@ -371,6 +368,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                     this.postForm.controls.contents.setValue("")
                     this.postForm.controls.titlePoll.setValue("")
                     this.fileArray = []
+                    this.postType = ""
                     this.init()
                 })
             })
@@ -391,6 +389,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                     this.postForm.controls.contents.setValue("")
                     this.postForm.controls.titlePoll.setValue("")
                     this.fileArray = []
+                    this.postType = ""
                     this.init()
                 })
             })
@@ -412,15 +411,10 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
             this.polling = result
             this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
-                this.pollOption[i][j].totalPoll = this.pollOption[i][j].totalPoll + 1
-                this.getByIdPollingStatusSubs = this.polingStatusService.getById(polling.id).subscribe(pollingStatus => {
-                    let totalTemp = 0;
-                    for (let k = 0; k < this.pollOption[i].length; k++) {
-                        this.pollOption[i][k].pollingStatus = pollingStatus;
-                        totalTemp += this.pollOption[i][k].totalPoll
-                    }
-                    this.post[i].totalPoll = totalTemp
-                })
+                this.post[i].totalVote = this.post[i].totalVote + 1
+                this.post[i].statusPolling = true
+                this.post[i].choosenPolling = pollId
+                this.post[i].totalPoll[j] = this.post[i].totalPoll[j] + 1
             })
         })
     }
@@ -430,10 +424,10 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             this.getIdBookmarkDataSubs = this.bookmarkService.getById(bookmarkId).subscribe(result => {
                 if (result.isActive) {
                     this.updateBookmark.controls.isActive.setValue(false)
-                    this.post[i].isActiveBookmark = false
+                    this.post[i].statusBookmark = false
                 } else {
                     this.updateBookmark.controls.isActive.setValue(true)
-                    this.post[i].isActiveBookmark = true
+                    this.post[i].statusBookmark = true
                 }
                 this.updateBookmark.controls['id'].setValue(result.id)
 
@@ -447,7 +441,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 }
             })
             this.insertBookmarkDataSubs = this.bookmarkService.insert(this.addBookmark.value).subscribe(response => {
-                this.post[i].isActiveBookmark = true
+                this.post[i].statusBookmark = true
                 this.post[i].bookmarkId = response.id
             }
 
@@ -461,11 +455,11 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 if (result.isActive) {
                     this.updateLike.controls.isActive.setValue(false)
                     this.post[i].countOfLike = this.post[i].countOfLike - 1;
-                    this.post[i].isActiveLike = false
+                    this.post[i].statusLike = false
                 } else {
                     this.updateLike.controls.isActive.setValue(true)
                     this.post[i].countOfLike = this.post[i].countOfLike + 1;
-                    this.post[i].isActiveLike = true
+                    this.post[i].statusLike = true
                 }
                 this.updateLike.controls['id'].setValue(result.id)
 
@@ -479,18 +473,14 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
                 }
             })
             this.insertLikeDataSubs = this.likeService.insert(this.addLike.value).subscribe(response => {
-                this.post[i].countOfLike = this.post[i].countOfLike + 1;
+                this.post[i].countOfLike = this.post[i].countOfLike + 1
                 this.post[i].likeId = response.id
                 this.post[i].isActiveLike = true
-
             })
         }
 
     }
 
-    btnToggleComment() {
-        this.isShowComment = !this.isShowComment
-    }
 
     insertComment(postId: string, i: any) {
         this.commentForm.patchValue({
@@ -500,14 +490,45 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         })
 
         this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
-            this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-                this.post[i].comments.push(resultId ?? '')
+            this.post[i].countOfComment = this.post[i].countOfComment + 1
 
+            this.post[i].createdAtComment.push((new Date()).toString())
+            console.log(this.post[i])
+            this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
+                console.log(resultId)
+                this.post[i].commentBody.push(resultId.commentBody)
+                this.post[i].userComment.push(resultId.user)
+                this.post[i].commentId.push(resultId.id)
+                this.commentForm.controls['commentBody'].setValue('')
             })
         })
     }
 
-    showPopUpDelete(id: string, i: any) {
+    updateComment(postId: string, commentId: string, j: number, i: number) {
+        this.updateCommentForm.patchValue({
+            post: {
+                id: postId
+            }
+        })
+        this.commentUpdateSubs = this.commentService.update(this.updateCommentForm.value).subscribe(() => {
+            this.indexComment = null
+            this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(resultId => {
+                this.post[i].commentBody.splice(j, 1, resultId.commentBody)
+                this.post[i].userComment.splice(j, 1, resultId.user)
+                this.post[i].commentId.splice(j, 1, resultId.id)
+            })
+        })
+    }
+
+    showEditComment(commentId: string, i: number, j: number) {
+        this.indexComment = j
+        this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(result => {
+            this.updateCommentForm.controls['commentBody'].setValue(result.commentBody)
+            this.updateCommentForm.controls['id'].setValue(result.id)
+        })
+    }
+
+    showPopUpDelete(id: string, i: number) {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete this post?',
             header: 'Delete Confirmation',
@@ -519,6 +540,26 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
                     this.postDeleteSubs = this.postService.update(this.unitPost).subscribe(() => {
                         this.post.splice(i, 1)
+                    })
+                })
+            }
+        })
+    }
+
+    showPopUpDeleteComment(id: string, i: number, j: number) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this comment?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.getByIdCommentSubs = this.commentService.getById(id).subscribe(result => {
+                    this.unitComment = result
+                    this.unitComment.isActive = false
+
+                    this.commentDeleteSubs = this.commentService.update(this.unitComment).subscribe(() => {
+                        this.post[i].commentBody.splice(j, 1)
+                        this.post[i].userComment.splice(j, 1)
+                        this.post[i].commentId.splice(j, 1)
                     })
                 })
             }
@@ -538,6 +579,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     editProfile() {
         this.router.navigateByUrl("/profiles/member/edit/" + this.myId)
     }
+
 
     ngOnDestroy(): void {
         this.postInsertSubs?.unsubscribe()
@@ -566,5 +608,11 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.getDataBookmarkSubs?.unsubscribe()
         this.commentInsertSubs?.unsubscribe()
         this.getAllCommentByPostSubs?.unsubscribe()
+        this.getByIdCommentSubs?.unsubscribe()
+        this.commentDeleteSubs?.unsubscribe()
+        this.getByIdCommentUpdateSubs?.unsubscribe()
+        this.commentUpdateSubs?.unsubscribe()
+        this.getRecentArticleSubs?.unsubscribe()
     }
+
 }
