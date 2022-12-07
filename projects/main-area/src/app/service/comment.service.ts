@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BASE_URL } from "projects/constant/base-url";
+import { Comment } from "projects/interface/comment";
 import { ResponseMessage } from "projects/interface/response-messge";
 import { Observable } from "rxjs";
 
