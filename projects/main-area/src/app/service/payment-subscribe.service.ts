@@ -22,7 +22,7 @@ export class PaymentSubscribeService {
         return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/id/${id}`)
     }
 
-    getByIsActive(startPosition: number, limit: number,ascending: boolean): Observable<PaymentSubscribe[]> {
+    getByIsActive(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
         return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
     }
 
@@ -30,25 +30,41 @@ export class PaymentSubscribeService {
         return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total/`)
     }
 
-    getByIsActiveTrueAndApprovedFalse(startPosition: number, limit: number,ascending:boolean): Observable<PaymentSubscribe[]>{
-		return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-approve-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
+    getByIsActiveTrueAndApprovedFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
+        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-approve-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
 
-    getTotalByIsActiveTrueAndApprovedFalse(): Observable<PaymentSubscribe>{
-		return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-is-active-approve-false/`)
-	}
+    getTotalByIsActiveTrueAndApprovedFalse(): Observable<PaymentSubscribe> {
+        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-is-active-approve-false/`)
+    }
 
-    getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number,ascending:boolean): Observable<PaymentSubscribe[]>{
-		return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-approve-true/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
+    getByPaymentApproved(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
+        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/payment-approved/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
 
-    getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentSubscribe>{
-		return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-is-active-approve-true/`)
-	}
+    getTotalByPaymentApproved(): Observable<PaymentSubscribe> {
+        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-payment-approved/`)
+    }
 
-	getByIsActiveFalse(startPosition: number, limit: number,ascending:boolean): Observable<PaymentSubscribe[]>{
-		return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
+    getByPaymentReject(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
+        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/payment-reject/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
+
+    getTotalByPaymentReject(): Observable<PaymentSubscribe> {
+        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-payment-reject/`)
+    }
+
+    getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
+        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-approve-true/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
+
+    getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentSubscribe> {
+        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-is-active-approve-true/`)
+    }
+
+    getByIsActiveFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
+        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    }
 
     insert(data: any): Observable<any> {
         return this.httpClient.post<any>(`${Object.values(BASE_URL)[0]}/payment-subscribes`, data)
