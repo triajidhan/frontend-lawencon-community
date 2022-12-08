@@ -34,8 +34,12 @@ export class LikeService {
     return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users-all/?userId=${userId}`)
   }
 
-  getByPost(postId: string): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/posts/?postId=${postId}`)
+  getByPostAll(postId: string): Observable<Like[]> {
+    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/posts-all/?postId=${postId}`)
+  }
+
+  getByPost(postId: string, startPosition: number, limit: number, ascending: boolean): Observable<Like[]> {
+    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/posts/?postId=${postId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
   }
 
   getTotalByUser(userId: string): Observable<Like> {
