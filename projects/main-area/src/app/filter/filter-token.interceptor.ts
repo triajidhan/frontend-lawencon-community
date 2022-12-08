@@ -38,6 +38,7 @@ export class FilterTokenInterceptor implements HttpInterceptor {
                         this.toast.error(err.error.message, 'Information ')
                         
                         if (err.error.message == 'Invalid token') {
+                            this.apiService.logOut()
                             this.router.navigate(['/login/member'])
                         }
                     }

@@ -59,8 +59,10 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
 
     this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(this.startPage, this.maxPage, false).subscribe(
       result => {
+        console.log("is true app false");
+        
         console.log(result)
-        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedTrue().subscribe(
+        this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
             this.data = result
             this.loading = false
@@ -83,7 +85,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
 
     this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
       result => {
-        console.log(result)
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
             this.data = result
@@ -97,7 +98,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   }
 
   loadDataApproved(event: LazyLoadEvent) {
-    console.log(event)
     this.getDataApproved(event.first, event.rows)
   }
 
@@ -151,8 +151,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.getByIdPaymentSubscribe = this.paymentSubscribeService.getById(paymentSubsId).pipe(finalize(() => this.loadingSubscribe = false)).subscribe(result => {
       this.paymentSubscribe = result
       this.paymentSubscribe.approve = true
-
-      console.log(this.paymentSubscribe);
 
       this.approvePaymentSubs = this.paymentSubscribeService.update(this.paymentSubscribe).subscribe(() => {
         this.getData()

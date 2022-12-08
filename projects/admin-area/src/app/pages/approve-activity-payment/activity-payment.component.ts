@@ -73,7 +73,6 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
             result => {
-                console.log(result)
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(total => {
                     this.data = result
                     this.loading = false
@@ -94,7 +93,6 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByPaymentApproved(startPage, maxPage, false).subscribe(
             result => {
-
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByPaymentApproved().subscribe(total => {
                     this.dataApprove = result
                     this.loading = false
