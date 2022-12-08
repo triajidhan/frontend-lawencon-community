@@ -15,9 +15,10 @@
                         <div class="col-12 md:col-4 lg:col-3 text-center">
                             <div class="flex justify-content-center relative">
                                 <div *ngIf="myStatusSubscribe" class="absolute left-0 z-2">
-                                    <div class="border-circle bg-orange-400 h-3rem w-3rem flex align-items-center justify-content-center">
+                                    <div
+                                        class="border-circle bg-orange-400 h-3rem w-3rem flex align-items-center justify-content-center">
                                         <i class="fa-regular fa-gem icon text-3xl"></i>
-                                      </div>
+                                    </div>
                                 </div>
                                 <div class="border-circle overflow-hidden w-10rem h-10rem">
                                     <ng-container *ngIf="(myProfile != 'null' && myProfile != '')">
@@ -41,12 +42,19 @@
                                     <div *ngIf="myCompany != ''" class="w-max mr-3 bg-green-100 border-round-xl">
                                         <h3 class="mx-3 my-2 text-green-500">{{ myCompany }}</h3>
                                     </div>
-                                    <div *ngIf="myPosition != 'null'" class="w-max mr-3 bg-purple-100 border-round-xl">
-                                        <h3 class="mx-3 my-2 text-purple-500">{{ myPosition }}</h3>
-                                    </div>
-                                    <div *ngIf="myIndustry != 'null'" class="w-max mr-3 bg-indigo-100 border-round-xl">
-                                        <h3 class="mx-3 my-2 text-indigo-500">{{ myIndustry }}</h3>
-                                    </div>
+                                    <ng-container *ngIf="myPosition">
+                                        <div *ngIf="myPosition != 'null'"
+                                            class="w-max mr-3 bg-purple-100 border-round-xl">
+                                            <h3 class="mx-3 my-2 text-purple-500">{{ myPosition }}</h3>
+                                        </div>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="myIndustry">
+                                        <div *ngIf="myIndustry != 'null'"
+                                            class="w-max mr-3 bg-indigo-100 border-round-xl">
+                                            <h3 class="mx-3 my-2 text-indigo-500">{{ myIndustry }}</h3>
+                                        </div>
+                                    </ng-container>
                                 </div>
                             </div>
                         </div>
@@ -101,48 +109,50 @@
             <div class="col-12 md:col-8 mt-3">
                 <p-card>
                     <div class="flex sm:mx-5">
-                      <div class="max-w-max">
-                        <div class="w-3rem h-3rem border-circle overflow-hidden">
-                          <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
-                          <ng-template #isProfile>
-                            <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                              imageClass="w-3rem h-3rem"></p-image>
-                          </ng-template>
-                          <ng-template #isNotProfile>
-                            <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
-                              imageClass="w-3rem h-3rem"></p-image>
-                          </ng-template>
+                        <div class="max-w-max">
+                            <div class="w-3rem h-3rem border-circle overflow-hidden">
+                                <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                                </div>
+                                <ng-template #isProfile>
+                                    <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                                        imageClass="w-3rem h-3rem"></p-image>
+                                </ng-template>
+                                <ng-template #isNotProfile>
+                                    <p-image [preview]="true" src="../../../../assets/logos/user.jpg"
+                                        alt="profile image" imageClass="w-3rem h-3rem"></p-image>
+                                </ng-template>
+                            </div>
+
                         </div>
-          
-                      </div>
-                      <div (click)="postDialog('regular')"
-                        class="w-full bg-black-alpha-10 ml-2 sm:ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
-                        <p class="text-black-alpha-50">What do you think?</p>
-                      </div>
+                        <div (click)="postDialog('regular')"
+                            class="w-full bg-black-alpha-10 ml-2 sm:ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
+                            <p class="text-black-alpha-50">What do you think?</p>
+                        </div>
                     </div>
                     <div class="flex sm:mx-3">
-                      <div
-                        class=" flex align-items-center mt-3 mr-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
-                        routerLink="/homes/new">
-                        <div class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
-                          <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
+                        <div class=" flex align-items-center mt-3 mr-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                            routerLink="/homes/new">
+                            <div
+                                class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
+                            </div>
+                            <h3 class="hidden sm:block ml-3">
+                                Poll Post
+                            </h3>
                         </div>
-                        <h3 class="hidden sm:block ml-3">
-                          Poll Post
-                        </h3>
-                      </div>
-                      <div *ngIf="myStatusSubscribe"
-                        class=" flex align-items-center mt-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
-                        (click)="postDialog('premium')">
-                        <div class="border-circle bg-orange-400 icon-box flex align-items-center justify-content-center">
-                          <i class="fa-regular fa-gem icon text-2xl"></i>
+                        <div *ngIf="myStatusSubscribe"
+                            class=" flex align-items-center mt-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
+                            (click)="postDialog('premium')">
+                            <div
+                                class="border-circle bg-orange-400 icon-box flex align-items-center justify-content-center">
+                                <i class="fa-regular fa-gem icon text-2xl"></i>
+                            </div>
+                            <h3 class="hidden sm:block ml-3">
+                                Premium Post
+                            </h3>
                         </div>
-                        <h3 class="hidden sm:block ml-3">
-                          Premium Post
-                        </h3>
-                      </div>
                     </div>
-                  </p-card>
+                </p-card>
                 <div class="pt-3">
                     <p-card infinite-scroll (scrolled)="onScroll()">
                         <ng-container *ngFor="let p of post; index as i">
@@ -489,7 +499,8 @@
                                                             <input formControlName="commentBody" pInputText
                                                                 class="text-lg w-full h-2rem border-round-2xl bg-gray-100"
                                                                 type="text" placeholder="write comment...">
-                                                            <p class="text-xs text-black-alpha-60">Press Enter to Send.
+                                                            <p class="text-xs text-black-alpha-60">Press Enter to Save
+                                                                Edit.
                                                             </p>
                                                         </div>
                                                         <div class="hidden">
@@ -514,109 +525,109 @@
 
 <p-dialog [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
     <ng-template pTemplate="header">
-      <ng-container *ngIf="postType == 'premium'">
-        <div class="border-circle bg-orange-300 icon-box flex align-items-center justify-content-center">
-          <i class="fa-regular fa-gem icon text-xl"></i>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="postType == 'regular'">
-        <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
-          <i class="fa-regular fa-note-sticky icon text-xl"></i>
-        </div>
-      </ng-container>
-      <h3 class="capitalize">{{postType}} Post</h3>
+        <ng-container *ngIf="postType == 'premium'">
+            <div class="border-circle bg-orange-300 icon-box flex align-items-center justify-content-center">
+                <i class="fa-regular fa-gem icon text-xl"></i>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="postType == 'regular'">
+            <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+                <i class="fa-regular fa-note-sticky icon text-xl"></i>
+            </div>
+        </ng-container>
+        <h3 class="capitalize">{{postType}} Post</h3>
     </ng-template>
     <div class="grid bg-white border-round-xl w-full lg:w-30rem">
-      <div class="col-12">
-        <div class="flex mb-3">
-          <div class="max-w-max mr-3">
-            <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-              imageClass="w-3rem h-3rem border-circle"></p-image>
-            <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
-              imageClass="w-3rem h-3rem border-circle"></p-image>
-          </div>
-          <div class="w-full">
-            <h3>{{ myFullName }}</h3>
-            <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
-              <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
+        <div class="col-12">
+            <div class="flex mb-3">
+                <div class="max-w-max mr-3">
+                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                        imageClass="w-3rem h-3rem border-circle"></p-image>
+                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                        alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
+                </div>
+                <div class="w-full">
+                    <h3>{{ myFullName }}</h3>
+                    <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
+                        <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
+                    </div>
+                </div>
             </div>
-          </div>
+            <form class="card" [formGroup]="postForm">
+                <div class="field">
+                    <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm"
+                        formControlName="title" placeholder="title" required>
+                </div>
+                <div class="field">
+                    <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
+                        formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
+                </div>
+                <div class="field">
+                    <label for="file">Photo</label>
+                    <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
+                        (uploadHandler)="fileUpload($event)" [multiple]="true">
+                    </p-fileUpload>
+                </div>
+                <button pButton [loading]="loadingPost" [disabled]="postForm.invalid" type="submit"
+                    (click)="postInsert()" class="main-color w-full mt-3" label="SUBMIT"></button>
+            </form>
         </div>
-        <form class="card" [formGroup]="postForm">
-          <div class="field">
-            <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm" formControlName="title"
-              placeholder="title" required>
-          </div>
-          <div class="field">
-            <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
-              formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
-          </div>
-          <div class="field">
-            <label for="file">Photo</label>
-            <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
-              (uploadHandler)="fileUpload($event)" [multiple]="true">
-            </p-fileUpload>
-          </div>
-          <button pButton [loading]="loadingPost" [disabled]="postForm.invalid" type="submit" (click)="postInsert()"
-            class="main-color w-full mt-3" label="SUBMIT"></button>
-        </form>
-      </div>
     </div>
-  </p-dialog>
-  
-  <p-dialog [(visible)]="displayEdit" [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
+</p-dialog>
+
+<p-dialog [(visible)]="displayEdit" [breakpoints]="{'960px': '75vw', '640px': '100vw'}">
     <ng-template pTemplate="header">
-      <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
-        <i class="fa-solid fa-pen icon text-xl"></i>
-      </div>
-      <h3 class="capitalize">Edit Post</h3>
+        <div class="border-circle main-color icon-box flex align-items-center justify-content-center">
+            <i class="fa-solid fa-pen icon text-xl"></i>
+        </div>
+        <h3 class="capitalize">Edit Post</h3>
     </ng-template>
     <div class="grid bg-white border-round-xl w-full lg:w-30rem">
-      <div class="col-12">
-        <div class="flex mb-3">
-          <div class="max-w-max mr-3">
-            <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-              imageClass="w-3rem h-3rem border-circle"></p-image>
-            <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg" alt="profile image"
-              imageClass="w-3rem h-3rem border-circle"></p-image>
-          </div>
-          <div class="w-full">
-            <h3>{{ myFullName }}</h3>
-            <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
-              <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
+        <div class="col-12">
+            <div class="flex mb-3">
+                <div class="max-w-max mr-3">
+                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                        imageClass="w-3rem h-3rem border-circle"></p-image>
+                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
+                        alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
+                </div>
+                <div class="w-full">
+                    <h3>{{ myFullName }}</h3>
+                    <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
+                        <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
+                    </div>
+                </div>
             </div>
-          </div>
+            <form class="card" [formGroup]="updatePostForm">
+                <div class="field">
+                    <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm"
+                        formControlName="title" placeholder="title" required>
+                </div>
+                <div class="field">
+                    <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
+                        formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
+                </div>
+                <button pButton [loading]="loadingPost" [disabled]="updatePostForm.invalid" type="submit"
+                    (click)="postUpdate()" class="main-color w-full mt-3" label="SUBMIT"></button>
+            </form>
         </div>
-        <form class="card" [formGroup]="updatePostForm">
-          <div class="field">
-            <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm" formControlName="title"
-              placeholder="title" required>
-          </div>
-          <div class="field">
-            <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
-              formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
-          </div>
-          <button pButton [loading]="loadingPost" [disabled]="updatePostForm.invalid" type="submit" (click)="postUpdate()"
-            class="main-color w-full mt-3" label="SUBMIT"></button>
-        </form>
-      </div>
     </div>
-  </p-dialog>
-  
-  <p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}"
+</p-dialog>
+
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}"
     rejectButtonStyleClass="p-button-outlined" acceptButtonStyleClass="p-button-danger">
-  </p-confirmDialog>
-  
-  
-  <p-galleria [value]="images" [(visible)]="displayGalleria" [responsiveOptions]="responsiveOptions"
+</p-confirmDialog>
+
+
+<p-galleria [value]="images" [(visible)]="displayGalleria" [responsiveOptions]="responsiveOptions"
     [containerStyle]="{'max-width': '850px'}" [numVisible]="7" [circular]="true" [fullScreen]="true"
     [showItemNavigators]="true" [showThumbnails]="false" [baseZIndex]="100000" [activeIndex]="activeIndex">
     <ng-template pTemplate="item" let-item>
-      <img src="{{urlFile}}{{item.file.id}}" style="width: 100%; display: block;" />
+        <img src="{{urlFile}}{{item.file.id}}" style="width: 100%; display: block;" />
     </ng-template>
     <ng-template pTemplate="thumbnail" let-item>
-      <div class="grid grid-nogutter justify-content-center">
-        <img src="{{urlFile}}{{item.file.id}}" style="display: block;" />
-      </div>
+        <div class="grid grid-nogutter justify-content-center">
+            <img src="{{urlFile}}{{item.file.id}}" style="display: block;" />
+        </div>
     </ng-template>
-  </p-galleria>
+</p-galleria>

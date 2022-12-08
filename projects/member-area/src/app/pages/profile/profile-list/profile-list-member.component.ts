@@ -197,11 +197,17 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.myEmail = String(this.apiService.getEmail())
         if (this.apiService.getPhotoId()) {
             this.myProfile = String(this.apiService.getPhotoId())
-          }
+        }
         this.myCompany = String(this.apiService.getCompany())
-          
-        this.myIndustry = String(this.apiService.getIndustry())
-        this.myPosition = String(this.apiService.getPosition())
+
+        if (this.apiService.getIndustry()) {
+            this.myIndustry = String(this.apiService.getIndustry())
+        }
+
+        if (this.apiService.getPosition()) {
+            this.myPosition = String(this.apiService.getPosition())
+        }
+
         this.myBalances = Number(this.apiService.getBalances())
         this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
 

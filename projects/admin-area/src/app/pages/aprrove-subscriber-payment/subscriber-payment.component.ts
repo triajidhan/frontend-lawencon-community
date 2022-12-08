@@ -14,7 +14,7 @@ import { finalize, Subscription } from "rxjs"
 export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   loadingSubscribe = false;
   items!: MenuItem[]
-  navMenus!:MenuItem[]
+  navMenus!: MenuItem[]
   data: any[] = []
   dataApprove: any[] = []
   dataReject: any[] = []
@@ -37,7 +37,7 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
   private rejectPaymentSubs?: Subscription
 
   constructor(private paymentSubscribeService: PaymentSubscribeService,
-    private userService: UserService,private activatedRoute:ActivatedRoute) { }
+    private userService: UserService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -57,17 +57,17 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     ]
 
 
-    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(this.startPage, this.maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(this.startPage, this.maxPage, false).subscribe(
       result => {
         console.log("is true app false");
         
         console.log(result)
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
-              this.data = result
-              this.loading = false
-              this.totalData = totalData.countOfPaymentSubscribe
-            
+            this.data = result
+            this.loading = false
+            this.totalData = totalData.countOfPaymentSubscribe
+
           }
         )
       }
@@ -83,14 +83,14 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.startPage = startPage
     this.maxPage = maxPage
 
-    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(startPage, maxPage, false).subscribe(
       result => {
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
-              this.data = result
-              this.loading = false
-              this.totalData = totalData.countOfPaymentSubscribe
-            
+            this.data = result
+            this.loading = false
+            this.totalData = totalData.countOfPaymentSubscribe
+
           }
         )
       }
@@ -106,15 +106,15 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.startPage = startPage
     this.maxPage = maxPage
 
-    this.getAllSubs = this.paymentSubscribeService.getByPaymentApproved(startPage, maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByPaymentApproved(startPage, maxPage, false).subscribe(
       result => {
         console.log(result)
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByPaymentApproved().subscribe(
           totalData => {
-              this.dataApprove = result 
-              this.loading = false
-              this.totalData = totalData.countOfPaymentSubscribe
-            
+            this.dataApprove = result
+            this.loading = false
+            this.totalData = totalData.countOfPaymentSubscribe
+
           }
         )
       }
@@ -132,14 +132,14 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
     this.startPage = startPage
     this.maxPage = maxPage
 
-    this.getAllSubs = this.paymentSubscribeService.getByPaymentReject(startPage, maxPage,false).subscribe(
+    this.getAllSubs = this.paymentSubscribeService.getByPaymentReject(startPage, maxPage, false).subscribe(
       result => {
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByPaymentReject().subscribe(
           totalData => {
-              this.dataReject = result
-              this.loading = false
-              this.totalData = totalData.countOfPaymentSubscribe
-            
+            this.dataReject = result
+            this.loading = false
+            this.totalData = totalData.countOfPaymentSubscribe
+
           }
         )
       }
