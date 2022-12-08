@@ -244,7 +244,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initAllActivity() {
-        this.getAllActivitySubs = this.activityService.getByIsActiveAndOrder(this.startPosition, this.limit, true).subscribe(result => {
+        this.getAllActivitySubs = this.activityService.getByIsActiveAndOrder(this.startPosition, this.limit, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addData(result[i])
             }
@@ -252,7 +252,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initAllActivityCourse() {
-        this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C', this.startPositionCourse, this.limitCourse, true).subscribe(result => {
+        this.getAllActivityByCourse = this.activityService.getByActivityTypeCodeOrder('C', this.startPositionCourse, this.limitCourse, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByCourse(result[i])
             }
@@ -260,7 +260,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initAllActivityEvent() {
-        this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E', this.startPositionEvent, this.limitEvent, true).subscribe(result => {
+        this.getAllActivityByEvent = this.activityService.getByActivityTypeCodeOrder('E', this.startPositionEvent, this.limitEvent, false).subscribe(result => {
 
             for (let i = 0; i < result.length; i++) {
                 this.addDataActivityByEvent(result[i])
@@ -278,7 +278,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityCourse() {
-        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'C', this.startPositionMyCourse, this.limitMyCourse, true).subscribe(result => {
+        this.getAllMyActivityCourseSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'C', this.startPositionMyCourse, this.limitMyCourse, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesCourse(result[i])
             }
@@ -286,7 +286,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityEvent() {
-        this.getAllMyActivityEventSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionMyEvent, this.limitMyCourse, true).subscribe(result => {
+        this.getAllMyActivityEventSubs = this.activityService.getByUserAndActivityTypeCode(this.myId, 'E', this.startPositionMyEvent, this.limitMyCourse, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesEvent(result[i])
             }
@@ -304,7 +304,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityCourseOnGoing() {
-        this.getAllMyActivityOnGoingCourseSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('course', this.myId, this.startPositionMyCourseOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
+        this.getAllMyActivityOnGoingCourseSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('course', this.myId, this.startPositionMyCourseOnGoing, this.limitMyCourseOnGoing, false).subscribe(result => {
 
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesOnGoingCourse(result[i])
@@ -313,7 +313,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     initMyActivityEventOnGoing() {
-        this.getAllMyActivityOnGoingEventSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('event', this.myId, this.startPositionMyEventOnGoing, this.limitMyCourseOnGoing, true).subscribe(result => {
+        this.getAllMyActivityOnGoingEventSubs = this.paymentActivityDetailService.getByActivityTypeAndUser('event', this.myId, this.startPositionMyEventOnGoing, this.limitMyCourseOnGoing, false).subscribe(result => {
             for (let i = 0; i < result.length; i++) {
                 this.addDataMyActivitiesOnGoingEvent(result[i])
             }
@@ -323,6 +323,7 @@ export class ActivityListComponent implements OnInit {
 
     addData(activity: any) {
         this.activities.push(activity)
+        console.log(this.activities)
     }
 
     addDataActivityByCourse(activity: any) {
@@ -350,7 +351,6 @@ export class ActivityListComponent implements OnInit {
 
     addDataMyActivitiesOnGoing(activity: any) {
         this.myActivitiesOnGoing.push(activity)
-        console.log(this.myActivitiesOnGoing)
     }
 
     addDataMyActivitiesOnGoingCourse(activity: any) {
@@ -400,6 +400,8 @@ export class ActivityListComponent implements OnInit {
 
         this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).pipe(finalize(() => this.loadingJoinActivity = false)).subscribe(() => {
             this.display = false
+
+            this.initAllActivity() 
         })
     }
 
