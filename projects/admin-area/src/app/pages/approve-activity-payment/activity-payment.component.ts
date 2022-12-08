@@ -47,7 +47,7 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
-          })
+        })
 
         this.items = [
             { label: 'Home', routerLink: "/dashboard/admin" },
@@ -93,7 +93,6 @@ export class ActivityPaymentComponent implements OnInit, OnDestroy {
 
         this.getAllPaymentActivitySubs = this.paymentActivityDetailService.getByPaymentApproved(startPage, maxPage, false).subscribe(
             result => {
-                
                 this.getTotalDataSubs = this.paymentActivityDetailService.getTotalByPaymentApproved().subscribe(total => {
                     this.dataApprove = result
                     this.loading = false
