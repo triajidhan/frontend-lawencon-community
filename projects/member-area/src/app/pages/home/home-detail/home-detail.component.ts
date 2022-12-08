@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
-import { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
+import { ConfirmationService } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { BookmarkService } from "projects/main-area/src/app/service/bookmark.service"
@@ -16,19 +17,27 @@ import { Subscription } from "rxjs"
 @Component({
   selector: 'home-detail',
   templateUrl: './home-detail.component.html',
-  styleUrls: ['../../../../styles.css']
+  styleUrls: ['../../../../styles.css'],
+  providers: [ConfirmationService]
 })
 export class HomeDetailComponent implements OnInit, OnDestroy {
 
+  myFullName = ""
   myId: string = ""
   myCompany: string = ""
   myProfile: string = ""
   myStatusSubscribe!: boolean
 
-  post: any = new Object()
+  loadingPost = false
+
   fileArray: any[] = []
   pollOption: any[] = []
+  indexComment?: number | null
+
   polling: any = new Object()
+  post: any = new Object()
+  unitComment: any = new Object()
+  displayEdit: boolean = false
 
   urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
@@ -54,7 +63,21 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     isActive: [false]
   })
 
+  updatePostForm = this.fb.group({
+    id: [''],
+    title: ['', Validators.required],
+    contents: ['', Validators.required]
+  })
+
   commentForm = this.fb.group({
+    commentBody: ['', Validators.required],
+    post: this.fb.group({
+      id: ['']
+    })
+  })
+
+  updateCommentForm = this.fb.group({
+    id: [''],
     commentBody: ['', Validators.required],
     post: this.fb.group({
       id: ['']
@@ -77,6 +100,8 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
   ]
 
   private getByIdPostSubscription?: Subscription
+  private postDeleteSubs?: Subscription
+  private postUpdateSubs?: Subscription
   private getCountLikeDataSubs?: Subscription
   private getCountBookmarkDataSubs?: Subscription
   private getPostAttachmentDataSubs?: Subscription
@@ -93,12 +118,17 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
   private getAllCommentByPostSubs?: Subscription
   private commentInsertSubs?: Subscription
   private getByIdCommentsSubs?: Subscription
+  private getByIdCommentUpdateSubs?: Subscription
+  private getByIdCommentSubs?: Subscription
+  private commentDeleteSubs?: Subscription
+  private commentUpdateSubs?: Subscription
 
   constructor(private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
     private postAttachmentService: PostAttachmentService, private apiService: ApiService,
     private likeService: LikeService, private bookmarkService: BookmarkService,
     private pollingService: PollingService, private polingStatusService: PollingStatusService,
-    private commentService: CommentService, private activatedRoute: ActivatedRoute
+    private commentService: CommentService, private activatedRoute: ActivatedRoute,
+    private confirmationService: ConfirmationService, private router: Router
   ) { }
 
 
@@ -108,6 +138,7 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
 
   init() {
     this.myId = String(this.apiService.getId())
+    this.myFullName = String(this.apiService.getName())
     this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
     if (this.apiService.getPhotoId()) {
       this.myProfile = String(this.apiService.getPhotoId())
@@ -120,6 +151,8 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
       this.getByIdPostSubscription = this.postService.getById(id['id']).subscribe(result => {
         this.post = result
 
+        console.log(this.post)
+
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(result.id, this.myId).subscribe(userLike => {
           result.likeId = userLike.likeId
           result.countOfLike = userLike.countOfLike
@@ -130,43 +163,38 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
           result.bookmarkId = userBookmark.id
           result.isActiveBookmark = userBookmark.isActive
         })
-        this.addDataPost(result)
-
       })
     })
   }
 
-  addDataPost(post: any) {
-    this.getPostAttachmentDataSubs = this.postAttachmentService.getByPost(post.id).subscribe(result => {
-      post.postAttachment = result
-    })
-
-    this.getAllCommentByPostSubs = this.commentService.getByPostAndOrder(post.id, true).subscribe(result => {
-      post.comments = result
-    })
-
-    this.getDataPollContentSubs = this.pollingService.getByPost(post.id).subscribe(result => {
-      this.pollOption = result
-      let totalTemp = 0
-      for (let j = 0; j < result.length; j++) {
-        totalTemp += result[j].totalPoll
-        post.totalPoll = totalTemp
-      }
-      console.log(this.post)
-    })
-  }
-
-  choosePollOption(pollId: string, j: any) {
+  choosePollOption(pollId: string, j: number) {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
       this.polling = result
       this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
-        this.pollOption[j].totalPoll = this.pollOption[j].totalPoll + 1
-        this.getByIdPollingStatusSubs = this.polingStatusService.getById(polling.id).subscribe(pollingStatus => {
-          for (let k = 0; k < this.pollOption.length; k++) {
-            this.pollOption[k].pollingStatus = pollingStatus;
-          }
-        })
+        this.post.totalVote = this.post.totalVote + 1
+        this.post.statusPolling = true
+        this.post.choosenPolling = pollId
+        this.post.totalPoll[j] = this.post.totalPoll[j] + 1
       })
+    })
+  }
+
+  postEditDialog() {
+    this.updatePostForm.controls['title'].setValue(this.post.title)
+    this.updatePostForm.controls['contents'].setValue(this.post.contents)
+    this.updatePostForm.controls['id'].setValue(this.post.id)
+
+    // this.postId = postId
+    this.displayEdit = true
+  }
+
+  postUpdate() {
+    this.postUpdateSubs = this.postService.update(this.updatePostForm.value).subscribe(() => {
+      this.displayEdit = false
+      this.post.title = this.updatePostForm.value.title
+      this.post.contents = this.updatePostForm.value.contents
+      this.updatePostForm.controls.title.setValue("")
+      this.updatePostForm.controls.contents.setValue("")
     })
   }
 
@@ -233,10 +261,10 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
 
   }
 
-  insertComment(postId: string) {
+  insertComment() {
     this.commentForm.patchValue({
       post: {
-        id: postId
+        id: this.post.id
       }
     })
 
@@ -244,8 +272,68 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
       this.post.countOfComment = this.post.countOfComment + 1
       this.commentForm.controls['commentBody'].setValue("")
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-        this.post.comments.push(resultId ?? '')
+        this.post.commentBody.push(resultId.commentBody)
+        this.post.userComment.push(resultId.user)
+        this.post.commentId.push(resultId.id)
       })
+    })
+  }
+
+  showPopUpDelete() {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this post?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.post.isActive = false
+        this.postDeleteSubs = this.postService.update(this.post).subscribe(() => {
+          this.router.navigateByUrl("/homes/type/threads")
+        })
+      }
+    })
+  }
+
+  showPopUpDeleteComment(id: string, j: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this comment?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.getByIdCommentSubs = this.commentService.getById(id).subscribe(result => {
+          this.unitComment = result
+          this.unitComment.isActive = false
+
+          this.commentDeleteSubs = this.commentService.update(this.unitComment).subscribe(() => {
+            this.post.commentBody.splice(j, 1)
+            this.post.userComment.splice(j, 1)
+            this.post.commentId.splice(j, 1)
+          })
+        })
+      }
+    })
+  }
+
+  updateComment(commentId: string, j: number) {
+    this.updateCommentForm.patchValue({
+      post: {
+        id: this.post.id
+      }
+    })
+    this.commentUpdateSubs = this.commentService.update(this.updateCommentForm.value).subscribe(() => {
+      this.indexComment = null
+      this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(resultId => {
+        this.post.commentBody.splice(j, 1, resultId.commentBody)
+        this.post.userComment.splice(j, 1, resultId.user)
+        this.post.commentId.splice(j, 1, resultId.id)
+      })
+    })
+  }
+
+  showEditComment(commentId: string, j: number) {
+    this.indexComment = j
+    this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(result => {
+      this.updateCommentForm.controls['commentBody'].setValue(result.commentBody)
+      this.updateCommentForm.controls['id'].setValue(result.id)
     })
   }
 
