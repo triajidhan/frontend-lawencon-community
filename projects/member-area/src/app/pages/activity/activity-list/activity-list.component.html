@@ -324,10 +324,6 @@
                                                 <p class="text-black-alpha-60">
                                                     {{ p.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
-                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
-                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -401,10 +397,6 @@
                                                 <p class="text-black-alpha-60">
                                                     {{ p.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
-                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
-                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -479,10 +471,6 @@
                                                 <p class="text-black-alpha-60">
                                                     {{ p.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
-                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activityType.activityTypeName }}</p>
-                                                </div>
                                             </div>
                                         </div>
                                     </p-card>
@@ -553,13 +541,18 @@
                                                 <i class="fa-solid fa-coins mr-2"></i>
                                                 <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3 flex justify-content-between">
+                                            <div class="text-right mt-3 flex justify-content-between align-items-center">
                                                 <p class="text-black-alpha-60">
                                                     {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.activity.id, p.activity.price, p.activity.title)"
-                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activity.activityType.activityTypeName }}</p>
+                                                <div *ngIf="!p.approve && p.isActive" class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
+                                                    <p>pending</p>
+                                                </div>
+                                                <div *ngIf="!p.approve && !p.isActive" class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
+                                                    <p>rejected</p>
+                                                </div>
+                                                <div *ngIf="p.approve && p.isActive" class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
+                                                    <p>approved</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -631,13 +624,18 @@
                                                 <i class="fa-solid fa-coins mr-2"></i>
                                                 <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3 flex justify-content-between">
+                                            <div class="text-right mt-3 flex justify-content-between align-items-center">
                                                 <p class="text-black-alpha-60">
                                                     {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.activity.id, p.activity.price, p.activity.title)"
-                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activity.activityType.activityTypeName }}</p>
+                                                <div *ngIf="!p.approve && p.isActive" class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
+                                                    <p>pending</p>
+                                                </div>
+                                                <div *ngIf="!p.approve && !p.isActive" class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
+                                                    <p>rejected</p>
+                                                </div>
+                                                <div *ngIf="p.approve && p.isActive" class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
+                                                    <p>approved</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -709,13 +707,18 @@
                                                 <i class="fa-solid fa-coins mr-2"></i>
                                                 <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3 flex justify-content-between">
+                                            <div class="text-right mt-3 flex justify-content-between align-items-center">
                                                 <p class="text-black-alpha-60">
                                                     {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.activity.id, p.activity.price, p.activity.title)"
-                                                    class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
-                                                    <p>Join {{ p.activity.activityType.activityTypeName }}</p>
+                                                <div *ngIf="!p.approve && p.isActive" class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
+                                                    <p>pending</p>
+                                                </div>
+                                                <div *ngIf="!p.approve && !p.isActive" class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
+                                                    <p>rejected</p>
+                                                </div>
+                                                <div *ngIf="p.approve && p.isActive" class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
+                                                    <p>approved</p>
                                                 </div>
                                             </div>
                                         </div>

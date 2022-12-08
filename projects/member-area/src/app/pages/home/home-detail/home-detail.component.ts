@@ -151,7 +151,7 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
       this.getByIdPostSubscription = this.postService.getById(id['id']).subscribe(result => {
         this.post = result
 
-        console.log(this.post)
+        // console.log(this.post)
 
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(result.id, this.myId).subscribe(userLike => {
           result.likeId = userLike.likeId

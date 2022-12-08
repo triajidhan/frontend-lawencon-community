@@ -27,7 +27,7 @@ export class LikeService {
   }
 
   getByUserOrder(userId: string, startPosition: number, limit: number, ascending: boolean): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users-order/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
   }
 
   getByUserAll(userId: string): Observable<Like[]> {
