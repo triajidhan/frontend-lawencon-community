@@ -34,8 +34,12 @@ export class BookmarkService {
     return this.http.get<Bookmark[]>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}`)
   }
 
-  getByPost(postId: string): Observable<any> {
+  getByPostAll(postId: string): Observable<any> {
     return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/posts/?postId=${postId}`)
+  }
+
+  getByPost(postId: string, startPosition: number, limit: number, ascending: boolean): Observable<any> {
+    return this.http.get<any>(`${Object.values(BASE_URL)[0]}/bookmarks/posts/?postId=${postId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
   }
 
   getTotalByUser(userId: string): Observable<any> {
