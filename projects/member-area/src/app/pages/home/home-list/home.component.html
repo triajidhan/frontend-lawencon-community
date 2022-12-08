@@ -13,10 +13,10 @@
         <p-card>
           <ng-container *ngFor="let ra of recentArticle;index as i">
             <div class="py-5 border-bottom-1 border-black-alpha-50 border-round-left-md">
-              <p-image *ngIf="recentArticle[i].file.files" [preview]="true" src="{{urlFile}}{{ recentArticle[i].file.id }}" alt="article image"
-                class="img-fluid"></p-image>
-                <p-image *ngIf="!recentArticle[i].file.files" [preview]="true" src="../../../../assets/images/article.jpg" alt="article image"
-                class="img-fluid"></p-image>
+              <p-image *ngIf="recentArticle[i].file.files" [preview]="true"
+                src="{{urlFile}}{{ recentArticle[i].file.id }}" alt="article image" class="img-fluid"></p-image>
+              <p-image *ngIf="!recentArticle[i].file.files" [preview]="true" src="../../../../assets/images/article.jpg"
+                alt="article image" class="img-fluid"></p-image>
 
               <h3 class="mt-3">
                 {{ recentArticle[i].title }}
@@ -179,22 +179,21 @@
                     <div *ngIf="post[i].fileId" class="flex w-full column-gap-1 cursor-pointer">
                       <ng-container *ngFor="let pa of post[i].fileId;index as j">
                         <ng-container *ngIf="post[i].fileId.length == 1">
-                          <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
-                            alt="post image">
+                          <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image">
                         </ng-container>
                         <ng-container *ngIf="post[i].fileId.length == 2">
                           <div
                             class="w-6 flex justify-content-center align-content-center h-20rem sm:h-30rem bg-black-alpha-30 overflow-hidden">
-                            <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
-                              alt="post image" class="w-auto">
+                            <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image"
+                              class="w-auto">
                           </div>
                         </ng-container>
                         <ng-container *ngIf="post[i].fileId.length > 2">
                           <ng-container *ngIf="j == 0">
                             <div
                               class="w-6 flex justify-content-center align-content-center h-20rem sm:h-30rem  overflow-hidden pb-1">
-                              <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
-                                alt="post image" class="w-auto">
+                              <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image"
+                                class="w-auto">
                             </div>
                           </ng-container>
                         </ng-container>
@@ -214,9 +213,8 @@
                               <ng-container *ngIf="j == 2">
                                 <div
                                   class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1">
-                                  <img (click)="imageClick(i, j)"
-                                    src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image"
-                                    class="h-auto">
+                                  <img (click)="imageClick(i, j)" src="{{urlFile}}{{ post[i].fileId[j] }}"
+                                    alt="post image" class="h-auto">
                                 </div>
                               </ng-container>
                             </ng-container>
@@ -224,8 +222,7 @@
                               <ng-container *ngIf="j == 2">
                                 <div
                                   class="w-full flex justify-content-center align-content-center h-10rem sm:h-15rem overflow-hidden pb-1 relative">
-                                  <img src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image"
-                                    class="h-auto">
+                                  <img src="{{urlFile}}{{ post[i].fileId[j] }}" alt="post image" class="h-auto">
                                   <div (click)="imageClick(i, j)"
                                     class="absolute w-full h-10rem sm:h-15rem bg-black-alpha-90 opacity-70 flex justify-content-center align-items-center img-cover">
                                     <h1 class="text-white">
@@ -245,16 +242,16 @@
                       <ng-container *ngFor="let po of post[i].pollContents; index as j">
 
                         <div *ngIf="!p.choosenPolling" class="mt-3 body-color hover:bg-gray-100">
-                            <div class="flex align-items-center cursor-pointer py-3"
+                          <div class="flex align-items-center cursor-pointer py-3"
                             (click)="choosePollOption(p.pollId[j], i , j)">
                             <p class="text-center text-lg main-text w-full">{{po}}</p>
                           </div>
                         </div>
-                     
+
 
                         <ng-container *ngIf="p.choosenPolling">
-                          <div *ngIf="p.pollId[j] != p.choosenPolling"
-                            class="mt-3 py-3 body-color cursor-pointer" pTooltip="you have voted">
+                          <div *ngIf="p.pollId[j] != p.choosenPolling" class="mt-3 py-3 body-color cursor-pointer"
+                            pTooltip="you have voted">
                             <div class="flex align-items-center">
                               <p class="text-center text-lg main-text w-full">{{po}}</p>
                               <p class="min-w-max mr-3 text-black-alpha-60">{{p.totalPoll[j]}} votes</p>
@@ -284,10 +281,8 @@
                           class="flex-order-0 flex align-items-center cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
                           (click)="actLikePost(p.id,p.likeId,i)">
 
-                          <i *ngIf="!p.likeId || !p.statusLike"
-                            class="fa-regular fa-heart text-2xl mr-2"></i>
-                          <i *ngIf="p.likeId && p.statusLike"
-                            class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
+                          <i *ngIf="!p.likeId || !p.statusLike" class="fa-regular fa-heart text-2xl mr-2"></i>
+                          <i *ngIf="p.likeId && p.statusLike" class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
 
 
                           <p class="min-w-max">{{ p.countOfLike }} <span class="hidden sm:inline">likes</span>
@@ -299,8 +294,7 @@
                         (click)="actBookmark(p.id,p.bookmarkId,i)">
                         <div
                           class="hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
-                          <div
-                            *ngIf="!p.bookmarkId || !p.statusBookmark; then isntBookmark else isBookmark">
+                          <div *ngIf="!p.bookmarkId || !p.statusBookmark; then isntBookmark else isBookmark">
                           </div>
                           <ng-template #isntBookmark>
                             <i class="fa-regular fa-bookmark text-2xl mr-2"></i>
@@ -325,14 +319,12 @@
                           <div *ngIf="j != indexComment" class="flex mt-3 justify-content-between">
                             <div class="flex">
                               <div class="max-w-max mr-3">
-                                <p-image [preview]="true" *ngIf="us.file"
-                                  src="{{urlFile}}{{us.file.id}}" alt="profile image"
-                                  imageClass="w-2rem h-2rem border-circle"></p-image>
-                                <p-image [preview]="true" *ngIf="!us.file"
-                                  src="../../../../assets/logos/user.jpg" alt="profile image"
-                                  imageClass="w-2rem h-2rem border-circle"></p-image>
+                                <p-image [preview]="true" *ngIf="us.file" src="{{urlFile}}{{us.file.id}}"
+                                  alt="profile image" imageClass="w-2rem h-2rem border-circle"></p-image>
+                                <p-image [preview]="true" *ngIf="!us.file" src="../../../../assets/logos/user.jpg"
+                                  alt="profile image" imageClass="w-2rem h-2rem border-circle"></p-image>
                               </div>
-  
+
                               <div class="w-max">
                                 <div class="bg-gray-100 px-3 py-2 border-round-xl">
                                   <p class="font-medium">{{ us.fullName }}</p>
@@ -343,51 +335,49 @@
                               </div>
                             </div>
                             <div *ngIf="myId == p.userComment[j].id || myId == p.createdBy">
-                              <div
-                              class="relative">
-                              <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100" pStyleClass="@next"
-                                enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
-                                <div
-                                  class=" cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
-                                  <i class="fa-solid fa-ellipsis text-xl"></i>
+                              <div class="relative">
+                                <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100"
+                                  pStyleClass="@next" enterClass="hidden" leaveToClass="hidden"
+                                  [hideOnOutsideClick]="true">
+                                  <div
+                                    class=" cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2">
+                                    <i class="fa-solid fa-ellipsis text-xl"></i>
+                                  </div>
+                                </div>
+                                <div class="absolute right-0 py-1 shadow-2 w-12rem bg-white hidden z-2">
+                                  <ul class="list-none p-0 m-0">
+                                    <li *ngIf="myId == p.userComment[j].id">
+                                      <a class="block px-3 pt-2 pb-3 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
+                                        (click)="showEditComment(p.commentId[j], i, j)">
+                                        edit comment
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a class="text-red-500 block px-3 pt-2 pb-3 no-underline hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
+                                        (click)="showPopUpDeleteComment(p.commentId[j], i, j)">
+                                        delete comment
+                                      </a>
+                                    </li>
+                                  </ul>
                                 </div>
                               </div>
-                              <div class="absolute right-0 py-1 shadow-2 w-12rem bg-white hidden z-2">
-                                <ul class="list-none p-0 m-0">
-                                  <li *ngIf="myId == p.userComment[j].id">
-                                    <a class="block px-3 pt-2 pb-3 no-underline text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
-                                    (click)="showEditComment(p.commentId[j], i, j)">
-                                      edit comment
-                                    </a>
-                                  </li>
-                                  <li >
-                                    <a class="text-red-500 block px-3 pt-2 pb-3 no-underline hover:bg-gray-100 transition-all transition-duration-200 cursor-pointer"
-                                      (click)="showPopUpDeleteComment(p.commentId[j], i, j)">
-                                      delete comment
-                                     </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
                             </div>
                           </div>
-                        
-                          <div *ngIf="j == indexComment">  
-                            <div class="flex mt-3" >
+
+                          <div *ngIf="j == indexComment">
+                            <div class="flex mt-3">
                               <div class="max-w-max mr-3">
-                                <p-image [preview]="true" *ngIf="us.file"
-                                    src="{{urlFile}}{{us.file.id}}" alt="profile image"
-                                    imageClass="w-2rem h-2rem border-circle"></p-image>
-                                  <p-image [preview]="true" *ngIf="!us.file"
-                                    src="../../../../assets/logos/user.jpg" alt="profile image"
-                                    imageClass="w-2rem h-2rem border-circle"></p-image>
+                                <p-image [preview]="true" *ngIf="us.file" src="{{urlFile}}{{us.file.id}}"
+                                  alt="profile image" imageClass="w-2rem h-2rem border-circle"></p-image>
+                                <p-image [preview]="true" *ngIf="!us.file" src="../../../../assets/logos/user.jpg"
+                                  alt="profile image" imageClass="w-2rem h-2rem border-circle"></p-image>
                               </div>
                               <div class="w-full">
                                 <form [formGroup]="updateCommentForm" class="card w-full">
                                   <div class="field">
                                     <input formControlName="commentBody" pInputText
                                       class="text-lg w-full h-2rem border-round-2xl bg-gray-100" type="text">
-                                    <p class="text-xs text-black-alpha-60">Press Enter to Send.
+                                    <p class="text-xs text-black-alpha-60">Press Enter to Save Edit.
                                     </p>
                                   </div>
                                   <div class="hidden">
@@ -398,7 +388,7 @@
                               </div>
                             </div>
                           </div>
-                          
+
 
                         </ng-container>
                         <div routerLink="/homes/details/{{p.id}}"
@@ -555,7 +545,7 @@
                     </ng-container>
 
                   </div>
-           
+
 
                   <div class="flex mt-5 align-items-center text-black-alpha-60 justify-content-between">
                     <div class="flex align-items-center">
