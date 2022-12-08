@@ -25,7 +25,6 @@
                     <div *ngIf="type == 'approve-payments'" class="table w-full">
                         <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)"
                             responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalData"
-                            [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
                             [globalFilterFields]="['id', 'title']">
 
                             <ng-template pTemplate="header">
@@ -40,9 +39,12 @@
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>{{data.user.fullName}}</td>
-                                    <td class="text-center">
+                                    <td class="flex justify-content-center">
                                         <ng-container *ngIf="data.file">
-                                            <a href="{{ urlFile }}{{ data.file.id }}">Download</a>
+                                            <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
+                                                <i class="fa-solid fa-download mr-2 my-1"></i>
+                                                DOWNLOAD
+                                            </a>
                                         </ng-container>
                                     </td>
                                     <td class="text-center">
@@ -64,7 +66,6 @@
                     <div *ngIf="type == 'approves'" class="table w-full">
                         <p-table #dt1 [value]="dataApprove" [lazy]="true" (onLazyLoad)="loadDataApproved($event)"
                             responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalData"
-                            [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
                             [globalFilterFields]="['id', 'title']">
 
                             <ng-template pTemplate="header">
@@ -78,9 +79,12 @@
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>{{data.user.fullName}}</td>
-                                    <td class="text-center">
+                                    <td class="flex justify-content-center">
                                         <ng-container *ngIf="data.file">
-                                            <a href="{{ urlFile }}{{ data.file.id }}">Download</a>
+                                            <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
+                                                <i class="fa-solid fa-download mr-2 my-1"></i>
+                                                DOWNLOAD
+                                            </a>
                                         </ng-container>
                                     </td>
                                 </tr>
@@ -91,7 +95,6 @@
                     <div *ngIf="type == 'rejects'" class="table w-full">
                         <p-table #dt1 [value]="dataReject" [lazy]="true" (onLazyLoad)="loadDataReject($event)"
                             responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalData"
-                            [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
                             [globalFilterFields]="['id', 'title']">
 
                             <ng-template pTemplate="header">
@@ -105,9 +108,12 @@
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>{{data.user.fullName}}</td>
-                                    <td class="text-center">
+                                    <td class="flex justify-content-center">
                                         <ng-container *ngIf="data.file">
-                                            <a href="{{ urlFile }}{{ data.file.id }}">Download</a>
+                                            <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
+                                                <i class="fa-solid fa-download mr-2 my-1"></i>
+                                                DOWNLOAD
+                                            </a>
                                         </ng-container>
                                     </td>
                                 </tr>

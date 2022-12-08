@@ -192,7 +192,7 @@
                                                             imageClass="w-2rem h-2rem border-circle"></p-image>
                                                     </div>
 
-                                                    <div class="w-max">
+                                                    <div class="card-word-flex-detail">
                                                         <div class="bg-gray-100 px-3 py-2 border-round-xl">
                                                             <p class="font-medium">{{ us.fullName }}</p>
                                                             <p class=" text-black-alpha-60">{{ post.commentBody[j] }}
@@ -234,7 +234,7 @@
                                             </div>
 
                                             <div *ngIf="j == indexComment">
-                                                <div class="flex mt-3 card-word-flex-detail">
+                                                <div class="flex mt-3 ">
                                                     <div class="max-w-max mr-3">
                                                         <p-image [preview]="true" *ngIf="us.file"
                                                             src="{{urlFile}}{{us.file.id}}" alt="profile image"

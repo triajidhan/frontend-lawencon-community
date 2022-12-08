@@ -323,7 +323,7 @@ export class ActivityListComponent implements OnInit {
 
     addData(activity: any) {
         this.activities.push(activity)
-        console.log(this.activities)
+        // console.log(this.activities)
     }
 
     addDataActivityByCourse(activity: any) {
@@ -351,6 +351,8 @@ export class ActivityListComponent implements OnInit {
 
     addDataMyActivitiesOnGoing(activity: any) {
         this.myActivitiesOnGoing.push(activity)
+        console.log(this.myActivitiesOnGoing)
+
     }
 
     addDataMyActivitiesOnGoingCourse(activity: any) {

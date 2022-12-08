@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   startPositionPollOption = 0
   limitPollOption = 5
 
-  indexComment ?:number | null
+  indexComment?: number | null
   urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
   items!: MenuItem[]
@@ -173,10 +173,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private primengConfig: PrimeNGConfig, private activatedRoute: ActivatedRoute,
     private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
-    private postAttachmentService: PostAttachmentService, private apiService: ApiService,
-    private likeService: LikeService, private bookmarkService: BookmarkService,
-    private pollingService: PollingService, private polingStatusService: PollingStatusService,
-    private commentService: CommentService, private articleService: ArticleService,
+    private apiService: ApiService, private likeService: LikeService, private bookmarkService: BookmarkService,
+    private pollingService: PollingService, private commentService: CommentService, private articleService: ArticleService,
     private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
@@ -244,18 +242,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   initPost() {
     this.getPostDataSubs = this.postService.getIsActiveAndOrder(this.startPositionPost, this.limitPost, false).subscribe(result => {
-        this.addDataPost(result)
+      this.addDataPost(result)
     })
   }
 
   initLike() {
     this.getDataLikeSubs = this.likeService.getByUserOrder(this.myId, this.startPositionPostLike, this.limitPostLike, false).subscribe(result => {
       for (let i = 0; i < result.length; i++) {
-        this.getCountLikeDataSubs = this.likeService.getUserLikePost(result[i].post.id, this.myId).subscribe(userLike => {
-          result[i].likeId = userLike.likeId
-          result[i].countOfLike = userLike.countOfLike
-        })
-        this.addDataLike(result[i])
+        this.postLike.unshift(result[i])
       }
     })
   }
@@ -263,11 +257,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   initBookmark() {
     this.getDataBookmarkSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPositionPostBookmark, this.limitPostBookmark, false).subscribe(result => {
       for (let i = 0; i < result.length; i++) {
-        this.getCountBookmarkDataSubs = this.bookmarkService.getUserBookmarkPost(result[i].post.id, this.myId).subscribe(userBookmark => {
-          result[i].bookmarkId = userBookmark.bookmarkId
-
-        })
-        this.addDataBookmark(result[i])
+        this.postBookmark.push(result[i])
+        console.log(this.postBookmark)
       }
     })
   }
@@ -275,25 +266,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   addDataPost(post: any) {
     for (let i = 0; i < post.length; i++) {
       this.post.push(post[i])
-      console.log(this.post)
     }
-  }
-
-  addDataLike(post: any) {
-    this.getPostLikeAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
-      post.post.postAttachment = result
-      post.post.countOfPostAttachment = result.length
-    })
-
-    this.postLike.unshift(post)
-  }
-
-  addDataBookmark(post: any) {
-    this.getPostBookmarkAttachmentDataSubs = this.postAttachmentService.getByPost(post.post.id).subscribe(result => {
-      post.post.postAttachment = result
-    })
-
-    this.postBookmark.unshift(post)
   }
 
   fileUpload(event: any): void {
@@ -389,8 +362,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   postUpdate() {
     this.postUpdateSubs = this.postService.update(this.updatePostForm.value).subscribe(() => {
       this.displayEdit = false
-      this.post[this.idx].title = this.updatePostForm.value.title
-      this.post[this.idx].contents = this.updatePostForm.value.contents
+      if (this.type == 'threads') {
+        this.post[this.idx].title = this.updatePostForm.value.title
+        this.post[this.idx].contents = this.updatePostForm.value.contents
+      } else if (this.type == 'likes') {
+        this.postLike[this.idx].post.title = this.updatePostForm.value.title
+        this.postLike[this.idx].post.contents = this.updatePostForm.value.contents
+      } else {
+        this.postBookmark[this.idx].post.title = this.updatePostForm.value.title
+        this.postBookmark[this.idx].post.contents = this.updatePostForm.value.contents
+      }
       this.updatePostForm.controls.title.setValue("")
       this.updatePostForm.controls.contents.setValue("")
       this.postType = ""
@@ -400,11 +381,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   choosePollOption(pollId: string, i: any, j: any) {
     this.getByIdPollOptionSubs = this.pollingService.getById(pollId).subscribe(result => {
       this.polling = result
-      this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(polling => {
-        this.post[i].totalVote = this.post[i].totalVote + 1
-        this.post[i].statusPolling = true
-        this.post[i].choosenPolling = pollId
-        this.post[i].totalPoll[j] = this.post[i].totalPoll[j] + 1
+      this.choosePollOptionSubs = this.pollingService.update(this.polling).subscribe(() => {
+        if (this.type == 'threads') {
+          this.post[i].totalVote = this.post[i].totalVote + 1
+          this.post[i].statusPolling = true
+          this.post[i].choosenPolling = pollId
+          this.post[i].totalPoll[j] = this.post[i].totalPoll[j] + 1
+        } else if (this.type == 'likes') {
+          this.postLike[i].post.totalVote = this.postLike[i].post.totalVote + 1
+          this.postLike[i].post.statusPolling = true
+          this.postLike[i].post.choosenPolling = pollId
+          this.postLike[i].post.totalPoll[j] = this.post[i].totalPoll[j] + 1
+        } else {
+          this.postBookmark[i].post.totalVote = this.postBookmark[i].post.totalVote + 1
+          this.postBookmark[i].post.statusPolling = true
+          this.postBookmark[i].post.choosenPolling = pollId
+          this.postBookmark[i].post.totalPoll[j] = this.post[i].totalPoll[j] + 1
+        }
       })
     })
   }
@@ -503,21 +496,38 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
 
     this.commentInsertSubs = this.commentService.insert(this.commentForm.value).subscribe(commentInsert => {
-      this.post[i].countOfComment = this.post[i].countOfComment + 1
+      if (this.type == 'threads') {
+        this.post[i].countOfComment = this.post[i].countOfComment + 1
+        this.post[i].createdAtComment.push((new Date()).toString())
+      } else if (this.type == 'likes') {
+        this.postLike[i].post.countOfComment = this.postLike[i].post.countOfComment + 1
+        this.postLike[i].post.createdAtComment.push((new Date()).toString())
+      } else {
+        this.postBookmark[i].post.countOfComment = this.postBookmark[i].post.countOfComment + 1
+        this.postBookmark[i].post.createdAtComment.push((new Date()).toString())
+      }
 
-      this.post[i].createdAtComment.push((new Date()).toString())
-      console.log(this.post[i])
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-        console.log(resultId)
-        this.post[i].commentBody.push(resultId.commentBody)
-        this.post[i].userComment.push(resultId.user)
-        this.post[i].commentId.push(resultId.id)
+        // console.log(resultId)
+        if (this.type == 'threads') {
+          this.post[i].commentBody.push(resultId.commentBody)
+          this.post[i].userComment.push(resultId.user)
+          this.post[i].commentId.push(resultId.id)
+        } else if (this.type == 'likes') {
+          this.postLike[i].post.commentBody.push(resultId.commentBody)
+          this.postLike[i].post.userComment.push(resultId.user)
+          this.postLike[i].post.commentId.push(resultId.id)
+        } else {
+          this.postBookmark[i].post.commentBody.push(resultId.commentBody)
+          this.postBookmark[i].post.userComment.push(resultId.user)
+          this.postBookmark[i].post.commentId.push(resultId.id)
+        }
         this.commentForm.controls['commentBody'].setValue('')
       })
     })
   }
 
-  updateComment(postId: string, commentId: string, j : number, i : number) {
+  updateComment(postId: string, commentId: string, j: number, i: number) {
     this.updateCommentForm.patchValue({
       post: {
         id: postId
@@ -526,10 +536,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.commentUpdateSubs = this.commentService.update(this.updateCommentForm.value).subscribe(() => {
       this.indexComment = null
       this.getByIdCommentUpdateSubs = this.commentService.getById(commentId).subscribe(resultId => {
-      this.post[i].commentBody.splice(j, 1, resultId.commentBody)
-      this.post[i].userComment.splice(j, 1, resultId.user)
-      this.post[i].commentId.splice(j, 1, resultId.id)
-    })
+        if (this.type == 'threads') {
+          this.post[i].commentBody.splice(j, 1, resultId.commentBody)
+          this.post[i].userComment.splice(j, 1, resultId.user)
+          this.post[i].commentId.splice(j, 1, resultId.id)
+        } else if (this.type == 'likes') {
+          this.postLike[i].post.commentBody.splice(j, 1, resultId.commentBody)
+          this.postLike[i].post.userComment.splice(j, 1, resultId.user)
+          this.postLike[i].post.commentId.splice(j, 1, resultId.id)
+        } else {
+          this.postBookmark[i].post.commentBody.splice(j, 1, resultId.commentBody)
+          this.postBookmark[i].post.userComment.splice(j, 1, resultId.user)
+          this.postBookmark[i].post.commentId.splice(j, 1, resultId.id)
+        }
+      })
     })
   }
 
@@ -552,7 +572,13 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.unitPost.isActive = false
 
           this.postDeleteSubs = this.postService.update(this.unitPost).subscribe(() => {
-            this.post.splice(i, 1)
+            if (this.type == 'threads') {
+              this.post.splice(i, 1)
+            } else if (this.type == 'likes') {
+              this.postLike.splice(i, 1)
+            } else {
+              this.postBookmark.splice(i, 1)
+            }
           })
         })
       }
@@ -570,9 +596,19 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.unitComment.isActive = false
 
           this.commentDeleteSubs = this.commentService.update(this.unitComment).subscribe(() => {
-            this.post[i].commentBody.splice(j, 1)
-            this.post[i].userComment.splice(j, 1)
-            this.post[i].commentId.splice(j, 1)
+            if (this.type == 'threads') {
+              this.post[i].commentBody.splice(j, 1)
+              this.post[i].userComment.splice(j, 1)
+              this.post[i].commentId.splice(j, 1)
+            } else if (this.type == 'likes') {
+              this.postLike[i].post.commentBody.splice(j, 1)
+              this.postLike[i].post.userComment.splice(j, 1)
+              this.postLike[i].post.commentId.splice(j, 1)
+            } else {
+              this.postBookmark[i].post.commentBody.splice(j, 1)
+              this.postBookmark[i].post.userComment.splice(j, 1)
+              this.postBookmark[i].post.commentId.splice(j, 1)
+            }
           })
         })
       }
@@ -580,7 +616,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   imageClick(i: number, j: number) {
-    this.images = this.post[i].postAttachment
+    if (this.type == 'threads') {
+      this.images = this.post[i].fileId
+    } else if (this.type == 'likes') {
+      this.images = this.postLike[i].post.fileId
+    } else {
+      this.images = this.postBookmark[i].post.fileId
+    }
+
     this.activeIndex = j
     this.displayGalleria = true
   }

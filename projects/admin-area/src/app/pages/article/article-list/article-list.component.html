@@ -25,9 +25,7 @@
             <div class="grid w-full ">
                 <div class="table w-full">
                     <p-table [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
-                        [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
-                        [globalFilterFields]="['id', 'title']" styleClass="p-datatable-sm"
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading" styleClass="p-datatable-sm"
                         [tableStyle]="{'min-width': '50rem'}" [rows]="5" class="w-full">
                         <ng-template pTemplate="header">
                             <tr>

@@ -18,7 +18,13 @@
                 </h1>
             </div>
             <div class="grid w-full ">
-                <div class="w-full flex justify-content-end">
+                <div class="w-full flex justify-content-between">
+                    <div class="mb-3 md:mb-0">
+                        <label class="mr-3 " for="range">Date Range</label>
+                        <p-calendar class="p-inputtext-sm" selectionMode="range" [(ngModel)]="rangeDates"
+                            (onSelect)="getValueDate()" inputId="range">
+                        </p-calendar>
+                    </div>
                     <button pButton label="EXPORT" class="mb-5 mr-3 main-color" (click)="exportData()">
                         <i class="fa-solid fa-cloud-arrow-down mr-2"></i>
                     </button>
@@ -31,24 +37,6 @@
                         [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
                         [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
                         [globalFilterFields]="['userName', 'provider']">
-
-                        <ng-template pTemplate="caption">
-                            <div class="md:flex md:justify-content-between">
-                                <div class="mb-3 md:mb-0">
-                                    <label class="mr-3 " for="range">Date Range</label>
-                                    <p-calendar class="p-inputtext-sm" selectionMode="range" [(ngModel)]="rangeDates"
-                                        (onSelect)="getValueDate()" inputId="range">
-                                    </p-calendar>
-                                </div>
-
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search"></i>
-                                    <input pInputText #searchText type="text"
-                                        (input)="dt1.filterGlobal(searchText.value, 'contains')"
-                                        placeholder="Search keyword" class="p-inputtext-sm" />
-                                </span>
-                            </div>
-                        </ng-template>
 
                         <ng-template pTemplate="header">
                             <tr>
@@ -69,7 +57,7 @@
                                 <td>{{data.activity.provider}}</td>
                                 <td>{{data.activity.activityType.activityTypeName}}</td>
                                 <td>{{data.activity.title}}</td>
-                                <td>{{data.activity.beginSchedule | date:'dd/MM/yyyy'}}</td>
+                                <td>{{data.activity.beginSchedule | date:'yyyy-MM-dd'}}</td>
                                 <td>{{data.partisipation }}</td>
                             </tr>
                         </ng-template>

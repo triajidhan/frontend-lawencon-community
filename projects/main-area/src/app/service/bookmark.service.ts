@@ -27,7 +27,7 @@ export class BookmarkService {
   }
 
   getByUserOrder(userId: string, startPosition: number, limit: number, ascending: boolean): Observable<Bookmark[]> {
-    return this.http.get<Bookmark[]>(`${Object.values(BASE_URL)[0]}/bookmarks/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
+    return this.http.get<Bookmark[]>(`${Object.values(BASE_URL)[0]}/bookmarks/users-order/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
   }
 
   getByUserAll(userId: string): Observable<Bookmark[]> {

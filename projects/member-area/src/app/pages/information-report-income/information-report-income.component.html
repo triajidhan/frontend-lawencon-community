@@ -18,8 +18,14 @@
                 </h1>
             </div>
             <div class="grid w-full lg:w-10 ">
-                <div class="w-full flex justify-content-end">
-                    <button pButton label="EXPORT" class="mb-5 mr-3 main-color" (click)="exportData()">
+                <div class="w-full flex justify-content-between mx-3 lg:mx-0 flex-wrap mb-5">
+                    <div class="mb-3 md:mb-0 flex flex-wrap align-items-center">
+                        <label class="mr-3 w-full mb-2 sm:w-auto sm:mb-0" for="range">Date Range</label>
+                        <p-calendar class="p-inputtext-sm" selectionMode="range" [(ngModel)]="rangeDates"
+                            (onSelect)="getValueDate()" inputId="range">
+                        </p-calendar>
+                    </div>
+                    <button pButton label="EXPORT" class="main-color w-full sm:w-auto" (click)="exportData()">
                         <i class="fa-solid fa-cloud-arrow-down mr-2"></i>
                     </button>
                 </div>
@@ -28,34 +34,11 @@
             <div class="grid w-full lg:w-10">
                 <div class="table w-full">
                     <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
-                        [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
-                        [globalFilterFields]="['userName', 'provider']">
-
-                        <ng-template pTemplate="caption">
-                            <div class="md:flex md:justify-content-between">
-                                <div class="mb-3 md:mb-0">
-                                    <label class="mr-3" for="range">Date Range</label>
-                                    <p-calendar class="p-inputtext-sm" selectionMode="range" [(ngModel)]="rangeDates"
-                                        (onSelect)="getValueDate()" inputId="range">
-                                    </p-calendar>
-                                </div>
-
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search"></i>
-                                    <input pInputText #searchText type="text"
-                                        (input)="dt1.filterGlobal(searchText.value, 'contains')"
-                                        placeholder="Search keyword" class="p-inputtext-sm" />
-                                </span>
-                            </div>
-                        </ng-template>
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading">
 
                         <ng-template pTemplate="header">
                             <tr>
-                                <th class="text-center">
-                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                </th>
-                                <th>No.</th>
+                                <th class="text-center">No.</th>
                                 <th>Type</th>
                                 <th>Title</th>
                                 <th>Total Income</th>
@@ -64,13 +47,10 @@
 
                         <ng-template pTemplate="body" let-data let-i="rowIndex">
                             <tr>
-                                <td class="text-center">
-                                    <p-tableCheckbox [value]="data"></p-tableCheckbox>
-                                </td>
-                                <td>{{i + 1}}</td>
+                                <td class="text-center">{{i + 1}}</td>
                                 <td>{{data.activity.activityType.activityTypeName}}</td>
                                 <td>{{data.activity.title}}</td>
-                                <td>{{data.net | currency:"IDR ":"symbol"}}</td>
+                                <td class="text-right min-w-max">{{data.net | currency:"IDR ":"symbol"}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
