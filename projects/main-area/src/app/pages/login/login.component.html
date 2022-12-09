@@ -23,6 +23,10 @@
                     <label for="email">Email Address</label>
                     <input pInputText id="email" name="email" formControlName="email" type="email"
                         class="w-full p-inputtext-sm">
+                    <small *ngIf="loginReq.controls['email'].touched && loginReq.controls['email'].errors?.['required']"
+                        id="email-help" class="p-error block">Please enter your email.</small>
+                    <small *ngIf="loginReq.controls['email'].errors?.['email'] && loginReq.controls['email'].dirty"
+                        id="email-help" class="p-error block">Your email format is wrong.</small>
                 </div>
                 <div class="field">
                     <label for="pass">Password</label>
