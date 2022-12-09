@@ -48,6 +48,7 @@ export class ActivityListComponent implements OnInit {
 
     items!: MenuItem[]
     type!: string
+    activitiyIdx: number = 0
 
     activities: any[] = []
     activitiesCourse: any[] = []
@@ -323,7 +324,6 @@ export class ActivityListComponent implements OnInit {
 
     addData(activity: any) {
         this.activities.push(activity)
-        // console.log(this.activities)
     }
 
     addDataActivityByCourse(activity: any) {
@@ -379,7 +379,8 @@ export class ActivityListComponent implements OnInit {
         })
     }
 
-    showPopUpDialog(activityId: string, price: string, title: string) {
+    showPopUpDialog(activityId: string, price: string, title: string, i: number) {
+        this.activitiyIdx = i
         this.display = true
         this.activityId = activityId
         this.activityPrice = price
@@ -402,8 +403,13 @@ export class ActivityListComponent implements OnInit {
 
         this.paymentActivityDetailSubs = this.paymentActivityDetailService.insert(this.paymentActivityForm.value).pipe(finalize(() => this.loadingJoinActivity = false)).subscribe(() => {
             this.display = false
-
-            this.initAllActivity() 
+            if (this.type == 'all') {
+                this.activities.splice(this.activitiyIdx, 1)
+            } else if (this.type == 'events') {
+                this.activitiesEvent.splice(this.activitiyIdx, 1)
+            } else {
+                this.activitiesCourse.splice(this.activitiyIdx, 1)
+            }
         })
     }
 

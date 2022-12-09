@@ -92,7 +92,7 @@
                                                 <p class="text-black-alpha-60">
                                                     {{ p.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title, i)"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
                                                     <p>Join {{ p.activityType.activityTypeName }}</p>
                                                 </div>
@@ -169,7 +169,7 @@
                                                 <p class="text-black-alpha-60">
                                                     {{ p.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title, i)"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
                                                     <p>Join {{ p.activityType.activityTypeName }}</p>
                                                 </div>
@@ -247,7 +247,7 @@
                                                 <p class="text-black-alpha-60">
                                                     {{ p.createdAt | timeAgo }}
                                                 </p>
-                                                <div (click)="showPopUpDialog(p.id, p.price, p.title)"
+                                                <div (click)="showPopUpDialog(p.id, p.price, p.title, i)"
                                                     class=" cursor-pointer font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
                                                     <p>Join {{ p.activityType.activityTypeName }}</p>
                                                 </div>
@@ -488,7 +488,8 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true" *ngIf="p.activity.file.files && p.activity.file.files != ''"
+                                                <p-image [preview]="true"
+                                                    *ngIf="p.activity.file.files && p.activity.file.files != ''"
                                                     src="{{urlFile}}{{ p.activity.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
@@ -541,17 +542,21 @@
                                                 <i class="fa-solid fa-coins mr-2"></i>
                                                 <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3 flex justify-content-between align-items-center">
+                                            <div
+                                                class="text-right mt-3 flex justify-content-between align-items-center">
                                                 <p class="text-black-alpha-60">
                                                     {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div *ngIf="!p.approve && p.isActive" class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
+                                                <div *ngIf="!p.approve && p.isActive"
+                                                    class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
                                                     <p>pending</p>
                                                 </div>
-                                                <div *ngIf="!p.approve && !p.isActive" class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
+                                                <div *ngIf="!p.approve && !p.isActive"
+                                                    class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
                                                     <p>rejected</p>
                                                 </div>
-                                                <div *ngIf="p.approve && p.isActive" class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
+                                                <div *ngIf="p.approve && p.isActive"
+                                                    class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
                                                     <p>approved</p>
                                                 </div>
                                             </div>
@@ -571,7 +576,8 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true" *ngIf="p.activity.file.files && p.activity.file.files != ''"
+                                                <p-image [preview]="true"
+                                                    *ngIf="p.activity.file.files && p.activity.file.files != ''"
                                                     src="{{urlFile}}{{ p.activity.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
@@ -624,17 +630,21 @@
                                                 <i class="fa-solid fa-coins mr-2"></i>
                                                 <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3 flex justify-content-between align-items-center">
+                                            <div
+                                                class="text-right mt-3 flex justify-content-between align-items-center">
                                                 <p class="text-black-alpha-60">
                                                     {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div *ngIf="!p.approve && p.isActive" class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
+                                                <div *ngIf="!p.approve && p.isActive"
+                                                    class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
                                                     <p>pending</p>
                                                 </div>
-                                                <div *ngIf="!p.approve && !p.isActive" class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
+                                                <div *ngIf="!p.approve && !p.isActive"
+                                                    class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
                                                     <p>rejected</p>
                                                 </div>
-                                                <div *ngIf="p.approve && p.isActive" class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
+                                                <div *ngIf="p.approve && p.isActive"
+                                                    class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
                                                     <p>approved</p>
                                                 </div>
                                             </div>
@@ -654,7 +664,8 @@
                                         <ng-template pTemplate="header">
                                             <div
                                                 class="w-full h-8rem flex justify-content-center align-items-center overflow-hidden bg-black-alpha-90">
-                                                <p-image [preview]="true" *ngIf="p.activity.file.files && p.activity.file.files != ''"
+                                                <p-image [preview]="true"
+                                                    *ngIf="p.activity.file.files && p.activity.file.files != ''"
                                                     src="{{urlFile}}{{ p.activity.file.id}}" imageClass="w-full">
                                                 </p-image>
                                                 <p-image [preview]="true"
@@ -707,17 +718,21 @@
                                                 <i class="fa-solid fa-coins mr-2"></i>
                                                 <p>{{ p.activity.price | currency:"IDR ":"symbol"}}</p>
                                             </div>
-                                            <div class="text-right mt-3 flex justify-content-between align-items-center">
+                                            <div
+                                                class="text-right mt-3 flex justify-content-between align-items-center">
                                                 <p class="text-black-alpha-60">
                                                     {{ p.activity.createdAt | timeAgo }}
                                                 </p>
-                                                <div *ngIf="!p.approve && p.isActive" class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
+                                                <div *ngIf="!p.approve && p.isActive"
+                                                    class=" font-medium text-yellow-600  p-2 bg-yellow-50 border-round-lg">
                                                     <p>pending</p>
                                                 </div>
-                                                <div *ngIf="!p.approve && !p.isActive" class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
+                                                <div *ngIf="!p.approve && !p.isActive"
+                                                    class=" font-medium text-red-600  p-2 bg-red-50 border-round-lg">
                                                     <p>rejected</p>
                                                 </div>
-                                                <div *ngIf="p.approve && p.isActive" class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
+                                                <div *ngIf="p.approve && p.isActive"
+                                                    class=" font-medium text-green-600  p-2 bg-green-50 border-round-lg">
                                                     <p>approved</p>
                                                 </div>
                                             </div>
