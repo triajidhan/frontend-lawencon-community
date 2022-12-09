@@ -14,45 +14,12 @@ export class ActivityService {
 
 	constructor(private httpClient: HttpClient) { }
 
-
-	getAll(startPosition: number, limit: number): Observable<Activity[]> {
-		return this.httpClient.get<Activity[]>(`${Object.values(BASE_URL)[0]}/activities/?startPosition=${startPosition}&limit=${limit}`)
-	}
-
 	getById(activityId: string): Observable<any> {
 		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/id/${activityId}`)
 	}
 
-	getByActivityCode(activityCode: string): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-code/?activityCode=${activityCode}`)
-	}
-
-	getTotalActivity(): Observable<any> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity/`)
-	}
-
-	getByActivityType(activityTypeId: string, startPosition: number, limit: number): Observable<Activity[]> {
-		return this.httpClient.get<Activity[]>(`${Object.values(BASE_URL)[0]}/activities/activity-type/?activityTypeId=${activityTypeId}&startPosition=${startPosition}&limit=${limit}`)
-	}
-
-	getTotalByActivityType(activityTypeId: string): Observable<Activity> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity-type/?${activityTypeId}`)
-	}
-
-	getByActivityTypeCode(activityTypeCode: string, startPosition: number, limit: number): Observable<Activity[]> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/activity-type-code/?activityTypeCode=${activityTypeCode}&startPosition=${startPosition}&limit=${limit}`)
-	}
-
 	getByActivityTypeCodeOrder(activityTypeCode: string, startPosition: number, limit: number,ascending:boolean): Observable<Activity[]> {
 		return this.httpClient.get<Activity[]>(`${Object.values(BASE_URL)[0]}/activities/activity-type-code-order/?activityTypeCode=${activityTypeCode}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
-
-	getTotalByActivityCode(activityTypeCode: string): Observable<Activity> {
-		return this.httpClient.get<any>(`${Object.values(BASE_URL)[0]}/activities/total-activity-type-code/?activityTypeCode=${activityTypeCode}`)
-	}
-
-	getByIsActive(startPosition: number, limit: number): Observable<Activity[]> {
-		return this.httpClient.get<Activity[]>(`${Object.values(BASE_URL)[0]}/activities/is-active/?startPosition=${startPosition}&limit=${limit}`)
 	}
 
 	getByIsActiveAndOrder(startPosition: number, limit: number, ascending: boolean): Observable<Activity[]> {

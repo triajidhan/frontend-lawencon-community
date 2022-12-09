@@ -24,10 +24,6 @@ export class UserService {
     return this.http.get<any>(`${BASE_URL.LOCALHOST}/users/total-user`)
   }
 
-  getAll(): Observable<any> {
-    return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/`)
-  }
-
   getById(id: any): Observable<User> {
     return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/id/${id}`)
   }
@@ -50,10 +46,6 @@ export class UserService {
 
   getTotalSubscribe() {
     return this.http.get<User>(`${Object.values(BASE_URL)[0]}/users/total-user-subscribe/`)
-  }
-
-  getByIsActive(startPosition: number, limit: number): Observable<any> {
-    return this.http.get<any>(`${Object.values(BASE_URL)[0]}/users/is-active/?startPosition=${startPosition}&limit=${limit}`)
   }
 
   insert(data: any): Observable<User> {

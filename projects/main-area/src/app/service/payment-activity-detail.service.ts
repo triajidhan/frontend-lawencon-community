@@ -14,20 +14,9 @@ export class PaymentActivityDetailService {
 
 	constructor(private httpClient: HttpClient) { }
 
-	getAll(startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/?startPosition=${startPosition}&limit=${limit}`)
-	}
 
 	getById(id: string): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/id/${id}`)
-	}
-
-	getByActivityAll(activityId: string): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/activity-all/?activityId=${activityId}`)
-	}
-
-	getByActivity(activityId: string, startPosition: number, limit: number): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/activity/?activityId=${activityId}&startPosition=${startPosition}&limit=${limit}`)
 	}
 
 	getByUser(userId: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
@@ -37,20 +26,6 @@ export class PaymentActivityDetailService {
 	getByActivityTypeAndUser(activityTypeId: string, userId: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/activity-type-user/?activityTypeId=${activityTypeId}&userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
-
-	getByActivityTypeCodeAndUser(activityTypeCode: string, userId: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/activity-type-code-user/?activityTypeCode=${activityTypeCode}&userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
-
-	getTotalByActivity(activityId: string): Observable<PaymentActivityDetail> {
-		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-activity/?activityId=${activityId}`)
-	}
-
-	getByIsActive(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
-
-
 
 	getByIsActiveTrueAndApprovedFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-approve-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
@@ -77,44 +52,20 @@ export class PaymentActivityDetailService {
 	}
 
 
-
-	getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-approve-true/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
-
-	getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentActivityDetail> {
-		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-is-active-approve-true/`)
-	}
-
-	getByIsActiveFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/is-active-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
-
-	getTotalPaymentActivity(): Observable<PaymentActivityDetail> {
-		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total/`)
-	}
-
+	
 	getReportPartisipationMember(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-member/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getReportPartisipationMemberAll(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-member-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
-	}
 
 	getTotalByReportPartisipationMember(beginDate: string, finishDate: string): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-partisipatian-member/?beginDate=${beginDate}&finishDate=${finishDate}`)
 	}
 
-
-
 	getReportPartisipationSuper(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getReportPartisipationSuperAll(beginDate: string, finishDate: string, ascending: boolean): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/partisipatian-super-all/?beginDate=${beginDate}&finishDate=${finishDate}&asc=${ascending}`)
-	}
 
 	getTotalByReportPartisipationSuper(beginDate: string, finishDate: string): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-partisipatian-super/?beginDate=${beginDate}&finishDate=${finishDate}`)
@@ -123,10 +74,6 @@ export class PaymentActivityDetailService {
 
 	getReportIncomeMember(beginDate: string, finishDate: string, startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-member/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-	}
-
-	getReportIncomeAllMember(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-member-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
 	}
 
 	getTotalByReportIncomeMember(beginDate: string, finishDate: string): Observable<PaymentActivityDetail> {
@@ -139,9 +86,6 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-super/?beginDate=${beginDate}&finishDate=${finishDate}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
 
-	getReportIncomeAllSuper(beginDate: string, finishDate: string): Observable<PaymentActivityDetail[]> {
-		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-income-super-all/?beginDate=${beginDate}&finishDate=${finishDate}`)
-	}
 
 	getTotalByReportIncomeSuper(beginDate: string, finishDate: string): Observable<PaymentActivityDetail> {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-total-income-super/?beginDate=${beginDate}&finishDate=${finishDate}`)

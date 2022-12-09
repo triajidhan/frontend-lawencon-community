@@ -13,28 +13,13 @@ export class PollingService {
 
 	constructor(private httpClient: HttpClient) { }
 
-	getAll(startPosition: number, limit: number): Observable<Polling> {
-		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/?startPosition=${startPosition}&limit=${limit}`)
-	}
-
 	getById(id: string): Observable<Polling> {
 		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/id/${id}`)
 	}
 
-	getByPost(postId: string): Observable<Polling[]> {
-		return this.httpClient.get<Polling[]>(`${Object.values(BASE_URL)[0]}/pollings/posts/?postId=${postId}`)
-	}
-
-	getByUser(userId: string): Observable<Polling> {
-		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/users/userId=${userId}`)
-	}
 
 	getByIsActive(startPosition: number, limit: number): Observable<Polling> {
 		return this.httpClient.get<Polling>(`${Object.values(BASE_URL)[0]}/pollings/is-active/?startPosition=${startPosition}&limit=${limit}`)
-	}
-
-	insert(data: any): Observable<Polling> {
-		return this.httpClient.post<Polling>(`${Object.values(BASE_URL)[0]}/pollings`, data)
 	}
 
 	update(data: any): Observable<Polling> {

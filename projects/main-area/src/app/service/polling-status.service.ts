@@ -12,29 +12,9 @@ import { Observable } from "rxjs";
 export class PollingStatusService {
 
 	constructor(private httpClient: HttpClient) { }
-
-	getAll(): Observable<PollingStatus> {
-		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/`)
+	
+	getByUserPosting(userId: string, postingId:string): Observable<PollingStatus>{
+			return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/user-posting?userId=${userId}&pollingId=${postingId}`)
 	}
-
-	getById(id: string): Observable<PollingStatus> {
-		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/id/${id}`)
-	}
-
-	getByPost(postId: string): Observable<PollingStatus> {
-		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/posts/postId=${postId}`)
-	}
-
-	getByUser(userId: string): Observable<PollingStatus> {
-		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/users/userId=${userId}`)
-	}
-
-	getByIsActive(startPosition: number, limit: number): Observable<PollingStatus> {
-		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/is-active/?startPosition=${startPosition}&limit=${limit}`)
-	}
-
-  getByUserPosting(userId: string, postingId:string): Observable<PollingStatus>{
-		return this.httpClient.get<PollingStatus>(`${Object.values(BASE_URL)[0]}/polling-status/user-posting?userId=${userId}&pollingId=${postingId}`)
-  }
 
 }

@@ -14,20 +14,8 @@ export class PaymentSubscribeService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getAll(startPosition: number, limit: number): Observable<PaymentSubscribe[]> {
-        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/?startPosition=${startPosition}&limit=${limit}`)
-    }
-
     getById(id: string): Observable<PaymentSubscribe> {
         return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/id/${id}`)
-    }
-
-    getByIsActive(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
-        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-    }
-
-    getTotalPaymentSubscribe(): Observable<PaymentSubscribe> {
-        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total/`)
     }
 
     getByIsActiveTrueAndApprovedFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
@@ -52,18 +40,6 @@ export class PaymentSubscribeService {
 
     getTotalByPaymentReject(): Observable<PaymentSubscribe> {
         return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-payment-reject/`)
-    }
-
-    getByIsActiveTrueAndApprovedTrue(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
-        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-approve-true/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-    }
-
-    getTotalByIsActiveTrueAndApprovedTrue(): Observable<PaymentSubscribe> {
-        return this.httpClient.get<PaymentSubscribe>(`${Object.values(BASE_URL)[0]}/payment-subscribes/total-is-active-approve-true/`)
-    }
-
-    getByIsActiveFalse(startPosition: number, limit: number, ascending: boolean): Observable<PaymentSubscribe[]> {
-        return this.httpClient.get<PaymentSubscribe[]>(`${Object.values(BASE_URL)[0]}/payment-subscribes/is-active-false/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
     }
 
     insert(data: any): Observable<any> {
