@@ -10,6 +10,7 @@ import { ToastrModule } from 'ngx-toastr'
 import { DialogModule } from 'primeng/dialog'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from "@angular/forms"
+import { PasswordModule } from 'primeng/password'
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ReactiveFormsModule } from "@angular/forms"
         DialogModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        PasswordModule,
         ToastrModule.forRoot()
     ]
 

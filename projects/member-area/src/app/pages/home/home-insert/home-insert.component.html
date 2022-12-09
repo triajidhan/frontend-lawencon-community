@@ -13,10 +13,12 @@
                 <p-card>
                     <ng-container *ngFor="let ra of recentArticle;index as i">
                         <div class="py-5 border-bottom-1 border-black-alpha-50 border-round-left-md">
-                            <p-image *ngIf="recentArticle[i].file.files" [preview]="true" src="{{urlFile}}{{ recentArticle[i].file.id }}"
-                                alt="article image" class="img-fluid"></p-image>
-                                <p-image *ngIf="!recentArticle[i].file.files" [preview]="true" src="../../../../assets/images/article.jpg"
-                                alt="article image" class="img-fluid"></p-image>
+                            <p-image *ngIf="recentArticle[i].file.files" [preview]="true"
+                                src="{{urlFile}}{{ recentArticle[i].file.id }}" alt="article image"
+                                class="img-fluid"></p-image>
+                            <p-image *ngIf="!recentArticle[i].file.files" [preview]="true"
+                                src="../../../../assets/images/article.jpg" alt="article image"
+                                class="img-fluid"></p-image>
                             <h3 class="mt-3">
                                 {{ recentArticle[i].title }}
                             </h3>
@@ -46,8 +48,11 @@
 
             <div class="col-12 md:col-8">
                 <div class="flex justify-content-end my-4">
-                    <button pButton type="button" class="p-button-outlined" label="Back"
+                    <button *ngIf="type == 'threads'" pButton type="button" class="p-button-outlined" label="Back"
                         routerLink="/homes/type/threads">
+                    </button>
+                    <button *ngIf="type == 'profiles'" pButton type="button" class="p-button-outlined" label="Back"
+                        routerLink="/profiles/member">
                     </button>
                 </div>
                 <div>
@@ -60,13 +65,19 @@
                                         <label for="title">Post Title <span class="text-red-500">*</span></label>
                                         <input pInputText id="title" name="title" type="text"
                                             class="w-full p-inputtext-sm" formControlName="title" placeholder="title"
-                                            required>
+                                            required maxlength="50">
+                                        <small
+                                            *ngIf="postForm.controls['title'].touched && postForm.controls['title'].errors?.['required']"
+                                            id="title-help" class="p-error block">Please enter your title.</small>
                                     </div>
                                     <div class="field col-12">
                                         <label for="contents">Contents <span class="text-red-500">*</span></label>
                                         <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true"
                                             name="contents" type="text" formControlName="contents"
                                             class="w-full text-sm" placeholder="contents" required></textarea>
+                                        <small
+                                            *ngIf="postForm.controls['contents'].touched && postForm.controls['contents'].errors?.['required']"
+                                            id="contents-help" class="p-error block">Please enter your contents.</small>
                                     </div>
 
                                     <h3 class="ml-2 my-3">Poll Post Content</h3>
@@ -77,6 +88,9 @@
                                         </label>
                                         <input id="titlePoll" name="titlePoll" type="text" pInputText
                                             class="w-full body-color" formControlName="titlePoll" required>
+                                            <small
+                                            *ngIf="postForm.controls['titlePoll'].touched && postForm.controls['titlePoll'].errors?.['required']"
+                                            id="title-poll-help" class="p-error block">Please enter your question.</small>
                                     </div>
 
                                     <form [formGroup]="pollingArr" class="card w-full mx-1">
@@ -84,7 +98,7 @@
                                             <div *ngFor="let data of details.controls; index as i" [formGroupName]="i">
                                                 <div class="p-inputgroup p-2">
                                                     <input type="text" placeholder="Option {{i+1}}" pInputText
-                                                        class="p-inputtext-sm" formControlName="pollContent" required>
+                                                        class="p-inputtext-sm" formControlName="pollContent" required maxlength="50">
                                                     <button type="button" (click)="remove(i)" label="Search"
                                                         class="p-element p-button p-component p-button-danger">
                                                         <i class="fa-solid fa-trash-can text-lg" pTooltip="Delete"

@@ -22,10 +22,16 @@
                     <div class="flex align-items-center text-900 cursor-pointer hover:bg-gray-100 px-3"
                         pStyleClass="@next" enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
                         <span>
-                            <img *ngIf="myProfile" src="{{urlFile}}{{myProfile}}" class="img-fluid images table-img"
-                                alt="user admin image">
-                            <img *ngIf="!myProfile" src="../../../../assets/logos/user.jpg"
-                                class="img-fluid images table-img" alt="user admin image">
+                            <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                            </div>
+                            <ng-template #isProfile>
+                                <img  src="{{urlFile}}{{myProfile}}" class="img-fluid images table-img"
+                                    alt="user admin image">
+                            </ng-template>
+                            <ng-template #isNotProfile>
+                                <img  src="../../../../assets/logos/user.jpg"
+                                    class="img-fluid images table-img" alt="user admin image">
+                            </ng-template>
                         </span>
                         <i class="pi pi-chevron-down text-xs ml-2"></i>
                     </div>
@@ -63,12 +69,13 @@
                 </h2>
             </div>
             <form class="card" [formGroup]="paymentSubsForm">
-                <p class="text-justify mb-2">Please make a payment to account number <b class="main-text">1234567890</b>
+                <p class=" mb-2">Please make a payment to account number <b class="main-text">12378901</b>
                     in
                     the amount of <b class="main-text">IDR
                         50.000,-</b> . And send proof of payment here</p>
                 <div class="field col-12">
-                    <p-fileUpload id="file" name="file" [customUpload]="true" (uploadHandler)="fileUpload($event)">
+                    <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+                        [auto]=true [customUpload]="true" chooseLabel="Choose">
                     </p-fileUpload>
                 </div>
                 <button pButton [disabled]="paymentSubsForm.invalid" type="submit" (click)="submitInsert()"

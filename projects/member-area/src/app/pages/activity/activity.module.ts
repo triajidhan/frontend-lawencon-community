@@ -21,6 +21,7 @@ import { DialogModule } from "primeng/dialog"
 import { PanelMenuModule } from 'primeng/panelmenu'
 import { ImageModule } from "primeng/image"
 import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudule"
+import {InputNumberModule} from 'primeng/inputnumber'
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudul
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, ReactiveFormsModule,
         CalendarModule, DropdownModule, InfiniteScrollModule,
-        DialogModule, PanelMenuModule, ImageModule, TimeAgoModule
+        DialogModule, PanelMenuModule, ImageModule, TimeAgoModule,
+        InputNumberModule
     ],
     exports: [
         ActivityListComponent, ActivityInsertComponent

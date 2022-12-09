@@ -24,6 +24,7 @@ import { ImageModule } from "primeng/image"
 import { GalleriaModule } from "primeng/galleria"
 import { ConfirmDialogModule } from "primeng/confirmdialog"
 import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudule"
+import { PasswordModule } from 'primeng/password'
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { TimeAgoModule } from "projects/main-area/src/app/module/times-ago.mudul
         MenuModule, TabMenuModule, PanelMenuModule,
         ReactiveFormsModule, DropdownModule, DialogModule,
         InfiniteScrollModule, StyleClassModule, ImageModule,
-        GalleriaModule, ConfirmDialogModule, TimeAgoModule
+        GalleriaModule, ConfirmDialogModule, TimeAgoModule,
+        PasswordModule
     ],
     exports: [
         ProfileListMemberComponent, EditProfileMemberComponent, ChangePasswordMemberComponent

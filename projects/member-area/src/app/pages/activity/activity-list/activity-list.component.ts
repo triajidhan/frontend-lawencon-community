@@ -86,15 +86,12 @@ export class ActivityListComponent implements OnInit {
     private getAllActivitySubs?: Subscription
     private getAllActivityByEvent?: Subscription
     private getAllActivityByCourse?: Subscription
-
     private getAllMyActivitiesSubs?: Subscription
     private getAllMyActivityEventSubs?: Subscription
     private getAllMyActivityCourseSubs?: Subscription
-
     private getAllMyActivitiesOnGoingSubs?: Subscription
     private getAllMyActivityOnGoingEventSubs?: Subscription
     private getAllMyActivityOnGoingCourseSubs?: Subscription
-
     private paymentActivityDetailSubs?: Subscription
 
     constructor(private primengConfig: PrimeNGConfig, private fb: FormBuilder,
@@ -351,7 +348,6 @@ export class ActivityListComponent implements OnInit {
 
     addDataMyActivitiesOnGoing(activity: any) {
         this.myActivitiesOnGoing.push(activity)
-        console.log(this.myActivitiesOnGoing)
 
     }
 
@@ -418,11 +414,12 @@ export class ActivityListComponent implements OnInit {
         this.getAllActivitySubs?.unsubscribe()
         this.getAllActivityByEvent?.unsubscribe()
         this.getAllActivityByCourse?.unsubscribe()
-
         this.getAllMyActivitiesSubs?.unsubscribe()
         this.getAllMyActivityCourseSubs?.unsubscribe()
         this.getAllMyActivityEventSubs?.unsubscribe()
-
+        this.getAllMyActivitiesOnGoingSubs?.unsubscribe()
+        this.getAllMyActivityOnGoingEventSubs?.unsubscribe()
+        this.getAllMyActivityOnGoingCourseSubs?.unsubscribe()
         this.paymentActivityDetailSubs?.unsubscribe()
     }
 }

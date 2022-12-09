@@ -14,11 +14,12 @@ import { ActivityService } from "projects/main-area/src/app/service/activity.ser
     styleUrls: ['../../../../styles.css']
 })
 export class ActivityInsertComponent implements OnInit, OnDestroy {
-    loadingActivity: boolean = false;
+    loadingActivity: boolean = false
+    showFinishSchedule: boolean = true
 
     items!: MenuItem[]
     type!: string
-    date?: Date
+    minDate!: Date
 
     activityTypesRes!: ActivityType[]
     activityTypes: any[] = []
@@ -26,16 +27,16 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     resultExtension!: string
     resultFile !: string
 
-    insertActivitySubscription?: Subscription
-    getAllActivityTypeSubscription?: Subscription
+    private insertActivitySubscription?: Subscription
+    private getAllActivityTypeSubscription?: Subscription
 
     activityForm = this.fb.group({
-        title: ['', Validators.required],
-        provider: ['', Validators.required],
+        title: ['', [Validators.required, Validators.maxLength(50)]],
+        provider: ['', [Validators.required, Validators.maxLength(100)]],
         location: ['', Validators.required],
         beginSchedule: ['', Validators.required],
         finishSchedule: ['', Validators.required],
-        price: ['', Validators.required],
+        price: ['', [Validators.required, Validators.min(5000)]],
         activityType: this.fb.group({
             id: ['']
         }),
@@ -48,9 +49,11 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
 
     constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder,
         private router: Router, private activityService: ActivityService,
-        private activityTypeService: ActivityTypeService) { }
+        private activityTypeService: ActivityTypeService) {}
 
     ngOnInit(): void {
+        this.minDate = new Date(new Date().setHours(new Date().getHours() + 1))
+
         this.items = [
             {
                 label: 'Activity',
@@ -95,6 +98,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     }
 
     fileUpload(event: any): void {
+        console.log(event)
         const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
             const reader = new FileReader()
             reader.readAsDataURL(event.files[0])
@@ -132,6 +136,10 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
         this.insertActivitySubscription = this.activityService.insert(this.activityForm.value).pipe(finalize(() => this.loadingActivity = false)).subscribe(() => {
             this.router.navigateByUrl(`/activities/type/all`)
         })
+    }
+
+    getValueDate() {
+        this.showFinishSchedule = false
     }
 
     ngOnDestroy(): void {

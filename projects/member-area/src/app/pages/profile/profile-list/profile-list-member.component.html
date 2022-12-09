@@ -25,7 +25,7 @@
                                         <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
                                             imageClass="table-img w-10rem h-10rem"></p-image>
                                     </ng-container>
-                                    <ng-container *ngIf="(myProfile == 'null' || myProfile == '')">
+                                    <ng-container *ngIf="(myProfile || myProfile == 'null' || myProfile == '')">
                                         <p-image [preview]="true" src="../../../../assets/logos/user.jpg"
                                             alt="profile image" imageClass="table-img w-10rem h-10rem">
                                         </p-image>
@@ -43,15 +43,14 @@
                                         <h3 class="mx-3 my-2 text-green-500">{{ myCompany }}</h3>
                                     </div>
                                     <ng-container *ngIf="myPosition">
-                                        <div *ngIf="myPosition != 'null'"
-                                            class="w-max mr-3 bg-purple-100 border-round-xl">
+                                        <div *ngIf="myPosition != ''" class="w-max mr-3 bg-purple-100 border-round-xl">
                                             <h3 class="mx-3 my-2 text-purple-500">{{ myPosition }}</h3>
                                         </div>
                                     </ng-container>
 
+
                                     <ng-container *ngIf="myIndustry">
-                                        <div *ngIf="myIndustry != 'null'"
-                                            class="w-max mr-3 bg-indigo-100 border-round-xl">
+                                        <div *ngIf="myIndustry != ''" class="w-max mr-3 bg-indigo-100 border-round-xl">
                                             <h3 class="mx-3 my-2 text-indigo-500">{{ myIndustry }}</h3>
                                         </div>
                                     </ng-container>
@@ -131,7 +130,7 @@
                     </div>
                     <div class="flex sm:mx-3">
                         <div class=" flex align-items-center mt-3 mr-3 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-100 transition-all transition-duration-200 px-3 py-2"
-                            routerLink="/homes/new">
+                            routerLink="/homes/profiles/new">
                             <div
                                 class="border-circle bg-purple-500 icon-box flex align-items-center justify-content-center">
                                 <i class="fa-solid fa-check-to-slot icon text-2xl"></i>
@@ -221,7 +220,7 @@
 
                                 <div class="relative">
                                     <div *ngIf="post[i].postType.postTypeName == 'Premium' && !myStatusSubscribe"
-                                        pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30 
+                                        pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30
                                   flex justify-content-center align-items-center">
                                         <div class="text-center text-white">
                                             <i class="fa-solid fa-lock text-5xl"></i>
@@ -486,12 +485,17 @@
 
                                             <div class="flex mt-3">
                                                 <div class="max-w-max mr-3">
-                                                    <p-image [preview]="true" *ngIf="myProfile != ''"
-                                                        src="{{urlFile}}{{myProfile}}" alt=""
-                                                        imageClass="w-2rem h-2rem border-circle"></p-image>
-                                                    <p-image [preview]="true" *ngIf="myProfile == ''"
-                                                        src="../../../../assets/logos/user.jpg" alt=""
-                                                        imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                    <div class="w-2rem h-2rem border-circle overflow-hidden">
+                                                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                                                        <ng-template #isProfile>
+                                                          <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                                                            imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                        </ng-template>
+                                                        <ng-template #isNotProfile>
+                                                          <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
+                                                            imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                        </ng-template>
+                                                      </div>
                                                 </div>
                                                 <div class="w-full">
                                                     <form [formGroup]="commentForm" class="card w-full">
@@ -541,10 +545,17 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                        imageClass="w-3rem h-3rem border-circle"></p-image>
-                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
-                        alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
+                    <div class="w-3rem h-3rem border-circle overflow-hidden">
+                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                        <ng-template #isProfile>
+                          <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        </ng-template>
+                        <ng-template #isNotProfile>
+                          <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
+                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        </ng-template>
+                      </div>
                 </div>
                 <div class="w-full">
                     <h3>{{ myFullName }}</h3>
@@ -564,8 +575,8 @@
                 </div>
                 <div class="field">
                     <label for="file">Photo</label>
-                    <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
-                        (uploadHandler)="fileUpload($event)" [multiple]="true">
+                    <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+                        [auto]=true [customUpload]="true" chooseLabel="Choose" [multiple]="true">
                     </p-fileUpload>
                 </div>
                 <button pButton [loading]="loadingPost" [disabled]="postForm.invalid" type="submit"
@@ -586,10 +597,17 @@
         <div class="col-12">
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
-                    <p-image [preview]="true" *ngIf="myProfile != ''" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                        imageClass="w-3rem h-3rem border-circle"></p-image>
-                    <p-image [preview]="true" *ngIf="myProfile == ''" src="../../../../assets/logos/user.jpg"
-                        alt="profile image" imageClass="w-3rem h-3rem border-circle"></p-image>
+                    <<div class="w-3rem h-3rem border-circle overflow-hidden">
+                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                        <ng-template #isProfile>
+                          <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        </ng-template>
+                        <ng-template #isNotProfile>
+                          <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
+                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        </ng-template>
+                      </div>
                 </div>
                 <div class="w-full">
                     <h3>{{ myFullName }}</h3>
@@ -623,11 +641,11 @@
     [containerStyle]="{'max-width': '850px'}" [numVisible]="7" [circular]="true" [fullScreen]="true"
     [showItemNavigators]="true" [showThumbnails]="false" [baseZIndex]="100000" [activeIndex]="activeIndex">
     <ng-template pTemplate="item" let-item>
-        <img src="{{urlFile}}{{item.file.id}}" style="width: 100%; display: block;" />
+        <img src="{{urlFile}}{{item}}" style="width: 100%; display: block;" />
     </ng-template>
     <ng-template pTemplate="thumbnail" let-item>
         <div class="grid grid-nogutter justify-content-center">
-            <img src="{{urlFile}}{{item.file.id}}" style="display: block;" />
+            <img src="{{urlFile}}{{item}}" style="display: block;" />
         </div>
     </ng-template>
 </p-galleria>

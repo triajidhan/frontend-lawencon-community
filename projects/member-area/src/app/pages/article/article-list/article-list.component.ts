@@ -5,7 +5,6 @@ import { MenuItem, PrimeNGConfig } from "primeng/api"
 import { BASE_URL } from "projects/constant/base-url"
 import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { FileService } from "projects/main-area/src/app/service/file.service"
-import { PaymentActivityDetailService } from "projects/main-area/src/app/service/payment-activity-detail.service"
 import { Subscription } from "rxjs"
 
 @Component({
@@ -65,7 +64,6 @@ export class ArticleListComponent implements OnInit {
         this.activatedRoute.params.subscribe(result => {
             this.type = result['type']
         })
-
         this.init()
     }
 

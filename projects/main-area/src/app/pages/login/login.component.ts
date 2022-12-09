@@ -19,8 +19,8 @@ export class LoginComponent implements OnDestroy {
     private loginSubscription?: Subscription
 
     loginReq = this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        pass: ['', Validators.required]
+        email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+        pass: ['', [Validators.required]]
     })
 
     constructor(private userService: UserService,
@@ -31,7 +31,6 @@ export class LoginComponent implements OnDestroy {
         this.loadingLogin = true
         this.loginSubscription = this.userService.login(this.loginReq.value).pipe(finalize(() => this.loadingLogin = false)).subscribe(result => {
             this.apiService.saveData(result)
-            console.log(result)
             if (result.role.roleCode == ROLE_CODE.MEMBER) {
                 this.router.navigateByUrl("/homes/type/threads")
             } else if (result.role.roleCode == ROLE_CODE.ADMIN) {

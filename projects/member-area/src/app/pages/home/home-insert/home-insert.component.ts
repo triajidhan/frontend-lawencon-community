@@ -35,7 +35,7 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
     private getRecentArticleSubs?: Subscription
 
     postForm = this.fb.group({
-        title: ['', Validators.required],
+        title: ['', [Validators.required, Validators.maxLength(50)]],
         contents: ['', Validators.required],
         postType: this.fb.group({
             id: ['']
@@ -47,8 +47,8 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
 
     pollingArr = this.fb.group({
         details: this.fb.array([
-            this.fb.group({ pollContent: ['', Validators.required] }),
-            this.fb.group({ pollContent: ['', Validators.required] })
+            this.fb.group({ pollContent: ['', [Validators.required, Validators.maxLength(50)]] }),
+            this.fb.group({ pollContent: ['', [Validators.required, Validators.maxLength(50)]] })
         ])
     })
 
@@ -64,8 +64,6 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
 
         this.getRecentArticleSubs = this.articleService.getByIsActiveAndOrder(0, 5, false).subscribe(result => {
             this.recentArticle = result
-
-            console.log(result)
         })
     }
 
@@ -89,7 +87,7 @@ export class HomeInsertComponent implements OnInit, OnDestroy {
 
     addInsert() {
         const newUserReq = this.fb.group({
-            pollContent: ['', Validators.required]
+            pollContent: ['', [Validators.required, Validators.maxLength(50)]]
         })
         this.details.push(newUserReq)
     }

@@ -9,7 +9,7 @@ const routes: Routes = [
         component: HomeComponent
     },
     {
-        path: 'new',
+        path: ':type/new',
         component: HomeInsertComponent
     },
     {

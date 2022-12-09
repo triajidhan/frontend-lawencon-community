@@ -1,8 +1,9 @@
 <div class="w-full body-color flex justify-content-center">
     <div class="w-full lg:w-10 container mt-3">
-        <button pButton routerLink="/articles/members" label="BACK" class="mb-4 ml-2 lg:ml-0 p-button-outlined">
-            <i class="fa-solid fa-angle-left mr-2 text-sm"></i>
-        </button>
+        <p routerLink="/articles/members" class="mb-4 ml-2 lg:ml-0 font-medium hover:text-black-alpha-60 hover:underline cursor-pointer">
+            <i class="fa-solid fa-angle-left mr-2 text-sm"> </i>
+            See all article
+        </p>
         <div class="w-full">
             <ng-container *ngIf="article.file">
                 <p-image [preview]="true" styleClass="w-full" src="{{urlFile}}{{ article.file.id}}" alt="article image">
