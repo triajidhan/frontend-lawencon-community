@@ -20,7 +20,7 @@
             <div class="grid w-full">
                 <div class="table w-full">
                     <p-tabMenu [model]="navMenus"></p-tabMenu>
-    
+
                     <div *ngIf="type == 'approve-payments'" class="table w-full">
                         <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
                             [paginator]="true" [rows]="maxPage" [totalRecords]="totalData">
@@ -34,20 +34,22 @@
                                     <th pSortableColumn="action" class="text-center">Action</th>
                                 </tr>
                             </ng-template>
-    
+
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>{{data.user.fullName }}</td>
                                     <td>{{data.activity.activityType.activityTypeName}}</td>
                                     <td>{{data.activity.title}}</td>
-                                    <td class="flex justify-content-center">
-                                        <ng-container *ngIf="data.file">
-                                            <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
-                                                <i class="fa-solid fa-download mr-2 my-1"></i>
-                                                DOWNLOAD
-                                            </a>
-                                        </ng-container>
+                                    <td>
+                                        <div class="flex justify-content-center">
+                                          <ng-container *ngIf="data.file">
+                                              <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
+                                                  <i class="fa-solid fa-download mr-2 my-1"></i>
+                                                  DOWNLOAD
+                                              </a>
+                                          </ng-container>
+                                        </div>
                                     </td>
                                     <td class="flex justify-content-center">
                                         <button pButton type="button" class="p-button-danger mr-2" label="REJECT"
@@ -63,7 +65,7 @@
                             </ng-template>
                         </p-table>
                     </div>
-    
+
                     <div *ngIf="type == 'approves'" class="table w-full">
                         <p-table #dt1 [value]="dataApprove" [lazy]="true" (onLazyLoad)="loadDataApprove($event)"
                             responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalData">
@@ -76,31 +78,33 @@
                                     <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
                                 </tr>
                             </ng-template>
-    
+
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>{{data.user.fullName }}</td>
                                     <td>{{data.activity.activityType.activityTypeName}}</td>
                                     <td>{{data.activity.title}}</td>
-                                    <td class="flex justify-content-center">
-                                        <ng-container *ngIf="data.file">
-                                            <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
-                                                <i class="fa-solid fa-download mr-2 my-1"></i>
-                                                DOWNLOAD
-                                            </a>
-                                        </ng-container>
+                                    <td>
+                                        <div class="flex justify-content-center">
+                                            <ng-container *ngIf="data.file">
+                                                <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
+                                                    <i class="fa-solid fa-download mr-2 my-1"></i>
+                                                    DOWNLOAD
+                                                </a>
+                                            </ng-container>
+                                          </div>
                                     </td>
                                 </tr>
                             </ng-template>
                         </p-table>
                     </div>
-    
+
                     <div *ngIf="type == 'rejects'" class="table w-full">
                         <p-table #dt1 [value]="dataReject" [lazy]="true" (onLazyLoad)="loadDataReject($event)"
                             responsiveLayout="scroll" [paginator]="true" [rows]="maxPage" [totalRecords]="totalData">
-    
-    
+
+
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th pSortableColumn="no" class="text-center">No.</th>
@@ -110,20 +114,22 @@
                                     <th pSortableColumn="proofOfPayment" class="text-center">Proof of Payment</th>
                                 </tr>
                             </ng-template>
-    
+
                             <ng-template pTemplate="body" let-data let-i="rowIndex">
                                 <tr>
                                     <td class="text-center">{{i + 1}}</td>
                                     <td>{{data.user.fullName }}</td>
                                     <td>{{data.activity.activityType.activityTypeName}}</td>
                                     <td>{{data.activity.title}}</td>
-                                    <td class="flex justify-content-center">
-                                        <ng-container *ngIf="data.file">
-                                            <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
-                                                <i class="fa-solid fa-download mr-2 my-1"></i>
-                                                DOWNLOAD
-                                            </a>
-                                        </ng-container>
+                                    <td>
+                                        <div class="flex justify-content-center">
+                                            <ng-container *ngIf="data.file">
+                                                <a class="block py-2 px-3 border-round-sm bg-green-400 max-w-max text-white no-underline font-medium hover:bg-green-300" href="{{ urlFile }}{{ data.file.id }}">
+                                                    <i class="fa-solid fa-download mr-2 my-1"></i>
+                                                    DOWNLOAD
+                                                </a>
+                                            </ng-container>
+                                          </div>
                                     </td>
                                 </tr>
                             </ng-template>

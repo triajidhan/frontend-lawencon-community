@@ -104,11 +104,8 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
   private postUpdateSubs?: Subscription
   private getCountLikeDataSubs?: Subscription
   private getCountBookmarkDataSubs?: Subscription
-  private getPostAttachmentDataSubs?: Subscription
-  private getDataPollContentSubs?: Subscription
   private getByIdPollOptionSubs?: Subscription
   private choosePollOptionSubs?: Subscription
-  private getByIdPollingStatusSubs?: Subscription
   private getIdBookmarkDataSubs?: Subscription
   private insertBookmarkDataSubs?: Subscription
   private updateBookmarkDataSubs?: Subscription
@@ -123,11 +120,9 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
   private commentDeleteSubs?: Subscription
   private commentUpdateSubs?: Subscription
 
-  constructor(private fb: FormBuilder, private postService: PostService, private postTypeService: PostTypeService,
-    private postAttachmentService: PostAttachmentService, private apiService: ApiService,
+  constructor(private fb: FormBuilder, private postService: PostService, private apiService: ApiService,
     private likeService: LikeService, private bookmarkService: BookmarkService,
-    private pollingService: PollingService, private polingStatusService: PollingStatusService,
-    private commentService: CommentService, private activatedRoute: ActivatedRoute,
+    private pollingService: PollingService, private commentService: CommentService, private activatedRoute: ActivatedRoute,
     private confirmationService: ConfirmationService, private router: Router
   ) { }
 
@@ -140,7 +135,7 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     this.myId = String(this.apiService.getId())
     this.myFullName = String(this.apiService.getName())
     this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
-    if (this.apiService.getPhotoId()) {
+    if (this.apiService.getFiles()) {
       this.myProfile = String(this.apiService.getPhotoId())
     }
     if (this.apiService.getCompany()) {
@@ -150,8 +145,6 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe(id => {
       this.getByIdPostSubscription = this.postService.getById(id['id']).subscribe(result => {
         this.post = result
-
-        // console.log(this.post)
 
         this.getCountLikeDataSubs = this.likeService.getUserLikePost(result.id, this.myId).subscribe(userLike => {
           result.likeId = userLike.likeId
@@ -184,7 +177,6 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     this.updatePostForm.controls['contents'].setValue(this.post.contents)
     this.updatePostForm.controls['id'].setValue(this.post.id)
 
-    // this.postId = postId
     this.displayEdit = true
   }
 
@@ -342,11 +334,8 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     this.getByIdPostSubscription?.unsubscribe()
     this.getCountLikeDataSubs?.unsubscribe()
     this.getCountBookmarkDataSubs?.unsubscribe()
-    this.getPostAttachmentDataSubs?.unsubscribe()
-    this.getDataPollContentSubs?.unsubscribe()
     this.getByIdPollOptionSubs?.unsubscribe()
     this.choosePollOptionSubs?.unsubscribe()
-    this.getByIdPollingStatusSubs?.unsubscribe()
     this.getIdBookmarkDataSubs?.unsubscribe()
     this.insertBookmarkDataSubs?.unsubscribe()
     this.updateBookmarkDataSubs?.unsubscribe()
@@ -356,6 +345,12 @@ export class HomeDetailComponent implements OnInit, OnDestroy {
     this.getAllCommentByPostSubs?.unsubscribe()
     this.commentInsertSubs?.unsubscribe()
     this.getByIdCommentsSubs?.unsubscribe()
+    this.postDeleteSubs?.unsubscribe()
+    this.postUpdateSubs?.unsubscribe()
+    this.getByIdCommentUpdateSubs?.unsubscribe()
+    this.getByIdCommentSubs?.unsubscribe()
+    this.commentDeleteSubs?.unsubscribe()
+    this.commentUpdateSubs?.unsubscribe()
   }
 
 }

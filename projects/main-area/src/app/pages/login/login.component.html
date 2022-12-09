@@ -22,7 +22,7 @@
                 <div class="field">
                     <label for="email">Email Address</label>
                     <input pInputText id="email" name="email" formControlName="email" type="email"
-                        class="w-full p-inputtext-sm">
+                        class="w-full p-inputtext-sm" maxlength="50">
                     <small *ngIf="loginReq.controls['email'].touched && loginReq.controls['email'].errors?.['required']"
                         id="email-help" class="p-error block">Please enter your email.</small>
                     <small *ngIf="loginReq.controls['email'].errors?.['email'] && loginReq.controls['email'].dirty"
@@ -30,8 +30,11 @@
                 </div>
                 <div class="field">
                     <label for="pass">Password</label>
-                    <input pInputText id="pass" name="pass" formControlName="pass" type="password"
-                        class="w-full p-inputtext-sm">
+                    <p-password id="pass" name="pass" formControlName="pass"
+                        styleClass="w-full p-inputtext-sm" inputStyleClass="w-full p-inputtext-sm" [feedback]="false"
+                        [toggleMask]="true"></p-password>
+                    <small *ngIf="loginReq.controls['pass'].touched && loginReq.controls['pass'].errors?.['required']"
+                        id="pass-help" class="p-error block">Please enter your password.</small>
                 </div>
                 <button [loading]="loadingLogin" [disabled]="loginReq.invalid" pButton type="submit" (click)="submit()"
                     class=" w-full mt-3" label="SIGN IN"></button>

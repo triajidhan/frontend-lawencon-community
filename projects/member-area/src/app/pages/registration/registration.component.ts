@@ -34,10 +34,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     display: boolean = false
 
     registerForm = this.fb.group({
-        fullName: ['', Validators.required],
-        email: ['', Validators.required],
-        pass: ['', Validators.required],
-        company: ['', Validators.required],
+        fullName: ['', [Validators.required, Validators.maxLength(30)]],
+        email: ['', [Validators.required, Validators.maxLength(50), Validators.email]],
+        pass: ['', [Validators.required]],
+        company: ['', [Validators.required, Validators.maxLength(100)]],
         industryId: [''],
         positionId: ['']
     })

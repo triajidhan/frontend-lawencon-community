@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnDestroy, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { ConfirmationService, MenuItem, PrimeNGConfig } from "primeng/api"
@@ -10,9 +10,7 @@ import { ArticleService } from "projects/main-area/src/app/service/article.servi
 import { BookmarkService } from "projects/main-area/src/app/service/bookmark.service"
 import { CommentService } from "projects/main-area/src/app/service/comment.service"
 import { LikeService } from "projects/main-area/src/app/service/like.service"
-import { PollingStatusService } from "projects/main-area/src/app/service/polling-status.service"
 import { PollingService } from "projects/main-area/src/app/service/polling.service"
-import { PostAttachmentService } from "projects/main-area/src/app/service/post-attachment.service"
 import { PostTypeService } from "projects/main-area/src/app/service/post-type.service"
 import { PostService } from "projects/main-area/src/app/service/post.service"
 import { finalize, Subscription } from "rxjs"
@@ -96,7 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   })
 
   postForm = this.fb.group({
-    title: ['', Validators.required],
+    title: ['', [Validators.required, Validators.maxLength(50)]],
     contents: ['', Validators.required],
     postType: this.fb.group({
       id: ['']
@@ -108,7 +106,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   updatePostForm = this.fb.group({
     id: [''],
-    title: ['', Validators.required],
+    title: ['', [Validators.required, Validators.maxLength(50)]],
     contents: ['', Validators.required]
   })
 
@@ -183,7 +181,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.myId = String(this.apiService.getId())
     this.myFullName = String(this.apiService.getName())
     this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
-    if (this.apiService.getPhotoId()) {
+    if (this.apiService.getFiles()) {
       this.myProfile = String(this.apiService.getPhotoId())
     }
     if (this.apiService.getCompany()) {
@@ -258,7 +256,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getDataBookmarkSubs = this.bookmarkService.getByUserOrder(this.myId, this.startPositionPostBookmark, this.limitPostBookmark, false).subscribe(result => {
       for (let i = 0; i < result.length; i++) {
         this.postBookmark.push(result[i])
-        console.log(this.postBookmark)
       }
     })
   }
@@ -508,7 +505,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
 
       this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-        // console.log(resultId)
         if (this.type == 'threads') {
           this.post[i].commentBody.push(resultId.commentBody)
           this.post[i].userComment.push(resultId.user)

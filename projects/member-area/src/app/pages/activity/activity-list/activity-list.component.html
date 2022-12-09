@@ -764,12 +764,13 @@
                 </h2>
             </div>
             <form class="card" [formGroup]="paymentActivityForm">
-                <p class="text-justify mb-2">Please make a payment to account number <b class="main-text">1234567890</b>
+                <p class=" mb-2">Please make a payment to account number <b class="main-text">12378901</b>
                     in
                     the amount of <b class="main-text">
                         {{activityPrice | currency:"IDR ":"symbol"}}</b>. And send proof of payment here</p>
                 <div class="field col-12">
-                    <p-fileUpload id="file" name="file" [customUpload]="true" (uploadHandler)="fileUpload($event)">
+                    <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+                        [auto]=true [customUpload]="true" chooseLabel="Choose">
                     </p-fileUpload>
                 </div>
                 <button pButton [loading]="loadingJoinActivity" [disabled]="paymentActivityForm.invalid" type="submit"

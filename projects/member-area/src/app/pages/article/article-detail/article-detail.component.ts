@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { BASE_URL } from "projects/constant/base-url"
-import { Article } from "projects/interface/article"
 import { ArticleService } from "projects/main-area/src/app/service/article.service"
 import { Subscription } from "rxjs"
 

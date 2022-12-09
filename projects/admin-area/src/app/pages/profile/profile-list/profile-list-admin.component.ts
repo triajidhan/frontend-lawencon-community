@@ -14,7 +14,7 @@ export class ProfileListAdminComponent implements OnInit, OnDestroy {
     roleCode?: string | null
     email?: string | null
     balances?: number | null
-    profile?: number | null
+    profile?: string | null
     urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
     constructor(private apiService: ApiService, private router: Router) { }

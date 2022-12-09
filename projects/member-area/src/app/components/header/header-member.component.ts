@@ -19,7 +19,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
     resultExtension!: string
     resultFile !: string
 
-    myProfile?: string
+    myProfile: string = ''
     myStatusSubscribe!: boolean
     display: boolean = false
 
@@ -44,7 +44,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
         this.primengConfig.ripple = true
 
         this.myStatusSubscribe = Boolean(this.apiService.getStatusSubscribe())
-        if (this.apiService.getPhotoId()) {
+        if (this.apiService.getFiles()) {
             this.myProfile = String(this.apiService.getPhotoId())
         }
 

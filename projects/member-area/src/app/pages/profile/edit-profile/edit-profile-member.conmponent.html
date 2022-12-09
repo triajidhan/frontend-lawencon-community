@@ -33,8 +33,8 @@
                                 <div class="formgrid grid">
                                     <div class="field col-12">
                                         <label for="file">Photo <span class="text-red-500">*</span></label>
-                                        <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
-                                            (uploadHandler)="fileUpload($event)">
+                                        <p-fileUpload  id="file" name="file" accept="image/*"
+                                            (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true" chooseLabel="Choose">
                                         </p-fileUpload>
                                     </div>
                                     <div class="field col-12 md:col-6">

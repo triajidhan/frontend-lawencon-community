@@ -195,17 +195,22 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.myId = String(this.apiService.getId())
         this.myFullName = String(this.apiService.getName())
         this.myEmail = String(this.apiService.getEmail())
-        if (this.apiService.getPhotoId()) {
+        if (this.apiService.getFiles()) {
             this.myProfile = String(this.apiService.getPhotoId())
         }
+
         this.myCompany = String(this.apiService.getCompany())
 
-        if (this.apiService.getIndustry()) {
-            this.myIndustry = String(this.apiService.getIndustry())
+        if (this.apiService.getIndustryObj()) {
+            if (this.apiService.getIndustry()) {
+              this.myIndustry = String(this.apiService.getIndustry())
+            }
         }
 
-        if (this.apiService.getPosition()) {
-            this.myPosition = String(this.apiService.getPosition())
+        if (this.apiService.getPositionObj()) {
+            if (this.apiService.getPosition()) {
+              this.myPosition = String(this.apiService.getPosition())
+            }
         }
 
         this.myBalances = Number(this.apiService.getBalances())
@@ -291,7 +296,6 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     addDataPost(post: any) {
         for (let i = 0; i < post.length; i++) {
             this.post.push(post[i])
-            console.log(this.post)
         }
     }
 
@@ -499,7 +503,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             this.post[i].countOfComment = this.post[i].countOfComment + 1
 
             this.post[i].createdAtComment.push((new Date()).toString())
-            console.log(this.post[i])
+            // console.log(this.post[i])
             this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
                 console.log(resultId)
                 this.post[i].commentBody.push(resultId.commentBody)
@@ -573,7 +577,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     }
 
     imageClick(i: number, j: number) {
-        this.images = this.post[i].postAttachment
+        this.images = this.post[i].fileId
         this.activeIndex = j
         this.displayGalleria = true
     }

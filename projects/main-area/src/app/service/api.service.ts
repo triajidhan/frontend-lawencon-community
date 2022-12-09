@@ -73,11 +73,21 @@ export class ApiService {
         return result
     }
 
+
     getIndustry(): string | null {
         const data = localStorage.getItem('data')
         let result: null | string = ''
         if (data) {
             result = JSON.parse(data).industry.industryName
+        }
+        return result
+    }
+
+    getIndustryObj(): object | null {
+        const data = localStorage.getItem('data')
+        let result: null | object = {}
+        if (data) {
+            result = JSON.parse(data).industry
         }
         return result
     }
@@ -91,11 +101,29 @@ export class ApiService {
         return result
     }
 
-    getPhotoId(): number | null {
+    getPositionObj(): Object | null {
         const data = localStorage.getItem('data')
-        let result: null | number = 0
+        let result: null | Object = {}
+        if (data) {
+            result = JSON.parse(data).position
+        }
+        return result
+    }
+
+    getPhotoId(): string | null {
+        const data = localStorage.getItem('data')
+        let result: null | string = ''
         if (data) {
             result = JSON.parse(data).file.id
+        }
+        return result
+    }
+
+    getFiles(): Object | null {
+        const data = localStorage.getItem('data')
+        let result: null | Object = ''
+        if (data) {
+            result = JSON.parse(data).file
         }
         return result
     }
