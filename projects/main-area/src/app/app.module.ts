@@ -12,12 +12,11 @@ import { CardModule } from 'primeng/card'
 import { RouterModule } from '@angular/router'
 import { ToastrModule } from 'ngx-toastr'
 import { NotFoundComponent } from './components/not-found/not-found.component'
-import { SiteMapComponent } from './site-map/site-map.component'
-
+import { PasswordModule } from 'primeng/password'
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, NotFoundComponent, SiteMapComponent
+    AppComponent, LoginComponent, NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +26,7 @@ import { SiteMapComponent } from './site-map/site-map.component'
     InputTextModule,
     CardModule,
     FormsModule,
+    PasswordModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot()
