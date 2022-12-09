@@ -14,48 +14,16 @@ import { Like } from "projects/interface/like";
 export class LikeService {
   constructor(private http: HttpClient) { }
 
-  getAll(startPosition: number, limit: number): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes?startPosition=${startPosition}&limit=${limit}`)
-  }
-
   getById(id: string): Observable<Like> {
     return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/id/${id}`)
-  }
-
-  getByUser(userId: string, startPosition: number, limit: number): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users/?userId=${userId}&startPosition=${startPosition}&limit=${limit}`)
   }
 
   getByUserOrder(userId: string, startPosition: number, limit: number, ascending: boolean): Observable<Like[]> {
     return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users-order/?userId=${userId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
   }
-
-  getByUserAll(userId: string): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/users-all/?userId=${userId}`)
-  }
-
-  getByPostAll(postId: string): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/posts-all/?postId=${postId}`)
-  }
-
-  getByPost(postId: string, startPosition: number, limit: number, ascending: boolean): Observable<Like[]> {
-    return this.http.get<Like[]>(`${Object.values(BASE_URL)[0]}/likes/posts/?postId=${postId}&startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
-  }
-
-  getTotalByUser(userId: string): Observable<Like> {
-    return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/total-users/?userId=${userId}`)
-  }
-
-  getTotalByPost(postId: string): Observable<Like> {
-    return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/total-posts/?postId=${postId}`)
-  }
-
+  
   getUserLikePost(postId: string, userId: string): Observable<Like> {
     return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/user-like/?postId=${postId}&userId=${userId}`)
-  }
-
-  getByIsActive(startPosition: number, limit: number): Observable<Like> {
-    return this.http.get<Like>(`${Object.values(BASE_URL)[0]}/likes/is-active/?startPosition=${startPosition}&limit=${limit}`)
   }
 
   insert(data: any): Observable<ResponseMessage> {

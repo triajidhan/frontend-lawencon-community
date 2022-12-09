@@ -14,15 +14,6 @@ export class PostAttachmentService{
 
     constructor(private httpClient:HttpClient){}
 
-
-    getAll(): Observable<PostAttachment[]> {
-		return this.httpClient.get<PostAttachment[]>(`${Object.values(BASE_URL)[0]}/post-attachments/`)
-	}
-
-	getById(id: string): Observable<PostAttachment> {
-		return this.httpClient.get<PostAttachment>(`${Object.values(BASE_URL)[0]}/post-attachments/id/${id}`)
-	}
-
     getByPost(postId:string): Observable<PostAttachment[]> {
 		return this.httpClient.get<PostAttachment[]>(`${Object.values(BASE_URL)[0]}/post-attachments/posts/?postId=${postId}`)
 	}

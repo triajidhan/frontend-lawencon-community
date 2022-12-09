@@ -12,13 +12,9 @@ export class PostTypeService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getAll(): Observable<PostType[]> {
-        return this.httpClient.get<PostType[]>(`${Object.values(BASE_URL)[0]}/post-types/`)
-    }
 
-    getById(id: string): Observable<PostType> {
-        return this.httpClient.get<PostType>(`${Object.values(BASE_URL)[0]}/post-types/id/${id}`)
-    }
+
+ 
 
     getByPostTypeCode(id: string): Observable<PostType> {
         return this.httpClient.get<PostType>(`${Object.values(BASE_URL)[0]}/post-types/post-code/?postTypeCode=${id}`)
