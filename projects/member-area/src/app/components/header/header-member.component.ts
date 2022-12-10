@@ -80,6 +80,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
                 label: 'Start Premium',
                 icon: 'fa-regular fa-gem',
                 styleClass: 'premiums',
+                command: () => this.showPopUpDialog()
             },
             {
                 label: 'Settings',
@@ -92,11 +93,20 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
                     },
                     {
                         label: 'Log Out',
-                        icon: 'fa-solid fa-power-off'
+                        icon: 'fa-solid fa-power-off',
+                        command: () => this.logOut()
                     }
                 ]
             }
         ]
+
+        this.checkStatusSubscribe()
+    }
+
+    checkStatusSubscribe() {
+        if (this.myStatusSubscribe) {
+            this.navMenus.splice(4, 1)
+        }
     }
 
     fileUpload(event: any): void {

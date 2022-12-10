@@ -14,10 +14,11 @@ import { finalize, Subscription } from "rxjs";
 export class PositionInsertComponent implements OnInit, OnDestroy {
   loadingInsert = false
   items!: MenuItem[]
+
   private insertSubscription?: Subscription;
 
   insertPositionForm = this.fb.group({
-    positionName: ['', Validators.required],
+    positionName: ['', [Validators.required, Validators.maxLength(30)]],
   })
 
   constructor(private fb: FormBuilder,

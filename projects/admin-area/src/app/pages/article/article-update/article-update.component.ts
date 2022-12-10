@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { FormBuilder } from "@angular/forms"
+import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { ConfirmationService, MenuItem } from "primeng/api"
 import { ArticleService } from "projects/main-area/src/app/service/article.service"
@@ -18,8 +18,8 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
 
   updateArticleForm = this.fb.group({
     id: [''],
-    title: [''],
-    contents: [''],
+    title: ['', [Validators.required, Validators.maxLength(50)]],
+    contents: ['', Validators.required],
     file: this.fb.group({
       files: [''],
       ext: ['']
@@ -46,9 +46,7 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
     ]
 
     this.activatedRoute.params.subscribe(id => {
-      console.log(id);
       this.getByIdSubscription = this.articleService.getById(id['id']).subscribe(result => {
-        console.log(result);
         this.article = result
         this.updateArticleForm.controls.title.setValue(result.title)
         this.updateArticleForm.controls.contents.setValue(result.contents)
@@ -80,7 +78,6 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
   }
 
   submitUpdate() {
-    console.log(this.resultFile);
     if (this.resultFile) {
       this.updateArticleForm.patchValue({
         file: {
@@ -90,7 +87,6 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
       })
     }
     this.updateSubscription = this.articleService.update(this.updateArticleForm.value).subscribe(() => {
-      console.log("save")
       this.router.navigateByUrl(`/articles/admin`)
     })
   }

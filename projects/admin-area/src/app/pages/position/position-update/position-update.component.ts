@@ -13,13 +13,13 @@ export class PositionUpdateComponent implements OnInit, OnDestroy {
     loadingUpdate: boolean = false
     items!: MenuItem[]
 
-    updateSubscription!: Subscription
-    getByIdSubscription!: Subscription
+    private updateSubscription?: Subscription
+    private getByIdSubscription!: Subscription
 
     position: any = new Object()
 
     updatePositionForm = this.fb.group({
-        positionName: ['', Validators.required],
+        positionName: ['', [Validators.required, Validators.maxLength(30)]],
         id: [''],
 
     })
@@ -36,7 +36,7 @@ export class PositionUpdateComponent implements OnInit, OnDestroy {
         ]
 
         this.activatedRoute.params.subscribe(result => {
-            this.updateSubscription = this.positionService.getById(result['id']).subscribe(position => {
+            this.getByIdSubscription = this.positionService.getById(result['id']).subscribe(position => {
                 this.position = position;
                 this.updatePositionForm.controls['positionName'].setValue(position.positionName)
                 this.updatePositionForm.controls['id'].setValue(position.id)
@@ -52,6 +52,7 @@ export class PositionUpdateComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-
+        this.updateSubscription?.unsubscribe()
+        this.getByIdSubscription?.unsubscribe()
     }
 }

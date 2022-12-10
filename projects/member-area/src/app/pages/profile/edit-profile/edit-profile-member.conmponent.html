@@ -33,8 +33,9 @@
                                 <div class="formgrid grid">
                                     <div class="field col-12">
                                         <label for="file">Photo <span class="text-red-500">*</span></label>
-                                        <p-fileUpload  id="file" name="file" accept="image/*"
-                                            (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true" chooseLabel="Choose">
+                                        <p-fileUpload id="file" name="file" accept="image/*"
+                                            (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true"
+                                            chooseLabel="Choose">
                                         </p-fileUpload>
                                     </div>
                                     <div class="field col-12 md:col-6">
@@ -53,7 +54,7 @@
                                             type="text" value="{{user.company}}" class="w-full p-inputtext-sm">
                                     </div>
                                     <div class="field col-12 md:col-6">
-                                        <label for="industryName">Industry <span class="text-red-500">*</span></label>
+                                        <label for="industryName">Industry</label>
                                         <p-dropdown [options]="industries" styleClass="w-full p-inputtext-sm"
                                             optionLabel="industryName" optionValue="id" name="industry"
                                             id="industryName" formControlName="industryId"
@@ -61,7 +62,7 @@
                                         </p-dropdown>
                                     </div>
                                     <div class="field col-12 md:col-6">
-                                        <label for="positionName">Position <span class="text-red-500">*</span></label>
+                                        <label for="positionName">Position</label>
                                         <p-dropdown [options]="positions" styleClass="w-full p-inputtext-sm"
                                             optionLabel="positionName" optionValue="id" name="position"
                                             id="positionName" formControlName="positionId"

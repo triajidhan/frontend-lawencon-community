@@ -19,6 +19,7 @@ import { PanelMenuModule } from 'primeng/panelmenu'
 import { DropdownModule } from "primeng/dropdown"
 import { ImageModule } from "primeng/image"
 import { ConfirmDialogModule } from "primeng/confirmdialog"
+import { PasswordModule } from "primeng/password"
 
 @NgModule({
     declarations: [
@@ -32,7 +33,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog"
         FileUploadModule, HttpClientModule,
         MenuModule, TabMenuModule, PanelMenuModule,
         ReactiveFormsModule, DropdownModule, ImageModule,
-        ConfirmDialogModule
+        ConfirmDialogModule, PasswordModule
     ],
     exports: [
         ProfileListAdminComponent, EditProfileAdminComponent, ChangePasswordAdminComponent

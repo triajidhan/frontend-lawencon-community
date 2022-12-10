@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
-import { Router } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
 import { finalize, Subscription } from "rxjs"
 import { ROLE_CODE } from "../../constant/role-type"
 import { ApiService } from "../../service/api.service"
@@ -12,9 +12,10 @@ import { UserService } from "../../service/user.service"
     styleUrls: ['../../app.component.css'],
     providers: []
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
 
     loadingLogin: boolean = false
+    isAdmin: boolean = false
 
     private loginSubscription?: Subscription
 
@@ -25,7 +26,14 @@ export class LoginComponent implements OnDestroy {
 
     constructor(private userService: UserService,
         private apiService: ApiService, private router: Router,
-        private fb: FormBuilder) { }
+        private fb: FormBuilder, private activatedRoute: ActivatedRoute) { }
+
+
+    ngOnInit(): void {
+        if (this.activatedRoute.snapshot.url[1].path == 'admin') {
+            this.isAdmin = true
+        }
+    }
 
     submit(): void {
         this.loadingLogin = true

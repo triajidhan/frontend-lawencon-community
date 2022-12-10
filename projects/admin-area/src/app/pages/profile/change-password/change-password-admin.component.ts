@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { FormBuilder } from "@angular/forms"
+import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { ToastrService } from "ngx-toastr"
 import { ConfirmationService } from "primeng/api"
@@ -25,8 +25,8 @@ export class ChangePasswordAdminComponent implements OnInit, OnDestroy {
     }
 
     inputPassForm = this.fb.group({
-        newPassword: [''],
-        confirmPassword: ['']
+        newPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required]
     })
 
     private getByIdUserSubscription?: Subscription

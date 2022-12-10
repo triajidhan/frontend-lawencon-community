@@ -17,7 +17,7 @@ export class IndustryInsertComponent implements OnInit, OnDestroy {
   private insertSubscription?: Subscription;
 
   insertIndustryForm = this.fb.group({
-    industryName: ['', Validators.required],
+    industryName: ['', [Validators.required, Validators.maxLength(30)]],
   })
 
   constructor(private fb: FormBuilder,

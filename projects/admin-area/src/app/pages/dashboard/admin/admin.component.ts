@@ -12,19 +12,19 @@ import { PaymentActivityDetailService } from "projects/main-area/src/app/service
 export class AdminComponent implements OnDestroy, OnInit {
     fullName!: string
     totalArticle!: number
-    totalUserSubsribe!:number
-    totalApproveEvent!:number
-    totalApproveCourse!:number
+    totalUserSubsribe!: number
+    totalApproveEvent!: number
+    totalApproveCourse!: number
 
-    private totalApprovedAndActivityTypeEvent?:Subscription
-    private totalApprovedAndActivityTypeCourse?:Subscription
+    private totalApprovedAndActivityTypeEvent?: Subscription
+    private totalApprovedAndActivityTypeCourse?: Subscription
 
     private articleGetCountSubscription?: Subscription
     private userSubscribeGetCountSubscription?: Subscription
-    
+
 
     constructor(private articleService: ArticleService,
-        private userService:UserService,
+        private userService: UserService,
         private apiService: ApiService,
         private paymentActivityDetailService: PaymentActivityDetailService) { }
 
@@ -35,15 +35,15 @@ export class AdminComponent implements OnDestroy, OnInit {
             this.totalArticle = result.countOfArticle
         })
 
-        this.userSubscribeGetCountSubscription = this.userService.getTotalSubscribe().subscribe(result=>{
+        this.userSubscribeGetCountSubscription = this.userService.getTotalSubscribe().subscribe(result => {
             this.totalUserSubsribe = result.countOfUser
         })
 
-        this.totalApprovedAndActivityTypeEvent = this.paymentActivityDetailService.getTotalByPaymentApprovedAndActivityTypeId('event').subscribe(result=>{
+        this.totalApprovedAndActivityTypeEvent = this.paymentActivityDetailService.getTotalByPaymentApprovedAndActivityTypeId('event').subscribe(result => {
             this.totalApproveEvent = result.countOfPaymentActivity
         })
 
-        this.totalApprovedAndActivityTypeCourse = this.paymentActivityDetailService.getTotalByPaymentApprovedAndActivityTypeId('course').subscribe(result=>{
+        this.totalApprovedAndActivityTypeCourse = this.paymentActivityDetailService.getTotalByPaymentApprovedAndActivityTypeId('course').subscribe(result => {
             this.totalApproveCourse = result.countOfPaymentActivity
         })
     }

@@ -16,6 +16,7 @@ import { MenuModule } from 'primeng/menu'
 import { ConfirmDialogModule } from "primeng/confirmdialog"
 import { ReactiveFormsModule } from "@angular/forms"
 import { ImageModule } from "primeng/image"
+import { PasswordModule } from "primeng/password"
 
 @NgModule({
     declarations: [
@@ -27,7 +28,7 @@ import { ImageModule } from "primeng/image"
         InputTextareaModule, TableModule,
         FileUploadModule, HttpClientModule,
         MenuModule, ConfirmDialogModule, ReactiveFormsModule,
-        ImageModule
+        ImageModule, PasswordModule
     ],
     exports: [
         UserListComponent, UserInsertComponent, UserUpdateComponent

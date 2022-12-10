@@ -20,7 +20,8 @@
                 </h1>
             </div>
             <div class="grid w-full ">
-                <button pButton type="button" routerLink="/users" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+                <button pButton type="button" routerLink="/users" class="p-button-outlined mb-5 ml-2"
+                    label="BACK"></button>
             </div>
             <div class="grid w-full mb-5 p-3 bg-white">
                 <form [formGroup]="insertUserForm" class="card w-full mx-3 border-0 md:px-4 my-3">
@@ -37,8 +38,13 @@
                         </div>
                         <div class="field col-12 md:col-6">
                             <label for="pass">Password <span class="text-red-500">*</span></label>
-                            <input pInputText id="pass" formControlName="pass" name="pass" type="password"
-                                class="w-full p-inputtext-sm">
+                            <p-password id="pass" name="pass" formControlName="pass" styleClass="w-full p-inputtext-sm"
+                                inputStyleClass="w-full p-inputtext-sm" [toggleMask]="true"
+                                [feedback]="false"></p-password>
+                            <small
+                                *ngIf="insertUserForm.controls['pass'].touched && insertUserForm.controls['pass'].errors?.['required']"
+                                id="pass-help" class="p-error block">Please enter your confirm
+                                password.</small>
                         </div>
                         <div class="col-12 my-3">
                             <button pButton [disabled]="insertUserForm.invalid" (click)="submitInsert()" type="submit"

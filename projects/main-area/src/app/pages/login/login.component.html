@@ -30,16 +30,15 @@
                 </div>
                 <div class="field">
                     <label for="pass">Password</label>
-                    <p-password id="pass" name="pass" formControlName="pass"
-                        styleClass="w-full p-inputtext-sm" inputStyleClass="w-full p-inputtext-sm" [feedback]="false"
-                        [toggleMask]="true"></p-password>
+                    <p-password id="pass" name="pass" formControlName="pass" styleClass="w-full p-inputtext-sm"
+                        inputStyleClass="w-full p-inputtext-sm" [feedback]="false" [toggleMask]="true"></p-password>
                     <small *ngIf="loginReq.controls['pass'].touched && loginReq.controls['pass'].errors?.['required']"
                         id="pass-help" class="p-error block">Please enter your password.</small>
                 </div>
                 <button [loading]="loadingLogin" [disabled]="loginReq.invalid" pButton type="submit" (click)="submit()"
                     class=" w-full mt-3" label="SIGN IN"></button>
             </form>
-            <p class="text-center mt-5">No Account Yet? <b routerLink="/registrations"
+            <p *ngIf="!isAdmin" class="text-center mt-5">No Account Yet? <b routerLink="/registrations"
                     class=" cursor-pointer main-text sign-up-btn">Sign
                     Up</b></p>
         </div>
