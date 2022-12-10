@@ -15,8 +15,8 @@ export class UserInsertComponent implements OnInit, OnDestroy {
     private insertSubscription?: Subscription
 
     insertUserForm = this.formBuilder.group({
-        fullName: ['', Validators.required],
-        email: ['', Validators.required],
+        fullName: ['', [Validators.required, Validators.maxLength(30)]],
+        email: ['', [Validators.required, Validators.maxLength(50), Validators.email]],
         pass: ['', Validators.required],
     })
 
@@ -35,7 +35,6 @@ export class UserInsertComponent implements OnInit, OnDestroy {
 
     submitInsert() {
         this.insertSubscription = this.userService.insert(this.insertUserForm.value).subscribe(() => {
-            console.log("save")
             this.router.navigateByUrl(`/users`)
         })
     }

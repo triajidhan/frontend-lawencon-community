@@ -40,7 +40,6 @@ export class PositionListComponent implements OnInit, OnDestroy {
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -56,7 +55,6 @@ export class PositionListComponent implements OnInit, OnDestroy {
                 this.contDataSubs = this.positionService.getTotalPosition().subscribe(result => {
                     this.totalData = result.countOfPosition
                 })
-                console.log(this.data)
             }
         )
     }

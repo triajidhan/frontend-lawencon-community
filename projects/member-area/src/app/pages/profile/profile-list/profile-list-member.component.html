@@ -14,14 +14,15 @@
                     <div class="grid mx-5">
                         <div class="col-12 md:col-4 lg:col-3 text-center flex justify-content-center">
                             <div class="flex border-circle w-10rem h-10rem justify-content-center relative">
-                                <div *ngIf="myStatusSubscribe" class="absolute left-0 z-2">
+                                <div *ngIf="myStatusSubscribe" class="absolute left-0 z-1">
                                     <div
                                         class="border-circle bg-orange-400 h-3rem w-3rem flex align-items-center justify-content-center">
                                         <i class="fa-regular fa-gem icon text-3xl"></i>
                                     </div>
                                 </div>
                                 <div class="border-circle w-10rem h-10rem overflow-hidden">
-                                    <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                                    <div
+                                        *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
                                     </div>
                                     <ng-template #isProfile>
                                         <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
@@ -111,18 +112,18 @@
                     <div class="flex sm:mx-5">
                         <div class="max-w-max">
                             <div class="w-3rem h-3rem border-circle overflow-hidden">
-                                <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                                <div
+                                    *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfiles else isProfiles">
                                 </div>
-                                <ng-template #isProfile>
+                                <ng-template #isProfiles>
                                     <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
                                         imageClass="w-3rem h-3rem"></p-image>
                                 </ng-template>
-                                <ng-template #isNotProfile>
+                                <ng-template #isNotProfiles>
                                     <p-image [preview]="true" src="../../../../assets/logos/user.jpg"
                                         alt="profile image" imageClass="w-3rem h-3rem"></p-image>
                                 </ng-template>
                             </div>
-
                         </div>
                         <div (click)="postDialog('regular')"
                             class="w-full bg-black-alpha-10 ml-2 sm:ml-5 border-round-3xl flex align-items-center px-4 cursor-pointer hover:text-black-alpha-60 hover:bg-gray-300 transition-all transition-duration-200">
@@ -487,16 +488,21 @@
                                             <div class="flex mt-3">
                                                 <div class="max-w-max mr-3">
                                                     <div class="w-2rem h-2rem border-circle overflow-hidden">
-                                                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                                                        <div
+                                                            *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                                                        </div>
                                                         <ng-template #isProfile>
-                                                          <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                                                            imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                            <p-image [preview]="true" src="{{urlFile}}{{myProfile}}"
+                                                                alt="profile image"
+                                                                imageClass="w-2rem h-2rem border-circle"></p-image>
                                                         </ng-template>
                                                         <ng-template #isNotProfile>
-                                                          <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
-                                                            imageClass="w-2rem h-2rem border-circle"></p-image>
+                                                            <p-image [preview]="true"
+                                                                src="../../../../assets/logos/user.jpg"
+                                                                alt="profile image"
+                                                                imageClass="w-2rem h-2rem border-circle"></p-image>
                                                         </ng-template>
-                                                      </div>
+                                                    </div>
                                                 </div>
                                                 <div class="w-full">
                                                     <form [formGroup]="commentForm" class="card w-full">
@@ -547,16 +553,16 @@
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
                     <div class="w-3rem h-3rem border-circle overflow-hidden">
-                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
-                        <ng-template #isProfile>
-                          <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfiles else isProfiles"></div>
+                        <ng-template #isProfiles>
+                            <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                                imageClass="w-3rem h-3rem border-circle"></p-image>
                         </ng-template>
-                        <ng-template #isNotProfile>
-                          <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
-                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        <ng-template #isNotProfiles>
+                            <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
+                                imageClass="w-3rem h-3rem border-circle"></p-image>
                         </ng-template>
-                      </div>
+                    </div>
                 </div>
                 <div class="w-full">
                     <h3>{{ myFullName }}</h3>
@@ -576,8 +582,9 @@
                 </div>
                 <div class="field">
                     <label for="file">Photo</label>
-                    <p-fileUpload #uploadComponent id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
-                        [auto]=true [customUpload]="true" chooseLabel="Choose" [multiple]="true">
+                    <p-fileUpload #uploadComponent id="file" name="file" accept="image/*"
+                        (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true" chooseLabel="Choose"
+                        [multiple]="true">
                     </p-fileUpload>
                 </div>
                 <button pButton [loading]="loadingPost" [disabled]="postForm.invalid" type="submit"
@@ -599,37 +606,37 @@
             <div class="flex mb-3">
                 <div class="max-w-max mr-3">
                     <<div class="w-3rem h-3rem border-circle overflow-hidden">
-                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
-                        <ng-template #isProfile>
-                          <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfiles else isProfiles"></div>
+                        <ng-template #isProfiles>
+                            <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
+                                imageClass="w-3rem h-3rem border-circle"></p-image>
                         </ng-template>
-                        <ng-template #isNotProfile>
-                          <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
-                            imageClass="w-3rem h-3rem border-circle"></p-image>
+                        <ng-template #isNotProfiles>
+                            <p-image [preview]="true" src="../../../../assets/logos/user.jpg" alt="profile image"
+                                imageClass="w-3rem h-3rem border-circle"></p-image>
                         </ng-template>
-                      </div>
-                </div>
-                <div class="w-full">
-                    <h3>{{ myFullName }}</h3>
-                    <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
-                        <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
-                    </div>
                 </div>
             </div>
-            <form class="card" [formGroup]="updatePostForm">
-                <div class="field">
-                    <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm"
-                        formControlName="title" placeholder="title" required>
+            <div class="w-full">
+                <h3>{{ myFullName }}</h3>
+                <div *ngIf="myCompany != ''" class=" max-w-max mr-3 bg-green-100 border-round-xl">
+                    <h4 class="mx-3 my-1 text-green-500">{{ myCompany }}</h4>
                 </div>
-                <div class="field">
-                    <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
-                        formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
-                </div>
-                <button pButton [loading]="loadingPost" [disabled]="updatePostForm.invalid" type="submit"
-                    (click)="postUpdate()" class="main-color w-full mt-3" label="SUBMIT"></button>
-            </form>
+            </div>
         </div>
+        <form class="card" [formGroup]="updatePostForm">
+            <div class="field">
+                <input pInputText id="title" name="title" type="text" class="w-full p-inputtext-sm"
+                    formControlName="title" placeholder="title" required>
+            </div>
+            <div class="field">
+                <textarea [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" name="contents" type="text"
+                    formControlName="contents" class="w-full h-auto text-sm" placeholder="contents"></textarea>
+            </div>
+            <button pButton [loading]="loadingPost" [disabled]="updatePostForm.invalid" type="submit"
+                (click)="postUpdate()" class="main-color w-full mt-3" label="SUBMIT"></button>
+        </form>
+    </div>
     </div>
 </p-dialog>
 

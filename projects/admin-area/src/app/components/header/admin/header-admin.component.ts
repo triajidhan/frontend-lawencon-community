@@ -71,7 +71,7 @@ export class HeaderAdminComponent {
                     {
                         label: 'Log Out',
                         icon: 'fa-solid fa-power-off',
-                        routerLink: '/login/admin'
+                        command: () => this.logOut()
                     }
                 ]
             }

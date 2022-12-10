@@ -84,7 +84,7 @@ export class EditProfileMemberComponent implements OnInit, OnDestroy {
     this.items = [
       { label: 'Edit Profile', routerLink: '/profiles/member/edit/' + this.myId },
       { label: 'Change Password', routerLink: '/profiles/member/change-password/' + this.myId },
-      { label: 'Log Out', routerLink: '/' }
+      { label: 'Log Out', command: () => this.apiService.logOut(), routerLink: '/' }
     ]
 
     this.init()

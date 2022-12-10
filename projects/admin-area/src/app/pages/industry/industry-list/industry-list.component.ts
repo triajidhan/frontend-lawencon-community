@@ -41,7 +41,6 @@ export class IndustryListComponent implements OnInit, OnDestroy {
 
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -57,7 +56,6 @@ export class IndustryListComponent implements OnInit, OnDestroy {
                 this.contDataSubs = this.industryService.getTotalIndustry().subscribe(result => {
                     this.totalData = result.countOfIndustry
                 })
-                console.log(this.data)
             }
         )
     }

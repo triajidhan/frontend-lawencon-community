@@ -15,7 +15,7 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
   resultFile !: string
 
   insertArticleForm = this.formBuilder.group({
-    title: ['', Validators.required],
+    title: ['', [Validators.required, Validators.maxLength(50)]],
     contents: ['', Validators.required],
     file: this.formBuilder.group({
       files: [''],
@@ -61,7 +61,6 @@ export class ArticleInsertComponent implements OnInit, OnDestroy {
       }
     });
     this.insertSubscription = this.articleService.insert(this.insertArticleForm.value).subscribe(() => {
-      console.log("save")
       this.router.navigateByUrl(`/articles/admin`)
     })
   }

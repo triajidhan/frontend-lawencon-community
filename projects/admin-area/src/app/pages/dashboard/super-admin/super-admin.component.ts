@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
+import { ROLE_CODE } from "projects/main-area/src/app/constant/role-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { IndustryService } from "projects/main-area/src/app/service/industry.service"
 import { PositionService } from "projects/main-area/src/app/service/position.service"
@@ -13,11 +14,13 @@ export class SuperAdminComponent implements OnInit, OnDestroy {
   fullName!: string
   totalIndustry!: number
   totalPosition!: number
-  totalUser!: number
+  totalAdminUser: number = 0
+  totalMemberUser: number = 0
 
   positionGetCountSubscription!: Subscription
   industryGetCountSubscription!: Subscription
-  userGetCountSubscription!: Subscription
+  adminUserGetCountSubscription!: Subscription
+  memberUserGetCountSubscription!: Subscription
 
   constructor(private positionService: PositionService, private industryService: IndustryService, private userService: UserService,
     private apiService: ApiService) { }
@@ -25,8 +28,12 @@ export class SuperAdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fullName = String(this.apiService.getName())
 
-    this.userGetCountSubscription = this.userService.getTotalUser().subscribe(result => {
-      this.totalUser = result.countOfUser
+    this.adminUserGetCountSubscription = this.userService.getTotalByRole(ROLE_CODE.ADMIN).subscribe(result => {
+      this.totalAdminUser = result.countOfUser
+    })
+
+    this.memberUserGetCountSubscription = this.userService.getTotalByRole(ROLE_CODE.MEMBER).subscribe(result => {
+      this.totalMemberUser = result.countOfUser
     })
 
     this.positionGetCountSubscription = this.positionService.getTotalPosition().subscribe(result => {
@@ -41,7 +48,8 @@ export class SuperAdminComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.positionGetCountSubscription.unsubscribe()
     this.industryGetCountSubscription.unsubscribe()
-    this.userGetCountSubscription.unsubscribe()
+    this.adminUserGetCountSubscription.unsubscribe()
+    this.memberUserGetCountSubscription.unsubscribe()
   }
 
 }

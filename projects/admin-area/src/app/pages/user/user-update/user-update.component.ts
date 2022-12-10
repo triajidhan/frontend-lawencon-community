@@ -20,8 +20,8 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
 
     updateUserForm = this.formBuilder.group({
         id: [''],
-        fullName: ['', Validators.required],
-        email: [''], 
+        fullName: ['', [Validators.required, Validators.maxLength(30)]],
+        email: [''],
         version: [0]
     })
 
@@ -37,7 +37,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
         ]
 
         this.activatedRoute.params.subscribe(result => {
-            this.updateSubscription = this.userService.getById(result['id']).subscribe(user => {
+            this.getByIdSubscription = this.userService.getById(result['id']).subscribe(user => {
                 this.user = user
                 this.updateUserForm.controls['fullName'].setValue(user.fullName)
                 this.updateUserForm.controls['email'].setValue(user.email)
@@ -49,12 +49,12 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
 
     userUpdate() {
         this.updateSubscription = this.userService.update(this.updateUserForm.value).subscribe(() => {
-            console.log("save")
             this.router.navigateByUrl(`/users`)
         })
     }
 
     ngOnDestroy(): void {
         this.updateSubscription?.unsubscribe()
+        this.getByIdSubscription.unsubscribe()
     }
 }

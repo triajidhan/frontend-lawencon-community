@@ -43,7 +43,7 @@ export class HeaderSuperAdminComponent implements OnInit {
             {
                 label: 'Master Data',
                 items: [{
-                    label: 'User',
+                    label: 'Admin User',
                     icon: 'fa-solid fa-users',
                     routerLink: '/users'
                 },
@@ -85,7 +85,8 @@ export class HeaderSuperAdminComponent implements OnInit {
                     },
                     {
                         label: 'Log Out',
-                        icon: 'fa-solid fa-power-off'
+                        icon: 'fa-solid fa-power-off',
+                        command: () => this.logOut()
                     }
                 ]
             }

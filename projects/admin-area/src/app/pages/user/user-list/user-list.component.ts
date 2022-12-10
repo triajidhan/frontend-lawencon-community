@@ -39,7 +39,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
         this.items = [
             { label: 'Home', routerLink: "/dashboard/super-admin" },
-            { label: 'User' }
+            { label: 'Admin User' }
         ]
     }
 

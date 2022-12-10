@@ -59,9 +59,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
 
     this.getAllSubs = this.paymentSubscribeService.getByIsActiveTrueAndApprovedFalse(this.startPage, this.maxPage, false).subscribe(
       result => {
-        console.log("is true app false");
-        
-        console.log(result)
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByIsActiveTrueAndApprovedFalse().subscribe(
           totalData => {
             this.data = result
@@ -108,7 +105,6 @@ export class SubscriberPaymentComponent implements OnInit, OnDestroy {
 
     this.getAllSubs = this.paymentSubscribeService.getByPaymentApproved(startPage, maxPage, false).subscribe(
       result => {
-        console.log(result)
         this.getTotalDataSubs = this.paymentSubscribeService.getTotalByPaymentApproved().subscribe(
           totalData => {
             this.dataApprove = result

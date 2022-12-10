@@ -56,15 +56,15 @@
                                             *ngIf="activityForm.controls['beginSchedule'].touched && activityForm.controls['beginSchedule'].errors?.['required']"
                                             id="beginSchedule-poll-help" class="p-error block">Please enter your
                                             begin schedule.</small>
-                                            <small
-                                            class=" block">Minimum begin schedule one hour from now.</small>
+                                        <small class=" block">Minimum begin schedule one hour from now.</small>
                                     </div>
                                     <div class="field col-12 md:col-6">
                                         <label for="finishSchedule" class="w-full">Finish Schedule <span
                                                 class="text-red-500">*</span></label>
                                         <p-calendar [showTime]="true" inputId="finishSchedule" styleClass="calendar"
                                             id="finishSchedule" formControlName="finishSchedule" [required]="true"
-                                            [minDate]="minFinishDate" [defaultDate]="minFinishDate" [disabled]="showFinishSchedule">
+                                            [minDate]="minFinishDate" [defaultDate]="minFinishDate"
+                                            [disabled]="showFinishSchedule">
                                         </p-calendar>
                                         <small
                                             *ngIf="activityForm.controls['finishSchedule'].touched && activityForm.controls['finishSchedule'].errors?.['required']"
@@ -75,9 +75,10 @@
                                     <div class="field col-12 md:col-6">
                                         <label for="price">Price <span class="text-red-500">*</span></label>
                                         <p-inputNumber id="price" formControlName="price" name="price" type="number"
-                                        styleClass="w-full p-inputtext-sm" class="w-full p-inputtext-sm" [min]="10000"  mode="currency" currency="IDR" [required]=true></p-inputNumber>
-                                        <small
-                                            class=" block">Minimum price IDR 10,000.00.</small>
+                                            styleClass="w-full p-inputtext-sm" class="w-full p-inputtext-sm"
+                                            [min]="10000" mode="currency" currency="IDR"
+                                            [required]=true></p-inputNumber>
+                                        <small class=" block">Minimum price IDR 10,000.00.</small>
                                     </div>
                                     <div class="field col-12 md:col-6">
                                         <label for="location">Location <span class="text-red-500">*</span></label>
@@ -89,7 +90,7 @@
                                             location.</small>
                                     </div>
                                     <div class="field col-12 md:col-6">
-                                        <label for="activityTypeName">Activity Type  <span
+                                        <label for="activityTypeName">Activity Type <span
                                                 class="text-red-500">*</span></label>
                                         <p-dropdown [options]="activityTypes" styleClass="w-full"
                                             optionLabel="activityTypeName" optionValue="id" name="activityType"
@@ -99,14 +100,15 @@
                                         </p-dropdown>
                                     </div>
                                     <div class="field col-12">
-                                        <label for="file">Photo  <span class="text-red-500">*</span></label>
-                                        <p-fileUpload  id="file" name="file" accept="image/*"
-                                            (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true" chooseLabel="Choose">
+                                        <label for="file">Photo </label>
+                                        <p-fileUpload id="file" name="file" accept="image/*"
+                                            (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true"
+                                            chooseLabel="Choose">
                                         </p-fileUpload>
                                     </div>
                                     <div class="col-12 my-3">
-                                        <button [loading]="loadingActivity"  pButton
-                                            type="submit" id="activity-submit" [disabled]="activityForm.invalid" label="SUBMIT" (click)="submitInsert()"
+                                        <button [loading]="loadingActivity" pButton type="submit" id="activity-submit"
+                                            [disabled]="activityForm.invalid" label="SUBMIT" (click)="submitInsert()"
                                             class="main-color"></button>
                                     </div>
                                 </div>

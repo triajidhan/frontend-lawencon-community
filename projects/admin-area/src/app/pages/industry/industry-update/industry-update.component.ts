@@ -18,7 +18,7 @@ export class IndustryUpdateComponent implements OnInit, OnDestroy {
   industry: any = new Object();
 
   updateIndustryForm = this.fb.group({
-    industryName: ['', Validators.required],
+    industryName: ['', [Validators.required, Validators.maxLength(50)]],
     id: [''],
   })
 

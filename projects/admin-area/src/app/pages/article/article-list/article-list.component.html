@@ -25,8 +25,8 @@
             <div class="grid w-full ">
                 <div class="table w-full">
                     <p-table [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading" styleClass="p-datatable-sm"
-                        [tableStyle]="{'min-width': '50rem'}" [rows]="5" class="w-full">
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
+                        styleClass="p-datatable-sm" [tableStyle]="{'min-width': '50rem'}" [rows]="5" class="w-full">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="no" class="text-center">No.</th>
@@ -41,23 +41,24 @@
                         <ng-template pTemplate="body" let-data let-i="rowIndex">
                             <tr>
                                 <td class="text-center">{{i + 1}}</td>
-                                <td>{{data.title}}</td>
+                                <td class="max-w-10rem">{{data.title}}</td>
                                 <td>{{data.articleCode}}</td>
                                 <td class="text-justify">
-                                    <p class="h-details overflow-hidden">
+                                    <p class="h-details overflow-hidden max-w-20rem">
                                         {{data.contents}}
                                     </p>
-                                    <p *ngIf="data.contents.length > 200">. . .</p>
+                                    <p *ngIf="data.contents.length > 130">. . .</p>
                                 </td>
                                 <td>
                                     <p-image *ngIf="data.file.files" [preview]="true" src="{{urlFile}}{{ data.file.id}}"
                                         imageClass="img-fluid images table-img" alt="article admin image">
                                     </p-image>
-                                    <p-image *ngIf="!data.file.files" [preview]="true" src="../../../../assets/images/article.jpg"
+                                    <p-image *ngIf="!data.file.files" [preview]="true"
+                                        src="../../../../assets/images/article.jpg"
                                         imageClass="img-fluid images table-img" alt="article admin image">
                                     </p-image>
                                 </td>
-                                <td>  {{data.isActive}}</td>
+                                <td> {{data.isActive}}</td>
                                 <td class="text-center">
                                     <div class="flex justify-content-center">
                                         <button pButton routerLink="/articles/admin/edit/{{data.id}}" type="button"

@@ -18,7 +18,8 @@
                 </h1>
             </div>
             <div class="grid w-full md:w-10">
-                <button pButton type="button" routerLink="/positions" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+                <button pButton type="button" routerLink="/positions" class="p-button-outlined mb-5 ml-2"
+                    label="BACK"></button>
             </div>
             <div class="grid w-full md:w-10 mb-5 p-3 bg-white">
                 <form [formGroup]="updatePositionForm" class="card w-full mx-3 border-0 md:px-4 my-3">
@@ -29,7 +30,7 @@
                                 type="text" class="w-full p-inputtext-sm" value="{{position.positionName}}">
                         </div>
                         <div class="field col-12 md:col-6">
-                            <label for="positionCode">Position Code <span class="text-red-500">*</span></label>
+                            <label for="positionCode">Position Code </label>
                             <input pInputText id="positionCode" name="positionCode" type="text"
                                 value="{{position.positionCode}}" class="w-full p-inputtext-sm" disabled>
                         </div>

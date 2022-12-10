@@ -205,13 +205,13 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
         if (this.apiService.getIndustryObj()) {
             if (this.apiService.getIndustry()) {
-              this.myIndustry = String(this.apiService.getIndustry())
+                this.myIndustry = String(this.apiService.getIndustry())
             }
         }
 
         if (this.apiService.getPositionObj()) {
             if (this.apiService.getPosition()) {
-              this.myPosition = String(this.apiService.getPosition())
+                this.myPosition = String(this.apiService.getPosition())
             }
         }
 
@@ -221,7 +221,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
         this.items = [
             { label: 'Edit Profile', routerLink: '/profiles/member/edit/' + this.myId },
             { label: 'Change Password', routerLink: '/profiles/member/change-password/' + this.myId },
-            { label: 'Log Out', routerLink: '/' }
+            { label: 'Log Out', command: () => this.apiService.logOut(), routerLink: '/' }
         ]
 
         this.init()

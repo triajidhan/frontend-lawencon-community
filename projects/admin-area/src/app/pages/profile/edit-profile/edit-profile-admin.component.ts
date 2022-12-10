@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
+import { ROLE_CODE } from "projects/main-area/src/app/constant/role-type"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { UserService } from "projects/main-area/src/app/service/user.service"
 import { Subscription } from "rxjs"
@@ -18,7 +19,7 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
   resultExtension!: string
   resultFile !: string
   user: any = new Object()
-  roleCode: string | null = ""
+  roleCode: string | null = ''
   fullName: string = ''
   email: string = ''
 
@@ -55,6 +56,8 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
   }
 
   init() {
+    this.roleCode = this.apiService.getRoleCode()
+
     this.activatedRoute.params.subscribe(result => {
       this.getByIdUserSubscription = this.userService.getById(result['id']).subscribe(user => {
         this.user = user
@@ -113,7 +116,7 @@ export class EditProfileAdminComponent implements OnInit, OnDestroy {
         this.newUser = result
         this.newUser.token = token
         this.apiService.saveData(this.newUser)
-        if (this.roleCode == "SA") {
+        if (this.roleCode == ROLE_CODE.SUPER_ADMIN) {
           this.router.navigateByUrl("/profiles/super-admin")
         } else {
           this.router.navigateByUrl("/profiles/admin")

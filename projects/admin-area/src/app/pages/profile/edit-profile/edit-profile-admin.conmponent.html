@@ -1,7 +1,11 @@
 <div class="flex body-color justify-content-center">
     <div class="w-full body-color container">
         <div class=" flex justify-content-center flex-wrap">
-            <div class="grid w-full my-5 p-3 bg-white">
+            <div class="grid w-full ">
+                <button pButton (click)="back()" type="submit" class="p-button-outlined my-5 ml-2"
+                    label="BACK"></button>
+            </div>
+            <div class="grid w-full mb-5 p-3 bg-white">
                 <form [formGroup]="editProfileForm" class="card w-full mx-3 border-0 md:px-4 my-3">
                     <div class="formgrid grid">
                         <div class="field col-12 md:col-6">
@@ -10,21 +14,19 @@
                                 class="w-full p-inputtext-sm">
                         </div>
                         <div class="field col-12 md:col-6">
-                            <label for="email">Email Address <span class="text-red-500">*</span></label>
+                            <label for="email">Email Address </label>
                             <input pInputText id="email" name="email" type="email" class="w-full p-inputtext-sm"
                                 disabled value={{email}}>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <label for="file">Photo <span class="text-red-500">*</span></label>
-                            <p-fileUpload id="file" name="file" accept="image/*" [customUpload]="true"
-                                (uploadHandler)="fileUpload($event)">
+                            <label for="file">Photo</label>
+                            <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+                                [auto]=true [customUpload]="true" chooseLabel="Choose">
                             </p-fileUpload>
                         </div>
 
                         <div class="field col-12">
-                            <div class="col-12 my-3">
-                                <button pButton (click)="back()" type="submit" class="p-button-outlined mr-2"
-                                    label="BACK"></button>
+                            <div class="my-3">
                                 <button pButton [disabled]="editProfileForm.invalid" (click)="updateUser()"
                                     type="submit" id="position-save" label="SAVE" class="main-color"></button>
                             </div>

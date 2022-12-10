@@ -18,7 +18,8 @@
                 </h1>
             </div>
             <div class="grid w-full ">
-                <button pButton type="button" routerLink="/industries" class="p-button-outlined mb-5 ml-2" label="BACK"></button>
+                <button pButton type="button" routerLink="/industries" class="p-button-outlined mb-5 ml-2"
+                    label="BACK"></button>
             </div>
             <div class="grid w-full mb-5 p-3 bg-white">
                 <form class="card w-full mx-3 border-0 md:px-4 my-3" [formGroup]="updateIndustryForm">
@@ -29,7 +30,7 @@
                                 type="text" class="w-full p-inputtext-sm" value="{{industry.industryName}}">
                         </div>
                         <div class="field col-12 md:col-6">
-                            <label for="industryCode">Industry Code <span class="text-red-500">*</span></label>
+                            <label for="industryCode">Industry Code</label>
                             <input pInputText id="industryCode" name="industryCode" type="text"
                                 class="w-full p-inputtext-sm" disabled value="{{industry.industryCode}}">
                         </div>

@@ -142,8 +142,6 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     getValueDate() {
         this.startDate = new Date(this.activityForm.value.beginSchedule ?? '')
         this.minFinishDate = new Date(this.startDate.setHours(this.startDate.getHours() + 1))
-
-        console.log(this.minFinishDate)
         this.showFinishSchedule = false
     }
 

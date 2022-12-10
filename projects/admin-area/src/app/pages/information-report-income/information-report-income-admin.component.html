@@ -17,15 +17,15 @@
                     </div>
                 </h1>
             </div>
-            <div class="grid w-full md:w-10 ">
-                <div class="w-full flex justify-content-between">
-                    <div class="mb-3 md:mb-0">
-                        <label class="mr-3" for="range">Date Range</label>
+            <div class="grid w-full lg:w-10 ">
+                <div class="w-full flex justify-content-between mx-3 lg:mx-0 flex-wrap mb-5">
+                    <div class="mb-3 md:mb-0 flex flex-wrap align-items-center">
+                        <label class="mr-3 w-full mb-2 sm:w-auto sm:mb-0" for="range">Date Range</label>
                         <p-calendar class="p-inputtext-sm" selectionMode="range" [(ngModel)]="rangeDates"
                             (onSelect)="getValueDate()" inputId="range">
                         </p-calendar>
                     </div>
-                    <button pButton label="EXPORT" class="mb-5 mr-3 main-color" (click)="exportData()">
+                    <button pButton label="EXPORT" class="main-color w-full sm:w-auto" (click)="exportData()">
                         <i class="fa-solid fa-cloud-arrow-down mr-2"></i>
                     </button>
                 </div>
@@ -34,9 +34,7 @@
             <div class="grid w-full md:w-10">
                 <div class="table w-full">
                     <p-table #dt1 [value]="data" [lazy]="true" (onLazyLoad)="loadData($event)" responsiveLayout="scroll"
-                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading"
-                        [rowsPerPageOptions]="[5, 10]" tyleClass="p-datatable-gridlines"
-                        [globalFilterFields]="['userName', 'provider']">
+                        [paginator]="true" [rows]="maxPage" [totalRecords]="totalData" [loading]="loading">
 
                         <ng-template pTemplate="header">
                             <tr>

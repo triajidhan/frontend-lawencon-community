@@ -44,7 +44,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -62,8 +61,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
                 this.contDataSubs = this.articleService.getTotalArticle().subscribe(result => {
                     this.totalData = result.countOfArticle
                 })
-
-                console.log(this.data)
             }
         )
     }
