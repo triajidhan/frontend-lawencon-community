@@ -96,7 +96,6 @@ export class InformationReportMemberAdminComponent implements OnInit, OnDestroy 
 
     exportData() {
         this.exportsSubscription = this.reportService.getReportPartisipationSuper(this.beginSchedule, this.finishSchedule).subscribe(result => {
-            console.log(result)
             const anchor = document.createElement('a');
             anchor.download = "partisipation-super.pdf";
             anchor.href = (window.webkitURL || window.URL).createObjectURL(result.body as any);

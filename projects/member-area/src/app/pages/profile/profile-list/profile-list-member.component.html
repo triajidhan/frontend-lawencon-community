@@ -12,24 +12,25 @@
                     </div>
 
                     <div class="grid mx-5">
-                        <div class="col-12 md:col-4 lg:col-3 text-center">
-                            <div class="flex justify-content-center relative">
+                        <div class="col-12 md:col-4 lg:col-3 text-center flex justify-content-center">
+                            <div class="flex border-circle w-10rem h-10rem justify-content-center relative">
                                 <div *ngIf="myStatusSubscribe" class="absolute left-0 z-2">
                                     <div
                                         class="border-circle bg-orange-400 h-3rem w-3rem flex align-items-center justify-content-center">
                                         <i class="fa-regular fa-gem icon text-3xl"></i>
                                     </div>
                                 </div>
-                                <div class="border-circle overflow-hidden w-10rem h-10rem">
-                                    <ng-container *ngIf="(myProfile != 'null' && myProfile != '')">
+                                <div class="border-circle w-10rem h-10rem overflow-hidden">
+                                    <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                                    </div>
+                                    <ng-template #isProfile>
                                         <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
-                                            imageClass="table-img w-10rem h-10rem"></p-image>
-                                    </ng-container>
-                                    <ng-container *ngIf="(myProfile || myProfile == 'null' || myProfile == '')">
+                                            imageClass="w-10rem h-10rem"></p-image>
+                                    </ng-template>
+                                    <ng-template #isNotProfile>
                                         <p-image [preview]="true" src="../../../../assets/logos/user.jpg"
-                                            alt="profile image" imageClass="table-img w-10rem h-10rem">
-                                        </p-image>
-                                    </ng-container>
+                                            alt="profile image" imageClass="w-10rem h-10rem"></p-image>
+                                    </ng-template>
                                 </div>
                             </div>
                         </div>
@@ -575,7 +576,7 @@
                 </div>
                 <div class="field">
                     <label for="file">Photo</label>
-                    <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+                    <p-fileUpload #uploadComponent id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
                         [auto]=true [customUpload]="true" chooseLabel="Choose" [multiple]="true">
                     </p-fileUpload>
                 </div>

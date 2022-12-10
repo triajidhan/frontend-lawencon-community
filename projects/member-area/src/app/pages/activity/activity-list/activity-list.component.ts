@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnInit, ViewChild } from "@angular/core"
 import { FormBuilder } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from "primeng/api"
+import { FileUpload } from "primeng/fileupload"
 import { BASE_URL } from "projects/constant/base-url"
 import { ActivityService } from "projects/main-area/src/app/service/activity.service"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
@@ -62,6 +63,7 @@ export class ActivityListComponent implements OnInit {
     myActivitiesByEventOnGoing: any[] = []
     myActivitiesByCourseOnGoing: any[] = []
 
+    @ViewChild('uploadComponent') upload!: FileUpload
     activityId?: string
     activityTitle?: string
     activityPrice?: string
@@ -406,6 +408,7 @@ export class ActivityListComponent implements OnInit {
             } else {
                 this.activitiesCourse.splice(this.activitiyIdx, 1)
             }
+            this.upload.clear()
         })
     }
 
