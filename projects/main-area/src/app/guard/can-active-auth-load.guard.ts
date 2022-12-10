@@ -9,15 +9,14 @@ import { ApiService } from "../service/api.service";
 })
 
 export class CanActiveAuth implements CanActivate{
-    
+
     constructor(private router: Router,private apiService:ApiService){}
-    
+
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const data = this.apiService.getRoleCode()
-        
+
         if(data){
 
-            console.log(data)
 
             if(data == ROLE_CODE.SUPER_ADMIN.toString()){
                 this.router.navigateByUrl('/dashboard/super')

@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute } from "@angular/router"
 import { ConfirmationService, MenuItem, PrimeNGConfig } from "primeng/api"
+import { FileUpload } from "primeng/fileupload"
 import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { PostType } from "projects/interface/post-type"
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   startPositionPollOption = 0
   limitPollOption = 5
 
+  @ViewChild('uploadComponent') upload!: FileUpload
   indexComment?: number | null
   urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
@@ -324,11 +326,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
           this.display = false
-          this.postForm.controls.title.setValue("")
-          this.postForm.controls.contents.setValue("")
-          this.postForm.controls.titlePoll.setValue("")
+          this.postForm.reset()
           this.fileArray = []
           this.postType = ""
+          this.upload.clear()
           this.init()
         })
       })
@@ -345,11 +346,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
           this.display = false
-          this.postForm.controls.title.setValue("")
-          this.postForm.controls.contents.setValue("")
-          this.postForm.controls.titlePoll.setValue("")
+          this.postForm.reset()
           this.fileArray = []
           this.postType = ""
+          this.upload.clear()
           this.init()
         })
       })

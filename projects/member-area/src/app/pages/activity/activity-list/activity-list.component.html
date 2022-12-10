@@ -769,7 +769,7 @@
                     the amount of <b class="main-text">
                         {{activityPrice | currency:"IDR ":"symbol"}}</b>. And send proof of payment here</p>
                 <div class="field col-12">
-                    <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+                    <p-fileUpload #uploadComponent id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
                         [auto]=true [customUpload]="true" chooseLabel="Choose">
                     </p-fileUpload>
                 </div>

@@ -44,7 +44,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
 
     loadData(event: LazyLoadEvent) {
-        console.log(event)
         this.getData(event.first, event.rows)
     }
 
@@ -56,12 +55,10 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.getAllSubs = this.userService.getByRoleCode('A', startPage, maxPage).subscribe(
             result => {
                 this.data = result
-                console.log(this.data)
                 this.loading = false
                 this.contDataSubs = this.userService.getTotalByRole('A').subscribe(result => {
                     this.totalData = result.countOfUser
                 })
-                console.log(this.data)
             }
         )
     }

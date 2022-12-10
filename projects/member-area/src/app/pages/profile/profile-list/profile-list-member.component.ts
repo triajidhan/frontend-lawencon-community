@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router"
 import { ConfirmationService, MenuItem, PrimeNGConfig } from "primeng/api"
+import { FileUpload } from "primeng/fileupload"
 import { BASE_URL } from "projects/constant/base-url"
 import { POST_TYPE_CODE } from "projects/constant/post-type"
 import { PostType } from "projects/interface/post-type"
@@ -63,6 +64,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
     unitPost: any = new Object()
     unitComment: any = new Object()
 
+    @ViewChild('uploadComponent') upload!: FileUpload
     images: any[] = []
     fileArray: any[] = []
     postTypesRes!: PostType[]
@@ -374,11 +376,10 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
                 this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
                     this.display = false
-                    this.postForm.controls.title.setValue("")
-                    this.postForm.controls.contents.setValue("")
-                    this.postForm.controls.titlePoll.setValue("")
+                    this.postForm.reset()
                     this.fileArray = []
                     this.postType = ""
+                    this.upload.clear()
                     this.init()
                 })
             })
@@ -395,11 +396,10 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
 
                 this.postInsertSubs = this.postService.insert(this.postForm.value).subscribe(() => {
                     this.display = false
-                    this.postForm.controls.title.setValue("")
-                    this.postForm.controls.contents.setValue("")
-                    this.postForm.controls.titlePoll.setValue("")
+                    this.postForm.reset()
                     this.fileArray = []
                     this.postType = ""
+                    this.upload.clear()
                     this.init()
                 })
             })
@@ -503,9 +503,7 @@ export class ProfileListMemberComponent implements OnInit, OnDestroy {
             this.post[i].countOfComment = this.post[i].countOfComment + 1
 
             this.post[i].createdAtComment.push((new Date()).toString())
-            // console.log(this.post[i])
             this.getByIdCommentsSubs = this.commentService.getById(commentInsert.id).subscribe(resultId => {
-                console.log(resultId)
                 this.post[i].commentBody.push(resultId.commentBody)
                 this.post[i].userComment.push(resultId.user)
                 this.post[i].commentId.push(resultId.id)

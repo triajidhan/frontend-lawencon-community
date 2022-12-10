@@ -20,6 +20,8 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     items!: MenuItem[]
     type!: string
     minDate!: Date
+    startDate: Date = new Date()
+    minFinishDate: Date = new Date()
 
     activityTypesRes!: ActivityType[]
     activityTypes: any[] = []
@@ -49,7 +51,7 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
 
     constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder,
         private router: Router, private activityService: ActivityService,
-        private activityTypeService: ActivityTypeService) {}
+        private activityTypeService: ActivityTypeService) { }
 
     ngOnInit(): void {
         this.minDate = new Date(new Date().setHours(new Date().getHours() + 1))
@@ -98,7 +100,6 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     }
 
     fileUpload(event: any): void {
-        console.log(event)
         const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
             const reader = new FileReader()
             reader.readAsDataURL(event.files[0])
@@ -139,6 +140,10 @@ export class ActivityInsertComponent implements OnInit, OnDestroy {
     }
 
     getValueDate() {
+        this.startDate = new Date(this.activityForm.value.beginSchedule ?? '')
+        this.minFinishDate = new Date(this.startDate.setHours(this.startDate.getHours() + 1))
+
+        console.log(this.minFinishDate)
         this.showFinishSchedule = false
     }
 

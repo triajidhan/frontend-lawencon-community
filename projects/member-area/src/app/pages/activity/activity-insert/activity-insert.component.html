@@ -56,13 +56,15 @@
                                             *ngIf="activityForm.controls['beginSchedule'].touched && activityForm.controls['beginSchedule'].errors?.['required']"
                                             id="beginSchedule-poll-help" class="p-error block">Please enter your
                                             begin schedule.</small>
+                                            <small
+                                            class=" block">Minimum begin schedule one hour from now.</small>
                                     </div>
                                     <div class="field col-12 md:col-6">
                                         <label for="finishSchedule" class="w-full">Finish Schedule <span
                                                 class="text-red-500">*</span></label>
                                         <p-calendar [showTime]="true" inputId="finishSchedule" styleClass="calendar"
                                             id="finishSchedule" formControlName="finishSchedule" [required]="true"
-                                            [minDate]="minDate" [defaultDate]="minDate" [disabled]="showFinishSchedule">
+                                            [minDate]="minFinishDate" [defaultDate]="minFinishDate" [disabled]="showFinishSchedule">
                                         </p-calendar>
                                         <small
                                             *ngIf="activityForm.controls['finishSchedule'].touched && activityForm.controls['finishSchedule'].errors?.['required']"

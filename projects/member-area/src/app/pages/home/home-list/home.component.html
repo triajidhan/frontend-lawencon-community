@@ -1159,7 +1159,7 @@
         </div>
         <div class="field">
           <label for="file">Photo</label>
-          <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)" [auto]=true
+          <p-fileUpload #uploadComponent id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)" [auto]=true
             [customUpload]="true" chooseLabel="Choose" [multiple]="true">
           </p-fileUpload>
         </div>
