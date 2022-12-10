@@ -43,6 +43,10 @@ export class PaymentActivityDetailService {
 		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-payment-approved/`)
 	}
 
+	getTotalByPaymentApprovedAndActivityTypeId(activityTypeId:string): Observable<PaymentActivityDetail> {
+		return this.httpClient.get<PaymentActivityDetail>(`${Object.values(BASE_URL)[0]}/payment-activity-details/total-payment-approved-activity-type/?activityType=${activityTypeId}`)
+	}
+
 	getByPaymentReject(startPosition: number, limit: number, ascending: boolean): Observable<PaymentActivityDetail[]> {
 		return this.httpClient.get<PaymentActivityDetail[]>(`${Object.values(BASE_URL)[0]}/payment-activity-details/payment-reject/?startPosition=${startPosition}&limit=${limit}&asc=${ascending}`)
 	}
