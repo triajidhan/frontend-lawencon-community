@@ -221,11 +221,9 @@
                                 </div>
 
                                 <div class="relative">
-                                    <h3 class="text-justify mb-3 mt-4 mx-3">{{post[i].title}}
-                                    </h3>
                                     <div *ngIf="post[i].postType.postTypeName == 'Premium' && !myStatusSubscribe"
-                                        pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30
-                                                          flex justify-content-center align-items-center z-2">
+                                        pTooltip="disabled, premium first" class="cursor-pointer absolute w-full bg-black-alpha-20 blur hover:bg-black-alpha-30
+                                  flex justify-content-center align-items-center z-2">
                                         <div class="text-center text-white">
                                             <i class="fa-solid fa-lock text-5xl"></i>
                                             <h2 class="mt-2">Locked</h2>
@@ -234,7 +232,9 @@
                                     </div>
 
                                     <p-card styleClass="content-box">
-                                        <p class="text-black-alpha-60 text-justify">
+                                        <h3 class="text-justify">{{post[i].title}}
+                                        </h3>
+                                        <p class="text-black-alpha-60 mt-3 text-justify">
                                             {{post[i].contents }}
                                         </p>
                                     </p-card>
