@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { Router } from "@angular/router"
 import { MenuItem, PrimeNGConfig } from 'primeng/api'
+import { FileUpload } from "primeng/fileupload"
 import { BASE_URL } from "projects/constant/base-url"
 import { ApiService } from "projects/main-area/src/app/service/api.service"
 import { PaymentSubscribeService } from "projects/main-area/src/app/service/payment-subscribe.service"
@@ -18,10 +19,12 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
     profiles!: MenuItem[]
     resultExtension!: string
     resultFile !: string
+    event: any = []
 
     myProfile: string = ''
     myStatusSubscribe!: boolean
     display: boolean = false
+    @ViewChild('uploadComponent') upload!: FileUpload
 
     urlFile = `${BASE_URL.LOCALHOST}/files/download/`
 
@@ -110,6 +113,7 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
     }
 
     fileUpload(event: any): void {
+        this.event.push(event.files)
         const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
             const reader = new FileReader()
             reader.readAsDataURL(event.files[0])
@@ -139,6 +143,8 @@ export class HeaderMemberComponent implements OnInit, OnDestroy {
 
         this.premiumSubscription = this.paymentSubscribeService.insert(this.paymentSubsForm.value).subscribe(() => {
             this.display = false
+            this.upload.clear()
+            this.event = []
         })
     }
 

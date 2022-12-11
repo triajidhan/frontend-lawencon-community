@@ -50,6 +50,7 @@ export class ActivityListComponent implements OnInit {
     items!: MenuItem[]
     type!: string
     activitiyIdx: number = 0
+    event: any = []
 
     activities: any[] = []
     activitiesCourse: any[] = []
@@ -362,6 +363,7 @@ export class ActivityListComponent implements OnInit {
     }
 
     fileUpload(event: any): void {
+        this.event.push(event.files)
         const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
             const reader = new FileReader()
             reader.readAsDataURL(event.files[0])
@@ -409,6 +411,7 @@ export class ActivityListComponent implements OnInit {
                 this.activitiesCourse.splice(this.activitiyIdx, 1)
             }
             this.upload.clear()
+            this.event = []
         })
     }
 
