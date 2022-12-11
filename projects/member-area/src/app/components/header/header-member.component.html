@@ -74,12 +74,13 @@
                     the amount of <b class="main-text">IDR
                         50.000,-</b> . And send proof of payment here</p>
                 <div class="field col-12">
-                    <p-fileUpload id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
-                        [auto]=true [customUpload]="true" chooseLabel="Choose">
+                    <p-fileUpload #uploadComponent id="file" name="file" accept="image/*"
+                        (uploadHandler)="fileUpload($event)" [auto]=true [customUpload]="true" chooseLabel="Choose">
                     </p-fileUpload>
                 </div>
-                <button pButton [disabled]="paymentSubsForm.invalid" type="submit" (click)="submitInsert()"
-                    class="main-color w-full mt-3" label="SUBMIT"></button>
+                <button pButton
+                    [disabled]="event.length == 0 || (event.length != 0 && event[event.length-1].length == 0)"
+                    type="submit" (click)="submitInsert()" class="main-color w-full mt-3" label="SUBMIT"></button>
             </form>
         </div>
     </div>
