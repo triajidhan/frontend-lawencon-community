@@ -1,4 +1,4 @@
-<div class="flex justify-content-center border-nav">
+<div class="flex justify-content-center border-nav sticky top-0 z-5 bg-white">
     <div class="w-full container">
         <p-menubar [model]="navMenus">
             <ng-template pTemplate="start">
@@ -25,12 +25,12 @@
                             <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
                             </div>
                             <ng-template #isProfile>
-                                <img  src="{{urlFile}}{{myProfile}}" class="img-fluid images table-img"
+                                <img src="{{urlFile}}{{myProfile}}" class="img-fluid images table-img"
                                     alt="user admin image">
                             </ng-template>
                             <ng-template #isNotProfile>
-                                <img  src="../../../../assets/logos/user.jpg"
-                                    class="img-fluid images table-img" alt="user admin image">
+                                <img src="../../../../assets/logos/user.jpg" class="img-fluid images table-img"
+                                    alt="user admin image">
                             </ng-template>
                         </span>
                         <i class="pi pi-chevron-down text-xs ml-2"></i>
