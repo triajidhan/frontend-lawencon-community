@@ -158,9 +158,11 @@
                   </div>
 
                   <div class="relative">
+                    <h3 class="text-justify mb-3 mt-4 mx-3">{{post[i].title}}
+                    </h3>
                     <div *ngIf="post[i].postType.postTypeName == 'Premium' && !myStatusSubscribe"
                       pTooltip="disabled, premium first" class="cursor-pointer absolute w-full h-full bg-black-alpha-20 blur hover:bg-black-alpha-30
-                      flex justify-content-center align-items-center">
+                      flex justify-content-center align-items-center z-2">
                       <div class="text-center text-white">
                         <i class="fa-solid fa-lock text-5xl"></i>
                         <h2 class="mt-2">Locked</h2>
@@ -169,9 +171,7 @@
                     </div>
 
                     <p-card styleClass="content-box">
-                      <h3 class="text-justify">{{post[i].title}}
-                      </h3>
-                      <p class="text-black-alpha-60 mt-3 text-justify">
+                      <p class="text-black-alpha-60 text-justify">
                         {{post[i].contents }}
                       </p>
                     </p-card>
@@ -396,7 +396,8 @@
                         <div class="flex mt-3">
                           <div class="max-w-max mr-3">
                             <div class="w-2rem h-2rem border-circle overflow-hidden">
-                              <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                              <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                              </div>
                               <ng-template #isProfile>
                                 <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
                                   imageClass="w-2rem h-2rem border-circle"></p-image>
@@ -734,7 +735,8 @@
                         <div class="flex mt-3">
                           <div class="max-w-max mr-3">
                             <div class="w-2rem h-2rem border-circle overflow-hidden">
-                              <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                              <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                              </div>
                               <ng-template #isProfile>
                                 <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
                                   imageClass="w-2rem h-2rem border-circle"></p-image>
@@ -1058,7 +1060,7 @@
 
 
                         </ng-container>
-                        <div  routerLink="/homes/details/{{p.post.id}}"
+                        <div routerLink="/homes/details/{{p.post.id}}"
                           class="mt-2 cursor-pointer w-full text-right font-medium text-black-alpha-60 hover:underline hover:text-black-alpha-50">
                           <p>Show all comments</p>
                         </div>
@@ -1067,7 +1069,8 @@
                         <div class="flex mt-3">
                           <div class="max-w-max mr-3">
                             <div class="w-2rem h-2rem border-circle overflow-hidden">
-                              <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile"></div>
+                              <div *ngIf="(myProfile == 'null' || myProfile == ''); then isNotProfile else isProfile">
+                              </div>
                               <ng-template #isProfile>
                                 <p-image [preview]="true" src="{{urlFile}}{{myProfile}}" alt="profile image"
                                   imageClass="w-2rem h-2rem border-circle"></p-image>
@@ -1159,8 +1162,8 @@
         </div>
         <div class="field">
           <label for="file">Photo</label>
-          <p-fileUpload #uploadComponent id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)" [auto]=true
-            [customUpload]="true" chooseLabel="Choose" [multiple]="true">
+          <p-fileUpload #uploadComponent id="file" name="file" accept="image/*" (uploadHandler)="fileUpload($event)"
+            [auto]=true [customUpload]="true" chooseLabel="Choose" [multiple]="true">
           </p-fileUpload>
         </div>
         <button pButton [loading]="loadingPost" [disabled]="postForm.invalid" type="submit" (click)="postInsert()"
