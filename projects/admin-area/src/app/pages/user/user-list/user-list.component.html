@@ -33,7 +33,6 @@
                                 <th pSortableColumn="fullName">Full Name</th>
                                 <th pSortableColumn="email">Email</th>
                                 <th pSortableColumn="photo">Photo</th>
-                                <th pSortableColumn="isActive">Is Active</th>
                                 <th pSortableColumn="action" class="text-center">Action</th>
                             </tr>
                         </ng-template>
@@ -58,7 +57,6 @@
                                         imageClass="img-fluid images table-img" alt="article admin image">
                                     </p-image>
                                 </td>
-                                <td>{{data.isActive}}</td>
                                 <td class="text-center">
                                     <div class="flex justify-content-center">
                                         <button pButton routerLink="/users/edit/{{data.id}}" type="button"

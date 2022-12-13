@@ -31,7 +31,6 @@
                                 <th pSortableColumn="no" class="text-center">No.</th>
                                 <th pSortableColumn="positionName">Position Name</th>
                                 <th pSortableColumn="positionCode">Position Code</th>
-                                <th pSortableColumn="isActive">Is Active</th>
                                 <th pSortableColumn="action" class="text-center">Action</th>
                             </tr>
                         </ng-template>
@@ -41,7 +40,6 @@
                                 <td class="text-center">{{i + 1}}</td>
                                 <td>{{data.positionName}}</td>
                                 <td>{{data.positionCode}}</td>
-                                <td>{{data.isActive}}</td>
                                 <td class="text-center">
                                     <div class="flex justify-content-center">
                                         <button pButton routerLink="/positions/edit/{{data.id}}" type="button"
